@@ -3,10 +3,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/anonymous_home_bg"
+    android:padding="@dimen/activity_margin"
     tools:context="com.privatecar.privatecar.activities.AnonymousHomeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/rg_toggle_person"
+            style="@style/Toggle_RG"
+            android:checkedButton="@+id/rb_customer"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_customer"
+                style="@style/Toggle_RB"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/customer" />
+
+            <RadioButton
+                android:id="@+id/rb_driver"
+                style="@style/Toggle_RB"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/driver" />
+        </RadioGroup>
+
+        <!-- TODO: Add ldrtl version-->
+        <Button
+            android:id="@+id/btn_one_lift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widgets_vertical_space"
+            android:background="@drawable/onelift_btn_bg"
+            android:onClick="onClick" />
+
+        <!-- TODO: Add ldrtl version-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widgets_vertical_space"
+            android:src="@drawable/anonymous_home_text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widgets_vertical_space"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btn_sign_in"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/yellowish_start_rounded_corners_shape"
+                android:onClick="onClick"
+                android:text="@string/sign_in" />
+
+            <Button
+                android:id="@+id/btn_sign_up"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/petroleum_end_rounded_corners_shape"
+                android:onClick="onClick"
+                android:text="@string/sign_up" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

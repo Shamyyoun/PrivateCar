@@ -9,6 +9,8 @@ public class User {
     private String Email;
     private String Password;
     private String Mobile;
+    private String GrantType;
+
 
     public String getFirstName() {
         return FirstName;
@@ -49,4 +51,13 @@ public class User {
     public void setMobile(String mobile) {
         Mobile = mobile;
     }
+
+    public String getGrantType() {
+        return GrantType;
+    }
+
+    public void setGrantType(String grantType) {
+        GrantType = grantType;
+    }
+
 }

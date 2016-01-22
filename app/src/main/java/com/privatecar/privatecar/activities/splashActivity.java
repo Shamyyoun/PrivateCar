@@ -1,5 +1,6 @@
 package com.privatecar.privatecar.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -49,9 +50,10 @@ public class splashActivity extends AppCompatActivity {
                             //TODO: populate user language
                             //TODO: navigate to picking screen
                         } else {
-                            //TODO: navigate to anonymous home screen
+                            startActivity(new Intent(getApplicationContext(), AnonymousHomeActivity.class));
                         }
 
+                        finish();
 
                     }
 
