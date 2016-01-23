@@ -19,4 +19,6 @@
     <string name="verify_your_account">Verify Your Account</string>
     <string name="verification_code">Verification Code</string>
     <string name="done">Done</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="question_mark">" ?"</string>
 </resources>

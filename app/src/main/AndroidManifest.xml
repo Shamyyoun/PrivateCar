@@ -80,6 +80,11 @@
             android:label="@string/verify_your_account">
 
         </activity>
+        <activity
+            android:name=".activities.CustomerSigninActivity"
+            android:label="@string/sign_in">
+
+        </activity>
     </application>
 
 </manifest>

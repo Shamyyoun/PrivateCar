@@ -72,7 +72,7 @@ public class AnonymousHomeActivity extends AppCompatActivity {
             case R.id.btn_sign_in:
                 switch (selection) {
                     case CUSTOMER:
-                        //TODO: customer sign in
+                        startActivity(new Intent(getApplicationContext(), CustomerSigninActivity.class));
                         break;
                     case DRIVER:
                         //TODO: driver sign in
@@ -94,7 +94,7 @@ public class AnonymousHomeActivity extends AppCompatActivity {
 
     private void showCallDialog(final String customerServiceNumber) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.call) + ": " + customerServiceNumber);
+        builder.setMessage(getString(R.string.call) + ": " + customerServiceNumber + getString(R.string.question_mark));
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

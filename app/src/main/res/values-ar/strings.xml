@@ -17,4 +17,6 @@
     <string name="verify_your_account">تأكيد الحساب</string>
     <string name="verification_code">كود التأكيد</string>
     <string name="done">إتمام</string>
+    <string name="forgot_password">نسيت كلمة المرور؟</string>
+    <string name="question_mark">" ؟"</string>
 </resources>
