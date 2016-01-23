@@ -7,4 +7,11 @@
     <string name="call">الاتصال بـ</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
+    <string name="loading">جاري التحميل…</string>
+    <string name="or">أو</string>
+    <string name="first_name">الاسم الأول</string>
+    <string name="last_name">الاسم الأخير</string>
+    <string name="email">E-mail</string>
+    <string name="mobile">Mobile</string>
+    <string name="password">Password</string>
 </resources>

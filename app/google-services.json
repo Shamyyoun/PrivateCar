@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_id": "private-car-1198",
+    "project_number": "190216326794",
+    "name": "Private Car"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190216326794:android:0c3be5866c8c8892",
+        "client_id": "android:com.privatecar.privatecar",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.privatecar.privatecar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190216326794-ef6g0bevjq5kcelp5l2q21d9lrn5ee4f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.privatecar.privatecar",
+            "certificate_hash": "F3E1B86B8E1B30A98E0EE1074A0270C562D78F98"
+          }
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

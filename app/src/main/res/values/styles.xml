@@ -4,11 +4,27 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/petroleum</item>
+        <item name="colorControlActivated">@color/petroleum</item>
+        <!-- Contextual actionbar background -->
+        <item name="android:actionModeBackground">@color/yellowish</item>
+        <!-- Large text color (in actionbar and toolbar)-->
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <!-- Medium text color -->
         <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <!-- Small text color -->
+        <item name="android:textColorTertiary">@color/textColorTertiary</item>
+        <item name="android:editTextColor">@color/textColorTertiary</item>
+        <item name="android:textColorHint">@color/grayish</item>
+        <!-- Text selection color -->
+        <item name="android:textColorHighlight">@color/petroleum_highlight</item>
+        <item name="colorButtonNormal">@color/petroleum</item>
+
+        <item name="homeAsUpIndicator">@drawable/start_white_arrow_icon</item>
 
         <item name="dialogTheme">@style/MyDialogTheme</item>
         <item name="alertDialogTheme">@style/MyDialogTheme</item>
+        <item name="android:buttonStyle">@style/MyButtonStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -24,6 +40,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="MyButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:textStyle">bold</item>
     </style>
 
 
@@ -43,10 +63,10 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <!-- ================================================================= -->
+    <!-- ============================================== -->
     <!-- Crop Activity theme -->
 
-    <style tools:ignore="NewApi" name="CropActivityTheme" parent="android:Theme.DeviceDefault">
+    <style name="CropActivityTheme" parent="android:Theme.DeviceDefault" tools:ignore="NewApi">
         <item name="cropImageStyle">@style/Widget.CropImageView</item>
     </style>
 

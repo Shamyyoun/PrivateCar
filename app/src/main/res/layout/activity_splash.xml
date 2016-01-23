@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/splash_bg"
-    tools:context=".activities.splashActivity">
+    tools:context=".activities.SplashActivity">
 
     <ProgressBar
         android:id="@+id/progress_bar"

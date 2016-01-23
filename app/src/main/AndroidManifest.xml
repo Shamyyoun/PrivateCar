@@ -23,8 +23,33 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- ===================== Facebook ============================ -->
         <activity
-            android:name=".activities.splashActivity"
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_id" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider1672155173024840"
+            android:exported="true" />
+
+        <!-- =========================================================== -->
+
+        <activity
+            android:name="com.soundcloud.android.crop.CropImageActivity"
+            android:theme="@style/CropActivityTheme" />
+
+        <!-- =========================================================== -->
+
+        <activity
+            android:name=".activities.SplashActivity"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,14 +57,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AnonymousHomeActivity">
+        <activity
+            android:name=".activities.AnonymousHomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".activities.CustomerSignupActivity"></activity>
+        <activity
+            android:name=".activities.CustomerSignupActivity"
+            android:label="@string/sign_up">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity android:name=".activities.UserVerificationActivity"></activity>
     </application>
 
 </manifest>

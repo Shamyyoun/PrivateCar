@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Private Car</string>
+    <string name="facebook_id" translatable="false">1672155173024840</string>
+    <string name="server_client_id" translatable="false">190216326794-la970paprihb4veb6i07k78p8l9jfch3.apps.googleusercontent.com</string>
     <string name="customer">Customer</string>
     <string name="driver">Driver</string>
     <string name="sign_in">Sign In</string>
@@ -7,4 +9,11 @@
     <string name="call">Call</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="loading">Loading…</string>
+    <string name="or">OR</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">E-mail</string>
+    <string name="mobile">Mobile</string>
+    <string name="password">Password</string>
 </resources>

@@ -1,7 +1,6 @@
 package com.privatecar.privatecar.activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
@@ -18,7 +18,7 @@ import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
 
-public class AnonymousHomeActivity extends Activity {
+public class AnonymousHomeActivity extends AppCompatActivity {
 
     private Button btnOneLift, btnSignIn, btnSignUp;
 
@@ -82,7 +82,7 @@ public class AnonymousHomeActivity extends Activity {
             case R.id.btn_sign_up:
                 switch (selection) {
                     case CUSTOMER:
-                        //TODO: customer sign up
+                        startActivity(new Intent(getApplicationContext(), CustomerSignupActivity.class));
                         break;
                     case DRIVER:
                         //TODO: driver sign up

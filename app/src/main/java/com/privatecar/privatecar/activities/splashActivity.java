@@ -15,7 +15,7 @@ import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class splashActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
 
@@ -26,6 +26,7 @@ public class splashActivity extends AppCompatActivity {
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
+        Utils.printHashKey(this);
     }
 
     @Override
@@ -60,6 +61,7 @@ public class splashActivity extends AppCompatActivity {
                     @Override
                     public void onFail(String message) {
                         Utils.showToast(getApplicationContext(), message);
+                        Log.e(Const.LOG_TAG, message);
                         finish();
                     }
                 });
