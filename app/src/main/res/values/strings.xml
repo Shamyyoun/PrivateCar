@@ -16,4 +16,7 @@
     <string name="email">E-mail</string>
     <string name="mobile">Mobile</string>
     <string name="password">Password</string>
+    <string name="verify_your_account">Verify Your Account</string>
+    <string name="verification_code">Verification Code</string>
+    <string name="done">Done</string>
 </resources>

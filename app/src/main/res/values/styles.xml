@@ -24,7 +24,7 @@
 
         <item name="dialogTheme">@style/MyDialogTheme</item>
         <item name="alertDialogTheme">@style/MyDialogTheme</item>
-        <item name="android:buttonStyle">@style/MyButtonStyle</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -42,8 +42,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MyButtonStyle" parent="Widget.AppCompat.Button">
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button">
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="forward_petroleum_button" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/petroleum_rounded_corners_shape</item>
+        <item name="android:drawableEnd">@drawable/end_white_arrow_icon</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingEnd">100dp</item>
+        <item name="android:paddingStart">110dp</item>
+        <item name="android:singleLine">true</item>
     </style>
 
 

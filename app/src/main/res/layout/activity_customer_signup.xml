@@ -143,19 +143,13 @@
 
             </android.support.design.widget.TextInputLayout>
 
-
             <Button
                 android:id="@+id/btn_sign_up"
+                style="@style/forward_petroleum_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/widgets_vertical_space"
-                android:background="@drawable/petroleum_rounded_corners_shape"
-                android:drawableEnd="@drawable/end_white_arrow_icon"
-                android:gravity="center"
                 android:onClick="onClick"
-                android:paddingEnd="100dp"
-                android:paddingStart="110dp"
-                android:singleLine="true"
                 android:text="@string/sign_up" />
         </LinearLayout>
 

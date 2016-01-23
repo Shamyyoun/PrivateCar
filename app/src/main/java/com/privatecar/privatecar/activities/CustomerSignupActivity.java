@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -41,7 +39,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-public class CustomerSignupActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+public class CustomerSignupActivity extends BasicBackActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     private static final int REQUEST_CODE_GOOGLE_PLUS_SIGN_IN = 9001;
 
@@ -56,10 +54,6 @@ public class CustomerSignupActivity extends AppCompatActivity implements GoogleA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_signup);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
         prepareLoginWithFacebook();
         prepareSigninWithGoogle();
@@ -76,15 +70,6 @@ public class CustomerSignupActivity extends AppCompatActivity implements GoogleA
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private void setupFloatingLabelError() {
         final TextInputLayout floatingUsernameLabel = (TextInputLayout) findViewById(R.id.et_first_name_text_input_layout);
@@ -175,6 +160,9 @@ public class CustomerSignupActivity extends AppCompatActivity implements GoogleA
                 break;
             case R.id.btn_sign_up_google_plus:
                 signInGoogle();
+                break;
+            case R.id.btn_sign_up:
+                startActivity(new Intent(getApplicationContext(), UserVerificationActivity.class));
                 break;
         }
     }

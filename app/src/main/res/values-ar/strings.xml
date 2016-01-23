@@ -11,7 +11,10 @@
     <string name="or">أو</string>
     <string name="first_name">الاسم الأول</string>
     <string name="last_name">الاسم الأخير</string>
-    <string name="email">E-mail</string>
-    <string name="mobile">Mobile</string>
-    <string name="password">Password</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="mobile">رقم الموبايل</string>
+    <string name="password">كلمة المرور</string>
+    <string name="verify_your_account">تأكيد الحساب</string>
+    <string name="verification_code">كود التأكيد</string>
+    <string name="done">إتمام</string>
 </resources>
