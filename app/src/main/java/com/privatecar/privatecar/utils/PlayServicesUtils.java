@@ -1,4 +1,4 @@
-package com.privatecar.privatecar.gcm;
+package com.privatecar.privatecar.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,14 +8,13 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.privatecar.privatecar.Const;
-import com.privatecar.privatecar.utils.Utils;
 
 /**
  * Created by basim on 27/1/16.
- * A utils class, contains useful methods for working with gcm.
- * Some of these methods needs the GCM library to be added to the project.
+ * A utils class, contains useful methods for working with Google Play Services such as gcm.
+ * Some of these methods need the Play Services libraries (like GCM library) to be added to the project.
  */
-public class GCMUtils {
+public class PlayServicesUtils {
 
     public static final String KEY_GCM_TOKEN = "gcm_token_key";
 
@@ -32,6 +31,7 @@ public class GCMUtils {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity);
         if (resultCode != ConnectionResult.SUCCESS) {
             if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                // Get the error dialog from Google Play services
                 GooglePlayServicesUtil.getErrorDialog(resultCode, activity, PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
                 Log.e(Const.LOG_TAG, "This device doesn't support push notifications.");

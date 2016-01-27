@@ -8,6 +8,7 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.utils.PlayServicesUtils;
 import com.privatecar.privatecar.utils.Utils;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class
                     String senderId = getResources().getString(R.string.gcm_senderId);
                     String token = instanceID.getToken(senderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE);
 
-                    GCMUtils.cacheGCMToken(getApplicationContext(), token);
+                    PlayServicesUtils.cacheGCMToken(getApplicationContext(), token);
                     Utils.cacheAppVersionCode(getApplicationContext());
                     Log.e(TAG, "New GCM Token: " + token);
 

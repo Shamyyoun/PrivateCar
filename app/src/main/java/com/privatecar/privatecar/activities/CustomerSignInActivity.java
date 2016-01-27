@@ -131,6 +131,7 @@ public class CustomerSigninActivity extends BasicBackActivity implements GoogleA
                 signInGoogle();
                 break;
             case R.id.btn_sign_in:
+                startActivity(new Intent(this, CustomerHomeActivity.class));
                 break;
         }
     }

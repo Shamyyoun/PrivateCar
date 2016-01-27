@@ -3,6 +3,7 @@
     <string name="facebook_id" translatable="false">1672155173024840</string>
     <string name="server_client_id" translatable="false">190216326794-la970paprihb4veb6i07k78p8l9jfch3.apps.googleusercontent.com</string>
     <string name="gcm_senderId" translatable="false">190216326794</string>
+    <string name="google_maps_key" translatable="false">AIzaSyDM5VfpHsOxEEreD8f8alq9n8otNG5jQtI</string>
     <string name="customer">Customer</string>
     <string name="driver">Driver</string>
     <string name="sign_in">Sign In</string>
