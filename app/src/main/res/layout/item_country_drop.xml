@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="2dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="2dp">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="25.67dp"
+        android:layout_height="16dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/f222" />
+
+    <!--<ImageView-->
+    <!--android:id="@+id/image"-->
+    <!--android:layout_width="25.67dp"-->
+    <!--android:layout_height="12dp"-->
+    <!--android:scaleType="center"-->
+    <!--android:src="@drawable/f222" />-->
+    <!-- -->
+
+
+    <TextView
+        android:id="@+id/country_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="5dp"
+        tools:text="Egypt" />
+
+
+    <TextView
+        android:id="@+id/country_code"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:padding="5dp"
+        tools:text="+2000" />
+
+</LinearLayout>

@@ -1,14 +1,13 @@
 package com.privatecar.privatecar.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 /**
  * Created by basim on 23/1/16.
  * A Base activity class that enables the actionbar home button.
  */
-public class BasicBackActivity extends AppCompatActivity {
+public class BasicBackActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

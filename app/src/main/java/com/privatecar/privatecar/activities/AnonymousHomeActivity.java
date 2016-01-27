@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
@@ -18,7 +17,7 @@ import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
 
-public class AnonymousHomeActivity extends AppCompatActivity {
+public class AnonymousHomeActivity extends BaseActivity {
 
     private Button btnOneLift, btnSignIn, btnSignUp;
 
@@ -94,7 +93,7 @@ public class AnonymousHomeActivity extends AppCompatActivity {
 
     private void showCallDialog(final String customerServiceNumber) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.call) + ": " + customerServiceNumber + getString(R.string.question_mark));
+        builder.setMessage(getString(R.string.call) + customerServiceNumber + getString(R.string.question_mark));
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

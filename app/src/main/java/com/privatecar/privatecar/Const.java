@@ -2,7 +2,7 @@ package com.privatecar.privatecar;
 
 /**
  * Created by basim on 18/12/15.
- *
+ * A class contains constants for the application and for some of the utility classes.
  */
 
 public class Const {
@@ -23,7 +23,5 @@ public class Const {
     public static final String MESSAGE_USER_CONFIG = "userconfig";
     public static final String MESSAGE_REGISTER_CUSTOMER = "regcustomer";
     public static final String MESSAGE_ACCESS_TOKEN = "accesstoken";
-
-
 
 }

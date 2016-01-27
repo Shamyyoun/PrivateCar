@@ -27,19 +27,15 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by basim on 18/12/15.
- * A class, with general purpose utility methods.
+ * A class, with general purpose utility methods (useful for many projects).
  */
 public class Utils {
 
     /**
      * get the hash key for usage with facebook sdk
-     *
-     * @param pContext a Context object
      */
     public static void printHashKey(Context pContext) {
         try {
@@ -54,21 +50,24 @@ public class Utils {
     }
 
 
-    public static boolean isValidEmail(String email) {
-        boolean isValid = false;
-
-        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(email);
-        if (matcher.matches()) {
-            isValid = true;
-        }
-        return isValid;
+    /**
+     * Validate email address.
+     *
+     * @param email the email to validate
+     * @return true if valid email or false.
+     */
+    public static boolean isValidEmail(CharSequence email) {
+        return (!TextUtils.isEmpty(email)) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public static boolean isValidEgyptianMobileNumber(String number) {
 
+    /**
+     * Checks the given number as a valid Egyptian mobile nubmer.
+     *
+     * @param number the number to check
+     * @return true if valid Egyptian mobile number.
+     */
+    public static boolean isValidEgyptianMobileNumber(String number) {
         if (number.length() < 11) {
             return false;
         } else if (!number.startsWith("01")) {
@@ -86,7 +85,6 @@ public class Utils {
                 }
             }
         }
-
         return true;
     }
 
@@ -130,21 +128,29 @@ public class Utils {
         return false;
     }
 
-    //gets a formatted % percent from numerator/denominator values
-    public static String getPercent(int numerator, int denominator) {
-        NumberFormat percentFormat = new DecimalFormat("###.#");
+    /**
+     * Gets a formatted % percent from numerator/denominator values.
+     *
+     * @param numerator
+     * @param denominator
+     * @param locale the locale of the returned string.
+     * @return the formatted percent.
+     */
+    public static String getPercent(int numerator, int denominator, Locale locale) {
+        //http://docs.oracle.com/javase/tutorial/i18n/format/decimalFormat.html
+        NumberFormat nf = NumberFormat.getNumberInstance(locale);  //Locale.US, .....
+        DecimalFormat df = (DecimalFormat) nf;
+        df.applyPattern("###.#");
         if (denominator == 0) {
-            return percentFormat.format(0) + "%";
+            return df.format(0) + "%";
         }
         float percent = (numerator / (float) denominator) * 100;
-        return percentFormat.format(percent) + "%";
+        return df.format(percent) + "%";
     }
+
 
     /**
      * hide keyboard in edit text field
-     *
-     * @param activity
-     * @param et
      */
     public void hideKeyboard(Activity activity, EditText et) {
         InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -153,9 +159,6 @@ public class Utils {
 
     /**
      * show key board in edit text field
-     *
-     * @param activity
-     * @param et
      */
     public void showKeyboard(Activity activity, EditText et) {
         InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -172,6 +175,11 @@ public class Utils {
         Toast.makeText(context, textID, Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Executes the given AsyncTask Efficiently.
+     *
+     * @param task the task to execute.
+     */
     public static void executeAsyncTask(AsyncTask<Void, Void, Void> task) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -199,12 +207,25 @@ public class Utils {
     }
 
 
+    /**
+     * converts the given timestamp to  readable date.
+     *
+     * @param timeStamp
+     * @return
+     */
     public static String timeStampToString(long timeStamp) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
         return dateFormat.format(new Date(timeStamp));
     }
 
-    public static int getAppVersion(Context context) {
+
+    /**
+     * Gets the app version code.
+     *
+     * @param context
+     * @return the version code.
+     */
+    public static int getAppVersionCode(Context context) {
         try {
             PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return packageInfo.versionCode;

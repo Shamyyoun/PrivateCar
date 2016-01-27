@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -31,6 +32,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.adapters.CountryAdapter;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
 import com.privatecar.privatecar.utils.Utils;
 
@@ -48,6 +50,7 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
     private ProgressDialog progressDialog;
 
     private Button btnSignUpFacebook, btnSignUpGooglePlus, btnSignUp;
+    private Spinner spinner;
 
 
     @Override
@@ -65,6 +68,13 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
         btnSignUpFacebook.setOnTouchListener(new ButtonHighlighterOnTouchListener(this, R.drawable.sign_up_facebook));
         btnSignUpGooglePlus.setOnTouchListener(new ButtonHighlighterOnTouchListener(this, R.drawable.sign_up_google_plus));
         btnSignUp.setOnTouchListener(new ButtonHighlighterOnTouchListener(this, R.drawable.petroleum_rounded_corners_shape));
+
+
+        spinner = (Spinner) findViewById(R.id.spinner_countries);
+        CountryAdapter adapter = new CountryAdapter(this);
+        spinner.setAdapter(adapter);
+
+
 
         setupFloatingLabelError();
 

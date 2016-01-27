@@ -19,7 +19,7 @@ import java.util.Map;
 
 /**
  * Created by basim on 1/3/16.
- * //TODO: add documentation
+ * A helper class for making requests using requests using Ion library.
  */
 
 public class RequestHelper<T> {
@@ -79,6 +79,10 @@ public class RequestHelper<T> {
         }
     }
 
+    /**
+     * Execute get request. (requires baseUrl & apiName)
+     * @return Future object for cancelling the request.
+     */
     public Future<String> executeGet() {
         if (baseUrl == null || apiName == null) {
             throw new IllegalArgumentException("No baseUrl or apiName found.");
@@ -100,6 +104,11 @@ public class RequestHelper<T> {
         }
     }
 
+    /**
+     * Execute x-www-form-urlencoded post request with string parameters.
+     * (requires at least baseUrl & apiName)
+     * @return Future object for cancelling the request.
+     */
     public Future<String> executeFormUrlEncoded() {
         if (baseUrl == null || apiName == null) {
             throw new IllegalArgumentException("No baseUrl or apiName found.");
@@ -129,6 +138,11 @@ public class RequestHelper<T> {
         }
     }
 
+    /**
+     * Execute a multipart post request with text and image parameters.
+     * (requires at least baseUrl & apiName)
+     * @return Future object for cancelling the request.
+     */
     public Future<String> executeMultiPart() {
         if (baseUrl == null || apiName == null || (params == null && files == null)) {
             throw new IllegalArgumentException("No baseUrl, apiName, params or files found.");
@@ -171,6 +185,11 @@ public class RequestHelper<T> {
         }
     }
 
+    /**
+     * Handles the completion of the request if (success or fail) and deserialize the string response using the given Class object and executes the  onFail or onSuccess method.
+     * @param e the exception object (may be null if request failed).
+     * @param result the string response.
+     */
     @SuppressWarnings("unchecked")
     private void handleOnCompleted(Exception e, String result) {
         printLogs(1);  // request finished
@@ -194,6 +213,11 @@ public class RequestHelper<T> {
         }
     }
 
+    /**
+     * Cancels the request.
+     * @param interruptThread true if the thread executing this task should be interrupted; otherwise, in-progress tasks are allowed to complete.
+     * @return false if the task could not be cancelled, typically because it has already completed normally; true otherwise.
+     */
     public boolean cancel(boolean interruptThread) {
         if (!(future.isCancelled() || future.isDone())) {
             return future.cancel(interruptThread);

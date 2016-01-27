@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 
 /**
  * Created by balamuddin on 10/4/2015.
+ * A utility class to highlight the button on touch works with (Button & ImageButton)
  */
 
 public class ButtonHighlighterOnTouchListener implements View.OnTouchListener {

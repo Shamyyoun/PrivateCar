@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 /**
  * Created by balamuddin on 10/4/2015.
+ * A utility class to highlight an image view on touch event (works with image view)
  */
 public class ImageHighlighterOnTouchListener implements View.OnTouchListener {
     //http://stackoverflow.com/a/14278790/4332959
