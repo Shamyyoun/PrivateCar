@@ -2,6 +2,7 @@
     <string name="app_name">Private Car</string>
     <string name="facebook_id" translatable="false">1672155173024840</string>
     <string name="server_client_id" translatable="false">190216326794-la970paprihb4veb6i07k78p8l9jfch3.apps.googleusercontent.com</string>
+    <string name="gcm_senderId" translatable="false">190216326794</string>
     <string name="customer">Customer</string>
     <string name="driver">Driver</string>
     <string name="sign_in">Sign In</string>

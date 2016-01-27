@@ -15,6 +15,17 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
+    <!-- ============= GCM =============== -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+
+    <!-- Creates a custom permission so only this app can receive its messages. -->
+    <permission
+        android:name="com.privatecar.privatecar.permission.C2D_MESSAGE"
+        android:protectionLevel="signature"/>
+
+    <uses-permission android:name="com.privatecar.privatecar.permission.C2D_MESSAGE"/>
+
+    <!-- ============================ -->
     <application
         android:name=".PrivateCar"
         android:allowBackup="true"
@@ -23,6 +34,38 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- ============= GCM =============== -->
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+
+                <category android:name="com.privatecar.privatecar"/>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".gcm.GCMMessageHandler"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name=".gcm.RegistrationIntentService"
+            android:exported="false"/>
+        <service
+            android:name=".gcm.MyInstanceIDListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID"/>
+            </intent-filter>
+        </service>
 
         <!-- ===================== Facebook ============================ -->
         <activity
@@ -40,8 +83,7 @@
             android:authorities="com.facebook.app.FacebookContentProvider1672155173024840"
             android:exported="true" />
 
-        <!-- =========================================================== -->
-
+        <!-- ======================== Crop library activity =================================== -->
         <activity
             android:name="com.soundcloud.android.crop.CropImageActivity"
             android:theme="@style/CropActivityTheme" />

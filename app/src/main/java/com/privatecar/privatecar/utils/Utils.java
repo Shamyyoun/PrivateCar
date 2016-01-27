@@ -34,6 +34,8 @@ import java.util.Locale;
  */
 public class Utils {
 
+    public static final String KEY_APP_VERSION_CODE = "app_version_code_key";
+
     /**
      * get the hash key for usage with facebook sdk
      */
@@ -62,7 +64,7 @@ public class Utils {
 
 
     /**
-     * Checks the given number as a valid Egyptian mobile nubmer.
+     * Checks the given number as a valid Egyptian mobile number.
      *
      * @param number the number to check
      * @return true if valid Egyptian mobile number.
@@ -89,35 +91,63 @@ public class Utils {
     }
 
 
-    public static void saveBooleanInPreferences(Context ctx, String k, Boolean v) {
-        SharedPreferences prefs = ctx.getSharedPreferences(Const.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+    /**
+     * Get a shared preferences file named Const.SHARED_PREFERENCES_FILE_NAME, keys added to it must be unique
+     *
+     * @param ctx
+     * @return the shared preferences
+     */
+    public static SharedPreferences getSharedPreferences(Context ctx) {
+        return ctx.getSharedPreferences(Const.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+    }
+
+    public static void cacheBoolean(Context ctx, String k, Boolean v) {
+        SharedPreferences prefs = getSharedPreferences(ctx);
         prefs.edit().putBoolean(k, v).apply();
     }
 
-    public static Boolean getBooleanFromPreferences(Context ctx, String k, Boolean defaultValue) {
-        SharedPreferences prefs = ctx.getSharedPreferences(Const.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+    public static Boolean getCachedBoolean(Context ctx, String k, Boolean defaultValue) {
+        SharedPreferences prefs = getSharedPreferences(ctx);
         return prefs.getBoolean(k, defaultValue);
     }
 
-    public static void saveStringInPreferences(Context ctx, String k, String v) {
-        SharedPreferences prefs = ctx.getSharedPreferences(Const.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+    public static void cacheString(Context ctx, String k, String v) {
+        SharedPreferences prefs = getSharedPreferences(ctx);
         prefs.edit().putString(k, v).apply();
     }
 
-    public static String getStringFromPreferences(Context ctx, String k, String defaultValue) {
-        SharedPreferences prefs = ctx.getSharedPreferences(Const.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+    public static String getCachedString(Context ctx, String k, String defaultValue) {
+        SharedPreferences prefs = getSharedPreferences(ctx);
         return prefs.getString(k, defaultValue);
     }
 
+    public static void cacheInt(Context ctx, String k, int v) {
+        SharedPreferences prefs = getSharedPreferences(ctx);
+        prefs.edit().putInt(k, v).apply();
+    }
+
+    public static int getCachedInt(Context ctx, String k, int defaultValue) {
+        SharedPreferences prefs = getSharedPreferences(ctx);
+        return prefs.getInt(k, defaultValue);
+    }
+
+    public static void clearCachedKey(Context context, String key) {
+        getSharedPreferences(context).edit().remove(key).apply();
+    }
+
+    /**
+     * Checks the device has a connection (not necessarily connected to the internet)
+     *
+     * @param ctx
+     * @return
+     */
     public static boolean hasConnection(Context ctx) {
         ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifiNetwork = cm
-                .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo wifiNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if (wifiNetwork != null && wifiNetwork.isConnected()) {
             return true;
         }
-        NetworkInfo mobileNetwork = cm
-                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        NetworkInfo mobileNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         if (mobileNetwork != null && mobileNetwork.isConnected()) {
             return true;
         }
@@ -133,7 +163,7 @@ public class Utils {
      *
      * @param numerator
      * @param denominator
-     * @param locale the locale of the returned string.
+     * @param locale      the locale of the returned string.
      * @return the formatted percent.
      */
     public static String getPercent(int numerator, int denominator, Locale locale) {
@@ -175,6 +205,11 @@ public class Utils {
         Toast.makeText(context, textID, Toast.LENGTH_LONG).show();
     }
 
+    public static void LogE(String msg) {
+        Log.e(Const.LOG_TAG, msg);
+    }
+
+
     /**
      * Executes the given AsyncTask Efficiently.
      *
@@ -189,7 +224,7 @@ public class Utils {
     }
 
     /**
-     * Remove - and other characters from mobile numbers and replace any + with 00
+     * Remove '-' and other characters from mobile numbers and replace any + with 00
      *
      * @param oldNumber
      * @return the enhanced number
@@ -202,19 +237,14 @@ public class Utils {
         return TextUtils.isEmpty(et.getText().toString().trim());
     }
 
-    public static Boolean isEmpty(String str) {
-        return str == null || TextUtils.isEmpty(str.trim());
-    }
-
-
     /**
      * converts the given timestamp to  readable date.
      *
      * @param timeStamp
      * @return
      */
-    public static String timeStampToString(long timeStamp) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+    public static String timeStampToString(long timeStamp, Locale locale) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", locale);
         return dateFormat.format(new Date(timeStamp));
     }
 
@@ -235,22 +265,13 @@ public class Utils {
         }
     }
 
-//    public static boolean checkPlayServices(Activity activity) {
-//        final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-//
-//        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity);
-//        if (resultCode != ConnectionResult.SUCCESS) {
-//            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-//                GooglePlayServicesUtil.getErrorDialog(resultCode, activity, PLAY_SERVICES_RESOLUTION_REQUEST).show();
-//            } else {
-//                Log.e(Dabrny.TAG, "This device is not supported.");
-//                Toast.makeText(activity, "This device doesn't support push notifications", Toast.LENGTH_LONG).show();
-//            }
-//            return false;
-//        }
-//        return true;
-//    }
+    public static void cacheAppVersionCode(Context context) {
+        cacheInt(context, KEY_APP_VERSION_CODE, getAppVersionCode(context));
+    }
 
+    public static int getCachedAppVersionCode(Context context) {
+        return getCachedInt(context, KEY_APP_VERSION_CODE, Integer.MIN_VALUE);
+    }
 
     /**
      * Gets the current app locale language like: ar, en, ....

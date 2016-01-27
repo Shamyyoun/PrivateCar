@@ -4,9 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.TextInputLayout;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -74,36 +71,6 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
         CountryAdapter adapter = new CountryAdapter(this);
         spinner.setAdapter(adapter);
 
-
-
-        setupFloatingLabelError();
-
-    }
-
-
-    private void setupFloatingLabelError() {
-        final TextInputLayout floatingUsernameLabel = (TextInputLayout) findViewById(R.id.et_first_name_text_input_layout);
-        if (floatingUsernameLabel.getEditText() != null)
-            floatingUsernameLabel.getEditText().addTextChangedListener(new TextWatcher() {
-                @Override
-                public void onTextChanged(CharSequence text, int start, int count, int after) {
-                    if (text.length() > 0 && text.length() <= 4) {
-                        floatingUsernameLabel.setError("User name required");
-//                        floatingUsernameLabel.setErrorEnabled(true);
-                    } else {
-                        floatingUsernameLabel.setErrorEnabled(false);
-                    }
-                }
-
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
     }
 
     @Override

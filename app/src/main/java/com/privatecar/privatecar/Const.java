@@ -6,13 +6,13 @@ package com.privatecar.privatecar;
  */
 
 public class Const {
+    //app level constants:--------------
     public static final String LOG_TAG = "Private Car";
     public static final String SHARED_PREFERENCES_FILE_NAME = "private_car";
     public static final String APP_FILES_DIR = "/.private_car";
     public static final String PACKAGE_NAME = "com.privatecar.privatecar";
-    public static final int IMAGE_SIZE = 500;
 
-    //cached parameter names
+    //cached parameter names:---------------
     public static final String CACHE_CONFIGS = "configs_cache";
     public static final String CACHE_USER = "user_cache";
 

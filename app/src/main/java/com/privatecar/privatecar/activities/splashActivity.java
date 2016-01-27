@@ -2,13 +2,14 @@ package com.privatecar.privatecar.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.gcm.GCMUtils;
+import com.privatecar.privatecar.gcm.RegistrationIntentService;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.RequestHelper;
@@ -23,6 +24,13 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        if (GCMUtils.isPlayServicesAvailable(this)) {
+            if (GCMUtils.getCachedGCMToken(getApplicationContext()) == null)
+                startService(new Intent(this, RegistrationIntentService.class));
+            else
+                Utils.LogE(GCMUtils.getCachedGCMToken(getApplicationContext()));
+        }
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 

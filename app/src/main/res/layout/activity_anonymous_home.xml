@@ -37,7 +37,6 @@
                 android:text="@string/driver" />
         </RadioGroup>
 
-        <!-- TODO: Add ldrtl version-->
         <Button
             android:id="@+id/btn_one_lift"
             android:layout_width="wrap_content"
@@ -46,7 +45,6 @@
             android:background="@drawable/onelift_btn_bg"
             android:onClick="onClick" />
 
-        <!-- TODO: Add ldrtl version-->
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
