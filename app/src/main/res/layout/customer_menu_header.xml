@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="10dp"
+    tools:background="@color/colorAccent">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iv_user_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="@dimen/toolbar_padding_top"
+        android:scaleType="centerCrop"
+        android:src="@drawable/penelope_cruz"
+        app:riv_border_color="@color/textColorPrimary"
+        app:riv_border_width="0.5dip"
+        app:riv_corner_radius="5dip"
+        app:riv_mutate_background="true"
+        app:riv_oval="false" />
+
+    <TextView
+        android:id="@+id/tv_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/iv_user_image"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/iv_user_image"
+        android:text="@string/welcome"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_welcome"
+        android:layout_toEndOf="@+id/tv_welcome"
+        android:text="Penelope Cruz"
+        android:textColor="@color/textColorPrimary"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/tv_desc_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv_user_image"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_toEndOf="@id/iv_user_image"
+        android:text="@string/your_id"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_user_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_desc_id"
+        android:layout_toEndOf="@+id/tv_desc_id"
+        android:text="1500"
+        android:textColor="@color/textColorPrimary"
+        android:textStyle="bold" />
+
+</RelativeLayout>

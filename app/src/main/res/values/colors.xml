@@ -6,8 +6,8 @@
     <color name="textColorPrimary">#FFF</color>
     <color name="textColorSecondary">#083947</color>
     <color name="textColorTertiary">@color/textColorSecondary</color>
-    <color name="petroleum">@color/colorAccent</color>
     <color name="petroleum_highlight">#87b9c7</color>
-    <color name="yellowish">@color/colorPrimary</color>
+    <color name="yellowish_highlight">#e9cb96</color>
+    <color name="yellowish_dark">#be8729</color>
     <color name="grayish">#878787</color>
 </resources>

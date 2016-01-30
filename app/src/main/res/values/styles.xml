@@ -4,10 +4,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/petroleum</item>
-        <item name="colorControlActivated">@color/petroleum</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
         <!-- Contextual actionbar background -->
-        <item name="android:actionModeBackground">@color/yellowish</item>
+        <item name="android:actionModeBackground">@color/colorPrimary</item>
         <!-- Large text color (in actionbar and toolbar)-->
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <!-- Medium text color -->
@@ -18,7 +18,7 @@
         <item name="android:textColorHint">@color/grayish</item>
         <!-- Text selection color -->
         <item name="android:textColorHighlight">@color/petroleum_highlight</item>
-        <item name="colorButtonNormal">@color/petroleum</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
 
         <item name="homeAsUpIndicator">@drawable/start_white_arrow_icon</item>
 
@@ -55,6 +55,22 @@
         <item name="android:singleLine">true</item>
     </style>
 
+    <style name="bold_capitalized_text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!-- ============= Navigation drawer ===============-->
+    <style name="navigation_item_text_appearance" parent="TextAppearance.AppCompat.Small">
+        <!--<item name="android:textAllCaps">true</item>-->
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NavigationDrawerStyle">
+        <!-- item size in menu-->
+        <item name="android:listPreferredItemHeightSmall">35dp</item>
+    </style>
+
 
     <!--========== Custom Toggle Style ============-->
     <style name="Toggle_RG">
@@ -85,6 +101,7 @@
         <item name="showHandles">always</item>
         <item name="highlightColor">#f3f3f3</item>
     </style>
+
     <!--==========  ============-->
 
 </resources>

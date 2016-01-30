@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_book_lift"
+            android:checked="true"
+            android:icon="@drawable/nav_icon_book_lift"
+            android:title="@string/book_a_lift" />
+
+        <item
+            android:id="@+id/nav_my_rides"
+            android:icon="@drawable/nav_icon_my_rides"
+            android:title="@string/my_rides" />
+        <item
+            android:id="@+id/nav_prices"
+            android:icon="@drawable/nav_icon_prices"
+            android:title="@string/prices" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/nav_icon_settings"
+            android:title="@string/settings" />
+        <item
+            android:id="@+id/nav_call_us"
+            android:icon="@drawable/nav_icon_call_us"
+            android:title="@string/call_us" />
+        <item
+            android:id="@+id/nav_message_center"
+            android:icon="@drawable/nav_icon_message_center"
+            android:title="@string/message_center" />
+        <item
+            android:id="@+id/nav_promo_code"
+            android:icon="@drawable/nav_icon_promo_code"
+            android:title="@string/promo_code" />
+        <item
+            android:id="@+id/nav_tell_friend"
+            android:icon="@drawable/nav_icon_tell_friend"
+            android:title="@string/tell_a_friend" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/nav_icon_about"
+            android:title="@string/about" />
+
+    </group>
+</menu>
