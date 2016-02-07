@@ -104,7 +104,7 @@
 
         <activity
             android:name=".activities.SplashActivity"
-            android:theme="@style/AppTheme.FullScreen">
+            android:theme="@style/AppTheme.NoActionBar.Transparent">
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->
 

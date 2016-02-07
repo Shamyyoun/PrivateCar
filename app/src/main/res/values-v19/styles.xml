@@ -5,4 +5,10 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+
+    <!-- Transparent Screen theme. -->
+    <style name="AppTheme.NoActionBar.Transparent">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
 </resources>
