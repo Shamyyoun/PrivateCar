@@ -92,6 +92,7 @@
             android:background="@drawable/yellowish_rounded_corners_selector"
             android:clickable="true"
             android:gravity="center_horizontal"
+            android:minWidth="240dp"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -122,6 +123,7 @@
             android:background="@drawable/yellowish_rounded_corners_selector"
             android:clickable="true"
             android:gravity="center_horizontal"
+            android:minWidth="240dp"
             android:orientation="vertical"
             android:padding="20dp">
 

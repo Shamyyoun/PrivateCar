@@ -93,7 +93,7 @@ public class AnonymousHomeActivity extends BaseActivity {
 
     private void showCallDialog(final String customerServiceNumber) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.call) + customerServiceNumber + getString(R.string.question_mark));
+        builder.setMessage(getString(R.string.call) + " " + customerServiceNumber + getString(R.string.question_mark));
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
