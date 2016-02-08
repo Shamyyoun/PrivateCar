@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="AppTheme.NoActionBar.TranslucentStatus" parent="AppTheme.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <!-- Transparent Screen theme. -->
+    <style name="AppTheme.NoActionBar.Transparent">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
 </resources>

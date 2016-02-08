@@ -104,12 +104,12 @@
 
         <activity
             android:name=".activities.SplashActivity"
-            android:theme="@style/AppTheme.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/AppTheme.NoActionBar.Transparent">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".activities.AnonymousHomeActivity"
@@ -133,15 +133,15 @@
             android:name=".activities.UserVerificationActivity"
             android:label="@string/verify_your_account" />
         <activity
-            android:name=".activities.CustomerSigninActivity"
+            android:name=".activities.CustomerSignInActivity"
             android:label="@string/sign_in" />
         <activity
             android:name=".activities.CustomerHomeActivity"
-            android:theme="@style/AppTheme.NoActionBar.TranslucentStatus">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

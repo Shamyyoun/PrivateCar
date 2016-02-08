@@ -71,7 +71,7 @@ public class AnonymousHomeActivity extends BaseActivity {
             case R.id.btn_sign_in:
                 switch (selection) {
                     case CUSTOMER:
-                        startActivity(new Intent(getApplicationContext(), CustomerSigninActivity.class));
+                        startActivity(new Intent(getApplicationContext(), CustomerSignInActivity.class));
                         break;
                     case DRIVER:
                         //TODO: driver sign in
