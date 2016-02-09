@@ -19,13 +19,8 @@ import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
 
 public class AnonymousHomeActivity extends BaseActivity {
 
-    private Button btnOneLift, btnSignIn, btnSignUp;
-
-    private enum Selection {
-        CUSTOMER, DRIVER
-    }
-
     Selection selection = Selection.CUSTOMER; //customer is the default selection
+    private Button btnOneLift, btnSignIn, btnSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +54,6 @@ public class AnonymousHomeActivity extends BaseActivity {
 
     }
 
-
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_one_lift:
@@ -84,7 +78,7 @@ public class AnonymousHomeActivity extends BaseActivity {
                         startActivity(new Intent(getApplicationContext(), CustomerSignupActivity.class));
                         break;
                     case DRIVER:
-                        //TODO: driver sign up
+                        startActivity(new Intent(getApplicationContext(), DriverSignupActivity.class));
                         break;
                 }
                 break;
@@ -106,5 +100,9 @@ public class AnonymousHomeActivity extends BaseActivity {
         });
         builder.setNegativeButton(R.string.no, null);
         builder.show();
+    }
+
+    private enum Selection {
+        CUSTOMER, DRIVER
     }
 }

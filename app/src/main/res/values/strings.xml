@@ -43,4 +43,12 @@
     <string name="pick_you_up_soon">pick you up soon</string>
     <string name="later">later</string>
     <string name="scheduled_pick_up">scheduled pick up</string>
+    <string name="your_photo">your photo</string>
+    <string name="car_photo">car photo</string>
+    <string name="id_front">ID Front</string>
+    <string name="id_back">ID Back</string>
+    <string name="driver_licence_front">Driver Licence Front</string>
+    <string name="driver_licence_back">Driver Licence Back</string>
+    <string name="car_licence_front">Car Licence Front</string>
+    <string name="car_licence_back">Car Licence Back</string>
 </resources>

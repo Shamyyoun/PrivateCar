@@ -70,6 +70,7 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
         spinner = (Spinner) findViewById(R.id.spinner_countries);
         CountryAdapter adapter = new CountryAdapter(this);
         spinner.setAdapter(adapter);
+        spinner.setSelection(61); //set egypt the default
 
     }
 
