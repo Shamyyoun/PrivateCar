@@ -47,4 +47,5 @@
     <string name="confirmation">Confirmation</string>
     <string name="confirm">Confirm</string>
     <string name="driver_signup_confirmation_message">We will contact you as soon as possible to come to the company with required papers, please check your email for importance.</string>
+    <string name="username">Username</string>
 </resources>

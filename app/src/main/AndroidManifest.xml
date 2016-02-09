@@ -133,7 +133,7 @@
             android:name=".activities.UserVerificationActivity"
             android:label="@string/verify_your_account" />
         <activity
-            android:name=".activities.CustomerSignInActivity"
+            android:name=".activities.CustomerSigninActivity"
             android:label="@string/sign_in" />
         <activity
             android:name=".activities.CustomerHomeActivity"
@@ -147,10 +147,12 @@
         <activity
             android:name=".activities.DriverSignupActivity"
             android:label="@string/sign_up" />
-
         <activity
             android:name=".activities.DriverSignupConfirmationActivity"
             android:label="@string/confirmation" />
+        <activity
+            android:name=".activities.DriverSigninActivity"
+            android:label="@string/sign_in" />
     </application>
 
 </manifest>

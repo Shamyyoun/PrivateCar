@@ -65,10 +65,10 @@ public class AnonymousHomeActivity extends BaseActivity {
             case R.id.btn_sign_in:
                 switch (selection) {
                     case CUSTOMER:
-                        startActivity(new Intent(getApplicationContext(), CustomerSignInActivity.class));
+                        startActivity(new Intent(getApplicationContext(), CustomerSigninActivity.class));
                         break;
                     case DRIVER:
-                        //TODO: driver sign in
+                        startActivity(new Intent(getApplicationContext(), DriverSigninActivity.class));
                         break;
                 }
                 break;
