@@ -1,6 +1,8 @@
 package com.privatecar.privatecar.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -25,5 +27,14 @@ public class DriverSignupActivity extends BasicBackActivity {
 
         btnSignUp = (Button) findViewById(R.id.btn_sign_up);
         btnSignUp.setOnTouchListener(new ButtonHighlighterOnTouchListener(this, R.drawable.petroleum_rounded_corners_shape));
+    }
+
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_sign_up:
+                startActivity(new Intent(this, DriverSignupConfirmationActivity.class));
+                finish();
+                break;
+        }
     }
 }

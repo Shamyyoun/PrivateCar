@@ -147,6 +147,10 @@
         <activity
             android:name=".activities.DriverSignupActivity"
             android:label="@string/sign_up" />
+
+        <activity
+            android:name=".activities.DriverSignupConfirmationActivity"
+            android:label="@string/confirmation" />
     </application>
 
 </manifest>
