@@ -10,7 +10,7 @@
         android:id="@+id/image"
         android:layout_width="25.67dp"
         android:layout_height="16dp"
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
         android:src="@drawable/f222" />
 
     <TextView

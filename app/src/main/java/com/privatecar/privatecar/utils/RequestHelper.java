@@ -24,9 +24,8 @@ import java.util.Map;
 
 public class RequestHelper<T> {
 
-    private static int TIMEOUT = 60 * 1000; // Ion's default timeout is 30 seconds.
     private static final String LOG_TAG = "request_helper";
-
+    private static int TIMEOUT = 60 * 1000; // Ion's default timeout is 30 seconds.
     Activity activity;
     String baseUrl;
     String apiName;
@@ -196,7 +195,7 @@ public class RequestHelper<T> {
 
         if (listener != null) {
             if (e != null) { //on request failure and cancellation
-                listener.onFail(e.toString());
+                listener.onFail(e.toString()); //TODO: omit on cancel
             } else if (result != null) {
                 Log.e(LOG_TAG, "Response: " + result);
 
@@ -207,6 +206,7 @@ public class RequestHelper<T> {
                         listener.onSuccess((T) new Gson().fromJson(result, cls), apiName);
                     } catch (Exception ex) {
                         Log.e(LOG_TAG, "Parsing Exception: " + ex.toString());
+                        listener.onFail("Parsing Exception: " + ex.toString());
                     }
                 }
             }
@@ -219,11 +219,7 @@ public class RequestHelper<T> {
      * @return false if the task could not be cancelled, typically because it has already completed normally; true otherwise.
      */
     public boolean cancel(boolean interruptThread) {
-        if (!(future.isCancelled() || future.isDone())) {
-            return future.cancel(interruptThread);
-        }
-
-        return false;
+        return !(future.isCancelled() || future.isDone()) && future.cancel(interruptThread);
     }
 
 

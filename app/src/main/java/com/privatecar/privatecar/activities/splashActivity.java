@@ -2,16 +2,17 @@ package com.privatecar.privatecar.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.utils.PlayServicesUtils;
 import com.privatecar.privatecar.gcm.RegistrationIntentService;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.utils.AppUtils;
+import com.privatecar.privatecar.utils.PlayServicesUtils;
 import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
@@ -63,7 +64,6 @@ public class SplashActivity extends BaseActivity {
                         }
 
                         finish();
-
                     }
 
                     @Override
@@ -74,6 +74,15 @@ public class SplashActivity extends BaseActivity {
                     }
                 });
 
-        helper.executeFormUrlEncoded();
+//        helper.executeFormUrlEncoded();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(getApplicationContext(), AnonymousHomeActivity.class));
+                finish();
+            }
+        }, 1000);
     }
 }

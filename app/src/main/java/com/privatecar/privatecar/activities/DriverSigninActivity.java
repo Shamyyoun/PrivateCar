@@ -1,5 +1,6 @@
 package com.privatecar.privatecar.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,7 @@ public class DriverSigninActivity extends BasicBackActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_sign_in:
-
+                startActivity(new Intent(this, DriverHomeActivity.class));
                 break;
             case R.id.btn_forgot_password:
 

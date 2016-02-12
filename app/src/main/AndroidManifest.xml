@@ -137,7 +137,7 @@
             android:label="@string/sign_in" />
         <activity
             android:name=".activities.CustomerHomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar.Transparent">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -153,6 +153,9 @@
         <activity
             android:name=".activities.DriverSigninActivity"
             android:label="@string/sign_in" />
+        <activity
+            android:name=".activities.DriverHomeActivity"
+            android:theme="@style/AppTheme.NoActionBar.Transparent" />
     </application>
 
 </manifest>

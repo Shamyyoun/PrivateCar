@@ -26,9 +26,7 @@
             android:id="@+id/layout_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar">
-        </FrameLayout>
-
+            android:layout_below="@+id/toolbar" />
 
     </RelativeLayout>
 
@@ -44,7 +42,7 @@
         app:itemIconTint="@color/navigation_item_color"
         app:itemTextAppearance="@style/navigation_item_text_appearance"
         app:itemTextColor="@color/navigation_item_color"
-        app:menu="@menu/customer_home_drawer"
+        app:menu="@menu/driver_home_drawer"
         app:theme="@style/NavigationDrawerStyle">
 
         <LinearLayout

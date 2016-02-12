@@ -13,9 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.fragments.BookALiftFragment;
 
-public class CustomerHomeActivity extends BaseActivity {
+public class DriverHomeActivity extends BaseActivity {
 
     DrawerLayout dlDrawer;
     NavigationView nvDrawer;
@@ -26,8 +25,7 @@ public class CustomerHomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_home);
-
+        setContentView(R.layout.activity_driver_home);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -53,8 +51,6 @@ public class CustomerHomeActivity extends BaseActivity {
         tvUserName = (TextView) nvHeader.findViewById(R.id.tv_user_name);
         tvUserID = (TextView) nvHeader.findViewById(R.id.tv_user_id);
         tvUserBalance = (TextView) nvHeader.findViewById(R.id.tv_user_balance);
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.layout_fragment_container, new BookALiftFragment()).commit();
 
     }
 
@@ -82,4 +78,5 @@ public class CustomerHomeActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
