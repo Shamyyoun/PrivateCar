@@ -10,4 +10,7 @@
     <color name="yellowish_highlight">#e9cb96</color>
     <color name="yellowish_dark">#be8729</color>
     <color name="grayish">#878787</color>
+    <color name="low_crowd">#ffed00</color>
+    <color name="medium_crowd">#f39200</color>
+    <color name="high_crowd">#e30613</color>
 </resources>

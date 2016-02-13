@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.fragments.DriverHomeFragment;
 
 public class DriverHomeActivity extends BaseActivity {
 
@@ -51,6 +52,8 @@ public class DriverHomeActivity extends BaseActivity {
         tvUserName = (TextView) nvHeader.findViewById(R.id.tv_user_name);
         tvUserID = (TextView) nvHeader.findViewById(R.id.tv_user_id);
         tvUserBalance = (TextView) nvHeader.findViewById(R.id.tv_user_balance);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.layout_fragment_container, new DriverHomeFragment()).commit();
 
     }
 

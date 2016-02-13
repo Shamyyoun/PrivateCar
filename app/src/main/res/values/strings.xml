@@ -60,4 +60,11 @@
     <string name="ratings">Ratings</string>
     <string name="account">Account</string>
     <string name="messages">Messages</string>
+    <string name="low_crowd_clients"><![CDATA[< 999 Clients]]></string>
+    <string name="medium_crowd_clients">1000-1999 Clients</string>
+    <string name="high_crowd_clients"><![CDATA[> 2999 Clients]]></string>
+    <string name="today_profit">TODAY PROFIT:</string>
+    <string name="total_trips">TOTAL TRIPS:</string>
+    <string name="total_hours">TOTAL HOURS:</string>
+    <string name="be_active">Be Active</string>
 </resources>
