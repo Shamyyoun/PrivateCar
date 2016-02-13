@@ -2,6 +2,7 @@ package com.privatecar.privatecar.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.fragments.DriverHomeFragment;
+import com.privatecar.privatecar.fragments.DriverRatingsFragment;
+import com.privatecar.privatecar.fragments.DriverStatementFragment;
 
 public class DriverHomeActivity extends BaseActivity {
 
@@ -37,12 +40,33 @@ public class DriverHomeActivity extends BaseActivity {
             actionBar.setLogo(R.drawable.home_logo);
         }
 
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+
         dlDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         nvDrawer = (NavigationView) findViewById(R.id.nv_drawer);
         nvDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
+                closeDrawer();
+
+                if (item.isChecked()) {
+                    return false;
+                }
+
                 item.setChecked(true);
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        fragmentManager.beginTransaction().replace(R.id.layout_fragment_container, new DriverHomeFragment()).commit();
+                        break;
+                    case R.id.nav_statement:
+                        fragmentManager.beginTransaction().replace(R.id.layout_fragment_container, new DriverStatementFragment()).commit();
+                        break;
+                    case R.id.nav_ratings:
+                        fragmentManager.beginTransaction().replace(R.id.layout_fragment_container, new DriverRatingsFragment()).commit();
+                        break;
+
+                }
+
                 return false;
             }
         });
@@ -60,10 +84,14 @@ public class DriverHomeActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (dlDrawer.isDrawerOpen(GravityCompat.END)) {
-            dlDrawer.closeDrawer(GravityCompat.END);
+            closeDrawer();
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void closeDrawer() {
+        dlDrawer.closeDrawer(GravityCompat.END);
     }
 
     @Override

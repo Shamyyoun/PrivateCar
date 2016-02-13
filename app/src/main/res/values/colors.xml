@@ -9,6 +9,7 @@
     <color name="petroleum_highlight">#87b9c7</color>
     <color name="yellowish_highlight">#e9cb96</color>
     <color name="yellowish_dark">#be8729</color>
+    <color name="petroleum_dark">#0c5c72</color>
     <color name="grayish">#878787</color>
     <color name="low_crowd">#ffed00</color>
     <color name="medium_crowd">#f39200</color>

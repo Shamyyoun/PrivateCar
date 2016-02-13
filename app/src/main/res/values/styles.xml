@@ -75,6 +75,28 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="white_medium_bold_capitalized_text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="white_medium_capitalized_text">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+
+    <style name="yellowish_medium_bold_capitalized_text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+
     <!-- ============= Navigation drawer ===============-->
     <style name="navigation_item_text_appearance" parent="TextAppearance.AppCompat.Small">
         <!--<item name="android:textAllCaps">true</item>-->

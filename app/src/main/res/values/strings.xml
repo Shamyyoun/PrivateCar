@@ -67,4 +67,6 @@
     <string name="total_trips">TOTAL TRIPS:</string>
     <string name="total_hours">TOTAL HOURS:</string>
     <string name="be_active">Be Active</string>
+    <string name="online">Online</string>
+    <string name="search_for_period">Search For Period</string>
 </resources>

@@ -9,4 +9,5 @@
     <dimen name="toolbar_padding_top">0dp</dimen>
     <dimen name="toolbar_size">?attr/actionBarSize</dimen>
     <dimen name="drawer_width">250dp</dimen>
+    <dimen name="medium_text_size">18sp</dimen>
 </resources>

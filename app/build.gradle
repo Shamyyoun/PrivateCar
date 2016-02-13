@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -25,10 +24,10 @@ dependencies {
     //    compile 'com.google.code.gson:gson:2.4' // gson is already included in ion
 
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.google.android.gms:play-services-auth:8.3.0'
-    compile 'com.google.android.gms:play-services-gcm:8.3.0'
-    compile 'com.google.android.gms:play-services-maps:8.3.0'
-    compile 'com.google.android.gms:play-services-location:8.3.0'
+    compile 'com.google.android.gms:play-services-auth:8.4.0'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
+    compile 'com.google.android.gms:play-services-maps:8.4.0'
+    compile 'com.google.android.gms:play-services-location:8.4.0'
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.android.support:percent:23.1.1'
     compile 'com.android.support:design:23.1.1'
@@ -42,3 +41,9 @@ dependencies {
     compile 'com.soundcloud.android:android-crop:1.0.1@aar'
     compile 'com.koushikdutta.ion:ion:2.1.6'
 }
+
+
+
+
+
+apply plugin: 'com.google.gms.google-services'
