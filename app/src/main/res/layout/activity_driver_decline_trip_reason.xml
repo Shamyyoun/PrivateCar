@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_margin"
+    tools:context="com.privatecar.privatecar.activities.DriverDeclineTripReasonActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/why_decline_ride" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rb_car_accident"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/car_accident" />
+
+        <RadioButton
+            android:id="@+id/rb_overcrowded_roads"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/overcrowded_roads" />
+
+        <RadioButton
+            android:id="@+id/rb_praying"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/praying" />
+
+        <RadioButton
+            android:id="@+id/rb_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/other" />
+
+    </RadioGroup>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edit_text_rounded_grayish_border"
+        android:gravity="start|top"
+        android:hint="@string/write_decline_reason"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/btn_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/petroleum_rounded_corners_selector"
+        android:text="@string/send" />
+
+</LinearLayout>

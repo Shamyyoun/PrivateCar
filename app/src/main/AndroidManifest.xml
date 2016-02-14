@@ -105,10 +105,10 @@
         <activity
             android:name=".activities.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar.Transparent">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".activities.AnonymousHomeActivity"
@@ -163,12 +163,15 @@
         </activity>
         <activity
             android:name=".activities.TripRequestActivity"
-            android:theme="@style/AppTheme.FullScreen">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.DriverDeclineTripReasonActivity"
+            android:label="@string/decline_reason" />
     </application>
 
 </manifest>
