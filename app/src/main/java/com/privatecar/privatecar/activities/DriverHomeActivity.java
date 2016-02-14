@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.fragments.DriverAccountFragment;
 import com.privatecar.privatecar.fragments.DriverHomeFragment;
+import com.privatecar.privatecar.fragments.DriverMessageCenterFragment;
 import com.privatecar.privatecar.fragments.DriverRatingsFragment;
 import com.privatecar.privatecar.fragments.DriverStatementFragment;
 
@@ -70,8 +71,9 @@ public class DriverHomeActivity extends BaseActivity {
                     case R.id.nav_account:
                         fragmentManager.beginTransaction().replace(R.id.layout_fragment_container, new DriverAccountFragment()).commit();
                         break;
-
-
+                    case R.id.nav_message_center:
+                        fragmentManager.beginTransaction().replace(R.id.layout_fragment_container, new DriverMessageCenterFragment()).commit();
+                        break;
                 }
 
                 if (actionBar != null) {

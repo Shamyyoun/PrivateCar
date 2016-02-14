@@ -2,6 +2,7 @@ package com.privatecar.privatecar.models.entities;
 
 /**
  * Created by basim on 22/1/16.
+ * *
  */
 public class User {
     private String FirstName;
