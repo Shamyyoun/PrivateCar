@@ -61,7 +61,7 @@
     <string name="account">Account</string>
     <string name="messages">Messages</string>
     <string name="low_crowd_clients"><![CDATA[< 999 Clients]]></string>
-    <string name="medium_crowd_clients">1000-1999 Clients</string>
+    <string name="medium_crowd_clients">1000–1999 Clients</string>
     <string name="high_crowd_clients"><![CDATA[> 2999 Clients]]></string>
     <string name="today_profit">TODAY PROFIT:</string>
     <string name="total_trips">TOTAL TRIPS:</string>
@@ -69,4 +69,8 @@
     <string name="be_active">Be Active</string>
     <string name="online">Online</string>
     <string name="search_for_period">Search For Period</string>
+    <string name="add_car">Add A Car</string>
+    <string name="your_documents">Your Documents</string>
+    <string name="about_private">About Private</string>
+    <string name="sign_out">Sign Out</string>
 </resources>

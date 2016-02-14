@@ -49,6 +49,7 @@
 
     <style name="ButtonStyle" parent="Widget.AppCompat.Button">
         <item name="android:textStyle">bold</item>
+        <item name="android:minHeight">45dp</item>
     </style>
 
     <style name="forward_petroleum_button" parent="Widget.AppCompat.Button">

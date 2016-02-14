@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.fragments.DriverAccountFragment;
 import com.privatecar.privatecar.fragments.DriverHomeFragment;
 import com.privatecar.privatecar.fragments.DriverRatingsFragment;
 import com.privatecar.privatecar.fragments.DriverStatementFragment;
@@ -33,11 +34,13 @@ public class DriverHomeActivity extends BaseActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(false); //hide the title
-            actionBar.setDisplayUseLogoEnabled(true);
-            actionBar.setLogo(R.drawable.home_logo);
+//            actionBar.setDisplayShowTitleEnabled(false); //hide the title
+//            actionBar.setDisplayUseLogoEnabled(true);
+//            actionBar.setLogo(R.drawable.home_logo);
+
+            actionBar.setIcon(R.drawable.home_logo);
         }
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -64,7 +67,15 @@ public class DriverHomeActivity extends BaseActivity {
                     case R.id.nav_ratings:
                         fragmentManager.beginTransaction().replace(R.id.layout_fragment_container, new DriverRatingsFragment()).commit();
                         break;
+                    case R.id.nav_account:
+                        fragmentManager.beginTransaction().replace(R.id.layout_fragment_container, new DriverAccountFragment()).commit();
+                        break;
 
+
+                }
+
+                if (actionBar != null) {
+                    actionBar.setTitle(item.getTitle());
                 }
 
                 return false;
@@ -77,6 +88,9 @@ public class DriverHomeActivity extends BaseActivity {
         tvUserID = (TextView) nvHeader.findViewById(R.id.tv_user_id);
         tvUserBalance = (TextView) nvHeader.findViewById(R.id.tv_user_balance);
 
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.home);
+        }
         getSupportFragmentManager().beginTransaction().replace(R.id.layout_fragment_container, new DriverHomeFragment()).commit();
 
     }

@@ -22,9 +22,9 @@
             android:title="@string/account" />
 
         <item
-            android:id="@+id/nav_messages"
+            android:id="@+id/nav_message_center"
             android:icon="@drawable/nav_icon_messages"
-            android:title="@string/messages" />
+            android:title="@string/message_center" />
 
     </group>
 </menu>
