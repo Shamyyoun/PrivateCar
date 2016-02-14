@@ -15,4 +15,7 @@
     <color name="low_crowd">#ffed00</color>
     <color name="medium_crowd">#f39200</color>
     <color name="high_crowd">#e30613</color>
+    <color name="greenish">#56c400</color>
+    <color name="reddish">#e30613</color>
+
 </resources>

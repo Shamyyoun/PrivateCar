@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/trip_background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="30dp"
+    tools:context="com.privatecar.privatecar.activities.TripRequestActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/private_logo" />
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/table_background_shape"
+        android:shrinkColumns="1">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:text="Order No."
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:text="2034"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/textColorPrimary" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:text="Ride No."
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:text="AA1234"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/textColorPrimary" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:text="Client Name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:text="Basim Alamuddin"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/textColorPrimary" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:text="Mobile"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:text="00201099592668"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/textColorPrimary" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:text="Pickup Address"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:singleLine="false"
+                android:text="35 Shehab St, Madinet Nasr, Cairo, 24 Mobile"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/greenish"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:text="Destination"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:singleLine="false"
+                android:text="City Stars, Madinet Nasr Cairo, 24 Mobile"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/greenish"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:text="Notes"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:singleLine="false"
+                android:text="I'll wait for your behind cook door restaurant"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/textColorPrimary" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:text="Payment Type"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_background_shape"
+                android:padding="5dp"
+                android:singleLine="false"
+                android:text="Account Credit"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/textColorPrimary" />
+        </TableRow>
+
+
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/widgets_vertical_space"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btn_accept"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/greenish_start_rounded_corners_shape"
+            android:onClick="onClick"
+            android:text="@string/accept" />
+
+        <Button
+            android:id="@+id/btn_decline"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/reddish_end_rounded_corners_shape"
+            android:onClick="onClick"
+            android:text="@string/decline" />
+    </LinearLayout>
+
+</LinearLayout>

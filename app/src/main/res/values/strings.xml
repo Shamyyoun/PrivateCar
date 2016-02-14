@@ -73,4 +73,6 @@
     <string name="your_documents">Your Documents</string>
     <string name="about_private">About Private</string>
     <string name="sign_out">Sign Out</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
 </resources>
