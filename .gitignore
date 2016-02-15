@@ -1,8 +1,48 @@
-*.iml
+#https://gist.github.com/vtanathip/9414323
+#https://github.com/github/gitignore/blob/master/Android.gitignore
+
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Eclipse project files
+.classpath
+.project
+
+# Android Studio
+.idea/
 .gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
+build/
+/*/local.properties
+/*/out
+/*/*/build
+/*/*/production
+*.iml
+*.iws
+*.ipr
+*~
+*.swp
 .DS_Store
-/build
-/captures
+
+# Android Studio captures folder
+captures/
+
+# Android Studio Navigation editor temp files
+.navigation/
+
+# Log Files
+*.log
+
