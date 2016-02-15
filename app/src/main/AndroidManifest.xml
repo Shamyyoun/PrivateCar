@@ -107,15 +107,16 @@
             android:theme="@style/AppTheme.NoActionBar.FullTransparent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activities.AnonymousHomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.CustomerSignupActivity"
-            android:label="@string/sign_up"/>
+            android:label="@string/sign_up" />
         <activity
             android:name=".activities.UserVerificationActivity"
             android:label="@string/verify_your_account" />
@@ -124,7 +125,7 @@
             android:label="@string/sign_in" />
         <activity
             android:name=".activities.CustomerHomeActivity"
-            android:theme="@style/AppTheme.NoActionBar.Transparent"/>
+            android:theme="@style/AppTheme.NoActionBar.Transparent" />
         <activity
             android:name=".activities.DriverSignupActivity"
             android:label="@string/sign_up" />
@@ -136,7 +137,7 @@
             android:label="@string/sign_in" />
         <activity
             android:name=".activities.DriverHomeActivity"
-            android:theme="@style/AppTheme.NoActionBar.Transparent"/>
+            android:theme="@style/AppTheme.NoActionBar.Transparent" />
         <activity
             android:name=".activities.TripRequestActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -144,6 +145,9 @@
             android:name=".activities.DriverDeclineTripReasonActivity"
             android:label="@string/decline_reason" />
         <activity android:name=".activities.PickupActivity" />
+        <activity
+            android:name=".activities.DriverTripInfo"
+            android:label="@string/your_ride" />
     </application>
 
 </manifest>
