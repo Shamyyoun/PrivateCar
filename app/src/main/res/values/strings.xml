@@ -75,4 +75,13 @@
     <string name="sign_out">Sign Out</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
+    <string name="pickup_location">Pickup Location</string>
+    <string name="economy">Economy</string>
+    <string name="business">Business</string>
+    <string name="full_day">Full Day</string>
+    <string name="where_should_we_pickup_you">Where should we pickup you?</string>
+    <string name="your_location">Your Location</string>
+    <string name="where_should_we_pick_you_up">Where should we pick you up?</string>
+    <string name="min">min</string>
+
 </resources>

@@ -1,6 +1,9 @@
 package com.privatecar.privatecar.fragments;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +14,23 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.activities.PickupActivity;
 
-public class BookALiftFragment extends BaseFragment implements OnMapReadyCallback {
+public class BookALiftFragment extends BaseFragment implements OnMapReadyCallback, View.OnClickListener {
 
+    Activity activity;
     TextView tvUserName, tvUserID;
+    View layoutPickNow;
 
     public BookALiftFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = getActivity();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,6 +38,10 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
 
         tvUserName = (TextView) view.findViewById(R.id.tv_user_name);
         tvUserID = (TextView) view.findViewById(R.id.tv_user_id);
+        layoutPickNow = view.findViewById(R.id.layout_pick_now);
+
+        // add click listeners
+        layoutPickNow.setOnClickListener(this);
 
         return view;
     }
@@ -51,4 +66,13 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.layout_pick_now:
+                // open pick up activity
+                startActivity(new Intent(activity, PickupActivity.class));
+                break;
+        }
+    }
 }
