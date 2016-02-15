@@ -64,6 +64,7 @@ public class DriverMessageCenterFragment extends Fragment {
         rvMessages.setLayoutManager(linearLayoutManager);
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
         rvMessages.addItemDecoration(itemDecoration);
+        rvMessages.setHasFixedSize(true);
         adapter = new RVMessagesAdapter(messages);
         rvMessages.setAdapter(adapter);
 

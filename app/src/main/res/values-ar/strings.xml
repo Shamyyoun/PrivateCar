@@ -68,4 +68,17 @@
     <string name="sign_out">Sign Out</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
+    <string name="decline_reason">Decline Reason</string>
+    <string name="why_decline_ride">Please tell us why you decline the ride?!</string>
+    <string name="car_accident">Car Accident</string>
+    <string name="overcrowded_roads">Overcrowded Roads</string>
+    <string name="praying">Praying</string>
+    <string name="other">Other</string>
+    <string name="write_decline_reason">Write the decline reason...</string>
+    <string name="send">Send</string>
+    <string name="economy">Economy</string>
+    <string name="business">Business</string>
+    <string name="full_day">Full Day</string>
+    <string name="where_should_we_pick_you_up">Where should we pick you up?</string>
+    <string name="min">min</string>
 </resources>

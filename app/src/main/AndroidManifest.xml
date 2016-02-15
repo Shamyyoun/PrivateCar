@@ -105,44 +105,26 @@
         <activity
             android:name=".activities.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar.FullTransparent">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activities.AnonymousHomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.CustomerSignupActivity"
-            android:label="@string/sign_up">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:label="@string/sign_up"/>
         <activity
             android:name=".activities.UserVerificationActivity"
             android:label="@string/verify_your_account" />
         <activity
-            android:name=".activities.CustomerSigninActivity"
+            android:name=".activities.CustomerSignInActivity"
             android:label="@string/sign_in" />
         <activity
             android:name=".activities.CustomerHomeActivity"
-            android:theme="@style/AppTheme.NoActionBar.Transparent">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar.Transparent"/>
         <activity
             android:name=".activities.DriverSignupActivity"
             android:label="@string/sign_up" />
@@ -154,24 +136,14 @@
             android:label="@string/sign_in" />
         <activity
             android:name=".activities.DriverHomeActivity"
-            android:theme="@style/AppTheme.NoActionBar.Transparent">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar.Transparent"/>
         <activity
             android:name=".activities.TripRequestActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.DriverDeclineTripReasonActivity"
             android:label="@string/decline_reason" />
+        <activity android:name=".activities.PickupActivity" />
     </application>
 
 </manifest>

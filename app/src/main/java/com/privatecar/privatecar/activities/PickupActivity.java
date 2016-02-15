@@ -1,11 +1,9 @@
 package com.privatecar.privatecar.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -19,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PickupActivity extends BasicBackActivity implements View.OnClickListener {
-    Toolbar toolbar;
     ImageButton buttonSearch;
     RecyclerView recyclerView;
     PlacesAdapter adapter;
@@ -29,12 +26,6 @@ public class PickupActivity extends BasicBackActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pickup);
 
-        // customize toolbar
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.start_white_arrow_icon);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setLogo(R.drawable.toolbar_pvt_icon);
 
         // customize search button
         buttonSearch = (ImageButton) findViewById(R.id.btn_search);
@@ -49,7 +40,7 @@ public class PickupActivity extends BasicBackActivity implements View.OnClickLis
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         // ===== DUMMY DATA =====
-        List<Place> places = new ArrayList();
+        List<Place> places = new ArrayList<>();
         Place myLocationPlace = new Place();
         myLocationPlace.setTitle("My Location");
         myLocationPlace.setAddress("Abbas Elakkad, Nasr City");
