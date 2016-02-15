@@ -140,6 +140,28 @@
         <item name="highlightColor">#f3f3f3</item>
     </style>
 
-    <!--==========  ============-->
+    <!-- =============== Pickup Screen =============== -->
+    <!-- Top Toggle Group -->
+    <style name="TopToggleGroup">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- Top Toggle Seperator-->
+    <style name="TopToggleSeperator">
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:background">@color/colorAccentDark</item>
+    </style>
+
+    <!-- Top Toggle Button -->
+    <style name="TopToggleButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@drawable/top_toggle_button_text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
 </resources>

@@ -36,7 +36,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-public class CustomerSigninActivity extends BasicBackActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+public class CustomerSignInActivity extends BasicBackActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     private static final int REQUEST_CODE_GOOGLE_PLUS_SIGN_IN = 9001;
 

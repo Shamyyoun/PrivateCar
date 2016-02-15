@@ -68,12 +68,4 @@
     <string name="sign_out">Sign Out</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
-    <string name="decline_reason">Decline Reason</string>
-    <string name="why_decline_ride">Please tell us why you decline this ride?!</string>
-    <string name="send">Send</string>
-    <string name="other">Other</string>
-    <string name="praying">Praying</string>
-    <string name="overcrowded_roads">OverCrowded Roads</string>
-    <string name="car_accident">Car Accident</string>
-    <string name="write_decline_reason">Please write here the reason of the ride decline...</string>
 </resources>
