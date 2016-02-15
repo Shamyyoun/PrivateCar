@@ -132,7 +132,7 @@
             android:name=".activities.UserVerificationActivity"
             android:label="@string/verify_your_account" />
         <activity
-            android:name=".activities.CustomerSignInActivity"
+            android:name=".activities.CustomerSigninActivity"
             android:label="@string/sign_in" />
         <activity
             android:name=".activities.CustomerHomeActivity"
@@ -169,10 +169,6 @@
             <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
-        <activity
-            android:name=".activities.PickupActivity"
-            android:label="@string/pickup_location"
-            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
