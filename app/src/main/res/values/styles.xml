@@ -37,9 +37,9 @@
     </style>
 
     <!-- Transparent Screen theme. -->
-    <style name="AppTheme.NoActionBar.Transparent">
+    <style name="AppTheme.NoActionBar.Transparent" />
 
-    </style>
+    <style name="AppTheme.NoActionBar.FullTransparent" />
 
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorPrimary">@color/colorPrimary</item>

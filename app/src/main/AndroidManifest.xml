@@ -104,7 +104,7 @@
 
         <activity
             android:name=".activities.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar.Transparent">
+            android:theme="@style/AppTheme.NoActionBar.FullTransparent">
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->
             <!--<category android:name="android.intent.category.LAUNCHER" />-->
@@ -155,7 +155,6 @@
         <activity
             android:name=".activities.DriverHomeActivity"
             android:theme="@style/AppTheme.NoActionBar.Transparent">
-
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
