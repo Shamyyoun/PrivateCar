@@ -157,8 +157,7 @@
         <activity
             android:name=".activities.DriverCashPaymentActivity"
             android:label="@string/payment" />
-
-
+        <activity android:name=".activities.DriverCreditPaymentActivity"></activity>
     </application>
 
 </manifest>

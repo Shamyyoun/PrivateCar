@@ -105,4 +105,5 @@
     <string name="notes_to_captain">Notes to captain</string>
     <string name="promo_codes">Promo codes</string>
     <string name="go">Go!</string>
+    <string name="payment_by_customer_credit_done">Payment by Customer\'s Credit Card Done.</string>
 </resources>
