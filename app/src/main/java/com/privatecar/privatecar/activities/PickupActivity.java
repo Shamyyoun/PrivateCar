@@ -27,7 +27,6 @@ public class PickupActivity extends BasicBackActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pickup);
 
-
         // customize search button
         buttonSearch = (ImageButton) findViewById(R.id.btn_search);
         buttonSearch.setOnTouchListener(new ButtonHighlighterOnTouchListener(this, R.drawable.search_icon));

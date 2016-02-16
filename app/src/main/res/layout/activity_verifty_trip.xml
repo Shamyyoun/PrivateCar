@@ -4,17 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:elevation="4dp"
-        app:elevation="4dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -43,8 +32,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/pickup"
+                        android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="@color/colorAccent"
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -53,7 +42,6 @@
                         android:layout_marginTop="3dp"
                         android:text="Abbas Elakkad - Nasr City"
                         android:textColor="@color/grayish"
-                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -70,8 +58,8 @@
                     android:background="?selectableItemBackgroundBorderless"
                     android:gravity="center"
                     android:text="@string/add_details"
-                    android:textColor="@color/grayish_light"
-                    android:textSize="16sp" />
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textColor="@color/grayish_light" />
             </LinearLayout>
 
             <View
@@ -96,8 +84,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dropoff"
+                        android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="@color/colorAccent"
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -106,7 +94,6 @@
                         android:layout_marginTop="3dp"
                         android:text="@string/i_will_guide_the_captain"
                         android:textColor="@color/grayish"
-                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -123,8 +110,8 @@
                     android:background="?selectableItemBackgroundBorderless"
                     android:gravity="center"
                     android:text="@string/add_dropoff"
-                    android:textColor="@color/grayish_light"
-                    android:textSize="16sp" />
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textColor="@color/grayish_light" />
             </LinearLayout>
 
             <View
@@ -144,8 +131,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/pickup_time"
+                    android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/colorAccent"
-                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -153,25 +140,27 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/as_soon_as_possible"
-                    android:textColor="@color/grayish_light"
-                    android:textSize="16sp" />
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textColor="@color/grayish_light" />
             </LinearLayout>
 
             <RadioGroup
                 style="@style/Toggle_RG"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:checkedButton="@+id/rb_now"
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/rb_now"
                     style="@style/Toggle_RB"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:checked="true"
                     android:text="@string/now" />
 
                 <RadioButton
+                    android:id="@+id/rb_later"
                     style="@style/Toggle_RB"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -192,8 +181,8 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/car_type"
+                android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/colorAccent"
-                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -204,31 +193,32 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/full_day"
                 android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:checkedButton="@+id/rb_economy"
                 android:orientation="horizontal"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp">
 
                 <RadioButton
+                    android:id="@+id/rb_economy"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:checked="true"
                     android:text="@string/economy"
-                    android:textSize="16sp" />
+                    android:textAppearance="?android:textAppearanceSmall" />
 
                 <RadioButton
+                    android:id="@+id/rb_business"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/business"
-                    android:textSize="16sp" />
+                    android:textAppearance="?android:textAppearanceSmall" />
             </RadioGroup>
 
             <View
@@ -253,8 +243,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/estimate"
+                        android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="@color/colorAccent"
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -262,8 +252,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
                         android:text="@string/add_dropoff_to_estimate"
-                        android:textColor="@color/grayish"
-                        android:textSize="15sp" />
+                        android:textColor="@color/grayish" />
                 </LinearLayout>
 
                 <View
@@ -283,8 +272,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/payment"
+                        android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="@color/colorAccent"
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -293,7 +282,6 @@
                         android:layout_marginTop="3dp"
                         android:text="@string/cash"
                         android:textColor="@color/grayish_dark"
-                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
@@ -324,7 +312,6 @@
                         android:drawableTop="@drawable/plus_icon"
                         android:text="@string/notes_to_captain"
                         android:textColor="@color/colorAccent"
-                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </FrameLayout>
 
@@ -349,7 +336,6 @@
                         android:drawableTop="@drawable/plus_icon"
                         android:text="@string/promo_codes"
                         android:textColor="@color/colorAccent"
-                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </FrameLayout>
             </LinearLayout>
@@ -362,6 +348,5 @@
         android:layout_margin="15dp"
         android:background="@drawable/petroleum_rounded_corners_shape"
         android:text="@string/go"
-        android:textAllCaps="true"
-        android:textSize="18sp" />
+        android:textAllCaps="true" />
 </LinearLayout>
