@@ -36,8 +36,6 @@
     <string name="tell_friends_to_earn_money">Tell friends to earn money</string>
     <string name="welcome">Welcome</string>
     <string name="your_id">Your ID</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="now">now</string>
     <string name="pick_you_up_soon">pick you up soon</string>
@@ -89,4 +87,22 @@
     <string name="where_should_we_pick_you_up">Where should we pick you up?</string>
     <string name="min">min</string>
     <string name="your_ride">Your Ride</string>
+    <string name="pickup">Pickup</string>
+
+    <string name="pickup_location">Pickup Location</string>
+    <string name="verify">Verify</string>
+    <string name="dropoff">Dropoff</string>
+    <string name="i_will_guide_the_captain">I will guide the captain</string>
+    <string name="add_details">Add\nDetails</string>
+    <string name="add_dropoff">Add\n Dropoff</string>
+    <string name="pickup_time">Pickup time</string>
+    <string name="as_soon_as_possible">As soon as possible</string>
+    <string name="car_type">Car type</string>
+    <string name="estimate">Estimate</string>
+    <string name="add_dropoff_to_estimate">Add dropoff to estimate</string>
+    <string name="payment">Payment</string>
+    <string name="cash">Cash</string>
+    <string name="notes_to_captain">Notes to captain</string>
+    <string name="promo_codes">Promo codes</string>
+    <string name="go">Go!</string>
 </resources>

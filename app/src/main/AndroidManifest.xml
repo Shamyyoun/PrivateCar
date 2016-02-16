@@ -144,11 +144,19 @@
         <activity
             android:name=".activities.DriverDeclineTripReasonActivity"
             android:label="@string/decline_reason" />
-        <activity android:name=".activities.PickupActivity" />
+        <activity
+            android:name=".activities.PickupActivity"
+            android:label="@string/pickup_location" />
         <activity
             android:name=".activities.DriverTripInfoActivity"
             android:label="@string/your_ride" />
+<<<<<<< HEAD
         <activity android:name=".activities.DriverTrackTheTripActivity"></activity>
+=======
+        <activity
+            android:name=".activities.VerifyTripActivity"
+            android:label="@string/verify" />
+>>>>>>> 83c4c0b699ef78e432a2ce1da6237b408a5dc1ce
     </application>
 
 </manifest>
