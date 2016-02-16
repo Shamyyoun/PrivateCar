@@ -105,11 +105,10 @@
         <activity
             android:name=".activities.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar.FullTransparent">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".activities.AnonymousHomeActivity"
@@ -147,12 +146,27 @@
         <activity
             android:name=".activities.PickupActivity"
             android:label="@string/pickup_location" />
+
         <activity
-            android:name=".activities.DriverTripInfo"
+            android:name=".activities.DriverTripInfoActivity"
             android:label="@string/your_ride" />
+
+        <activity android:name=".activities.DriverTrackTheTripActivity" />
         <activity
             android:name=".activities.VerifyTripActivity"
             android:label="@string/verify" />
+        <activity
+            android:name=".activities.DriverCashPaymentActivity"
+            android:label="@string/payment" />
+        <activity android:name=".activities.DriverCreditPaymentActivity" />
+        <activity
+            android:name=".activities.DriverRateTripActivity"
+            android:label="@string/rate">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

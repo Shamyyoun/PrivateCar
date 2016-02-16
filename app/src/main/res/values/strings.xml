@@ -105,4 +105,10 @@
     <string name="notes_to_captain">Notes to captain</string>
     <string name="promo_codes">Promo codes</string>
     <string name="go">Go!</string>
+    <string name="payment_by_customer_credit_done">Payment by Customer\'s Credit Card Done.</string>
+    <string name="please_type_comment_here">Please write your comment here</string>
+    <string name="customer_behaved_badly">The customer behaved badly</string>
+    <string name="customer_arrived_late">The customer arrived tool late</string>
+    <string name="customer_made_illegal_action">The customer made an illegal action</string>
+    <string name="rate">Rate</string>
 </resources>

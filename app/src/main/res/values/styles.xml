@@ -53,20 +53,38 @@
     </style>
 
     <style name="forward_petroleum_button" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/petroleum_rounded_corners_shape</item>
+        <item name="android:background">@drawable/petroleum_rounded_corners_selector</item>
         <item name="android:drawableEnd">@drawable/end_white_arrow_icon</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingEnd">100dp</item>
-        <item name="android:paddingStart">110dp</item>
+        <item name="android:paddingStart">100dp</item>
         <item name="android:singleLine">true</item>
     </style>
 
     <style name="submit_petroleum_button" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/petroleum_rounded_corners_shape</item>
+        <item name="android:background">@drawable/petroleum_rounded_corners_selector</item>
         <item name="android:drawableStart">@drawable/check_icon</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingEnd">100dp</item>
-        <item name="android:paddingStart">110dp</item>
+        <item name="android:paddingStart">100dp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="submit_yellowish_button" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/yellowish_rounded_corners_selector</item>
+        <item name="android:drawableStart">@drawable/check_icon</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingEnd">100dp</item>
+        <item name="android:paddingStart">100dp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="submit_yellowish_button_with_half_star" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/yellowish_rounded_corners_selector</item>
+        <item name="android:drawableStart">@drawable/white_half_star</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingEnd">100dp</item>
+        <item name="android:paddingStart">100dp</item>
         <item name="android:singleLine">true</item>
     </style>
 
@@ -164,11 +182,24 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- Rating bar style -->
-    <style name="CustomRatingBar" parent="Widget.AppCompat.RatingBar">
-        <item name="android:progressDrawable">@drawable/ratingbar</item>
-        <item name="android:minHeight">15dp</item>
-        <item name="android:maxHeight">15dp</item>
+    <!-- =========== RatingBar style ============= -->
+    <style name="GoldenRatingBarStyle" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar_golden</item>
+        <item name="android:minHeight">38dp</item>
+        <item name="android:maxHeight">38dp</item>
+    </style>
+
+    <style name="GoldenRatingBarIndicatorStyle" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar_indicator_golden</item>
+        <item name="android:minHeight">14.5dp</item>
+        <item name="android:maxHeight">14.5dp</item>
+    </style>
+
+    <style name="GoldenRatingBarTheme" parent="Theme.AppCompat">
+        <item name="colorAccent">@color/golden</item>
+        <item name="colorControlNormal">@color/golden</item>
+        <item name="colorControlActivated">@color/golden</item>
+        <item name="colorControlHighlight">@color/golden</item>
     </style>
 
 </resources>

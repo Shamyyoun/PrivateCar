@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_margin"
+    tools:context=".activities.DriverCreditPaymentActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/petroleum_rounded_corners_shape"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            style="@style/white_medium_bold_capitalized_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ride No: " />
+
+        <TextView
+            style="@style/white_medium_capitalized_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AA1234" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/widgets_vertical_space"
+        android:background="@drawable/petroleum_rounded_corners_shape"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            style="@style/white_medium_bold_capitalized_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Travel Price: " />
+
+        <TextView
+            style="@style/white_medium_capitalized_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100 EGP" />
+
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/white_medium_capitalized_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/widgets_vertical_space"
+        android:background="@drawable/petroleum_rounded_corners_shape"
+        android:padding="5dp"
+        android:text="@string/payment_by_customer_credit_done" />
+
+    <Button
+        android:id="@+id/btn_confirm"
+        style="@style/submit_yellowish_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/widgets_vertical_space"
+        android:onClick="onClick"
+        android:text="@string/confirm"
+        android:textSize="@dimen/large_text_size" />
+
+
+</LinearLayout>
