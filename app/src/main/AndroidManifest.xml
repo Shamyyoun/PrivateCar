@@ -146,8 +146,9 @@
             android:label="@string/decline_reason" />
         <activity android:name=".activities.PickupActivity" />
         <activity
-            android:name=".activities.DriverTripInfo"
+            android:name=".activities.DriverTripInfoActivity"
             android:label="@string/your_ride" />
+        <activity android:name=".activities.DriverTrackTheTripActivity"></activity>
     </application>
 
 </manifest>
