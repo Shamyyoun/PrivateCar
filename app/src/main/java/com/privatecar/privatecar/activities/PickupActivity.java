@@ -1,5 +1,6 @@
 package com.privatecar.privatecar.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -57,6 +58,13 @@ public class PickupActivity extends BasicBackActivity implements View.OnClickLis
 
         adapter = new PlacesAdapter(this, places, R.layout.item_places);
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new PlacesAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                // open verify trip activity
+                startActivity(new Intent(PickupActivity.this, VerifyTripActivity.class));
+            }
+        });
     }
 
     @Override
