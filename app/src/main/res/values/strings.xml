@@ -111,4 +111,7 @@
     <string name="customer_arrived_late">The customer arrived tool late</string>
     <string name="customer_made_illegal_action">The customer made an illegal action</string>
     <string name="rate">Rate</string>
+
+    <string name="add_details_for_pick_up">Add details for pickup location that will help the captain find you.</string>
+    <string name="save">Save</string>
 </resources>

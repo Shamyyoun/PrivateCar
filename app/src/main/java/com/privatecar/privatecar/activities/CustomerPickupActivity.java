@@ -17,7 +17,7 @@ import com.privatecar.privatecar.views.DividerItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PickupActivity extends BasicBackActivity implements View.OnClickListener {
+public class CustomerPickupActivity extends BasicBackActivity implements View.OnClickListener {
     ImageButton buttonSearch;
     RecyclerView recyclerView;
     PlacesAdapter adapter;
@@ -25,7 +25,7 @@ public class PickupActivity extends BasicBackActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pickup);
+        setContentView(R.layout.activity_customer_pickup);
 
         // customize search button
         buttonSearch = (ImageButton) findViewById(R.id.btn_search);
@@ -61,7 +61,7 @@ public class PickupActivity extends BasicBackActivity implements View.OnClickLis
             @Override
             public void onItemClick(View view, int position) {
                 // open verify trip activity
-                startActivity(new Intent(PickupActivity.this, VerifyTripActivity.class));
+                startActivity(new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class));
             }
         });
     }

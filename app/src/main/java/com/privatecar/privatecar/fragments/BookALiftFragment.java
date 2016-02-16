@@ -14,7 +14,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.activities.PickupActivity;
+import com.privatecar.privatecar.activities.CustomerPickupActivity;
 
 public class BookALiftFragment extends BaseFragment implements OnMapReadyCallback, View.OnClickListener {
 
@@ -71,7 +71,7 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
         switch (v.getId()) {
             case R.id.layout_pick_now:
                 // open pick up activity
-                startActivity(new Intent(activity, PickupActivity.class));
+                startActivity(new Intent(activity, CustomerPickupActivity.class));
                 break;
         }
     }

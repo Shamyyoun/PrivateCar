@@ -53,6 +53,7 @@
                     android:background="@color/grayish_highlight" />
 
                 <TextView
+                    android:id="@+id/tv_add_details"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackgroundBorderless"

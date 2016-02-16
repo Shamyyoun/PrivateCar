@@ -112,7 +112,13 @@
         </activity>
         <activity
             android:name=".activities.AnonymousHomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.CustomerSignupActivity"
             android:label="@string/sign_up" />
@@ -144,7 +150,7 @@
             android:name=".activities.DriverDeclineTripReasonActivity"
             android:label="@string/decline_reason" />
         <activity
-            android:name=".activities.PickupActivity"
+            android:name=".activities.CustomerPickupActivity"
             android:label="@string/pickup_location" />
 
         <activity
@@ -153,7 +159,7 @@
 
         <activity android:name=".activities.DriverTrackTheTripActivity" />
         <activity
-            android:name=".activities.VerifyTripActivity"
+            android:name=".activities.CustomerVerifyTripActivity"
             android:label="@string/verify" />
         <activity
             android:name=".activities.DriverCashPaymentActivity"
@@ -161,12 +167,10 @@
         <activity android:name=".activities.DriverCreditPaymentActivity" />
         <activity
             android:name=".activities.DriverRateTripActivity"
-            android:label="@string/rate">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="@string/rate"></activity>
+        <activity
+            android:name=".activities.CustomerAddDetailsActivity"
+            android:label="@string/add_details"></activity>
     </application>
 
 </manifest>
