@@ -53,23 +53,31 @@
     </style>
 
     <style name="forward_petroleum_button" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/petroleum_rounded_corners_shape</item>
+        <item name="android:background">@drawable/petroleum_rounded_corners_selector</item>
         <item name="android:drawableEnd">@drawable/end_white_arrow_icon</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingEnd">100dp</item>
-        <item name="android:paddingStart">110dp</item>
+        <item name="android:paddingStart">100dp</item>
         <item name="android:singleLine">true</item>
     </style>
 
     <style name="submit_petroleum_button" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/petroleum_rounded_corners_shape</item>
+        <item name="android:background">@drawable/petroleum_rounded_corners_selector</item>
         <item name="android:drawableStart">@drawable/check_icon</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingEnd">100dp</item>
-        <item name="android:paddingStart">110dp</item>
+        <item name="android:paddingStart">100dp</item>
         <item name="android:singleLine">true</item>
     </style>
 
+    <style name="submit_yellowish_button" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/yellowish_rounded_corners_selector</item>
+        <item name="android:drawableStart">@drawable/check_icon</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingEnd">100dp</item>
+        <item name="android:paddingStart">100dp</item>
+        <item name="android:singleLine">true</item>
+    </style>
 
     <style name="bold_capitalized_text">
         <item name="android:textStyle">bold</item>

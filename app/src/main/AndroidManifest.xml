@@ -150,13 +150,15 @@
         <activity
             android:name=".activities.DriverTripInfoActivity"
             android:label="@string/your_ride" />
-<<<<<<< HEAD
-        <activity android:name=".activities.DriverTrackTheTripActivity"></activity>
-=======
+        <activity android:name=".activities.DriverTrackTheTripActivity" />
         <activity
             android:name=".activities.VerifyTripActivity"
             android:label="@string/verify" />
->>>>>>> 83c4c0b699ef78e432a2ce1da6237b408a5dc1ce
+        <activity
+            android:name=".activities.DriverCashPaymentActivity"
+            android:label="@string/payment" />
+
+
     </application>
 
 </manifest>
