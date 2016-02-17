@@ -171,12 +171,6 @@
         <activity
             android:name=".activities.CustomerAddDetailsActivity"
             android:label="@string/add_details"></activity>
-        <activity
-            android:name=".activities.CustomerAddDropoffActivity"
-            android:label="@string/add_details"></activity>
-        <activity
-            android:name=".activities.CustomerAddPromoCodeActivity"
-            android:label="@string/add_promo_code"></activity>
     </application>
 
 </manifest>
