@@ -67,8 +67,7 @@ public class DriverMessageCenterFragment extends Fragment {
         rvMessages.setHasFixedSize(true);
         adapter = new RVMessagesAdapter(messages);
         rvMessages.setAdapter(adapter);
-
-
+        
         return fragment;
     }
 

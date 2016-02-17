@@ -170,7 +170,10 @@
         <activity
             android:name=".activities.CustomerAddDetailsActivity"
             android:label="@string/add_details" />
-        <activity android:name=".activities.DriverTodayProfitActivity"></activity>
+        <activity android:name=".activities.DriverTodayProfitActivity" />
+        <activity
+            android:name=".activities.DriverStatementSearchResultActivity"
+            android:label="@string/statement"></activity>
     </application>
 
 </manifest>

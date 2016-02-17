@@ -101,8 +101,19 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
     </style>
 
+    <style name="white_medium_bold_text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
     <style name="white_medium_capitalized_text">
         <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="white_medium_text">
         <item name="android:textColor">@color/textColorPrimary</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
     </style>
