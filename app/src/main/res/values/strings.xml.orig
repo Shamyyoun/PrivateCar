@@ -111,11 +111,14 @@
     <string name="customer_arrived_late">The customer arrived tool late</string>
     <string name="customer_made_illegal_action">The customer made an illegal action</string>
     <string name="rate">Rate</string>
+
     <string name="add_details_for_pick_up">Add details for pickup location that will help the captain find you.</string>
     <string name="save">Save</string>
+<<<<<<< HEAD
     <string name="date">Date</string>
     <string name="trips">Trips</string>
     <string name="profit">Profit</string>
+=======
     <string name="search_for_place">Search for a place</string>
     <string name="select_on_map">Select on map</string>
     <string name="select_pickup_time">Set Pickup Time</string>
@@ -127,4 +130,5 @@
     <string name="full_day_4_people">Full Day\n4 People</string>
     <string name="enter_here">Enter here</string>
     <string name="add_promo_code">Add Promo Code</string>
+>>>>>>> 046cbc44484772c44ed024b19fb31b28863217cf
 </resources>

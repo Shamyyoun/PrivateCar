@@ -169,7 +169,6 @@
         <item name="highlightColor">#f3f3f3</item>
     </style>
 
-    <!-- =============== Pickup Screen =============== -->
     <!-- Top Toggle Group -->
     <style name="TopToggleGroup">
         <item name="android:layout_width">match_parent</item>
@@ -182,7 +181,7 @@
     <style name="TopToggleSeperator">
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:layout_marginTop">5dp</item>
-        <item name="android:background">@color/colorAccentDark</item>
+        <item name="android:background">@color/colorAccent_dark</item>
     </style>
 
     <!-- Top Toggle Button -->
@@ -213,4 +212,10 @@
         <item name="colorControlHighlight">@color/golden</item>
     </style>
 
+    <!-- Dialog Toggle Button -->
+    <style name="DialogToggleButton">
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@color/grayish_dark</item>
+        <item name="android:textStyle">normal</item>
+    </style>
 </resources>

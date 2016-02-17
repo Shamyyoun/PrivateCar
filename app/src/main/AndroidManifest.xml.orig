@@ -170,11 +170,15 @@
             android:label="@string/rate"></activity>
         <activity
             android:name=".activities.CustomerAddDetailsActivity"
+<<<<<<< HEAD
             android:label="@string/add_details" />
         <activity android:name=".activities.DriverTodayProfitActivity" />
         <activity
             android:name=".activities.DriverStatementSearchResultActivity"
             android:label="@string/statement"></activity>
+=======
+            android:label="@string/add_details"></activity>
+>>>>>>> 046cbc44484772c44ed024b19fb31b28863217cf
     </application>
 
 </manifest>
