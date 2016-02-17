@@ -114,4 +114,15 @@
 
     <string name="add_details_for_pick_up">Add details for pickup location that will help the captain find you.</string>
     <string name="save">Save</string>
+    <string name="search_for_place">Search for a place</string>
+    <string name="select_on_map">Select on map</string>
+    <string name="select_pickup_time">Set Pickup Time</string>
+    <string name="cancel">Cancel</string>
+    <string name="set">Set</string>
+    <string name="select_car_type">Select Car Type</string>
+    <string name="economy_4_people">Economy\n4 People</string>
+    <string name="business_4_people">Business\n4 People</string>
+    <string name="full_day_4_people">Full Day\n4 People</string>
+    <string name="enter_here">Enter here</string>
+    <string name="add_promo_code">Add Promo Code</string>
 </resources>

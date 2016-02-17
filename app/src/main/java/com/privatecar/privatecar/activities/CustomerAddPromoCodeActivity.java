@@ -1,15 +1,14 @@
 package com.privatecar.privatecar.activities;
 
 import android.os.Bundle;
-import android.widget.Button;
 
 import com.privatecar.privatecar.R;
 
-public class CustomerAddDetailsActivity extends BasicBackActivity {
+public class CustomerAddPromoCodeActivity extends BasicBackActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_add_details);
+        setContentView(R.layout.activity_customer_add_promo_code);
     }
 }

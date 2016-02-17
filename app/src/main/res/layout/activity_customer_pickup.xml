@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:drawableTop="@drawable/rb_economy_image"
+            android:drawableTop="@drawable/rb_economy_image_white"
             android:text="@string/economy" />
 
         <View
@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/rb_business_image"
+            android:drawableTop="@drawable/rb_business_image_white"
             android:text="@string/business" />
 
         <View
@@ -45,7 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/rb_full_day_image"
+            android:drawableTop="@drawable/rb_full_day_image_white"
             android:text="@string/full_day" />
     </RadioGroup>
 
