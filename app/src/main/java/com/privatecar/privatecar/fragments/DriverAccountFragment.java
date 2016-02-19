@@ -2,6 +2,7 @@ package com.privatecar.privatecar.fragments;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.activities.DriverAddCarActivity;
 import com.privatecar.privatecar.utils.Utils;
 
 public class DriverAccountFragment extends BaseFragment {
@@ -38,6 +40,14 @@ public class DriverAccountFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 openChangeCarType();
+            }
+        });
+
+        View layoutAddCar = fragment.findViewById(R.id.layout_add_car);
+        layoutAddCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), DriverAddCarActivity.class));
             }
         });
 

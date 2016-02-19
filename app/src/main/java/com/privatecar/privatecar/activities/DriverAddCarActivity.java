@@ -1,5 +1,6 @@
 package com.privatecar.privatecar.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -14,5 +15,10 @@ public class DriverAddCarActivity extends BasicBackActivity {
     }
 
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_add_car:
+                startActivity(new Intent(this, DriverAddCarConfirmationActivity.class));
+                break;
+        }
     }
 }

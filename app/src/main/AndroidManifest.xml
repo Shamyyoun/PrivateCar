@@ -163,18 +163,27 @@
         <activity
             android:name=".activities.DriverCashPaymentActivity"
             android:label="@string/payment" />
-        <activity android:name=".activities.DriverCreditPaymentActivity" />
+        <activity
+            android:name=".activities.DriverCreditPaymentActivity"
+            android:label="@string/payment" />
         <activity
             android:name=".activities.DriverRateTripActivity"
             android:label="@string/rate" />
         <activity
             android:name=".activities.CustomerAddDetailsActivity"
             android:label="@string/add_details" />
-        <activity android:name=".activities.DriverTodayProfitActivity" />
+        <activity
+            android:name=".activities.DriverTodayProfitActivity"
+            android:label="@string/today_profit" />
         <activity
             android:name=".activities.DriverStatementSearchResultActivity"
             android:label="@string/statement" />
-        <activity android:name=".activities.DriverAddCarActivity"></activity>
+        <activity
+            android:name=".activities.DriverAddCarActivity"
+            android:label="@string/add_car" />
+        <activity
+            android:name=".activities.DriverAddCarConfirmationActivity"
+            android:label="@string/add_car" />
     </application>
 
 </manifest>

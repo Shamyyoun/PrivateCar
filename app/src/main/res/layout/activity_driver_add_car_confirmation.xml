@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_margin"
+    android:orientation="vertical"
+    tools:context="com.privatecar.privatecar.activities.DriverAddCarConfirmationActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/driver_add_car_confirmation_message" />
+
+    <Button
+        android:id="@+id/btn_confirm"
+        style="@style/submit_yellowish_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/widgets_vertical_space"
+        android:onClick="onClick"
+        android:text="@string/confirm" />
+
+</LinearLayout>

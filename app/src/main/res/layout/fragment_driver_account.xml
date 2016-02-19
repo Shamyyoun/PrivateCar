@@ -112,6 +112,7 @@
                 android:text="your balance: 1000 EGP" />
 
             <LinearLayout
+                android:id="@+id/layout_add_car"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
