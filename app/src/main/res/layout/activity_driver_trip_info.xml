@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -40,19 +40,19 @@
             android:background="@drawable/petroleum_rounded_corners_shape"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="5dp">
+            android:padding="7dp">
 
             <TextView
                 style="@style/white_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ride No: " />
+                android:text="@string/ride_no" />
 
             <TextView
                 style="@style/white_medium_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AA1234" />
+                android:text=" AA1234" />
         </LinearLayout>
 
         <LinearLayout

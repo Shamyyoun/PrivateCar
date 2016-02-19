@@ -133,4 +133,8 @@
     
     <string name="select_full_day_car_type">Select full day car type</string>
     <string name="business_1_people">Business\n1 People</string>
+    <string name="ride_no">Ride no:</string>
+    <string name="driver_c">Driver:</string>
+    <string name="car_c">Car:</string>
+    <string name="avg">AVG</string>
 </resources>

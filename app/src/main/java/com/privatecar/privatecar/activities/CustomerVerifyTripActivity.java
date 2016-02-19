@@ -3,6 +3,7 @@ package com.privatecar.privatecar.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
     TextView textCarType;
     TextView textFullDay;
     TextView textPromoCode;
+    Button buttonGo;
 
     CustomerPickupTimeDialog pickupTimeDialog;
     Selection selection = Selection.NOW; // now is the default selection
@@ -71,6 +73,10 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
         // customize promo code textview
         textPromoCode = (TextView) findViewById(R.id.tv_promo_code);
         textPromoCode.setOnClickListener(this);
+
+        // customize go button
+        buttonGo = (Button) findViewById(R.id.btn_go);
+        buttonGo.setOnClickListener(this);
     }
 
     @Override
@@ -109,6 +115,11 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
             case R.id.tv_promo_code:
                 // open add promo code activity
                 startActivity(new Intent(this, CustomerAddPromoCodeActivity.class));
+                break;
+
+            case R.id.btn_go:
+                // open ride activity
+                startActivity(new Intent(this, CustomerRideActivity.class));
                 break;
         }
     }

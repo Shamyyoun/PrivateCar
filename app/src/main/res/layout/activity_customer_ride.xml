@@ -1,0 +1,195 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        map:cameraBearing="112.5"
+        map:cameraTargetLat="-33.796923"
+        map:cameraTargetLng="150.922433"
+        map:cameraTilt="30"
+        map:cameraZoom="13"
+        map:liteMode="true"
+        map:mapType="normal"
+        map:uiCompass="false"
+        map:uiRotateGestures="false"
+        map:uiScrollGestures="false"
+        map:uiTiltGestures="false"
+        map:uiZoomControls="false"
+        map:uiZoomGestures="false" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/petroleum_rounded_corners_shape"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="7dp">
+
+            <TextView
+                style="@style/white_medium_bold_capitalized_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ride_no" />
+
+            <TextView
+                style="@style/white_medium_capitalized_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" AA1234" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/penelope_cruz"
+                app:riv_border_color="@color/textColorPrimary"
+                app:riv_border_width="0.5dip"
+                app:riv_corner_radius="7dip"
+                app:riv_mutate_background="true"
+                app:riv_oval="false" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/msg_text_area_bg"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:text="Hi, I'm coming to pick you up 1.5 km away, 5 min." />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_driver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/driver_c"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/tv_driver_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/tv_driver"
+                    android:text="Mostafa Ali"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/tv_car"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_driver"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/car_c"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/tv_car_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_driver"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/tv_car"
+                    android:text="Black Toyota Corola"
+                    android:textColor="@android:color/black" />
+
+                <RatingBar
+                    android:id="@+id/rating_bar"
+                    style="@style/GoldenRatingBarIndicatorStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_car"
+                    android:layout_marginTop="10dp"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:rating="4.5"
+                    android:stepSize="0.5" />
+
+                <TextView
+                    android:id="@+id/tv_avg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_car"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@+id/rating_bar"
+                    android:text="4.5"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_car"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@+id/tv_avg"
+                    android:text="@string/avg"
+                    android:textColor="@android:color/black" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="7dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/call_icon"
+                    android:scaleType="fitCenter" />
+
+                <ImageButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="5dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/cancel_icon"
+                    android:scaleType="fitCenter" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

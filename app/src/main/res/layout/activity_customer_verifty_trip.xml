@@ -349,6 +349,7 @@
     </ScrollView>
 
     <Button
+        android:id="@+id/btn_go"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
