@@ -1,83 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp">
+    android:background="@drawable/rounded_corners_dialog_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="12dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="@string/select_car_type"
+        android:textAllCaps="true"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorAccent" />
+
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:background="@drawable/rounded_corners_dialog_bg"
-        android:gravity="center_horizontal"
+        android:checkedButton="@+id/rb_economy"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RadioButton
+            android:id="@+id/rb_economy"
+            style="@style/DialogToggleButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="12dp"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="@string/select_car_type"
-            android:textAllCaps="true"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold" />
+            android:layout_margin="10dp"
+            android:drawableRight="@drawable/rb_economy_image_gray"
+            android:text="@string/economy_4_people" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/colorAccent" />
+            android:layout_height="1dp"
+            android:background="@color/grayish_highlight" />
 
-        <RadioGroup
+        <RadioButton
+            android:id="@+id/rb_business"
+            style="@style/DialogToggleButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/rounded_corners_dialog_bg"
-            android:checkedButton="@+id/rb_economy"
-            android:orientation="vertical">
+            android:layout_margin="10dp"
+            android:drawableRight="@drawable/rb_business_image_gray"
+            android:text="@string/business_4_people" />
 
-            <RadioButton
-                android:id="@+id/rb_economy"
-                style="@style/DialogToggleButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:drawableRight="@drawable/rb_economy_image_gray"
-                android:text="@string/economy_4_people" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grayish_highlight" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grayish_highlight" />
+        <RadioButton
+            android:id="@+id/rb_full_day"
+            style="@style/DialogToggleButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:drawableRight="@drawable/rb_full_day_image_gray"
+            android:text="@string/full_day_4_people" />
 
-            <RadioButton
-                android:id="@+id/rb_business"
-                style="@style/DialogToggleButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:drawableRight="@drawable/rb_business_image_gray"
-                android:text="@string/business_4_people" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grayish_highlight" />
-
-            <RadioButton
-                android:id="@+id/rb_full_day"
-                style="@style/DialogToggleButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:drawableRight="@drawable/rb_full_day_image_gray"
-                android:text="@string/full_day_4_people" />
-
-            
-        </RadioGroup>
-    </LinearLayout>
-</FrameLayout>
+    </RadioGroup>
+</LinearLayout>

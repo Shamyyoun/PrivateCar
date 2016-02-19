@@ -18,13 +18,10 @@ import com.privatecar.privatecar.R;
 public class CustomerPickupTimeDialog extends Dialog {
 
     public CustomerPickupTimeDialog(Context context) {
-        super(context);
+        super(context, R.style.MyDialogTheme);
 
-        // customize dialog window
+        // set no title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Window window = getWindow();
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        window.setGravity(Gravity.CENTER);
 
         // set view layout
         setContentView(R.layout.dialog_customer_date_time_picker);
@@ -40,7 +37,6 @@ public class CustomerPickupTimeDialog extends Dialog {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
 
         // show it
         super.show();
