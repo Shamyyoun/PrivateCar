@@ -76,6 +76,8 @@
                 android:layout_margin="10dp"
                 android:drawableRight="@drawable/rb_full_day_image_gray"
                 android:text="@string/full_day_4_people" />
+
+            
         </RadioGroup>
     </LinearLayout>
 </FrameLayout>

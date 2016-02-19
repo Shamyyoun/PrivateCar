@@ -2,7 +2,6 @@ package com.privatecar.privatecar.fragments;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +17,7 @@ import com.privatecar.privatecar.models.entities.Message;
 
 import java.util.ArrayList;
 
-public class DriverMessageCenterFragment extends Fragment {
+public class DriverMessageCenterFragment extends BaseFragment {
 
 
     CheckBox cbMessages;
@@ -67,7 +66,7 @@ public class DriverMessageCenterFragment extends Fragment {
         rvMessages.setHasFixedSize(true);
         adapter = new RVMessagesAdapter(messages);
         rvMessages.setAdapter(adapter);
-        
+
         return fragment;
     }
 
