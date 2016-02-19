@@ -220,4 +220,15 @@
         <item name="android:textColor">@color/grayish_dark</item>
         <item name="android:textStyle">normal</item>
     </style>
+
+    <!--============ Circle Page Indicator =============-->
+    <style name="CirclePageIndicator">
+        <item name="fillColor">@android:color/white</item>
+        <item name="strokeColor">@color/grayish</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="radius">5dp</item>
+        <item name="centered">true</item>
+    </style>
+
+
 </resources>
