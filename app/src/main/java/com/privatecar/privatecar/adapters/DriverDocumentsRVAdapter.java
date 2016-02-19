@@ -1,6 +1,7 @@
 package com.privatecar.privatecar.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.utils.Utils;
+import com.privatecar.privatecar.activities.DriverDocumentDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class DriverDocumentsRVAdapter extends RecyclerView.Adapter<DriverDocumen
     @Override
     public DocumentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View document = LayoutInflater.from(parent.getContext()).inflate(R.layout.driver_document_rv_item, parent, false);
-        return new DocumentHolder(document);
+        return new DocumentHolder(document, documents);
     }
 
     @Override
@@ -46,14 +47,17 @@ public class DriverDocumentsRVAdapter extends RecyclerView.Adapter<DriverDocumen
     static class DocumentHolder extends RecyclerView.ViewHolder {
         ImageView ivDocument;
 
-        public DocumentHolder(View itemView) {
+        public DocumentHolder(View itemView, final ArrayList<String> documents) {
             super(itemView);
 
             ivDocument = (ImageView) itemView;
             ivDocument.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Utils.showToast(ivDocument.getContext(), "position: " + getAdapterPosition());
+                    Intent intent = new Intent(ivDocument.getContext(), DriverDocumentDetailsActivity.class);
+                    intent.putExtra("position", getAdapterPosition());
+                    intent.putExtra("documents", documents);
+                    ivDocument.getContext().startActivity(intent);
                 }
             });
         }

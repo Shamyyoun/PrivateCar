@@ -187,6 +187,9 @@
         <activity
             android:name=".activities.DriverDocumentsActivity"
             android:label="@string/your_documents" />
+        <activity
+            android:name=".activities.DriverDocumentDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar.FullTransparent" />
     </application>
 
 </manifest>

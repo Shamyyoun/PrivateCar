@@ -1,8 +1,8 @@
 package com.privatecar.privatecar.activities;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.adapters.DriverDocumentsRVAdapter;
@@ -23,8 +23,8 @@ public class DriverDocumentsActivity extends BasicBackActivity {
         fillDumpDocuments();
 
         rvDocuments = (RecyclerView) findViewById(R.id.rv_documents);
-//        rvDocuments.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
-        rvDocuments.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        rvDocuments.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
+//        rvDocuments.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         rvDocuments.setHasFixedSize(true);
         rvDocuments.setAdapter(new DriverDocumentsRVAdapter(this, documents));
 
