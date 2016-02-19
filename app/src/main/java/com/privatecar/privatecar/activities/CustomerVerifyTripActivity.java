@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.dialogs.CustomerCarTypeDialog;
+import com.privatecar.privatecar.dialogs.CustomerFullDayCarTypeDialog;
 import com.privatecar.privatecar.dialogs.CustomerPickupTimeDialog;
 
 public class CustomerVerifyTripActivity extends BasicBackActivity implements View.OnClickListener {
@@ -15,11 +16,13 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
     TextView textAddDropoff;
     RadioGroup groupPickupTime;
     TextView textCarType;
+    TextView textFullDay;
     TextView textPromoCode;
 
     CustomerPickupTimeDialog pickupTimeDialog;
     Selection selection = Selection.NOW; // now is the default selection
     CustomerCarTypeDialog carTypeDialog;
+    CustomerFullDayCarTypeDialog fullDayCarTypeDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,10 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
         textCarType = (TextView) findViewById(R.id.tv_car_type);
         textCarType.setOnClickListener(this);
 
+        // customize full day textview
+        textFullDay = (TextView) findViewById(R.id.tv_full_day);
+        textFullDay.setOnClickListener(this);
+
         // customize promo code textview
         textPromoCode = (TextView) findViewById(R.id.tv_promo_code);
         textPromoCode.setOnClickListener(this);
@@ -87,6 +94,16 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
 
                 // show it
                 carTypeDialog.show();
+                break;
+
+            case R.id.tv_full_day:
+                // check full day car type dialog
+                if (fullDayCarTypeDialog == null) {
+                    fullDayCarTypeDialog = new CustomerFullDayCarTypeDialog(this);
+                }
+
+                // show it
+                fullDayCarTypeDialog.show();
                 break;
 
             case R.id.tv_promo_code:

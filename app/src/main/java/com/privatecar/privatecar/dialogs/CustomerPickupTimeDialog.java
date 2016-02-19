@@ -15,31 +15,14 @@ import com.privatecar.privatecar.R;
 /**
  * Created by Shamyyoun on 2/17/2016.
  */
-public class CustomerPickupTimeDialog extends Dialog {
+public class CustomerPickupTimeDialog extends ParentDialog {
 
     public CustomerPickupTimeDialog(Context context) {
-        super(context, R.style.MyDialogTheme);
-
-        // set no title
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        // set view layout
+        super(context);
         setContentView(R.layout.dialog_customer_date_time_picker);
 
         // init views
         TimePicker timePicker = (TimePicker) findViewById(R.id.time_picker);
         timePicker.setIs24HourView(true);
-    }
-
-    @Override
-    public void show() {
-        // customize dialog width
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-
-        // show it
-        super.show();
-        getWindow().setAttributes(lp);
     }
 }

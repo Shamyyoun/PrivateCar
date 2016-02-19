@@ -14,27 +14,10 @@ import com.privatecar.privatecar.R;
 /**
  * Created by Shamyyoun on 2/17/2016.
  */
-public class CustomerCarTypeDialog extends Dialog {
+public class CustomerCarTypeDialog extends ParentDialog {
 
     public CustomerCarTypeDialog(Context context) {
-        super(context, R.style.MyDialogTheme);
-
-        // set no title
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        // set view layout
+        super(context);
         setContentView(R.layout.dialog_customer_car_type);
-    }
-
-    @Override
-    public void show() {
-        // customize dialog width
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-
-        // show it
-        super.show();
-        getWindow().setAttributes(lp);
     }
 }
