@@ -190,6 +190,9 @@
         <activity
             android:name=".activities.DriverDocumentDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar.FullTransparent" />
+        <activity
+            android:name=".activities.DriverMessageDetails"
+            android:label="@string/message_details" />
     </application>
 
 </manifest>

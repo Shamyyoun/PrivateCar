@@ -12,7 +12,7 @@ import android.widget.CompoundButton;
 
 import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.adapters.RVMessagesAdapter;
+import com.privatecar.privatecar.adapters.MessagesRVAdapter;
 import com.privatecar.privatecar.models.entities.Message;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class DriverMessageCenterFragment extends BaseFragment {
     CheckBox cbMessages;
     ArrayList<Message> messages = new ArrayList<>();
     RecyclerView rvMessages;
-    RVMessagesAdapter adapter;
+    MessagesRVAdapter adapter;
 
     public DriverMessageCenterFragment() {
         // Required empty public constructor
@@ -32,7 +32,8 @@ public class DriverMessageCenterFragment extends BaseFragment {
     private void fillDummyMessages() {
         for (int i = 0; i < 40; i++) {
             Message message = new Message();
-            message.setContent("This is a message that you must read, numbered " + i);
+            message.setTitle("This is a message title that you must read, numbered " + i);
+            message.setBody("This is a message body that you must read, numbered " + i);
             message.setDate("20-10-2015");
 
             messages.add(message);
@@ -64,7 +65,7 @@ public class DriverMessageCenterFragment extends BaseFragment {
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
         rvMessages.addItemDecoration(itemDecoration);
         rvMessages.setHasFixedSize(true);
-        adapter = new RVMessagesAdapter(messages);
+        adapter = new MessagesRVAdapter(messages);
         rvMessages.setAdapter(adapter);
 
         return fragment;

@@ -14,7 +14,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.adapters.RVStatementSearchResultsAdapter;
+import com.privatecar.privatecar.adapters.StatementSearchResultsRVAdapter;
 import com.privatecar.privatecar.models.entities.StatementSearchResult;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class DriverStatementSearchResultActivity extends BasicBackActivity {
 
     ArrayList<StatementSearchResult> searchResults = new ArrayList<>();
     RecyclerView rvResults;
-    RVStatementSearchResultsAdapter adapter;
+    StatementSearchResultsRVAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class DriverStatementSearchResultActivity extends BasicBackActivity {
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
         rvResults.addItemDecoration(itemDecoration);
         rvResults.setHasFixedSize(true);
-        adapter = new RVStatementSearchResultsAdapter(searchResults);
+        adapter = new StatementSearchResultsRVAdapter(searchResults);
         rvResults.setAdapter(adapter);
 
     }

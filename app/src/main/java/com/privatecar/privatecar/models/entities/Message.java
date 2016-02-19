@@ -1,20 +1,23 @@
 package com.privatecar.privatecar.models.entities;
 
+import java.io.Serializable;
+
 /**
  * Created by basim on 14/2/16.
  * *
  */
-public class Message {
-    private String content;
+public class Message implements Serializable {
+    private String title;
+    private String body;
     private String date;
     private Boolean selected = false;
 
-    public String getContent() {
-        return content;
+    public String getBody() {
+        return body;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setBody(String body) {
+        this.body = body;
     }
 
     public String getDate() {
@@ -31,5 +34,13 @@ public class Message {
 
     public void setSelected(Boolean selected) {
         this.selected = selected;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

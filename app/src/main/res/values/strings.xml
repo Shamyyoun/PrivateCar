@@ -130,4 +130,5 @@
     <string name="select_car">Select Car</string>
     <string name="both_economy_business">Both (Economy + Business)</string>
     <string name="driver_add_car_confirmation_message">The car will be added after we review it.</string>
+    <string name="message_details">Message Details</string>
 </resources>

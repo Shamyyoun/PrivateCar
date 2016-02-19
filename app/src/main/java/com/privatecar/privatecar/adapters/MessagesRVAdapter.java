@@ -1,5 +1,6 @@
 package com.privatecar.privatecar.adapters;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.activities.DriverMessageDetails;
 import com.privatecar.privatecar.models.entities.Message;
 
 import java.util.ArrayList;
@@ -16,11 +18,11 @@ import java.util.ArrayList;
 /**
  * Created by basim on 14/2/16.
  */
-public class RVMessagesAdapter extends RecyclerView.Adapter<RVMessagesAdapter.ViewHolder> {
+public class MessagesRVAdapter extends RecyclerView.Adapter<MessagesRVAdapter.ViewHolder> {
 
     private ArrayList<Message> messages;
 
-    public RVMessagesAdapter(ArrayList<Message> messages) {
+    public MessagesRVAdapter(ArrayList<Message> messages) {
         this.messages = messages;
     }
 
@@ -35,7 +37,7 @@ public class RVMessagesAdapter extends RecyclerView.Adapter<RVMessagesAdapter.Vi
         Message message = messages.get(position);
 
         holder.cbMessage.setChecked(message.isSelected());
-        holder.tvMessage.setText(message.getContent());
+        holder.tvMessage.setText(message.getTitle());
         holder.tvDate.setText(message.getDate());
     }
 
@@ -53,6 +55,15 @@ public class RVMessagesAdapter extends RecyclerView.Adapter<RVMessagesAdapter.Vi
         public ViewHolder(View itemView) {
             super(itemView);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), DriverMessageDetails.class);
+                    intent.putExtra("message", messages.get(getAdapterPosition()));
+                    v.getContext().startActivity(intent);
+                }
+            });
+
             cbMessage = (CheckBox) itemView.findViewById(R.id.cb_message);
             cbMessage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -61,7 +72,7 @@ public class RVMessagesAdapter extends RecyclerView.Adapter<RVMessagesAdapter.Vi
                 }
             });
 
-            tvMessage = (TextView) itemView.findViewById(R.id.tv_message);
+            tvMessage = (TextView) itemView.findViewById(R.id.tv_message_title);
             tvDate = (TextView) itemView.findViewById(R.id.tv_date);
         }
     }

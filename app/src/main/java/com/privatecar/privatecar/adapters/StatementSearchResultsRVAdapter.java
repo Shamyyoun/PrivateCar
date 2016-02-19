@@ -16,23 +16,23 @@ import java.util.ArrayList;
  */
 
 
-public class RVStatementSearchResultsAdapter extends RecyclerView.Adapter<RVStatementSearchResultsAdapter.ResultViewHolder> {
+public class StatementSearchResultsRVAdapter extends RecyclerView.Adapter<StatementSearchResultsRVAdapter.ResultViewHolder> {
 
     private ArrayList<StatementSearchResult> results;
 
 
-    public RVStatementSearchResultsAdapter(ArrayList<StatementSearchResult> results) {
+    public StatementSearchResultsRVAdapter(ArrayList<StatementSearchResult> results) {
         this.results = results;
     }
 
     @Override
-    public RVStatementSearchResultsAdapter.ResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public StatementSearchResultsRVAdapter.ResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_statement_search_result_item, parent, false);
         return new ResultViewHolder(item);
     }
 
     @Override
-    public void onBindViewHolder(RVStatementSearchResultsAdapter.ResultViewHolder holder, int position) {
+    public void onBindViewHolder(StatementSearchResultsRVAdapter.ResultViewHolder holder, int position) {
         StatementSearchResult result = results.get(position);
 
         holder.tvDate.setText(String.format("%s\n%s", "Monday", "20-10-2015"));
