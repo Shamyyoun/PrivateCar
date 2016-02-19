@@ -105,17 +105,18 @@
         <activity
             android:name=".activities.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar.FullTransparent">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".activities.AnonymousHomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -152,11 +153,9 @@
         <activity
             android:name=".activities.CustomerPickupActivity"
             android:label="@string/pickup_location" />
-
         <activity
             android:name=".activities.DriverTripInfoActivity"
             android:label="@string/your_ride" />
-
         <activity android:name=".activities.DriverTrackTheTripActivity" />
         <activity
             android:name=".activities.CustomerVerifyTripActivity"
@@ -167,14 +166,15 @@
         <activity android:name=".activities.DriverCreditPaymentActivity" />
         <activity
             android:name=".activities.DriverRateTripActivity"
-            android:label="@string/rate"></activity>
+            android:label="@string/rate" />
         <activity
             android:name=".activities.CustomerAddDetailsActivity"
             android:label="@string/add_details" />
         <activity android:name=".activities.DriverTodayProfitActivity" />
         <activity
             android:name=".activities.DriverStatementSearchResultActivity"
-            android:label="@string/statement"></activity>
+            android:label="@string/statement" />
+        <activity android:name=".activities.DriverAddCarActivity"></activity>
     </application>
 
 </manifest>
