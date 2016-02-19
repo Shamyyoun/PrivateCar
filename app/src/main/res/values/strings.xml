@@ -131,4 +131,6 @@
     <string name="both_economy_business">Both (Economy + Business)</string>
     <string name="driver_add_car_confirmation_message">The car will be added after we review it.</string>
     <string name="message_details">Message Details</string>
+    <string name="select_full_day_car_type">Select full day car type</string>
+    <string name="business_1_people">Business\n1 People</string>
 </resources>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rounded_corners_dialog_bg"
@@ -16,7 +15,7 @@
         android:layout_marginTop="12dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="@string/select_car_type"
+        android:text="@string/select_full_day_car_type"
         android:textAllCaps="true"
         android:textAppearance="?android:textAppearanceMedium"
         android:textColor="@color/colorAccent"
@@ -56,22 +55,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:drawableRight="@drawable/rb_business_image_gray"
-            android:text="@string/business_4_people" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grayish_highlight" />
-
-        <RadioButton
-            android:id="@+id/rb_full_day"
-            style="@style/DialogToggleButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:drawableRight="@drawable/rb_full_day_image_gray"
-            android:text="@string/full_day_4_people" />
-
-
+            android:text="@string/business_1_people" />
     </RadioGroup>
 </LinearLayout>

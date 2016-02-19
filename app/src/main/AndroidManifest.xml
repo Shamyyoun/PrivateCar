@@ -173,6 +173,12 @@
             android:name=".activities.CustomerAddDetailsActivity"
             android:label="@string/add_details" />
         <activity
+            android:name=".activities.CustomerAddDropoffActivity"
+            android:label="@string/add_dropoff" />
+        <activity
+            android:name=".activities.CustomerAddPromoCodeActivity"
+            android:label="@string/add_promo_code" />
+        <activity
             android:name=".activities.DriverTodayProfitActivity"
             android:label="@string/today_profit" />
         <activity
