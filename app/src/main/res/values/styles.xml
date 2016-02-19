@@ -128,6 +128,14 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
     </style>
 
+    <style name="yellowish_medium_bold_text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+
+
 
     <!-- ============= Navigation drawer ===============-->
     <style name="navigation_item_text_appearance" parent="TextAppearance.AppCompat.Small">

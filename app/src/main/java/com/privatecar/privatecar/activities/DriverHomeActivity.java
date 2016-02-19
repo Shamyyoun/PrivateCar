@@ -77,7 +77,15 @@ public class DriverHomeActivity extends BaseActivity {
                 }
 
                 if (actionBar != null) {
-                    actionBar.setTitle(item.getTitle());
+                    switch (item.getItemId()) {
+                        case R.id.nav_home:
+                            actionBar.setTitle("");
+                            actionBar.setIcon(R.drawable.home_logo);
+                            break;
+                        default:
+                            actionBar.setTitle(item.getTitle());
+                            actionBar.setIcon(R.drawable.toolbar_pvt_icon);
+                    }
                 }
 
                 return false;
@@ -91,8 +99,9 @@ public class DriverHomeActivity extends BaseActivity {
         tvUserBalance = (TextView) nvHeader.findViewById(R.id.tv_user_balance);
 
         if (actionBar != null) {
-            actionBar.setTitle(R.string.home);
+            actionBar.setTitle("");
         }
+
         getSupportFragmentManager().beginTransaction().replace(R.id.layout_fragment_container, new DriverHomeFragment()).commit();
 
     }
