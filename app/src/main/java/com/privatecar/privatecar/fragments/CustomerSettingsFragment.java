@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.activities.CustomerAddCreditCardActivity;
+import com.privatecar.privatecar.activities.CustomerAddPromoCodeActivity;
 import com.privatecar.privatecar.activities.CustomerChangePasswordActivity;
 
 public class CustomerSettingsFragment extends BaseFragment implements View.OnClickListener {
@@ -18,6 +20,8 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
     Activity activity;
     View rootView;
     View layoutChangePassword;
+    View layoutAddCreditCard;
+    View layoutPromoCode;
 
     public CustomerSettingsFragment() {
         // Required empty public constructor
@@ -37,6 +41,14 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
             // customize change password layout
             layoutChangePassword = rootView.findViewById(R.id.layout_change_password);
             layoutChangePassword.setOnClickListener(this);
+
+            // customize add credit card layout
+            layoutAddCreditCard = rootView.findViewById(R.id.layout_add_credit_card);
+            layoutAddCreditCard.setOnClickListener(this);
+
+            // customize promo code layout
+            layoutPromoCode = rootView.findViewById(R.id.layout_promo_code);
+            layoutPromoCode.setOnClickListener(this);
         }
 
         return rootView;
@@ -49,6 +61,17 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
                 // open change password activity
                 startActivity(new Intent(activity, CustomerChangePasswordActivity.class));
                 break;
+
+            case R.id.layout_add_credit_card:
+                // open add credit card activity
+                startActivity(new Intent(activity, CustomerAddCreditCardActivity.class));
+                break;
+
+            case R.id.layout_promo_code:
+                // open add promo code activity
+                startActivity(new Intent(activity, CustomerAddPromoCodeActivity.class));
+                break;
+
         }
     }
 }

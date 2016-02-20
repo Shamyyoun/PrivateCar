@@ -219,6 +219,9 @@
         <activity
             android:name=".activities.CustomerChangePasswordActivity"
             android:label="@string/change_password" />
+        <activity
+            android:name=".activities.CustomerAddCreditCardActivity"
+            android:label="@string/add_credit_card" />
     </application>
 
 </manifest>
