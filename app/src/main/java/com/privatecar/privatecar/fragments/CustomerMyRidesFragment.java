@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class CustomerMyRidesFragment extends BaseFragment {
-
+    public static final String TAG = CustomerMyRidesFragment.class.getName();
 
     ArrayList<Ride> rides = new ArrayList<>();
     RecyclerView rvRides;
