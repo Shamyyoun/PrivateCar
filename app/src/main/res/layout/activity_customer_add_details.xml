@@ -25,7 +25,6 @@
             android:gravity="start|top"
             android:hint="@string/add_details_for_pick_up"
             android:inputType="textMultiLine"
-            android:minHeight="120dp"
             android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"

@@ -106,7 +106,7 @@
     <string name="promo_codes">Promo codes</string>
     <string name="go">Go!</string>
     <string name="payment_by_customer_credit_done">Payment by Customer\'s Credit Card Done.</string>
-    <string name="please_type_comment_here">Please write your comment here</string>
+    <string name="please_type_comment_here">Please write your comment here...</string>
     <string name="customer_behaved_badly">The customer behaved badly</string>
     <string name="customer_arrived_late">The customer arrived tool late</string>
     <string name="customer_made_illegal_action">The customer made an illegal action</string>
@@ -133,8 +133,25 @@
     <string name="message_details">Message Details</string>
     <string name="select_full_day_car_type">Select full day car type</string>
     <string name="business_1_people">Business\n1 People</string>
-    <string name="ride_no">Ride no:</string>
+    <string name="ride_no">Ride No.:</string>
     <string name="driver_c">Driver:</string>
     <string name="car_c">Car:</string>
     <string name="avg">AVG</string>
+    <string name="travel_price_c">Travel Price:</string>
+    <string name="current_statement_c">Current Statement:</string>
+    <string name="current_balance_c">Current Balance:</string>
+    <string name="card_no">Card NO.</string>
+    <string name="name">Name</string>
+    <string name="cvv">CVV</string>
+    <string name="exp_mm_yy">EXP&#160;&#160;&#160;&#160;&#160;&#160;MM/YY</string>
+    <string name="country">Country</string>
+    <string name="receipt_no_c">Receipt No.:</string>
+    <string name="receipt">Receipt</string>
+    <string name="ok">Ok</string>
+    <string name="driver_behaviour_worse">The driver behaviour Worse</string>
+    <string name="car_not_clean">The car isn\'t clean</string>
+    <string name="driver_arrived_too_late">Driver arrived too late</string>
+    <string name="lack_of_knowledge_of_places">Lack of knowledge of the driver places</string>
+    <string name="driver_id_c">Driver ID:</string>
+    <string name="thank_you">Thank You</string>
 </resources>

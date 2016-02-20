@@ -168,7 +168,8 @@
             android:label="@string/payment" />
         <activity
             android:name=".activities.DriverRateTripActivity"
-            android:label="@string/rate" />
+            android:label="@string/rate"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".activities.CustomerAddDetailsActivity"
             android:label="@string/add_details" />
@@ -196,6 +197,25 @@
         <activity
             android:name=".activities.DriverDocumentDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar.FullTransparent" />
+        <activity
+            android:name=".activities.CustomerRideActivity"
+            android:label="@string/your_ride" />
+        <activity
+            android:name=".activities.CustomerCashPaymentActivity"
+            android:label="@string/payment" />
+        <activity
+            android:name=".activities.CustomerAccountPaymentActivity"
+            android:label="@string/payment" />
+        <activity
+            android:name=".activities.CustomerCreditCardPaymentActivity"
+            android:label="@string/payment" />
+        <activity
+            android:name=".activities.CustomerReceiptActivity"
+            android:label="@string/receipt" />
+        <activity
+            android:name=".activities.CustomerRateActivity"
+            android:label="@string/rate"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
     </application>
 
 </manifest>

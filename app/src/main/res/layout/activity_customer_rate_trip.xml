@@ -43,13 +43,13 @@
             style="@style/white_normal_bold_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Client Id: " />
+            android:text="@string/driver_id_c" />
 
         <TextView
             style="@style/white_normal_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AA1234" />
+            android:text=" AA1234" />
     </LinearLayout>
 
     <RatingBar
@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
-        android:rating="1.5"
+        android:rating="3"
         android:stepSize="0.5"
         android:theme="@style/GoldenRatingBarTheme" />
 
@@ -67,25 +67,26 @@
         android:layout_height="wrap_content">
 
         <RadioButton
-            android:id="@+id/rb_car_accident"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/customer_behaved_badly" />
+            android:text="@string/driver_behaviour_worse" />
 
         <RadioButton
-            android:id="@+id/rb_overcrowded_roads"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/customer_arrived_late" />
+            android:text="@string/car_not_clean" />
 
         <RadioButton
-            android:id="@+id/rb_praying"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/customer_made_illegal_action" />
+            android:text="@string/driver_arrived_too_late" />
 
         <RadioButton
-            android:id="@+id/rb_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lack_of_knowledge_of_places" />
+
+        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/other" />
@@ -93,29 +94,29 @@
     </RadioGroup>
 
     <ScrollView
+        android:background="@drawable/edit_text_rounded_grayish_border"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
-        android:layout_weight="1"
-        android:background="@drawable/edit_text_rounded_grayish_border">
+        android:layout_weight="1">
 
         <EditText
+            android:textAppearance="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:gravity="start|top"
-            android:hint="@string/please_type_comment_here"
-            android:inputType="textMultiLine"
             android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="5dp"
-            android:textAppearance="?android:textAppearanceSmall" />
+            android:background="@null"
+            android:gravity="start|top"
+            android:hint="@string/please_type_comment_here"
+            android:inputType="textMultiLine" />
     </ScrollView>
 
     <Button
-        android:id="@+id/btn_send"
+        android:id="@+id/btn_rate"
         style="@style/submit_yellowish_button_with_half_star"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -45,13 +45,13 @@
             android:padding="7dp">
 
             <TextView
-                style="@style/white_medium_bold_capitalized_text"
+                style="@style/white_normal_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ride_no" />
 
             <TextView
-                style="@style/white_medium_capitalized_text"
+                style="@style/white_normal_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" AA1234" />
@@ -176,6 +176,7 @@
                 android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/btn_call"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:adjustViewBounds="true"
