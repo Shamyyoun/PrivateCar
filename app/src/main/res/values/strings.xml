@@ -154,6 +154,10 @@
     <string name="lack_of_knowledge_of_places">Lack of knowledge of the driver places</string>
     <string name="driver_id_c">Driver ID:</string>
     <string name="thank_you">Thank You</string>
+    <string name="pickup_address">Pickup Address:</string>
+    <string name="drop_off_address">Drop Off Address:</string>
+    <string name="price">Price:</string>
+    <string name="date_head">Date:</string>
     <string name="counter_start">Counter start = </string>
     <string name="_1_km">1 KM = </string>
     <string name="_1_min_wait">1 Min wait = </string>
