@@ -13,6 +13,7 @@ import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.CustomerAddCreditCardActivity;
 import com.privatecar.privatecar.activities.CustomerAddPromoCodeActivity;
 import com.privatecar.privatecar.activities.CustomerChangePasswordActivity;
+import com.privatecar.privatecar.dialogs.CustomerChangeLanguageDialog;
 
 public class CustomerSettingsFragment extends BaseFragment implements View.OnClickListener {
     public static final String TAG = CustomerSettingsFragment.class.getName();
@@ -22,6 +23,9 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
     View layoutChangePassword;
     View layoutAddCreditCard;
     View layoutPromoCode;
+    View layoutLanguage;
+
+    CustomerChangeLanguageDialog languageDialog;
 
     public CustomerSettingsFragment() {
         // Required empty public constructor
@@ -49,6 +53,10 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
             // customize promo code layout
             layoutPromoCode = rootView.findViewById(R.id.layout_promo_code);
             layoutPromoCode.setOnClickListener(this);
+
+            // customize language layout
+            layoutLanguage = rootView.findViewById(R.id.layout_language);
+            layoutLanguage.setOnClickListener(this);
         }
 
         return rootView;
@@ -70,6 +78,15 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
             case R.id.layout_promo_code:
                 // open add promo code activity
                 startActivity(new Intent(activity, CustomerAddPromoCodeActivity.class));
+                break;
+
+            case R.id.layout_language:
+                // show change language dialog
+                if (languageDialog == null) {
+                    languageDialog = new CustomerChangeLanguageDialog(activity);
+                }
+                languageDialog.show();
+
                 break;
 
         }
