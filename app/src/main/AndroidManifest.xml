@@ -225,6 +225,9 @@
         <activity
             android:name=".activities.CustomerInviteFriendsActivity"
             android:label="@string/invite_friends" />
+        <activity
+            android:name=".activities.CustomerAboutPrivateActivity"
+            android:label="@string/about_private" />
     </application>
 
 </manifest>

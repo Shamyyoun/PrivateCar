@@ -1,5 +1,6 @@
 package com.privatecar.privatecar.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -104,6 +105,21 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
                 if (fragment == null)
                     fragment = new CustomerSettingsFragment();
                 break;
+
+            case R.id.nav_promo_code:
+                // open add promo code activity
+                startActivity(new Intent(this, CustomerAddPromoCodeActivity.class));
+                break;
+
+            case R.id.nav_tell_friend:
+                // open invite friends activity
+                startActivity(new Intent(this, CustomerInviteFriendsActivity.class));
+                break;
+
+            case R.id.nav_about:
+                // open about private activity
+                startActivity(new Intent(this, CustomerAboutPrivateActivity.class));
+                break;
         }
 
         // check fragment
@@ -122,19 +138,17 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
 
             // check selected item
             item.setChecked(true);
-
-            // close navigation drawer after static time to prevent block fragment loading
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    dlDrawer.closeDrawer(GravityCompat.END);
-                }
-            }, 150);
-
-            return true;
-        } else {
-            return false;
         }
+
+        // close navigation drawer after static time
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dlDrawer.closeDrawer(GravityCompat.END);
+            }
+        }, 150);
+
+        return true;
     }
 
     @Override

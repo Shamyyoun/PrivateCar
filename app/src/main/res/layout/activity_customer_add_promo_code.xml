@@ -33,5 +33,7 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/petroleum_rounded_corners_shape"
         android:text="@string/save"
-        android:textAllCaps="true" />
+        android:textAllCaps="true"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@android:color/white" />
 </RelativeLayout>

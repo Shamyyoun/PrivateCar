@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.activities.CustomerAboutPrivateActivity;
 import com.privatecar.privatecar.activities.CustomerAddCreditCardActivity;
 import com.privatecar.privatecar.activities.CustomerAddPromoCodeActivity;
 import com.privatecar.privatecar.activities.CustomerChangePasswordActivity;
@@ -103,6 +104,11 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
             case R.id.layout_tell_friends:
                 // open invite friends activity
                 startActivity(new Intent(activity, CustomerInviteFriendsActivity.class));
+                break;
+
+            case R.id.layout_about_private:
+                // open about private activity
+                startActivity(new Intent(activity, CustomerAboutPrivateActivity.class));
                 break;
 
         }
