@@ -74,6 +74,8 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
+        boolean selectItem = true;
+
         // get the suitable fragment
         Fragment fragment = null;
         String tag = null;
@@ -108,16 +110,19 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
 
             case R.id.nav_promo_code:
                 // open add promo code activity
+                selectItem = false;
                 startActivity(new Intent(this, CustomerAddPromoCodeActivity.class));
                 break;
 
             case R.id.nav_tell_friend:
                 // open invite friends activity
+                selectItem = false;
                 startActivity(new Intent(this, CustomerInviteFriendsActivity.class));
                 break;
 
             case R.id.nav_about:
                 // open about private activity
+                selectItem = false;
                 startActivity(new Intent(this, CustomerAboutPrivateActivity.class));
                 break;
         }
@@ -135,10 +140,10 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
             // add to back stackk & commit transaction
             ft.addToBackStack(tag);
             ft.commitAllowingStateLoss();
-
-            // check selected item
-            item.setChecked(true);
         }
+
+        // select / unselect item
+        item.setChecked(selectItem);
 
         // close navigation drawer after static time
         new Handler().postDelayed(new Runnable() {
@@ -148,7 +153,7 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
             }
         }, 150);
 
-        return true;
+        return selectItem;
     }
 
     @Override
