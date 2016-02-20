@@ -216,6 +216,9 @@
             android:name=".activities.CustomerRateActivity"
             android:label="@string/rate"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".activities.CustomerChangePasswordActivity"
+            android:label="@string/change_password" />
     </application>
 
 </manifest>
