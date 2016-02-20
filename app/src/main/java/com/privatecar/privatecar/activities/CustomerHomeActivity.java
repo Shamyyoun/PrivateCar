@@ -1,7 +1,11 @@
 package com.privatecar.privatecar.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -14,8 +18,9 @@ import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.fragments.BookALiftFragment;
+import com.privatecar.privatecar.fragments.CustomerPricesFragment;
 
-public class CustomerHomeActivity extends BaseActivity {
+public class CustomerHomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout dlDrawer;
     NavigationView nvDrawer;
@@ -40,13 +45,7 @@ public class CustomerHomeActivity extends BaseActivity {
 
         dlDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         nvDrawer = (NavigationView) findViewById(R.id.nv_drawer);
-        nvDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                item.setChecked(true);
-                return false;
-            }
-        });
+        nvDrawer.setNavigationItemSelectedListener(this);
 
         nvHeader = nvDrawer.getHeaderView(0);
         ivUserImage = (ImageView) nvHeader.findViewById(R.id.iv_user_image);
@@ -54,8 +53,72 @@ public class CustomerHomeActivity extends BaseActivity {
         tvUserID = (TextView) nvHeader.findViewById(R.id.tv_user_id);
         tvUserBalance = (TextView) nvHeader.findViewById(R.id.tv_user_balance);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.layout_fragment_container, new BookALiftFragment()).commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.layout_fragment_container, new BookALiftFragment(), BookALiftFragment.TAG)
+                .commit();
 
+    }
+
+    /**
+     * overridden method, used to handle click of an item in the navigation menu
+     *
+     * @param item
+     * @return boolean
+     */
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // begin fragment transaction
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+
+        // get the suitable fragment
+        Fragment fragment = null;
+        String tag = null;
+        switch (item.getItemId()) {
+            case R.id.nav_book_lift:
+                tag = BookALiftFragment.TAG;
+                fragment = fm.findFragmentByTag(tag);
+                if (fragment == null)
+                    fragment = new BookALiftFragment();
+                break;
+
+            case R.id.nav_prices:
+                tag = CustomerPricesFragment.TAG;
+                fragment = fm.findFragmentByTag(tag);
+                if (fragment == null)
+                    fragment = new CustomerPricesFragment();
+                break;
+        }
+
+        // check fragment
+        if (fragment != null) {
+
+            // check to add fragment or replace it
+            if (fragment.isAdded()) {
+                ft.show(fragment);
+            } else {
+                ft.replace(R.id.layout_fragment_container, fragment, tag);
+            }
+
+            // add to back stackk & commit transaction
+            ft.addToBackStack(tag);
+            ft.commitAllowingStateLoss();
+
+            // check selected item
+            item.setChecked(true);
+
+            // close navigation drawer after static time to prevent block fragment loading
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    dlDrawer.closeDrawer(GravityCompat.END);
+                }
+            }, 150);
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
