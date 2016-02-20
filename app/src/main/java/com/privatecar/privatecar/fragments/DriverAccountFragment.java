@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverAddCarActivity;
 import com.privatecar.privatecar.activities.DriverDocumentsActivity;
+import com.privatecar.privatecar.activities.DriverSettingsActivity;
 import com.privatecar.privatecar.utils.Utils;
 
 public class DriverAccountFragment extends BaseFragment implements View.OnClickListener {
@@ -39,6 +40,9 @@ public class DriverAccountFragment extends BaseFragment implements View.OnClickL
 
         View layoutDocuments = fragment.findViewById(R.id.layout_documents);
         layoutDocuments.setOnClickListener(this);
+
+        View layoutSettings = fragment.findViewById(R.id.layout_settings);
+        layoutSettings.setOnClickListener(this);
 
 
         return fragment;
@@ -86,6 +90,9 @@ public class DriverAccountFragment extends BaseFragment implements View.OnClickL
                 break;
             case R.id.layout_documents:
                 startActivity(new Intent(getActivity(), DriverDocumentsActivity.class));
+                break;
+            case R.id.layout_settings:
+                startActivity(new Intent(getActivity(), DriverSettingsActivity.class));
                 break;
         }
     }

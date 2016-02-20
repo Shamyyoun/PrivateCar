@@ -223,6 +223,9 @@
             android:name=".activities.CustomerAddCreditCardActivity"
             android:label="@string/add_credit_card" />
         <activity
+            android:name=".activities.DriverSettingsActivity"
+            android:label="@string/settings" />
+        <activity
             android:name=".activities.CustomerInviteFriendsActivity"
             android:label="@string/invite_friends" />
         <activity
