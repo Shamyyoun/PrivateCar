@@ -221,6 +221,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_language"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -256,6 +257,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_tell_friends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -283,6 +285,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_about_private"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

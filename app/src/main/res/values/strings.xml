@@ -174,4 +174,6 @@
     <string name="we_support_visa_master">We currently support Visa and MasterCard</string>
     <string name="credit_card_will_be_debited_by_1_egp">Your credit card will be debited by 1 EGP to verify the card.
         Dont\'t worry, this amount will be fully re-funded.</string>
+    <string name="change_language">Change Language</string>
+    <string name="invite_friends">Invite Friends</string>
 </resources>
