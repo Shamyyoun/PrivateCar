@@ -157,4 +157,11 @@
     <string name="counter_start">Counter start = </string>
     <string name="_1_km">1 KM = </string>
     <string name="_1_min_wait">1 Min wait = </string>
+    <string name="change_password">Change Password</string>
+    <string name="add_credit_card">Add Credit Card</string>
+    <string name="language">Language</string>
+    <string name="tell_friends">Tell Friends</string>
+    <string name="customer_services">Customer Services</string>
+    <string name="english">English</string>
+    <string name="arabic">عربي</string>
 </resources>

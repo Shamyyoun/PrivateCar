@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.fragments.BookALiftFragment;
 import com.privatecar.privatecar.fragments.CustomerPricesFragment;
+import com.privatecar.privatecar.fragments.CustomerSettingsFragment;
 
 public class CustomerHomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -88,6 +89,13 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
                 if (fragment == null)
                     fragment = new CustomerPricesFragment();
                 break;
+
+            case R.id.nav_settings:
+                tag = CustomerSettingsFragment.TAG;
+                fragment = fm.findFragmentByTag(tag);
+                if (fragment == null)
+                    fragment = new CustomerSettingsFragment();
+                break;
         }
 
         // check fragment
@@ -126,7 +134,7 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
         if (dlDrawer.isDrawerOpen(GravityCompat.END)) {
             dlDrawer.closeDrawer(GravityCompat.END);
         } else {
-            super.onBackPressed();
+            finish();
         }
     }
 
