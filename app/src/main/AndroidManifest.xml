@@ -222,6 +222,9 @@
         <activity
             android:name=".activities.CustomerAddCreditCardActivity"
             android:label="@string/add_credit_card" />
+        <activity
+            android:name=".activities.DriverSettingsActivity"
+            android:label="@string/settings" />
     </application>
 
 </manifest>
