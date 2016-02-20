@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/widgets_vertical_space"
     android:background="@drawable/petroleum_rounded_corners_shape"
     android:orientation="vertical">
 
@@ -10,120 +11,120 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="7dp">
+        android:orientation="horizontal">
 
         <TextView
-            style="@style/yellowish_medium_bold_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ride_no" />
+            android:text="@string/ride_no"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_ride_number"
-            style="@style/white_medium_bold_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
             tools:text="2100" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="7dp">
+        android:orientation="horizontal">
 
         <TextView
-            style="@style/yellowish_medium_bold_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/receipt_no_c" />
+            android:text="@string/receipt_no_c"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_receipt_number"
-            style="@style/white_medium_bold_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
             tools:text="2100" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="7dp">
+        android:orientation="horizontal">
 
         <TextView
-            style="@style/yellowish_medium_bold_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pickup_address" />
+            android:text="@string/pickup_address"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_pickup_address"
-            style="@style/white_medium_bold_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
             tools:text="Pickup Address" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="7dp">
+        android:orientation="horizontal">
 
         <TextView
-            style="@style/yellowish_medium_bold_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/drop_off_address" />
+            android:text="@string/drop_off_address"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_drop_off_address"
-            style="@style/white_medium_bold_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
             tools:text="Drop Off Address" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="7dp">
+        android:orientation="horizontal">
 
         <TextView
-            style="@style/yellowish_medium_bold_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/price" />
+            android:text="@string/price"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_price"
-            style="@style/white_medium_bold_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
             tools:text="77" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="7dp">
+        android:orientation="horizontal">
 
         <TextView
-            style="@style/yellowish_medium_bold_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/date_head" />
+            android:text="@string/date_head"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_date"
-            style="@style/white_medium_bold_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
             tools:text="20 Jan 2016" />
     </LinearLayout>
 

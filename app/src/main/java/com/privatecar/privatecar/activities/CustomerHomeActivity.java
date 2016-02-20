@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.fragments.BookALiftFragment;
+import com.privatecar.privatecar.fragments.CustomerMyRidesFragment;
 import com.privatecar.privatecar.fragments.CustomerPricesFragment;
 import com.privatecar.privatecar.fragments.CustomerSettingsFragment;
 
@@ -81,6 +82,13 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
                 fragment = fm.findFragmentByTag(tag);
                 if (fragment == null)
                     fragment = new BookALiftFragment();
+                break;
+
+            case R.id.nav_my_rides:
+                tag = CustomerMyRidesFragment.TAG;
+                fragment = fm.findFragmentByTag(tag);
+                if (fragment == null)
+                    fragment = new CustomerMyRidesFragment();
                 break;
 
             case R.id.nav_prices:
