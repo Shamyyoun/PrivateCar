@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/petroleum_rounded_corners_shape"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="7dp">
+
+        <TextView
+            style="@style/yellowish_medium_bold_capitalized_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ride_no" />
+
+        <TextView
+            android:id="@+id/tv_ride_number"
+            style="@style/white_medium_bold_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="2100" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="7dp">
+
+        <TextView
+            style="@style/yellowish_medium_bold_capitalized_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/receipt_no_c" />
+
+        <TextView
+            android:id="@+id/tv_receipt_number"
+            style="@style/white_medium_bold_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="2100" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="7dp">
+
+        <TextView
+            style="@style/yellowish_medium_bold_capitalized_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pickup_address" />
+
+        <TextView
+            android:id="@+id/tv_pickup_address"
+            style="@style/white_medium_bold_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Pickup Address" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="7dp">
+
+        <TextView
+            style="@style/yellowish_medium_bold_capitalized_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/drop_off_address" />
+
+        <TextView
+            android:id="@+id/tv_drop_off_address"
+            style="@style/white_medium_bold_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Drop Off Address" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="7dp">
+
+        <TextView
+            style="@style/yellowish_medium_bold_capitalized_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/price" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/white_medium_bold_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="77" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="7dp">
+
+        <TextView
+            style="@style/yellowish_medium_bold_capitalized_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date_head" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            style="@style/white_medium_bold_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="20 Jan 2016" />
+    </LinearLayout>
+
+
+</LinearLayout>

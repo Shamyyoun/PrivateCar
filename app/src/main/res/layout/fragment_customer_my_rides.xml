@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_margin"
+    android:divider="@drawable/linearlayout_vertical_divider_transparent"
+    android:orientation="vertical"
+    android:showDividers="middle"
+    tools:context="com.privatecar.privatecar.fragments.CustomerMyRidesFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/petroleum_rounded_corners_shape"
+        android:orientation="horizontal"
+        android:padding="7dp">
+
+        <TextView
+            style="@style/white_medium_bold_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Rides: " />
+
+        <TextView
+            style="@style/white_medium_bold_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="210 Rides" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/yellowish_rounded_corners_shape"
+        android:orientation="horizontal"
+        android:padding="7dp">
+
+        <TextView
+            style="@style/white_medium_bold_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Money: " />
+
+        <TextView
+            style="@style/white_medium_bold_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2100 EGP" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_rides"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

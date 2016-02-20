@@ -154,4 +154,8 @@
     <string name="lack_of_knowledge_of_places">Lack of knowledge of the driver places</string>
     <string name="driver_id_c">Driver ID:</string>
     <string name="thank_you">Thank You</string>
+    <string name="pickup_address">Pickup Address:</string>
+    <string name="drop_off_address">Drop Off Address:</string>
+    <string name="price">Price:</string>
+    <string name="date_head">Date:</string>
 </resources>
