@@ -9,7 +9,7 @@
         android:id="@+id/tv_promo_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/promo_code"
+        android:text="@string/promo_code_cc"
         android:textStyle="bold" />
 
     <EditText

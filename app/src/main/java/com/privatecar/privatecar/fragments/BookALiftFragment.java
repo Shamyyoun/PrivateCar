@@ -17,8 +17,10 @@ import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.CustomerPickupActivity;
 
 public class BookALiftFragment extends BaseFragment implements OnMapReadyCallback, View.OnClickListener {
+    public static final String TAG = BookALiftFragment.class.getName();
 
     Activity activity;
+    View rootView;
     TextView tvUserName, tvUserID;
     View layoutPickNow;
 
@@ -34,16 +36,20 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_book_alift, container, false);
+        // check root view
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_book_alift, container, false);
 
-        tvUserName = (TextView) view.findViewById(R.id.tv_user_name);
-        tvUserID = (TextView) view.findViewById(R.id.tv_user_id);
-        layoutPickNow = view.findViewById(R.id.layout_pick_now);
+            tvUserName = (TextView) rootView.findViewById(R.id.tv_user_name);
+            tvUserID = (TextView) rootView.findViewById(R.id.tv_user_id);
+            layoutPickNow = rootView.findViewById(R.id.layout_pick_now);
 
-        // add click listeners
-        layoutPickNow.setOnClickListener(this);
+            // add click listeners
+            layoutPickNow.setOnClickListener(this);
 
-        return view;
+        }
+
+        return rootView;
     }
 
     @Override

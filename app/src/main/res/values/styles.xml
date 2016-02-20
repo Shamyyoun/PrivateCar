@@ -243,5 +243,23 @@
         <item name="centered">true</item>
     </style>
 
+    <!-- Pinned Label -->
+    <style name="PinnedLabel">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">1dp</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!-- Petroleum Pinned Label -->
+    <style name="PetroleumPinnedLabel" parent="PinnedLabel">
+        <item name="android:background">@drawable/petroleum_small_rounded_corners_shape</item>
+    </style>
+
+    <!-- Yellowish Pinned Label -->
+    <style name="YellowishPinnedLabel" parent="PinnedLabel">
+        <item name="android:background">@drawable/yellowish_small_rounded_corners_shape</item>
+    </style>
 
 </resources>
