@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.content.res.Configuration;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -182,8 +183,8 @@ public class Utils {
     /**
      * hide keyboard in edit text field
      */
-    public void hideKeyboard(Activity activity, EditText et) {
-        InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+    public static void hideKeyboard(EditText et) {
+        InputMethodManager inputManager = (InputMethodManager) et.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(et.getWindowToken(), 0);
     }
 
@@ -196,12 +197,20 @@ public class Utils {
     }
 
 
-    public static void showToast(Context context, String text) {
-        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+    public static void showShortToast(Context context, String text) {
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 
 
-    public static void showToast(Context context, int textID) {
+    public static void showShortToast(Context context, int textID) {
+        Toast.makeText(context, textID, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void showLongToast(Context context, String text) {
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+    }
+
+    public static void showLongToast(Context context, int textID) {
         Toast.makeText(context, textID, Toast.LENGTH_LONG).show();
     }
 
@@ -294,6 +303,20 @@ public class Utils {
         Configuration config = new Configuration();
         config.locale = locale;
         ctx.getResources().updateConfiguration(config, ctx.getResources().getDisplayMetrics());
+    }
+
+    /**
+     * method, used to check if gps  is enabled on the device or not
+     * @param context
+     * @return boolean variable
+     */
+    public static boolean isGpsEnabled(Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager == null) {
+            return false;
+        } else {
+            return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        }
     }
 
 }

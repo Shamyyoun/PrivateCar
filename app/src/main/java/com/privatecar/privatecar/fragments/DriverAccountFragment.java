@@ -55,7 +55,7 @@ public class DriverAccountFragment extends BaseFragment implements View.OnClickL
         builder.setTitle(R.string.select_car)
                 .setItems(cars, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Utils.showToast(getActivity(), cars[which]);
+                        Utils.showLongToast(getActivity(), cars[which]);
                     }
                 });
         builder.show();
@@ -69,7 +69,7 @@ public class DriverAccountFragment extends BaseFragment implements View.OnClickL
         builder.setTitle(R.string.select_car_type)
                 .setItems(types, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Utils.showToast(getActivity(), types[which]);
+                        Utils.showLongToast(getActivity(), types[which]);
                     }
                 });
         builder.show();
