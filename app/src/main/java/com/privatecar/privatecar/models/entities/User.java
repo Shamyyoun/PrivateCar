@@ -1,17 +1,28 @@
 package com.privatecar.privatecar.models.entities;
 
+import com.privatecar.privatecar.models.enums.UserType;
+
 /**
  * Created by basim on 22/1/16.
  * *
  */
 public class User {
+    private String accessToken;
     private String FirstName;
     private String LastName;
     private String Email;
     private String Password;
     private String Mobile;
     private String GrantType;
+    private UserType type;
 
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 
     public String getFirstName() {
         return FirstName;
@@ -61,4 +72,11 @@ public class User {
         GrantType = grantType;
     }
 
+    public UserType getType() {
+        return type;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
+    }
 }

@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.models.entities.Config;
+import com.privatecar.privatecar.models.responses.config.ConfigResponse;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
 
@@ -57,7 +57,7 @@ public class AnonymousHomeActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_one_lift:
-                String customerServiceNumber = AppUtils.getConfigValue(getApplicationContext(), Config.CUSTOMER_SERVICE_NUMBER_KEY);
+                String customerServiceNumber = AppUtils.getConfigValue(getApplicationContext(), ConfigResponse.KEY_CUSTOMER_SERVICE_NUMBER);
                 if (customerServiceNumber != null) {
                     showCallDialog(customerServiceNumber);
                 }

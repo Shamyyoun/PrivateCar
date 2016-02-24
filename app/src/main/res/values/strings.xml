@@ -184,4 +184,12 @@
         <item>From Gallery</item>
         <item>From Camera</item>
     </string-array>
+    <string name="required">Required</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="loading_please_wait">Loading, pleas wait...</string>
+    <string name="gps_option">GPS Option</string>
+    <string name="enable_gps_to_use_app">To use this app you should turn on your GPS so please go to settings and turn it on.</string>
+    <string name="unexpected_error_try_again">Unexpected error, try again</string>
+    <string name="invalid_credentials">Invalid credentials</string>
+    <string name="connection_error"></string>
 </resources>

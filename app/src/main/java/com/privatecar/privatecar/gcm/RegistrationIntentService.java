@@ -21,8 +21,7 @@ import java.io.IOException;
  * this service gets a token from the gcm server
  */
 
-public class
-        RegistrationIntentService extends IntentService {
+public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";
 

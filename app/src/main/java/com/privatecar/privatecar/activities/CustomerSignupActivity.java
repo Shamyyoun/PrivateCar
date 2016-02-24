@@ -211,7 +211,7 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
                                 }, 2000);
                             }
                         } else {
-                            Utils.showToast(getApplicationContext(), error.toString());
+                            Utils.showLongToast(getApplicationContext(), error.toString());
                         }
                     }
 
@@ -219,7 +219,7 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
                     public void onCancel() {
                         hideProgressDialog();
 
-                        Utils.showToast(getApplicationContext(), "Login cancelled");
+                        Utils.showLongToast(getApplicationContext(), "Login cancelled");
                     }
                 });
     }

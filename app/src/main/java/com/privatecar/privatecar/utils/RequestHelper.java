@@ -1,6 +1,7 @@
 package com.privatecar.privatecar.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -26,7 +27,7 @@ public class RequestHelper<T> {
 
     private static final String LOG_TAG = "request_helper";
     private static int TIMEOUT = 60 * 1000; // Ion's default timeout is 30 seconds.
-    Activity activity;
+    Context context;
     String baseUrl;
     String apiName;
     Class<?> cls;
@@ -39,16 +40,16 @@ public class RequestHelper<T> {
     long startTime, finishTime;
 
 
-    public RequestHelper(Activity activity, String baseUrl, String apiName, @Nullable Class<?> cls, RequestListener<T> listener) {
-        this.activity = activity;
+    public RequestHelper(Context context, String baseUrl, String apiName, @Nullable Class<?> cls, RequestListener<T> listener) {
+        this.context = context;
         this.baseUrl = baseUrl;
         this.apiName = apiName;
         this.cls = cls;
         this.listener = listener;
     }
 
-    public RequestHelper(Activity activity, String baseUrl, String apiName, @Nullable Class<?> cls, RequestListener<T> listener, Map<String, String> params) {
-        this(activity, baseUrl, apiName, cls, listener);
+    public  RequestHelper(Context context, String baseUrl, String apiName, @Nullable Class<?> cls, RequestListener<T> listener, Map<String, String> params) {
+        this(context, baseUrl, apiName, cls, listener);
         if (params != null) {
             this.params = new HashMap<>();
             for (String key : params.keySet()) {
@@ -58,8 +59,8 @@ public class RequestHelper<T> {
 
     }
 
-    public RequestHelper(Activity activity, String baseUrl, String apiName, @Nullable Class<?> cls, RequestListener<T> listener, Map<String, String> params, Map<String, File> files) {
-        this(activity, baseUrl, apiName, cls, listener, params);
+    public RequestHelper(Context context, String baseUrl, String apiName, @Nullable Class<?> cls, RequestListener<T> listener, Map<String, String> params, Map<String, File> files) {
+        this(context, baseUrl, apiName, cls, listener, params);
         this.files = files;
     }
 
@@ -80,6 +81,7 @@ public class RequestHelper<T> {
 
     /**
      * Execute get request. (requires baseUrl & apiName)
+     *
      * @return Future object for cancelling the request.
      */
     public Future<String> executeGet() {
@@ -88,7 +90,7 @@ public class RequestHelper<T> {
         } else {
             printLogs(0);  // request started
 
-            future = Ion.with(activity)
+            future = Ion.with(context)
                     .load(baseUrl + apiName)
                     .setTimeout(TIMEOUT)
                     .asString()
@@ -106,6 +108,7 @@ public class RequestHelper<T> {
     /**
      * Execute x-www-form-urlencoded post request with string parameters.
      * (requires at least baseUrl & apiName)
+     *
      * @return Future object for cancelling the request.
      */
     public Future<String> executeFormUrlEncoded() {
@@ -114,7 +117,7 @@ public class RequestHelper<T> {
         } else {
             printLogs(0);
 
-            Builders.Any.B ionBuilder = Ion.with(activity)
+            Builders.Any.B ionBuilder = Ion.with(context)
                     .load("POST", baseUrl + apiName)
                     .setTimeout(TIMEOUT);
 
@@ -140,6 +143,7 @@ public class RequestHelper<T> {
     /**
      * Execute a multipart post request with text and image parameters.
      * (requires at least baseUrl & apiName)
+     *
      * @return Future object for cancelling the request.
      */
     public Future<String> executeMultiPart() {
@@ -149,7 +153,7 @@ public class RequestHelper<T> {
             printLogs(0);  // request started
 
             Builders.Any.B ionBuilder =
-                    Ion.with(activity)
+                    Ion.with(context)
                             .load("POST", baseUrl + apiName)
                             .setTimeout(TIMEOUT);
 //                            .uploadProgress(new ProgressCallback() {
@@ -186,7 +190,8 @@ public class RequestHelper<T> {
 
     /**
      * Handles the completion of the request if (success or fail) and deserialize the string response using the given Class object and executes the  onFail or onSuccess method.
-     * @param e the exception object (may be null if request failed).
+     *
+     * @param e      the exception object (may be null if request failed).
      * @param result the string response.
      */
     @SuppressWarnings("unchecked")
@@ -215,6 +220,7 @@ public class RequestHelper<T> {
 
     /**
      * Cancels the request.
+     *
      * @param interruptThread true if the thread executing this task should be interrupted; otherwise, in-progress tasks are allowed to complete.
      * @return false if the task could not be cancelled, typically because it has already completed normally; true otherwise.
      */

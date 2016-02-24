@@ -3,8 +3,9 @@ package com.privatecar.privatecar.utils;
 import android.content.Context;
 
 import com.privatecar.privatecar.Const;
-import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.models.responses.config.ConfigResponse;
+import com.privatecar.privatecar.models.responses.config.Content;
 
 /**
  * Created by basim on 22/1/16.
@@ -15,22 +16,22 @@ public class AppUtils {
     /**
      * Cache app configs (retrieved by startupconfig message)
      *
-     * @param ctx     the application context
-     * @param configs the array of configs to cache
+     * @param ctx            the application context
+     * @param configResponse config response returned from the server
      */
-    public static void cacheConfigs(Context ctx, Config[] configs) {
-        SavePrefs<Config[]> savePrefs = new SavePrefs<>(ctx, Config[].class);
-        savePrefs.save(configs, Const.CACHE_CONFIGS);
+    public static void cacheConfigs(Context ctx, ConfigResponse configResponse) {
+        SavePrefs<ConfigResponse> savePrefs = new SavePrefs<>(ctx, ConfigResponse.class);
+        savePrefs.save(configResponse, Const.CACHE_CONFIGS);
     }
 
     /**
      * retrieve cached app configs
      *
      * @param ctx the application config
-     * @return the array of configs if cached otherwise null.
+     * @return the config response if cached otherwise null.
      */
-    public static Config[] getCachedConfigs(Context ctx) {
-        SavePrefs<Config[]> savePrefs = new SavePrefs<>(ctx, Config[].class);
+    public static ConfigResponse getCachedConfigs(Context ctx) {
+        SavePrefs<ConfigResponse> savePrefs = new SavePrefs<>(ctx, ConfigResponse.class);
         return savePrefs.load(Const.CACHE_CONFIGS);
     }
 
@@ -42,12 +43,12 @@ public class AppUtils {
      * @return the value if config is cached and found otherwise null.
      */
     public static String getConfigValue(Context ctx, String configKey) {
-        Config[] configs = getCachedConfigs(ctx);
+        ConfigResponse configResponse = getCachedConfigs(ctx);
 
-        if (configs != null) {
-            for (Config config : configs) {
-                if (config.getKey().equals(configKey))
-                    return config.getValue();
+        if (configResponse != null) {
+            for (Content configContent : configResponse.getContent()) {
+                if (configContent.getKey().equals(configKey))
+                    return configContent.getValue();
             }
         }
 
