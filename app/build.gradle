@@ -25,7 +25,6 @@ repositories {
 
 dependencies {
     testCompile 'junit:junit:4.12'
-    //    compile 'com.google.code.gson:gson:2.4' // gson is already included in ion
 
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.google.android.gms:play-services-auth:8.4.0'
@@ -43,13 +42,12 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.2.0'
     compile 'com.marshalchen.ultimaterecyclerview:library:0.3.18'
     compile 'com.soundcloud.android:android-crop:1.0.1@aar'
-    compile 'com.koushikdutta.ion:ion:2.1.6'
+    compile 'com.koushikdutta.ion:ion:2.1.6'  //include Gson
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.2'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.commit451:PhotoView:1.2.4'
+
 }
-
-
 
 
 apply plugin: 'com.google.gms.google-services'

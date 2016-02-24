@@ -17,8 +17,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp">
+            android:layout_gravity="center">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -28,9 +27,10 @@
 
                 <ImageButton
                     android:id="@+id/ib_user_photo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:background="?selectableItemBackgroundBorderless"
+                    android:onClick="onClick"
                     android:src="@drawable/add_placeholder" />
 
                 <TextView
@@ -41,6 +41,15 @@
                     android:focusableInTouchMode="true"
                     android:text="@string/your_photo"
                     android:textAllCaps="true" />
+
+                <ImageView
+                    android:id="@+id/iv_user_photo_validation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:src="@drawable/fail_icon"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
             </LinearLayout>
 
             <LinearLayout
@@ -52,9 +61,10 @@
 
                 <ImageButton
                     android:id="@+id/ib_car_photo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:background="?selectableItemBackgroundBorderless"
+                    android:onClick="onClick"
                     android:src="@drawable/add_placeholder" />
 
                 <TextView
@@ -63,6 +73,15 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/car_photo"
                     android:textAllCaps="true" />
+
+                <ImageView
+                    android:id="@+id/iv_car_photo_validation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:src="@drawable/fail_icon"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
             </LinearLayout>
         </LinearLayout>
 
@@ -84,8 +103,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/first_name"
                     android:inputType="textPersonName"
-                    android:nextFocusDown="@+id/et_last_name"
-                    android:singleLine="true" />
+                    android:nextFocusDown="@+id/et_last_name" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -178,9 +196,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:padding="10dp"
-                android:src="@drawable/success_icon"
-                android:visibility="invisible"
-                tools:visibility="visible" />
+                android:src="@null"
+                tools:src="@drawable/success_icon" />
 
             <ImageButton
                 android:id="@+id/ib_id_front_gallery"
@@ -188,6 +205,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:background="?selectableItemBackgroundBorderless"
+                android:onClick="onClick"
                 android:padding="10dp"
                 android:src="@drawable/open_gallery_icon" />
 
@@ -197,6 +215,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackgroundBorderless"
+                android:onClick="onClick"
                 android:padding="10dp"
                 android:src="@drawable/camera_icon" />
 
@@ -226,9 +245,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:padding="10dp"
-                android:src="@drawable/success_icon"
-                android:visibility="invisible"
-                tools:visibility="visible" />
+                android:src="@null"
+                tools:src="@drawable/success_icon" />
 
             <ImageButton
                 android:id="@+id/ib_id_back_gallery"
@@ -236,6 +254,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:background="?selectableItemBackgroundBorderless"
+                android:onClick="onClick"
                 android:padding="10dp"
                 android:src="@drawable/open_gallery_icon" />
 
@@ -244,6 +263,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackgroundBorderless"
+                android:onClick="onClick"
                 android:padding="10dp"
                 android:src="@drawable/camera_icon" />
 
@@ -274,9 +294,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:padding="10dp"
-                android:src="@drawable/success_icon"
-                android:visibility="invisible"
-                tools:visibility="visible" />
+                android:src="@null"
+                tools:src="@drawable/success_icon" />
 
             <ImageButton
                 android:id="@+id/ib_driver_licence_front_gallery"
@@ -284,6 +303,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:background="?selectableItemBackgroundBorderless"
+                android:onClick="onClick"
                 android:padding="10dp"
                 android:src="@drawable/open_gallery_icon" />
 
@@ -292,6 +312,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackgroundBorderless"
+                android:onClick="onClick"
                 android:padding="10dp"
                 android:src="@drawable/camera_icon" />
 
@@ -322,9 +343,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:padding="10dp"
-                android:src="@drawable/success_icon"
-                android:visibility="invisible"
-                tools:visibility="visible" />
+                android:src="@null"
+                tools:src="@drawable/success_icon" />
 
             <ImageButton
                 android:id="@+id/ib_driver_licence_back_gallery"
@@ -332,6 +352,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:background="?selectableItemBackgroundBorderless"
+                android:onClick="onClick"
                 android:padding="10dp"
                 android:src="@drawable/open_gallery_icon" />
 
@@ -340,6 +361,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackgroundBorderless"
+                android:onClick="onClick"
                 android:padding="10dp"
                 android:src="@drawable/camera_icon" />
 
@@ -370,9 +392,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:padding="10dp"
-                android:src="@drawable/success_icon"
-                android:visibility="invisible"
-                tools:visibility="visible" />
+                android:src="@null"
+                tools:src="@drawable/success_icon" />
 
             <ImageButton
                 android:id="@+id/ib_car_licence_front_gallery"
@@ -380,6 +401,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:background="?selectableItemBackgroundBorderless"
+                android:onClick="onClick"
                 android:padding="10dp"
                 android:src="@drawable/open_gallery_icon" />
 
@@ -388,6 +410,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackgroundBorderless"
+                android:onClick="onClick"
                 android:padding="10dp"
                 android:src="@drawable/camera_icon" />
 
@@ -418,9 +441,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:padding="10dp"
-                android:src="@drawable/success_icon"
-                android:visibility="invisible"
-                tools:visibility="visible" />
+                android:src="@null"
+                tools:src="@drawable/success_icon" />
 
             <ImageButton
                 android:id="@+id/ib_car_licence_back_gallery"
@@ -428,6 +450,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:background="?selectableItemBackgroundBorderless"
+                android:onClick="onClick"
                 android:padding="10dp"
                 android:src="@drawable/open_gallery_icon" />
 
@@ -436,6 +459,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackgroundBorderless"
+                android:onClick="onClick"
                 android:padding="10dp"
                 android:src="@drawable/camera_icon" />
 

@@ -180,4 +180,8 @@
     <string name="website_c">Website:</string>
     <string name="private_website">www.private.ws</string>
     <string name="update_now">Update Now</string>
+    <string-array name="photo_sources_array">
+        <item>From Gallery</item>
+        <item>From Camera</item>
+    </string-array>
 </resources>
