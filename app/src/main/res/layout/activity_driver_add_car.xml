@@ -52,7 +52,7 @@
             android:layout_marginEnd="10dp"
             android:background="?selectableItemBackgroundBorderless"
             android:padding="10dp"
-            android:src="@drawable/open_gallary_icon" />
+            android:src="@drawable/open_gallery_icon" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -86,7 +86,7 @@
             android:layout_marginEnd="10dp"
             android:background="?selectableItemBackgroundBorderless"
             android:padding="10dp"
-            android:src="@drawable/open_gallary_icon" />
+            android:src="@drawable/open_gallery_icon" />
 
         <ImageButton
             android:layout_width="wrap_content"
