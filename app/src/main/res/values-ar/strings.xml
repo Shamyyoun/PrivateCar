@@ -118,4 +118,6 @@
     <string name="drop_off_address">Drop Off Address:</string>
     <string name="price">Price:</string>
     <string name="date_head">Date:</string>
+    <string name="not_valid_email">Not Valid Email</string>
+    <string name="not_valid_mobile">Not Valid Mobile</string>
 </resources>
