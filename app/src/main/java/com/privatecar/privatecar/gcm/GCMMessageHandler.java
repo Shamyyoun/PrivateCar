@@ -4,21 +4,67 @@ package com.privatecar.privatecar.gcm;
  * Created by Basim Alamuddin on 13/12/2015.
  */
 
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
+import com.google.gson.Gson;
 import com.privatecar.privatecar.Const;
+import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.activities.TripRequestActivity;
+import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.models.enums.UserType;
+import com.privatecar.privatecar.models.payload.TripRequestPayload;
+import com.privatecar.privatecar.utils.AppUtils;
+
+import org.json.JSONObject;
 
 public class GCMMessageHandler extends GcmListenerService {
 
-    //to test if GCM works:-
-    //http://techzog.com/development/gcm-notification-test-tool-android/
-
-//    private static int notification_id = 0; //should be static to avoid reinitialization
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        String json_notification = data.getString("message");
-        Log.e(Const.LOG_TAG, "GCM Message: " + json_notification);
+        try {
+            // create gson object and get json string
+            Gson gson = new Gson();
+            String json = data.getString("message");
+
+            Log.e(Const.LOG_TAG, "GCM Message: " + json);
+
+            // get the key
+            JSONObject object = new JSONObject(json);
+            String key = object.optString("key");
+
+            // check logged in user type
+            User user = AppUtils.getCachedUser(this);
+            if (user != null && user.getType() != null && user.getType() == UserType.DRIVER) {
+                // this is a driver user
+                // check the key
+                if (key.equals("trip_request")) {
+                    // this is a trip request
+                    // parse the json string
+                    TripRequestPayload requestPayload = gson.fromJson(json, TripRequestPayload.class);
+
+                    // open trip request activity
+                    Intent intent = new Intent(this, TripRequestActivity.class);
+                    intent.putExtra(Const.KEY_TRIP_REQUEST, requestPayload.getTripRequest());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
+                    // play horn sound
+                    final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.horn);
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            mediaPlayer.release();
+                        }
+                    });
+                    mediaPlayer.start();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

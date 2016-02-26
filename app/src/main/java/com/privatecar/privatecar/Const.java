@@ -95,4 +95,7 @@ public class Const {
     public static final String MSG_PARAM_OS = "os";
     public static final String MSG_PARAM_GCM_ACCESS_TOKEN = "gcm_access_token";
     public static final String MSG_PARAM_ACCESS_TOKEN = "access_token";
+
+    //Intent & bundle keys
+    public static final String KEY_TRIP_REQUEST = "trip_request";
 }

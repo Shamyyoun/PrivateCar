@@ -8,28 +8,45 @@
     android:layout_marginTop="10dp"
     tools:background="@color/colorAccent">
 
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/iv_user_image"
+    <FrameLayout
+        android:id="@+id/layout_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginTop="@dimen/toolbar_padding_top"
-        android:scaleType="centerCrop"
-        android:src="@drawable/penelope_cruz"
-        app:riv_border_color="@color/textColorPrimary"
-        app:riv_border_width="0.5dip"
-        app:riv_corner_radius="5dip"
-        app:riv_mutate_background="true"
-        app:riv_oval="false" />
+        android:layout_marginTop="@dimen/toolbar_padding_top">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_user_def_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/def_user_photo"
+            app:riv_border_color="@color/textColorPrimary"
+            app:riv_border_width="0.5dip"
+            app:riv_corner_radius="5dip"
+            app:riv_mutate_background="true"
+            app:riv_oval="false" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_user_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:riv_border_color="@color/textColorPrimary"
+            app:riv_border_width="0.5dip"
+            app:riv_corner_radius="5dip"
+            app:riv_mutate_background="true"
+            app:riv_oval="false" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tv_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/iv_user_image"
+        android:layout_alignTop="@+id/layout_image"
         android:layout_marginEnd="5dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@id/iv_user_image"
+        android:layout_toEndOf="@id/layout_image"
         android:text="@string/welcome"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold" />
@@ -40,6 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tv_welcome"
         android:layout_toEndOf="@+id/tv_welcome"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:text="Penelope Cruz"
         android:textColor="@color/textColorPrimary"
         android:textStyle="bold" />
@@ -49,10 +68,10 @@
         android:id="@+id/tv_desc_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/iv_user_image"
+        android:layout_alignBottom="@id/layout_image"
         android:layout_marginBottom="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_toEndOf="@id/iv_user_image"
+        android:layout_toEndOf="@id/layout_image"
         android:text="@string/your_id"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold" />
