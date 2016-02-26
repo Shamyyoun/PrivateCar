@@ -181,7 +181,6 @@
     <string name="website_c">Website:</string>
     <string name="private_website">www.private.ws</string>
     <string name="update_now">Update Now</string>
-
     <string name="required">Required</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="loading_please_wait">Loading, pleas wait...</string>
@@ -195,4 +194,8 @@
         <item>From Gallery</item>
         <item>From Camera</item>
     </string-array>
+    <string name="not_valid_email">Not Valid Email</string>
+    <string name="not_valid_mobile">Not Valid Mobile</string>
+    <string name="registering">Registering</string>
+    <string name="short_password">Short Password</string>
 </resources>

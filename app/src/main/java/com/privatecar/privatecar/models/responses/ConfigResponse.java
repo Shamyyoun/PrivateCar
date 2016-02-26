@@ -20,7 +20,7 @@ public class ConfigResponse {
     private boolean status;
     @SerializedName("content")
     @Expose
-    private List<Config> config = new ArrayList<Config>();
+    private List<Config> configs = new ArrayList<Config>();
     @SerializedName("validation")
     @Expose
     private Object validation;
@@ -46,19 +46,19 @@ public class ConfigResponse {
     /**
      * 
      * @return
-     *     The config
+     *     The configs
      */
-    public List<Config> getConfig() {
-        return config;
+    public List<Config> getConfigs() {
+        return configs;
     }
 
     /**
      * 
-     * @param config
-     *     The config
+     * @param configs
+     *     The configs
      */
-    public void setConfig(List<Config> config) {
-        this.config = config;
+    public void setConfigs(List<Config> configs) {
+        this.configs = configs;
     }
 
     /**

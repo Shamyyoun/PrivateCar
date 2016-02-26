@@ -46,7 +46,7 @@ public class AppUtils {
         ConfigResponse configResponse = getCachedConfigs(ctx);
 
         if (configResponse != null) {
-            for (Config config : configResponse.getConfig()) {
+            for (Config config : configResponse.getConfigs()) {
                 if (config.getKey().equals(configKey))
                     return config.getValue();
             }

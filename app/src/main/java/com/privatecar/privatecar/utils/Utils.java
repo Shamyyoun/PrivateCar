@@ -246,6 +246,10 @@ public class Utils {
         return TextUtils.isEmpty(et.getText().toString().trim());
     }
 
+    public static String getText(EditText et) {
+        return et.getText().toString().trim();
+    }
+
     /**
      * converts the given timestamp to  readable date.
      *

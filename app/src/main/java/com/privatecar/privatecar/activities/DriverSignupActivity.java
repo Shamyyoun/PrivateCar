@@ -1,5 +1,6 @@
 package com.privatecar.privatecar.activities;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -19,15 +20,20 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.adapters.CountryAdapter;
+import com.privatecar.privatecar.models.responses.GeneralResponse;
+import com.privatecar.privatecar.requests.DriverRequests;
 import com.privatecar.privatecar.utils.BitmapUtils;
+import com.privatecar.privatecar.utils.CountriesUtils;
+import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
 
-public class DriverSignupActivity extends BasicBackActivity {
+public class DriverSignupActivity extends BasicBackActivity implements RequestListener<GeneralResponse> {
 
-    private EditText etFirstName, etLastName, etEmail, etMobile;
+    private EditText etFirstName, etLastName, etMobile, etEmail, etPassword;
     private Spinner spinner;
     private ImageButton ibUserPhoto, ibCarPhoto;
     private ImageView ivUserPhotoValidation, ivCarPhotoValidation, ivIdFrontValidation, ivIdBackValidation, ivDriverLicenceFrontValidation, ivDriverLicenceBackValidation, ivCarLicenceFrontValidation, ivCarLicenceBackValidation;
@@ -40,7 +46,8 @@ public class DriverSignupActivity extends BasicBackActivity {
     File imageDriverLicenceBackPhoto, imageDriverLicenceBackPhotoCropped;
     File imageCarLicenceFrontPhoto, imageCarLicenceFrontPhotoCropped;
     File imageCarLicenceBackPhoto, imageCarLicenceBackPhotoCropped;
-    
+    private ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +116,28 @@ public class DriverSignupActivity extends BasicBackActivity {
                     etEmail.setError(getString(R.string.not_valid_email));
                 } else {
                     etEmail.setError(null);
+                }
+            }
+        });
+
+        etPassword = (EditText) findViewById(R.id.et_password);
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() < Const.MIN_PASSWORD_LENGTH) {
+                    etPassword.setError(getString(R.string.short_password));
+                } else {
+                    etPassword.setError(null);
                 }
             }
         });
@@ -482,32 +511,38 @@ public class DriverSignupActivity extends BasicBackActivity {
 
     }
 
-    private void driverSignup() {
-        if (!driverValidation())
-            return;
-
-
-    }
-
     private boolean driverValidation() {
         boolean valid = true;
 
         if (Utils.isEmpty(etFirstName)) {
             etFirstName.setError(getString(R.string.required));
+            valid = false;
         } else {
             etFirstName.setError(null);
         }
 
         if (Utils.isEmpty(etLastName)) {
             etLastName.setError(getString(R.string.required));
+            valid = false;
         } else {
             etLastName.setError(null);
         }
 
         if (!Utils.isValidEmail(etEmail.getText().toString())) {
             etEmail.setError(getString(R.string.not_valid_email));
+            valid = false;
         } else {
             etEmail.setError(null);
+        }
+
+        if (Utils.getText(etPassword).length() == 0) {
+            etPassword.setError(getString(R.string.required));
+            valid = false;
+        } else if (Utils.getText(etPassword).length() < Const.MIN_PASSWORD_LENGTH) {
+            etPassword.setError(getString(R.string.short_password));
+            valid = false;
+        } else {
+            etPassword.setError(null);
         }
 
         if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX) {
@@ -576,4 +611,43 @@ public class DriverSignupActivity extends BasicBackActivity {
 
         return valid;
     }
+
+    private void driverSignup() {
+
+        if (!driverValidation()) //if the validation failed
+            return;
+
+        String code = new CountriesUtils().getCountryCodes()[spinner.getSelectedItemPosition()];
+
+        dialog = DialogUtils.showProgressDialog(this, R.string.registering, false);
+
+        DriverRequests.driverSignup(this, this, Utils.getText(etFirstName), Utils.getText(etLastName), Utils.getText(etEmail), Utils.getText(etPassword), code + Utils.getText(etMobile), imageUserPhotoCropped, imageCarPhotoCropped, imageIdFrontPhotoCropped, imageIdBackPhotoCropped, imageDriverLicenceFrontPhotoCropped, imageDriverLicenceBackPhotoCropped, imageCarLicenceFrontPhotoCropped, imageCarLicenceBackPhotoCropped);
+
+    }
+
+    @Override
+    public void onSuccess(GeneralResponse response, String apiName) {
+        dialog.dismiss();
+
+        if (response.isSuccess()) {
+            startActivity(new Intent(this, DriverSignupConfirmationActivity.class));
+            this.onBackPressed();
+        } else {
+            if (response.getValidation() != null) {
+                String validation = "";
+                for (String error : response.getValidation()) {
+                    validation += error + "\n";
+                }
+
+                DialogUtils.showAlertDialog(this, validation, null);
+            }
+        }
+    }
+
+    @Override
+    public void onFail(String message, String apiName) {
+        dialog.dismiss();
+        Utils.showLongToast(this, message);
+    }
 }
+

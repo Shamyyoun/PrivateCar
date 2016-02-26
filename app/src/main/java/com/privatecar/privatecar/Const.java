@@ -21,7 +21,7 @@ public class Const {
     public static final int IMAGE_SIZE_USER = 400;
     public static final int IMAGE_SIZE = 1024;
     public static final int EGYPT_INDEX = 61; //Egypt index in the country spinner
-
+    public static final int MIN_PASSWORD_LENGTH = 3;
 
     public static final int REQUEST_CAMERA_USER_PHOTO = 1001;
     public static final int REQUEST_CAMERA_CAR_PHOTO = 1002;
@@ -95,4 +95,5 @@ public class Const {
     public static final String MSG_PARAM_OS = "os";
     public static final String MSG_PARAM_GCM_ACCESS_TOKEN = "gcm_access_token";
     public static final String MSG_PARAM_ACCESS_TOKEN = "access_token";
+
 }
