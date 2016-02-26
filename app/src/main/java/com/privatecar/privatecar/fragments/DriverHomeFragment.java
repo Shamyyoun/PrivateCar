@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.activities.DriverHomeActivity;
 import com.privatecar.privatecar.dialogs.GpsOptionDialog;
 import com.privatecar.privatecar.models.entities.DriverAccountDetails;
 import com.privatecar.privatecar.models.entities.User;
@@ -36,7 +37,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallback, View.OnClickListener, RequestListener {
-    private Activity activity;
+    private DriverHomeActivity activity;
     private Button btnBeActive;
     private TextView tvMessage;
     private TextView tvDate;
@@ -54,7 +55,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.activity = activity;
+        this.activity = (DriverHomeActivity) activity;
     }
 
     @Override
@@ -167,8 +168,11 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
             // check status
             if (detailsResponse != null && detailsResponse.getDriverAccountDetails() != null) {
                 // response is valid
-                // update ui
+                // update ui in the fragment
                 updateUI(detailsResponse.getDriverAccountDetails());
+
+                // update personal info in the navigation drawer
+                activity.updatePersonalInfo(detailsResponse.getDriverAccountDetails());
             } else {
                 // invalid response
                 // show error toast & exit

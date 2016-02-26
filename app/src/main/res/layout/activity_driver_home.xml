@@ -54,7 +54,7 @@
             android:paddingTop="5dp">
 
             <TextView
-                android:id="@+id/tv_user_balance"
+                android:id="@+id/tv_credit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="200 EGP"

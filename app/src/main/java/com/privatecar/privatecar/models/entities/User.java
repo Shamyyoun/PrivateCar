@@ -11,6 +11,7 @@ public class User {
     private String accessToken;
     private UserType type;
     private AccountDetailsResponse accountDetails;
+    private boolean online;
 
     public String getAccessToken() {
         return accessToken;
@@ -34,5 +35,13 @@ public class User {
 
     public void setAccountDetails(AccountDetailsResponse accountDetails) {
         this.accountDetails = accountDetails;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
     }
 }

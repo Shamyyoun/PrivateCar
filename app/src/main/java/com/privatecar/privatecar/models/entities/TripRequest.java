@@ -1,10 +1,12 @@
 
-package com.privatecar.privatecar.models.payloads;
+package com.privatecar.privatecar.models.entities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TripRequestPayload {
+import java.io.Serializable;
+
+public class TripRequest implements Serializable {
 
     @SerializedName("Id")
     @Expose
