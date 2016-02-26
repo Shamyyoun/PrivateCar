@@ -1,5 +1,6 @@
 package com.privatecar.privatecar.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -34,8 +36,25 @@ import java.util.Locale;
  * A class, with general purpose utility methods (useful for many projects).
  */
 public class Utils {
-
     public static final String KEY_APP_VERSION_CODE = "app_version_code_key";
+    public static final int PERM_REQ_WRITE_STORAGE = 1;
+
+    /**
+     * Checks if the app has permission to write to device storage
+     * <p/>
+     * If the app does not has permission then the user will be prompted to grant permissions
+     *
+     * @param activity
+     */
+    public static void verifyWriteStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERM_REQ_WRITE_STORAGE);
+        }
+    }
 
     /**
      * get the hash key for usage with facebook sdk
@@ -244,6 +263,10 @@ public class Utils {
 
     public static Boolean isEmpty(EditText et) {
         return TextUtils.isEmpty(et.getText().toString().trim());
+    }
+
+    public static String getText(EditText et) {
+        return et.getText().toString().trim();
     }
 
     /**

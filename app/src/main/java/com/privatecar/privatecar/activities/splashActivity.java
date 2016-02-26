@@ -58,7 +58,7 @@ public class SplashActivity extends BaseActivity implements RequestListener<Conf
             AppUtils.cacheConfigs(getApplicationContext(), response);
 
             // print them
-            for (Config config : response.getConfig()) {
+            for (Config config : response.getConfigs()) {
                 Log.e(Const.LOG_TAG, config.getKey() + " : " + config.getValue());
             }
 

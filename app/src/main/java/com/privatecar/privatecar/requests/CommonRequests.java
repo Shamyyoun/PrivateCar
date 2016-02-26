@@ -19,7 +19,7 @@ import java.util.Map;
 public class CommonRequests {
     public static RequestHelper normalLogin(Context context, RequestListener<AccessTokenResponse> listener, String username, String password) {
         // prepare parameters
-        Map<String, String> params = new HashMap();
+        Map<String, String> params = new HashMap<>();
         params.put(Const.MSG_PARAM_CLIENT_ID, Const.CLIENT_ID);
         params.put(Const.MSG_PARAM_CLIENT_SECRET, Const.CLIENT_SECRET);
         params.put(Const.MSG_PARAM_GRANT_TYPE, GrantType.PASSWORD.getValue());
@@ -29,7 +29,7 @@ public class CommonRequests {
         params.put(Const.MSG_PARAM_PASSWORD, password);
 
         // create & send request
-        RequestHelper<AccessTokenResponse> requestHelper = new RequestHelper(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_ACCESS_TOKEN, AccessTokenResponse.class, listener, params);
+        RequestHelper<AccessTokenResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_ACCESS_TOKEN, AccessTokenResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;
@@ -37,7 +37,7 @@ public class CommonRequests {
 
     public static RequestHelper startupConfig(Context context, RequestListener<ConfigResponse> listener) {
         // create & send request
-        RequestHelper<ConfigResponse> requestHelper = new RequestHelper(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_STARTUP_CONFIG, ConfigResponse.class, listener);
+        RequestHelper<ConfigResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_STARTUP_CONFIG, ConfigResponse.class, listener);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;

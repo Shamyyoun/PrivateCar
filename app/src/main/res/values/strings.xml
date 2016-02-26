@@ -195,6 +195,10 @@
         <item>From Gallery</item>
         <item>From Camera</item>
     </string-array>
+    <string name="not_valid_email">Not Valid Email</string>
+    <string name="not_valid_mobile">Not Valid Mobile</string>
+    <string name="registering">Registering</string>
+    <string name="short_password">Short Password</string>
     <string name="credit_card">Credit Card</string>
     <string name="account_credit">Account Credit</string>
 </resources>
