@@ -189,5 +189,10 @@
     <string name="enable_gps_to_use_app">To use this app you should turn on your GPS so please go to settings and turn it on.</string>
     <string name="unexpected_error_try_again">Unexpected error, try again</string>
     <string name="invalid_credentials">Invalid credentials</string>
-    <string name="connection_error"></string>
+    <string name="connection_error">Connection error</string>
+    <string name="hours">Hours</string>
+    <string-array name="photo_sources_array">
+        <item>From Gallery</item>
+        <item>From Camera</item>
+    </string-array>
 </resources>
