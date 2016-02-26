@@ -1,10 +1,12 @@
 
-package com.privatecar.privatecar.models.responses.config;
+package com.privatecar.privatecar.models.responses;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.privatecar.privatecar.models.entities.Config;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class ConfigResponse {
     public static final String KEY_CURRENT_APP_VERSION = "CurrentAppVersion";
@@ -18,7 +20,7 @@ public class ConfigResponse {
     private boolean status;
     @SerializedName("content")
     @Expose
-    private List<Content> content = new ArrayList<Content>();
+    private List<Config> config = new ArrayList<Config>();
     @SerializedName("validation")
     @Expose
     private Object validation;
@@ -44,19 +46,19 @@ public class ConfigResponse {
     /**
      * 
      * @return
-     *     The content
+     *     The config
      */
-    public List<Content> getContent() {
-        return content;
+    public List<Config> getConfig() {
+        return config;
     }
 
     /**
      * 
-     * @param content
-     *     The content
+     * @param config
+     *     The config
      */
-    public void setContent(List<Content> content) {
-        this.content = content;
+    public void setConfig(List<Config> config) {
+        this.config = config;
     }
 
     /**

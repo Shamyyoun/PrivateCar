@@ -21,7 +21,4 @@ public class GCMMessageHandler extends GcmListenerService {
         String json_notification = data.getString("message");
         Log.e(Const.LOG_TAG, "GCM Message: " + json_notification);
     }
-
-
-
 }

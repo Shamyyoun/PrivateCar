@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.models.responses.config.ConfigResponse;
+import com.privatecar.privatecar.models.responses.ConfigResponse;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
 

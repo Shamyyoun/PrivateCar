@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,13 +21,28 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.dialogs.GpsOptionDialog;
+import com.privatecar.privatecar.models.entities.DriverAccountDetails;
+import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
+import com.privatecar.privatecar.requests.DriverRequests;
+import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
+import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallback, View.OnClickListener, RequestListener {
     private Activity activity;
     private Button btnBeActive;
+    private TextView tvMessage;
+    private TextView tvDate;
+    private TextView tvTodayProfit;
+    private TextView tvTotalTrips;
+    private TextView tvTotalHours;
 
     private GpsOptionDialog gpsOptionDialog;
     private ProgressDialog progressDialog;
@@ -44,11 +61,34 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragment = inflater.inflate(R.layout.fragment_driver_home, container, false);
 
+        // init views
         btnBeActive = (Button) fragment.findViewById(R.id.btn_be_active);
         btnBeActive.setOnTouchListener(new ButtonHighlighterOnTouchListener(getActivity(), R.drawable.petroleum_bottom_rounded_corners_shape));
         btnBeActive.setOnClickListener(this);
+        tvMessage = (TextView) fragment.findViewById(R.id.tv_message);
+        tvDate = (TextView) fragment.findViewById(R.id.tv_date);
+        tvTodayProfit = (TextView) fragment.findViewById(R.id.tv_today_profit);
+        tvTotalTrips = (TextView) fragment.findViewById(R.id.tv_total_trips);
+        tvTotalHours = (TextView) fragment.findViewById(R.id.tv_total_hours);
+
+        // update today's date
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        tvDate.setText(dateFormat.format(calendar.getTime()));
+
+        // load account details
+        loadAccountDetails();
 
         return fragment;
+    }
+
+    /**
+     * method, used to update UI and set new values
+     */
+    private void updateUI(DriverAccountDetails detailsDriverAccountDetails) {
+        tvTodayProfit.setText(detailsDriverAccountDetails.getCredit() + " " + getString(R.string.currency));
+        tvTotalTrips.setText(detailsDriverAccountDetails.getTotaltrips() + " " + getString(R.string.trips));
+        tvTotalHours.setText(detailsDriverAccountDetails.getTodayhours() + " " + getString(R.string.hours));
     }
 
     @Override
@@ -81,6 +121,18 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     }
 
     /**
+     * method, used to fetch driver's account details from server
+     */
+    private void loadAccountDetails() {
+        // show progress dialog
+        progressDialog = DialogUtils.showProgressDialog(activity, R.string.loading_please_wait);
+
+        // get cached user & send the request
+        User user = AppUtils.getCachedUser(activity);
+        DriverRequests.accountDetails(activity, this, user.getAccessToken());
+    }
+
+    /**
      * method, used to validate gps & send be active request to server
      */
     private void beActive(boolean active) {
@@ -104,12 +156,39 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
 
     @Override
     public void onSuccess(Object response, String apiName) {
+        // dismiss progress dialog
+        progressDialog.dismiss();
 
+        // check request type
+        if (response instanceof DriverAccountDetailsResponse) {
+            // account details response
+            DriverAccountDetailsResponse detailsResponse = (DriverAccountDetailsResponse) response;
+
+            // check status
+            if (detailsResponse != null && detailsResponse.getDriverAccountDetails() != null) {
+                // response is valid
+                // update ui
+                updateUI(detailsResponse.getDriverAccountDetails());
+            } else {
+                // invalid response
+                // show error toast & exit
+                Utils.showLongToast(activity, R.string.unexpected_error_try_again);
+                activity.finish();
+            }
+        } else {
+
+        }
     }
 
     @Override
-    public void onFail(String message) {
-
+    public void onFail(String message, String apiName) {
+        // check api name
+        if (apiName.equals(Const.MESSAGE_DRIVER_ACCOUNT_DETAILS)) {
+            // show error toast & exits
+            Utils.showLongToast(activity, message);
+            Log.e(Const.LOG_TAG, message);
+            activity.finish();
+        }
     }
 
     @Override

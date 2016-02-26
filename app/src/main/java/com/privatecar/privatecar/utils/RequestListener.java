@@ -6,5 +6,5 @@ package com.privatecar.privatecar.utils;
  */
 public interface RequestListener<T> {
     void onSuccess(T response, String apiName);
-    void onFail(String message);
+    void onFail(String message, String apiName);
 }

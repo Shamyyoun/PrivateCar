@@ -200,7 +200,7 @@ public class RequestHelper<T> {
 
         if (listener != null) {
             if (e != null) { //on request failure and cancellation
-                listener.onFail(e.toString()); //TODO: omit on cancel
+                listener.onFail(e.toString(), apiName); //TODO: omit on cancel
             } else if (result != null) {
                 Log.e(LOG_TAG, "Response: " + result);
 
@@ -211,7 +211,7 @@ public class RequestHelper<T> {
                         listener.onSuccess((T) new Gson().fromJson(result, cls), apiName);
                     } catch (Exception ex) {
                         Log.e(LOG_TAG, "Parsing Exception: " + ex.toString());
-                        listener.onFail("Parsing Exception: " + ex.toString());
+                        listener.onFail("Parsing Exception: " + ex.toString(), apiName);
                     }
                 }
             }

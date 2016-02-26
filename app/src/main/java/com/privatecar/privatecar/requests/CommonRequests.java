@@ -5,7 +5,7 @@ import android.content.Context;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.models.enums.GrantType;
 import com.privatecar.privatecar.models.responses.AccessTokenResponse;
-import com.privatecar.privatecar.models.responses.config.ConfigResponse;
+import com.privatecar.privatecar.models.responses.ConfigResponse;
 import com.privatecar.privatecar.utils.PlayServicesUtils;
 import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;

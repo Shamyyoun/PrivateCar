@@ -1,6 +1,7 @@
 package com.privatecar.privatecar.models.entities;
 
 import com.privatecar.privatecar.models.enums.UserType;
+import com.privatecar.privatecar.models.responses.AccountDetailsResponse;
 
 /**
  * Created by basim on 22/1/16.
@@ -8,13 +9,8 @@ import com.privatecar.privatecar.models.enums.UserType;
  */
 public class User {
     private String accessToken;
-    private String FirstName;
-    private String LastName;
-    private String Email;
-    private String Password;
-    private String Mobile;
-    private String GrantType;
     private UserType type;
+    private AccountDetailsResponse accountDetails;
 
     public String getAccessToken() {
         return accessToken;
@@ -24,59 +20,19 @@ public class User {
         this.accessToken = accessToken;
     }
 
-    public String getFirstName() {
-        return FirstName;
-    }
-
-    public void setFirstName(String firstName) {
-        FirstName = firstName;
-    }
-
-    public String getLastName() {
-        return LastName;
-    }
-
-    public void setLastName(String lastName) {
-        LastName = lastName;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
-
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
-    }
-
-    public String getMobile() {
-        return Mobile;
-    }
-
-    public void setMobile(String mobile) {
-        Mobile = mobile;
-    }
-
-    public String getGrantType() {
-        return GrantType;
-    }
-
-    public void setGrantType(String grantType) {
-        GrantType = grantType;
-    }
-
     public UserType getType() {
         return type;
     }
 
     public void setType(UserType type) {
         this.type = type;
+    }
+
+    public AccountDetailsResponse getAccountDetails() {
+        return accountDetails;
+    }
+
+    public void setAccountDetails(AccountDetailsResponse accountDetails) {
+        this.accountDetails = accountDetails;
     }
 }

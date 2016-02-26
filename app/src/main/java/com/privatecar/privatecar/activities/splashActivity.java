@@ -9,10 +9,10 @@ import android.widget.ProgressBar;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.gcm.RegistrationIntentService;
+import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.enums.UserType;
-import com.privatecar.privatecar.models.responses.config.ConfigResponse;
-import com.privatecar.privatecar.models.responses.config.Content;
+import com.privatecar.privatecar.models.responses.ConfigResponse;
 import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.PlayServicesUtils;
@@ -58,8 +58,8 @@ public class SplashActivity extends BaseActivity implements RequestListener<Conf
             AppUtils.cacheConfigs(getApplicationContext(), response);
 
             // print them
-            for (Content configContent : response.getContent()) {
-                Log.e(Const.LOG_TAG, configContent.getKey() + " : " + configContent.getValue());
+            for (Config config : response.getConfig()) {
+                Log.e(Const.LOG_TAG, config.getKey() + " : " + config.getValue());
             }
 
             // get cached user
@@ -90,7 +90,7 @@ public class SplashActivity extends BaseActivity implements RequestListener<Conf
     }
 
     @Override
-    public void onFail(String message) {
+    public void onFail(String message, String apiName) {
         Utils.showLongToast(getApplicationContext(), message);
         Log.e(Const.LOG_TAG, message);
         finish();

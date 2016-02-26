@@ -3,9 +3,9 @@ package com.privatecar.privatecar.utils;
 import android.content.Context;
 
 import com.privatecar.privatecar.Const;
+import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.User;
-import com.privatecar.privatecar.models.responses.config.ConfigResponse;
-import com.privatecar.privatecar.models.responses.config.Content;
+import com.privatecar.privatecar.models.responses.ConfigResponse;
 
 /**
  * Created by basim on 22/1/16.
@@ -46,9 +46,9 @@ public class AppUtils {
         ConfigResponse configResponse = getCachedConfigs(ctx);
 
         if (configResponse != null) {
-            for (Content configContent : configResponse.getContent()) {
-                if (configContent.getKey().equals(configKey))
-                    return configContent.getValue();
+            for (Config config : configResponse.getConfig()) {
+                if (config.getKey().equals(configKey))
+                    return config.getValue();
             }
         }
 

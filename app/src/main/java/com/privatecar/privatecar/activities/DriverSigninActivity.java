@@ -146,7 +146,7 @@ public class DriverSigninActivity extends BasicBackActivity implements View.OnCl
     }
 
     @Override
-    public void onFail(String message) {
+    public void onFail(String message, String apiName) {
         // dismiss progress dialog
         progressDialog.dismiss();
 

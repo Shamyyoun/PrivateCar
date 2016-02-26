@@ -1,10 +1,10 @@
 
-package com.privatecar.privatecar.models.responses.config;
+package com.privatecar.privatecar.models.entities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Content {
+public class Config {
 
     @SerializedName("key")
     @Expose

@@ -29,6 +29,7 @@ public class Const {
     public static final String MESSAGE_USER_CONFIG = "userconfig";
     public static final String MESSAGE_REGISTER_CUSTOMER = "regcustomer";
     public static final String MESSAGE_ACCESS_TOKEN = "accesstoken";
+    public static final String MESSAGE_DRIVER_ACCOUNT_DETAILS = "driveraccountdetails";
 
     //parameters:----
     public static final String MSG_PARAM_CLIENT_ID = "client_id";
@@ -38,4 +39,5 @@ public class Const {
     public static final String MSG_PARAM_PASSWORD = "password";
     public static final String MSG_PARAM_OS = "os";
     public static final String MSG_PARAM_GCM_ACCESS_TOKEN = "gcm_access_token";
+    public static final String MSG_PARAM_ACCESS_TOKEN = "access_token";
 }
