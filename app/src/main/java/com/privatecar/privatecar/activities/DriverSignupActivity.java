@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,7 +27,7 @@ import java.io.File;
 
 public class DriverSignupActivity extends BasicBackActivity {
 
-    private EditText etFirstName, etLastName, etMobile, etEmail;
+    private EditText etFirstName, etLastName, etEmail, etMobile;
     private Spinner spinner;
     private ImageButton ibUserPhoto, ibCarPhoto;
     private ImageView ivUserPhotoValidation, ivCarPhotoValidation, ivIdFrontValidation, ivIdBackValidation, ivDriverLicenceFrontValidation, ivDriverLicenceBackValidation, ivCarLicenceFrontValidation, ivCarLicenceBackValidation;
@@ -38,17 +40,107 @@ public class DriverSignupActivity extends BasicBackActivity {
     File imageDriverLicenceBackPhoto, imageDriverLicenceBackPhotoCropped;
     File imageCarLicenceFrontPhoto, imageCarLicenceFrontPhotoCropped;
     File imageCarLicenceBackPhoto, imageCarLicenceBackPhotoCropped;
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_signup);
 
+        etFirstName = (EditText) findViewById(R.id.et_first_name);
+        etFirstName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() < 1) {
+                    etFirstName.setError(getString(R.string.required));
+                } else {
+                    etFirstName.setError(null);
+                }
+            }
+        });
+
+
+        etLastName = (EditText) findViewById(R.id.et_last_name);
+        etLastName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() < 1) {
+                    etLastName.setError(getString(R.string.required));
+                } else {
+                    etLastName.setError(null);
+                }
+            }
+        });
+
+        etEmail = (EditText) findViewById(R.id.et_email);
+        etEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Utils.isValidEmail(s.toString())) {
+                    etEmail.setError(getString(R.string.not_valid_email));
+                } else {
+                    etEmail.setError(null);
+                }
+            }
+        });
+
+        etMobile = (EditText) findViewById(R.id.et_mobile);
+        etMobile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX) {
+                    if (!Utils.isValidEgyptianMobileNumber("0" + s.toString())) {
+                        etMobile.setError(getString(R.string.not_valid_mobile));
+                    } else {
+                        etMobile.setError(null);
+                    }
+                }
+            }
+        });
+
         spinner = (Spinner) findViewById(R.id.spinner_countries);
         CountryAdapter adapter = new CountryAdapter(this);
         spinner.setAdapter(adapter);
-        spinner.setSelection(61); //set egypt the default
+        spinner.setSelection(Const.EGYPT_INDEX); //set egypt the default
 
         ibUserPhoto = (ImageButton) findViewById(R.id.ib_user_photo);
         ibCarPhoto = (ImageButton) findViewById(R.id.ib_car_photo);
@@ -355,10 +447,44 @@ public class DriverSignupActivity extends BasicBackActivity {
         imageCarLicenceFrontPhotoCropped = (File) savedInstanceState.getSerializable("imageCarLicenceFrontPhotoCropped");
         imageCarLicenceBackPhoto = (File) savedInstanceState.getSerializable("imageCarLicenceBackPhoto");
         imageCarLicenceBackPhotoCropped = (File) savedInstanceState.getSerializable("imageCarLicenceBackPhotoCropped");
+
+        if (imageUserPhotoCropped != null) {
+            Glide.with(this).load(imageUserPhotoCropped).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(ibUserPhoto);
+        }
+
+        if (imageCarPhotoCropped != null) {
+            Glide.with(this).load(imageCarPhotoCropped).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(ibCarPhoto);
+        }
+
+        if (imageIdFrontPhotoCropped != null) {
+            ivIdFrontValidation.setImageResource(R.drawable.success_icon);
+        }
+
+        if (imageIdBackPhotoCropped != null) {
+            ivIdBackValidation.setImageResource(R.drawable.success_icon);
+        }
+
+        if (imageDriverLicenceFrontPhotoCropped != null) {
+            ivDriverLicenceFrontValidation.setImageResource(R.drawable.success_icon);
+        }
+
+        if (imageDriverLicenceBackPhotoCropped != null) {
+            ivDriverLicenceBackValidation.setImageResource(R.drawable.success_icon);
+        }
+
+        if (imageCarLicenceFrontPhotoCropped != null) {
+            ivCarLicenceFrontValidation.setImageResource(R.drawable.success_icon);
+        }
+
+        if (imageCarLicenceBackPhotoCropped != null) {
+            ivCarLicenceBackValidation.setImageResource(R.drawable.success_icon);
+        }
+
     }
 
     private void driverSignup() {
-        driverValidation();
+        if (!driverValidation())
+            return;
 
 
     }
@@ -366,8 +492,30 @@ public class DriverSignupActivity extends BasicBackActivity {
     private boolean driverValidation() {
         boolean valid = true;
 
-        if(Utils.isEmpty(etFirstName)){
-            etFirstName.setError(getString(R.string.first_name));
+        if (Utils.isEmpty(etFirstName)) {
+            etFirstName.setError(getString(R.string.required));
+        } else {
+            etFirstName.setError(null);
+        }
+
+        if (Utils.isEmpty(etLastName)) {
+            etLastName.setError(getString(R.string.required));
+        } else {
+            etLastName.setError(null);
+        }
+
+        if (!Utils.isValidEmail(etEmail.getText().toString())) {
+            etEmail.setError(getString(R.string.not_valid_email));
+        } else {
+            etEmail.setError(null);
+        }
+
+        if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX) {
+            if (!Utils.isValidEgyptianMobileNumber("0" + etMobile.getText().toString())) {
+                etMobile.setError(getString(R.string.not_valid_mobile));
+            } else {
+                etMobile.setError(null);
+            }
         }
 
         if (imageUserPhotoCropped == null) {
@@ -388,44 +536,43 @@ public class DriverSignupActivity extends BasicBackActivity {
             ivIdFrontValidation.setImageResource(R.drawable.fail_icon);
             valid = false;
         } else {
-            ivIdFrontValidation.setImageResource(0);
+            ivIdFrontValidation.setImageResource(R.drawable.success_icon);
         }
 
         if (imageIdBackPhotoCropped == null) {
             ivIdBackValidation.setImageResource(R.drawable.fail_icon);
             valid = false;
         } else {
-            ivIdBackValidation.setImageResource(0);
+            ivIdBackValidation.setImageResource(R.drawable.success_icon);
         }
 
         if (imageDriverLicenceFrontPhotoCropped == null) {
             ivDriverLicenceFrontValidation.setImageResource(R.drawable.fail_icon);
             valid = false;
         } else {
-            ivDriverLicenceFrontValidation.setImageResource(0);
+            ivDriverLicenceFrontValidation.setImageResource(R.drawable.success_icon);
         }
 
         if (imageDriverLicenceBackPhotoCropped == null) {
             ivDriverLicenceBackValidation.setImageResource(R.drawable.fail_icon);
             valid = false;
         } else {
-            ivDriverLicenceBackValidation.setImageResource(0);
+            ivDriverLicenceBackValidation.setImageResource(R.drawable.success_icon);
         }
 
         if (imageCarLicenceFrontPhotoCropped == null) {
             ivCarLicenceFrontValidation.setImageResource(R.drawable.fail_icon);
             valid = false;
         } else {
-            ivCarLicenceFrontValidation.setImageResource(0);
+            ivCarLicenceFrontValidation.setImageResource(R.drawable.success_icon);
         }
 
         if (imageCarLicenceBackPhotoCropped == null) {
             ivCarLicenceBackValidation.setImageResource(R.drawable.fail_icon);
             valid = false;
         } else {
-            ivCarLicenceBackValidation.setImageResource(0);
+            ivCarLicenceBackValidation.setImageResource(R.drawable.success_icon);
         }
-
 
         return valid;
     }

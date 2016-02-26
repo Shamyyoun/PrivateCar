@@ -20,6 +20,8 @@ public class Const {
     public static final String PACKAGE_NAME = "com.privatecar.privatecar";
     public static final int IMAGE_SIZE_USER = 400;
     public static final int IMAGE_SIZE = 1024;
+    public static final int EGYPT_INDEX = 61; //Egypt index in the country spinner
+
 
     public static final int REQUEST_CAMERA_USER_PHOTO = 1001;
     public static final int REQUEST_CAMERA_CAR_PHOTO = 1002;

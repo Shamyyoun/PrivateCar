@@ -71,7 +71,7 @@ public class Utils {
      * @return true if valid Egyptian mobile number.
      */
     public static boolean isValidEgyptianMobileNumber(String number) {
-        if (number.length() < 11) {
+        if (number.length() != 11) {
             return false;
         } else if (!number.startsWith("01")) {
             return false;
@@ -307,6 +307,7 @@ public class Utils {
 
     /**
      * method, used to check if gps  is enabled on the device or not
+     *
      * @param context
      * @return boolean variable
      */

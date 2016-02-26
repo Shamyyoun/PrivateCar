@@ -15,6 +15,7 @@
         <!-- Small text color -->
         <item name="android:textColorTertiary">@color/textColorTertiary</item>
         <item name="android:textColorHint">@color/grayish</item>
+        <item name="android:editTextColor">@color/textColorTertiary</item>
         <item name="editTextColor">@color/textColorTertiary</item>
         <!-- Text selection color -->
         <item name="android:textColorHighlight">@color/petroleum_highlight</item>
