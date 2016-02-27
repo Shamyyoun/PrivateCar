@@ -49,11 +49,11 @@
                 android:text="price: " />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/tv_last_trip_price"
                 style="@style/white_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100 EGP" />
+                android:text="0 EGP" />
 
             <View
                 android:layout_width="0dp"
@@ -68,11 +68,11 @@
                 android:text="Date: " />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/tv_last_trip_date"
                 style="@style/white_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20/2/2016" />
+                android:text="dd/mm/yyyy" />
         </LinearLayout>
     </LinearLayout>
 
@@ -91,14 +91,13 @@
             android:textColor="@color/grayish" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/tv_from"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="20-10-2015" />
+            android:layout_weight="1" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/ib_from"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="?selectableItemBackgroundBorderless"
@@ -122,14 +121,13 @@
             android:textColor="@color/grayish" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/tv_to"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="20-1-2016" />
+            android:layout_weight="1"/>
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/ib_to"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="?selectableItemBackgroundBorderless"

@@ -85,6 +85,7 @@ public class Const {
     //messages (driver):----
     public static final String MESSAGE_DRIVER_ACCOUNT_DETAILS = "driveraccountdetails";
     public static final String MESSAGE_DRIVER_SIGNUP = "regdriver";
+    public static final String MESSAGE_DRIVER_LAST_TRIP = "lasttrip";
 
 
     //parameters:----

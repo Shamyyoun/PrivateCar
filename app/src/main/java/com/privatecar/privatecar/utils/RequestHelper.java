@@ -1,6 +1,5 @@
 package com.privatecar.privatecar.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -48,7 +47,7 @@ public class RequestHelper<T> {
         this.listener = listener;
     }
 
-    public  RequestHelper(Context context, String baseUrl, String apiName, @Nullable Class<?> cls, RequestListener<T> listener, Map<String, String> params) {
+    public RequestHelper(Context context, String baseUrl, String apiName, @Nullable Class<?> cls, RequestListener<T> listener, Map<String, String> params) {
         this(context, baseUrl, apiName, cls, listener);
         if (params != null) {
             this.params = new HashMap<>();
@@ -201,6 +200,7 @@ public class RequestHelper<T> {
         if (listener != null) {
             if (e != null) { //on request failure and cancellation
                 listener.onFail(e.toString(), apiName); //TODO: omit on cancel
+                e.printStackTrace();
             } else if (result != null) {
                 Log.e(LOG_TAG, "Response: " + result);
 
@@ -212,6 +212,7 @@ public class RequestHelper<T> {
                     } catch (Exception ex) {
                         Log.e(LOG_TAG, "Parsing Exception: " + ex.toString());
                         listener.onFail("Parsing Exception: " + ex.toString(), apiName);
+                        ex.printStackTrace();
                     }
                 }
             }

@@ -201,4 +201,5 @@
     <string name="short_password">Short Password</string>
     <string name="credit_card">Credit Card</string>
     <string name="account_credit">Account Credit</string>
+    <string name="offline">Offline</string>
 </resources>
