@@ -19,7 +19,7 @@ import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverHomeActivity;
 import com.privatecar.privatecar.models.entities.Trip;
 import com.privatecar.privatecar.models.entities.User;
-import com.privatecar.privatecar.models.responses.TripsResponse;
+import com.privatecar.privatecar.models.responses.TripResponse;
 import com.privatecar.privatecar.requests.DriverRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DatePickerFragment;
@@ -28,8 +28,7 @@ import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class DriverStatementFragment extends BaseFragment implements View.OnClickListener,
-        RequestListener<TripsResponse> {
+public class DriverStatementFragment extends BaseFragment implements View.OnClickListener, RequestListener<TripResponse> {
     private static final String TRIP_DATE_FORMAT = "dd/MM/yyyy";
     private static final String STATEMENT_DATE_FORMAT = "dd-MM-yyyy";
 
@@ -95,22 +94,26 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
     }
 
     @Override
-    public void onSuccess(TripsResponse response, String apiName) {
+    public void onSuccess(TripResponse response, String apiName) {
         // hide loading
         progressDialog.dismiss();
 
         // check last trip
-        if (response.getTrips() != null && response.getTrips().size() != 0) {
+        Trip trip = response.getTrip();
+        if (response.getTrip() != null) {
             // render response to the ui
-            Trip trip = response.getTrips().get(response.getTrips().size() - 1);
             tvLastTripPrice.setText(trip.getEstimateFare() + " " + getString(R.string.currency));
             tvLastTripDate.setText(DateUtil.formatDate(trip.getPickupDateTime(), "yyyy-MM-dd hh:mm:ss", TRIP_DATE_FORMAT));
+        } else {
+            Utils.showLongToast(activity, R.string.unexpected_error_try_again);
         }
     }
 
     @Override
     public void onFail(String message, String apiName) {
         // show error toast
+        progressDialog.dismiss();
+
         Utils.showLongToast(activity, message);
         Log.e(Const.LOG_TAG, message);
     }

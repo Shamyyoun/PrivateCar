@@ -115,7 +115,7 @@
     <string name="add_details_for_pick_up">Add details for pickup location that will help the captain find you.</string>
     <string name="save">Save</string>
     <string name="date">Date</string>
-    <string name="trips">Trips</string>
+    <string name="trip">Trips</string>
     <string name="profit">Profit</string>
     <string name="search_for_place">Search for a place</string>
     <string name="select_on_map">Select on map</string>
@@ -203,4 +203,5 @@
     <string name="account_credit">Account Credit</string>
     <string name="install_google_play_services">Please install Google Play Services</string>
     <string name="offline">Offline</string>
+    <string name="trips">Trips</string>
 </resources>

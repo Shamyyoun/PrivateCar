@@ -5,6 +5,7 @@ import android.content.Context;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
+import com.privatecar.privatecar.models.responses.TripResponse;
 import com.privatecar.privatecar.models.responses.TripsResponse;
 import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
@@ -55,14 +56,14 @@ public class DriverRequests {
         return request;
     }
 
-    public static RequestHelper<TripsResponse> lastTrip(Context context, RequestListener<TripsResponse> listener, String accessToken) {
+    public static RequestHelper<TripResponse> lastTrip(Context context, RequestListener<TripResponse> listener, String accessToken) {
         // prepare parameters
         Map<String, String> params = new HashMap<>();
         params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
 
         // create & send request
-        RequestHelper<TripsResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
-                Const.MESSAGE_DRIVER_LAST_TRIP, TripsResponse.class, listener, params);
+        RequestHelper<TripResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_LAST_TRIP, TripResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;

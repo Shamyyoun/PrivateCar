@@ -108,7 +108,7 @@
     <string name="add_details_for_pick_up">Add details for pickup location that will help the captain find you.</string>
     <string name="save">Save</string>
     <string name="date">Date</string>
-    <string name="trips">Trips</string>
+    <string name="trip">Trips</string>
     <string name="profit">Profit</string>
     <string name="select_car">Select Car</string>
     <string name="both_economy_business">Both (Economy + Business)</string>

@@ -189,6 +189,9 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
 
     @Override
     public void onFail(String message, String apiName) {
+        // dismiss progress dialog
+        progressDialog.dismiss();
+
         // check api name
         if (apiName.equals(Const.MESSAGE_DRIVER_ACCOUNT_DETAILS)) {
             // show error toast & exits
