@@ -30,7 +30,8 @@ import com.privatecar.privatecar.utils.Utils;
 
 public class DriverStatementFragment extends BaseFragment implements View.OnClickListener,
         RequestListener<TripsResponse> {
-    private static final String DATE_FORMAT = "dd/MM/yyyy";
+    private static final String TRIP_DATE_FORMAT = "dd/MM/yyyy";
+    private static final String STATEMENT_DATE_FORMAT = "dd-MM-yyyy";
 
     private DriverHomeActivity activity;
     private TextView tvStatus;
@@ -103,7 +104,7 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
             // render response to the ui
             Trip trip = response.getTrips().get(response.getTrips().size() - 1);
             tvLastTripPrice.setText(trip.getEstimateFare() + " " + getString(R.string.currency));
-            tvLastTripDate.setText(DateUtil.formatDate(trip.getPickupDateTime(), "yyyy-MM-dd hh:mm:ss", DATE_FORMAT));
+            tvLastTripDate.setText(DateUtil.formatDate(trip.getPickupDateTime(), "yyyy-MM-dd hh:mm:ss", TRIP_DATE_FORMAT));
         }
     }
 
@@ -122,13 +123,13 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
                 fromPickerFragment = new DatePickerFragment();
 
                 // pass from date if exists
-                fromPickerFragment.setDate(fromDateStr, DATE_FORMAT);
+                fromPickerFragment.setDate(fromDateStr, STATEMENT_DATE_FORMAT);
 
                 // show it
                 fromPickerFragment.setDatePickerListener(new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        fromDateStr = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        fromDateStr = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
                         tvFrom.setText(fromDateStr);
                     }
                 });
@@ -140,13 +141,13 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
                 toPickerFragment = new DatePickerFragment();
 
                 // pass to date if exists
-                toPickerFragment.setDate(toDateStr, DATE_FORMAT);
+                toPickerFragment.setDate(toDateStr, STATEMENT_DATE_FORMAT);
 
                 // show it
                 toPickerFragment.setDatePickerListener(new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        toDateStr = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        toDateStr = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
                         tvTo.setText(toDateStr);
                     }
                 });
