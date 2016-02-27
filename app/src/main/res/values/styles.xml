@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
+    <style name="AppThemeBase" parent="Base.Theme.AppCompat.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -26,7 +26,11 @@
         <item name="dialogTheme">@style/MyDialogTheme</item>
         <item name="alertDialogTheme">@style/MyDialogTheme</item>
         <item name="android:buttonStyle">@style/ButtonStyle</item>
+
+        <item name="android:dialogTheme">@style/MyDialogTheme</item>
     </style>
+
+    <style name="AppTheme" parent="AppThemeBase"></style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowNoTitle">true</item>
@@ -42,13 +46,16 @@
 
     <style name="AppTheme.NoActionBar.FullTransparent" />
 
-    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="MyDialogThemeBase" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/colorPrimary</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="android:datePickerStyle">@style/MyDatePicker</item>
     </style>
+
+    <style name="MyDialogTheme" parent="MyDialogThemeBase"></style>
 
     <style name="ButtonStyle" parent="Widget.AppCompat.Button">
         <item name="android:textStyle">bold</item>

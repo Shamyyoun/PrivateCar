@@ -202,4 +202,5 @@
     <string name="credit_card">Credit Card</string>
     <string name="account_credit">Account Credit</string>
     <string name="install_google_play_services">Please install Google Play Services</string>
+    <string name="offline">Offline</string>
 </resources>
