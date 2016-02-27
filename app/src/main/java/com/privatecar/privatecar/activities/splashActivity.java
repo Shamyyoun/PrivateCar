@@ -33,6 +33,10 @@ public class SplashActivity extends BaseActivity implements RequestListener<Conf
                 startService(new Intent(this, RegistrationIntentService.class));
             else
                 Utils.LogE(PlayServicesUtils.getCachedGCMToken(getApplicationContext()));
+        } else { // if google play services is not available
+            Utils.showLongToast(this, R.string.install_google_play_services);
+            finish();
+            return;
         }
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
@@ -46,6 +50,31 @@ public class SplashActivity extends BaseActivity implements RequestListener<Conf
 
         // send startup config request
         CommonRequests.startupConfig(this, this);
+
+//        // get cached user
+//        final User user = AppUtils.getCachedUser(this);
+//        if (user != null) { //if there is a signed in user, update its access token if expired
+//            long expiryTimestamp = user.getExpiryTimestamp();
+//            if (AppUtils.isTokenExpired(expiryTimestamp)) {
+//                CommonRequests.normalLogin(this, new RequestListener<AccessTokenResponse>() {
+//                    @Override
+//                    public void onSuccess(AccessTokenResponse response, String apiName) {
+//                        if (response.getAccessToken() != null) {
+//                            // cache response
+//                            user.setAccessToken(response.getAccessToken());
+//                            int expiryIn = response.getExpiresIn() * 1000; //in melli seconds
+//                            user.setExpiryTimestamp(System.currentTimeMillis() + expiryIn);
+//                            AppUtils.cacheUser(SplashActivity.this, user);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFail(String message, String apiName) {
+//
+//                    }
+//                }, username, password); //TODO: get username & password of the signed in user somehow
+//            }
+//        }
     }
 
     @Override

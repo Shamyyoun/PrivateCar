@@ -122,6 +122,7 @@
     <string name="not_valid_mobile">Not Valid Mobile</string>
     <string name="registering">Registering</string>
     <string name="short_password">Short Password</string>
+    <string name="install_google_play_services">Please install Google Play Services</string>
     <string-array name="photo_sources_array">
         <item>From Gallery</item>
         <item>From Camera</item>

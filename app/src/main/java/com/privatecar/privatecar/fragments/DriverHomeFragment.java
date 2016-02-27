@@ -1,8 +1,8 @@
 package com.privatecar.privatecar.fragments;
 
 
-import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderApi;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -48,14 +50,16 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     private GpsOptionDialog gpsOptionDialog;
     private ProgressDialog progressDialog;
 
+    private FusedLocationProviderApi fusedLocationProviderApi = LocationServices.FusedLocationApi;
+
     public DriverHomeFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.activity = (DriverHomeActivity) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.activity = (DriverHomeActivity) getActivity();
     }
 
     @Override
@@ -104,7 +108,6 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
         GoogleMap mMap = googleMap;
-        mMap.getUiSettings().setAllGesturesEnabled(false);
 
 //        // Add a marker in Sydney, Australia, and move the camera.
         LatLng sydney = new LatLng(-34, 151);

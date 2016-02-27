@@ -70,4 +70,16 @@ public class AppUtils {
     }
 
 
+    /**
+     * New token will be generated if there is less than 6 days for it to expire
+     *
+     * @param expiryTimestamp
+     * @return true if (expiryTimestamp - currentTimestamp) < milliSecondsIn6Days
+     */
+    public static boolean isTokenExpired(long expiryTimestamp) {
+        long currentTimestamp = System.currentTimeMillis();
+        long milliSecondsIn6Days = 518400000;
+
+        return (expiryTimestamp - currentTimestamp) < milliSecondsIn6Days;
+    }
 }

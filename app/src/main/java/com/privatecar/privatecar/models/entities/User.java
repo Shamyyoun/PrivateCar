@@ -9,6 +9,7 @@ import com.privatecar.privatecar.models.responses.AccountDetailsResponse;
  */
 public class User {
     private String accessToken;
+    private long expiryTimestamp; // expiry timestamp
     private UserType type;
     private AccountDetailsResponse accountDetails;
     private boolean online;
@@ -43,5 +44,13 @@ public class User {
 
     public void setOnline(boolean online) {
         this.online = online;
+    }
+
+    public long getExpiryTimestamp() {
+        return expiryTimestamp;
+    }
+
+    public void setExpiryTimestamp(long expiryTimestamp) {
+        this.expiryTimestamp = expiryTimestamp;
     }
 }

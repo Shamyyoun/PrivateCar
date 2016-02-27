@@ -25,7 +25,7 @@ public class CommonRequests {
         params.put(Const.MSG_PARAM_GRANT_TYPE, GrantType.PASSWORD.getValue());
         params.put(Const.MSG_PARAM_OS, "1");
         params.put(Const.MSG_PARAM_GCM_ACCESS_TOKEN, PlayServicesUtils.getCachedGCMToken(context));
-        params.put(Const.MSG_PARAM_USERNAME, username);
+        params.put(Const.MSG_PARAM_USERNAME, username); // the email
         params.put(Const.MSG_PARAM_PASSWORD, password);
 
         // create & send request

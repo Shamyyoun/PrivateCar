@@ -635,8 +635,11 @@ public class DriverSignupActivity extends BasicBackActivity implements RequestLi
         } else {
             if (response.getValidation() != null) {
                 String validation = "";
-                for (String error : response.getValidation()) {
-                    validation += error + "\n";
+                for (int i = 0; i < response.getValidation().size(); i++) {
+                    if (i == 0)
+                        validation += response.getValidation().get(i);
+                    else
+                        validation += "\n" + response.getValidation().get(i);
                 }
 
                 DialogUtils.showAlertDialog(this, validation, null);
