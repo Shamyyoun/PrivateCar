@@ -51,7 +51,14 @@ public class DriverHomeActivity extends BaseActivity {
         nvDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                closeDrawer();
+
+                //close the drawer after the fragment loads (prevent sluggish behavior)
+                nvDrawer.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        closeDrawer();
+                    }
+                }, 150);
 
                 if (item.isChecked()) {
                     return false;
