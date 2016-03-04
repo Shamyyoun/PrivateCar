@@ -114,6 +114,8 @@ public class DriverSigninActivity extends BasicBackActivity implements View.OnCl
                 // cache response
                 User user = new User();
                 user.setType(UserType.DRIVER);
+                user.setUserName(Utils.getText(etUsername));
+                user.setPassword(Utils.getText(etPassword));
                 user.setAccessToken(response.getAccessToken());
                 int expiryIn = response.getExpiresIn() * 1000; //in melli seconds
                 user.setExpiryTimestamp(System.currentTimeMillis() + expiryIn);

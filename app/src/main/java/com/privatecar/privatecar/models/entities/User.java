@@ -10,7 +10,26 @@ import com.privatecar.privatecar.models.responses.AccountDetailsResponse;
 public class User {
     private String accessToken;
     private long expiryTimestamp; // expiry timestamp
+    private String userName;
+    private String password;
     private UserType type;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     private AccountDetailsResponse accountDetails;
     private boolean online;
 

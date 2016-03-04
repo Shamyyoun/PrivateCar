@@ -12,6 +12,7 @@ import com.privatecar.privatecar.gcm.RegistrationIntentService;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.enums.UserType;
+import com.privatecar.privatecar.models.responses.AccessTokenResponse;
 import com.privatecar.privatecar.models.responses.ConfigResponse;
 import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.utils.AppUtils;
@@ -51,30 +52,32 @@ public class SplashActivity extends BaseActivity implements RequestListener<Conf
         // send startup config request
         CommonRequests.startupConfig(this, this);
 
-//        // get cached user
-//        final User user = AppUtils.getCachedUser(this);
-//        if (user != null) { //if there is a signed in user, update its access token if expired
-//            long expiryTimestamp = user.getExpiryTimestamp();
-//            if (AppUtils.isTokenExpired(expiryTimestamp)) {
-//                CommonRequests.normalLogin(this, new RequestListener<AccessTokenResponse>() {
-//                    @Override
-//                    public void onSuccess(AccessTokenResponse response, String apiName) {
-//                        if (response.getAccessToken() != null) {
-//                            // cache response
-//                            user.setAccessToken(response.getAccessToken());
-//                            int expiryIn = response.getExpiresIn() * 1000; //in melli seconds
-//                            user.setExpiryTimestamp(System.currentTimeMillis() + expiryIn);
-//                            AppUtils.cacheUser(SplashActivity.this, user);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFail(String message, String apiName) {
-//
-//                    }
-//                }, username, password); //TODO: get username & password of the signed in user somehow
-//            }
-//        }
+        // get cached user
+        final User user = AppUtils.getCachedUser(this);
+        if (user != null) { //if there is a signed in user, update its access token if expired
+            long expiryTimestamp = user.getExpiryTimestamp();
+            if (AppUtils.isTokenExpired(expiryTimestamp)) {
+                CommonRequests.normalLogin(this, new RequestListener<AccessTokenResponse>() {
+                    @Override
+                    public void onSuccess(AccessTokenResponse response, String apiName) {
+                        if (response.getAccessToken() != null) {
+                            // cache response
+                            user.setAccessToken(response.getAccessToken());
+                            int expiryIn = response.getExpiresIn() * 1000; //in melli seconds
+                            user.setExpiryTimestamp(System.currentTimeMillis() + expiryIn);
+                            AppUtils.cacheUser(SplashActivity.this, user);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(String message, String apiName) {
+
+                    }
+                }, user.getUserName(), user.getPassword());
+            }
+        }
+
+
     }
 
     @Override
