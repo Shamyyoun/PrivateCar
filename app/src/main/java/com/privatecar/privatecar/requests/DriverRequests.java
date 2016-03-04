@@ -5,8 +5,8 @@ import android.content.Context;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
+import com.privatecar.privatecar.models.responses.StatementsResponse;
 import com.privatecar.privatecar.models.responses.TripResponse;
-import com.privatecar.privatecar.models.responses.TripsResponse;
 import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 
@@ -56,14 +56,30 @@ public class DriverRequests {
         return request;
     }
 
-    public static RequestHelper<TripResponse> lastTrip(Context context, RequestListener<TripResponse> listener, String accessToken) {
+    public static RequestHelper<Object> lastTrip(Context context, RequestListener<Object> listener, String accessToken) {
         // prepare parameters
         Map<String, String> params = new HashMap<>();
         params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
 
         // create & send request
-        RequestHelper<TripResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+        RequestHelper<Object> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
                 Const.MESSAGE_DRIVER_LAST_TRIP, TripResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+    public static RequestHelper<Object> statements(Context context, RequestListener<Object> listener,
+                                                               String accessToken, String fromDate, String toDate) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_FROM, fromDate);
+        params.put(Const.MSG_PARAM_TO, toDate);
+
+        // create & send request
+        RequestHelper<Object> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_GET_STATEMENT, StatementsResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;

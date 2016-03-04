@@ -86,6 +86,7 @@ public class Const {
     public static final String MESSAGE_DRIVER_ACCOUNT_DETAILS = "driveraccountdetails";
     public static final String MESSAGE_DRIVER_SIGNUP = "regdriver";
     public static final String MESSAGE_DRIVER_LAST_TRIP = "lasttrip";
+    public static final String MESSAGE_DRIVER_GET_STATEMENT = "getstatment";
 
 
     //parameters:----
@@ -97,7 +98,10 @@ public class Const {
     public static final String MSG_PARAM_OS = "os";
     public static final String MSG_PARAM_GCM_ACCESS_TOKEN = "gcm_access_token";
     public static final String MSG_PARAM_ACCESS_TOKEN = "access_token";
+    public static final String MSG_PARAM_FROM = "form";
+    public static final String MSG_PARAM_TO = "to";
 
     //Intent & bundle keys
     public static final String KEY_TRIP_REQUEST = "trip_request";
+    public static final String KEY_STATEMENTS_RESPONSE = "statements_response";
 }

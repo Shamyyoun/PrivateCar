@@ -4,8 +4,8 @@ package com.privatecar.privatecar.fragments;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +17,12 @@ import android.widget.TextView;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverHomeActivity;
+import com.privatecar.privatecar.activities.DriverStatementSearchResultActivity;
+import com.privatecar.privatecar.models.entities.Statement;
+import com.privatecar.privatecar.models.entities.StatementSearchResult;
 import com.privatecar.privatecar.models.entities.Trip;
 import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.models.responses.StatementsResponse;
 import com.privatecar.privatecar.models.responses.TripResponse;
 import com.privatecar.privatecar.requests.DriverRequests;
 import com.privatecar.privatecar.utils.AppUtils;
@@ -28,7 +32,9 @@ import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class DriverStatementFragment extends BaseFragment implements View.OnClickListener, RequestListener<TripResponse> {
+import java.util.List;
+
+public class DriverStatementFragment extends BaseFragment implements View.OnClickListener, RequestListener<Object> {
     private static final String TRIP_DATE_FORMAT = "dd/MM/yyyy";
     private static final String STATEMENT_DATE_FORMAT = "dd-MM-yyyy";
 
@@ -84,40 +90,6 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
         return fragment;
     }
 
-    private void loadLastTrip() {
-        // show loading
-        progressDialog = DialogUtils.showProgressDialog(activity, R.string.loading_please_wait);
-
-        // create & send the request
-        User user = AppUtils.getCachedUser(activity);
-        DriverRequests.lastTrip(activity, this, user.getAccessToken());
-    }
-
-    @Override
-    public void onSuccess(TripResponse response, String apiName) {
-        // hide loading
-        progressDialog.dismiss();
-
-        // check last trip
-        Trip trip = response.getTrip();
-        if (response.getTrip() != null) {
-            // render response to the ui
-            tvLastTripPrice.setText(trip.getEstimateFare() + " " + getString(R.string.currency));
-            tvLastTripDate.setText(DateUtil.formatDate(trip.getPickupDateTime(), "yyyy-MM-dd hh:mm:ss", TRIP_DATE_FORMAT));
-        } else {
-            Utils.showLongToast(activity, R.string.unexpected_error_try_again);
-        }
-    }
-
-    @Override
-    public void onFail(String message, String apiName) {
-        // show error toast
-        progressDialog.dismiss();
-
-        Utils.showLongToast(activity, message);
-        Log.e(Const.LOG_TAG, message);
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -156,6 +128,86 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
                 });
                 toPickerFragment.show(activity.getSupportFragmentManager(), "ToPickerFragment");
                 break;
+
+            case R.id.btn_search:
+                search();
+                break;
         }
+    }
+
+    private void loadLastTrip() {
+        // show loading
+        progressDialog = DialogUtils.showProgressDialog(activity, R.string.loading_please_wait);
+
+        // create & send the request
+        User user = AppUtils.getCachedUser(activity);
+        DriverRequests.lastTrip(activity, this, user.getAccessToken());
+    }
+
+    @Override
+    public void onSuccess(Object response, String apiName) {
+        // hide loading
+        progressDialog.dismiss();
+
+        // check response type
+        if (response instanceof TripResponse) {
+            // this last trip response
+            TripResponse tripResponse = (TripResponse) response;
+
+            // check last trip
+            Trip trip = tripResponse.getTrip();
+            if (tripResponse.getTrip() != null) {
+                // render response to the ui
+                tvLastTripPrice.setText(trip.getEstimateFare() + " " + getString(R.string.currency));
+                tvLastTripDate.setText(DateUtil.formatDate(trip.getPickupDateTime(), "yyyy-MM-dd hh:mm:ss", TRIP_DATE_FORMAT));
+            } else {
+                Utils.showLongToast(activity, R.string.unexpected_error_try_again);
+            }
+        } else if (response instanceof StatementsResponse) {
+            // this statements request
+            StatementsResponse statementsResponse = (StatementsResponse) response;
+
+            // check statements size
+            List<Statement> statements = statementsResponse.getStatements();
+            if (statements != null && statements.size() != 0) {
+                // open statements result activity
+                Intent intent = new Intent(activity, DriverStatementSearchResultActivity.class);
+                intent.putExtra(Const.KEY_STATEMENTS_RESPONSE, statementsResponse);
+                startActivity(intent);
+            }
+
+        } else {
+            // show error toast
+            Utils.showLongToast(activity, R.string.unexpected_error_try_again);
+        }
+    }
+
+    @Override
+    public void onFail(String message, String apiName) {
+        // dismiss progress dialog
+        progressDialog.dismiss();
+        // show error toast
+        Utils.showLongToast(activity, message);
+    }
+
+    /**
+     * method, used to validate inputs and send statement search request
+     */
+    private void search() {
+        // check  dates
+        if (fromDateStr == null) {
+            // set error
+            tvFrom.setError(getString(R.string.please_choose_from_date));
+            return;
+        }
+        if (toDateStr == null) {
+            // set error
+            tvTo.setError(getString(R.string.please_choose_to_date));
+            return;
+        }
+
+        // create and send the request
+        User user = AppUtils.getCachedUser(activity);
+        DriverRequests.statements(activity, this, user.getAccessToken(), fromDateStr, toDateStr);
     }
 }

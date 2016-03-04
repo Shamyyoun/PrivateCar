@@ -180,7 +180,7 @@
             android:label="@string/today_profit" />
         <activity
             android:name=".activities.DriverStatementSearchResultActivity"
-            android:label="@string/statement" />
+            android:label="@string/statements" />
         <activity
             android:name=".activities.DriverAddCarActivity"
             android:label="@string/add_car" />
