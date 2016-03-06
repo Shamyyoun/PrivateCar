@@ -183,7 +183,15 @@ public class DriverHomeActivity extends BaseActivity {
                 DriverHomeFragment homeFragment = (DriverHomeFragment) fragment;
                 homeFragment.onConnected(null);
             }
+        } else if (requestCode == Const.REQUEST_FINE_LOCATION_PERMISSION && resultCode == RESULT_OK) {//this request is sent in DriverHomeFragment
+            Log.e(Const.LOG_TAG, "resultCode: " + resultCode);
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_fragment_container);
+            if (fragment instanceof DriverHomeFragment) {
+                DriverHomeFragment homeFragment = (DriverHomeFragment) fragment;
+                homeFragment.beActive(true);
+            }
         }
+
     }
 
 

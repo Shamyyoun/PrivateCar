@@ -2,6 +2,7 @@ package com.privatecar.privatecar.utils;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -345,6 +346,7 @@ public class Utils {
 
     /**
      * method, used to format a double number as string without x.0
+     *
      * @param number
      * @return the formatted double as string
      */
@@ -353,6 +355,24 @@ public class Utils {
             return String.format("%d", (long) number);
         else
             return String.format("%s", number);
+    }
+
+
+    /**
+     * Checks if a specified service is running or not.
+     *
+     * @param ctx          the context
+     * @param serviceClass the class of the service
+     * @return true if the service is running otherwise false
+     */
+    public static boolean isServiceRunning(Context ctx, Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

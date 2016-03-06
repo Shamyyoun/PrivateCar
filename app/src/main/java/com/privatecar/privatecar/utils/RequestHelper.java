@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CancellationException;
 
 /**
  * Created by basim on 1/3/16.
@@ -198,8 +199,8 @@ public class RequestHelper<T> {
         printLogs(1);  // request finished
 
         if (listener != null) {
-            if (e != null) { //on request failure and cancellation
-                listener.onFail(e.toString(), apiName); //TODO: omit on cancel
+            if (e != null && !(e instanceof CancellationException)) { //on request failure
+                listener.onFail(e.toString(), apiName);
                 e.printStackTrace();
             } else if (result != null) {
                 Log.e(LOG_TAG, "Response: " + result);

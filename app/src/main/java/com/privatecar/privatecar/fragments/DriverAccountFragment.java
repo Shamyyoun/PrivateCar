@@ -9,15 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverAddCarActivity;
 import com.privatecar.privatecar.activities.DriverDocumentsActivity;
 import com.privatecar.privatecar.activities.DriverSettingsActivity;
+import com.privatecar.privatecar.services.UpdateDriverLocationService;
 import com.privatecar.privatecar.utils.Utils;
 
 public class DriverAccountFragment extends BaseFragment implements View.OnClickListener {
 
+    private TextView tvStatus;
 
     public DriverAccountFragment() {
         // Required empty public constructor
@@ -44,6 +47,13 @@ public class DriverAccountFragment extends BaseFragment implements View.OnClickL
         View layoutSettings = fragment.findViewById(R.id.layout_settings);
         layoutSettings.setOnClickListener(this);
 
+        tvStatus = (TextView) fragment.findViewById(R.id.tv_status);
+        // update status
+        if (Utils.isServiceRunning(getContext(), UpdateDriverLocationService.class)) {
+            tvStatus.setText(R.string.online);
+        } else {
+            tvStatus.setText(R.string.offline);
+        }
 
         return fragment;
     }

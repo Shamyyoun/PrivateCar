@@ -6,7 +6,6 @@ import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.models.responses.LocationsResponse;
-import com.privatecar.privatecar.models.responses.TripsResponse;
 import com.privatecar.privatecar.models.responses.StatementsResponse;
 import com.privatecar.privatecar.models.responses.TripResponse;
 import com.privatecar.privatecar.utils.RequestHelper;
@@ -145,13 +144,13 @@ public class DriverRequests {
     }
 
 
-    public static RequestHelper<GeneralResponse> updateLocation(Context context, RequestListener<GeneralResponse> listener, String accessToken, String location, int carId, int driverId) {
+    public static RequestHelper<GeneralResponse> updateLocation(Context context, RequestListener<GeneralResponse> listener, String accessToken, String location, String carId, String driverId) {
         // prepare parameters
         Map<String, String> params = new HashMap<>();
         params.put("access_token", accessToken);
         params.put("location", location);
-        params.put("carId", String.valueOf(carId));
-        params.put("driverId", String.valueOf(driverId));
+        params.put("carId", carId);
+        params.put("driverId", driverId);
 
         // create & send request
         RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
