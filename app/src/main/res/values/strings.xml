@@ -55,7 +55,7 @@
     <string name="driver_signup_confirmation_message">We will contact you as soon as possible to come to the company with required papers, please check your email for importance.</string>
     <string name="username">Username</string>
     <string name="home">Home</string>
-    <string name="statement">Statement</string>
+    <string name="statements">Statement</string>
     <string name="ratings">Ratings</string>
     <string name="account">Account</string>
     <string name="messages">Messages</string>
@@ -115,7 +115,7 @@
     <string name="add_details_for_pick_up">Add details for pickup location that will help the captain find you.</string>
     <string name="save">Save</string>
     <string name="date">Date</string>
-    <string name="trips">Trips</string>
+    <string name="trip">Trips</string>
     <string name="profit">Profit</string>
     <string name="search_for_place">Search for a place</string>
     <string name="select_on_map">Select on map</string>
@@ -205,4 +205,15 @@
     <string name="offline">Offline</string>
     <string name="today_trips">Today Trips</string>
     <string name="today_hours">Today Hours</string>
+    <string name="trips">Trips</string>
+    <string name="please_choose_from_date">Please choose from date</string>
+    <string name="please_choose_to_date">Please choose to date</string>
+    <string name="loading_your_statements">Loading your statements, please wait...</string>
+    <string name="no_statements_found_in_this_period">No statements found in this period</string>
+    <string name="error_fetching_available_options">Error fetching available options</string>
+    <string name="enter_your_comment">Enter your comment</string>
+    <string name="please_choose_your_reason">Please choose your reason</string>
+    <string name="trip_declined_successfully">Trip declined successfully</string>
+    <string name="error_decline_this_trip">Error decline this trip</string>
+    <string name="error_accepting_this_trip">Error accepting this trip</string>
 </resources>

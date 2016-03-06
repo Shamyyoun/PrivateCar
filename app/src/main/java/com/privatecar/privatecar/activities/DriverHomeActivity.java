@@ -23,6 +23,7 @@ import com.privatecar.privatecar.fragments.DriverHomeFragment;
 import com.privatecar.privatecar.fragments.DriverMessageCenterFragment;
 import com.privatecar.privatecar.fragments.DriverRatingsFragment;
 import com.privatecar.privatecar.fragments.DriverStatementFragment;
+import com.privatecar.privatecar.models.entities.AccountDetails;
 import com.privatecar.privatecar.models.entities.DriverAccountDetails;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;

@@ -3,16 +3,20 @@ package com.privatecar.privatecar.models.responses;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.privatecar.privatecar.models.entities.DriverAccountDetails;
+import com.privatecar.privatecar.models.entities.Statement;
 
-public class DriverAccountDetailsResponse {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class StatementsResponse implements Serializable {
 
     @SerializedName("status")
     @Expose
     private boolean status;
     @SerializedName("content")
     @Expose
-    private DriverAccountDetails driverAccountDetails;
+    private List<Statement> statements = new ArrayList<Statement>();
     @SerializedName("validation")
     @Expose
     private Object validation;
@@ -32,17 +36,17 @@ public class DriverAccountDetailsResponse {
     }
 
     /**
-     * @return The driverAccountDetails
+     * @return The statements
      */
-    public DriverAccountDetails getDriverAccountDetails() {
-        return driverAccountDetails;
+    public List<Statement> getStatements() {
+        return statements;
     }
 
     /**
-     * @param driverAccountDetails The driverAccountDetails
+     * @param statements The statements
      */
-    public void setDriverAccountDetails(DriverAccountDetails driverAccountDetails) {
-        this.driverAccountDetails = driverAccountDetails;
+    public void setStatements(List<Statement> statements) {
+        this.statements = statements;
     }
 
     /**

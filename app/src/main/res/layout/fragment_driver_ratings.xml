@@ -60,7 +60,7 @@
                 style="@style/white_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="200 trips" />
+                android:text="200 trip" />
         </LinearLayout>
     </LinearLayout>
 

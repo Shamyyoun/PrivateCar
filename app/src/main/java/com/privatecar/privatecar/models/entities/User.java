@@ -12,7 +12,7 @@ public class User {
     private String userName;
     private String password;
     private UserType type;
-    private AccountDetails accountDetails;
+    private DriverAccountDetails accountDetails;
     private boolean online;
 
     public String getUserName() {
@@ -31,7 +31,6 @@ public class User {
         this.password = password;
     }
 
-
     public String getAccessToken() {
         return accessToken;
     }
@@ -46,6 +45,14 @@ public class User {
 
     public void setType(UserType type) {
         this.type = type;
+    }
+
+    public DriverAccountDetails getAccountDetails() {
+        return accountDetails;
+    }
+
+    public void setAccountDetails(DriverAccountDetails accountDetails) {
+        this.accountDetails = accountDetails;
     }
 
     public boolean isOnline() {

@@ -1,15 +1,18 @@
 package com.privatecar.privatecar.activities;
 
+import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.WindowManager;
 
 /**
  * Created by basim on 25/1/16.
  * The very basic base activity that is the parent or grand parent to all activities
  */
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
+    protected ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,5 +21,9 @@ public class BaseActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    public void onClick(View v) {
     }
 }

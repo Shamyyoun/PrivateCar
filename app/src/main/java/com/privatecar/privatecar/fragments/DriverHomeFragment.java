@@ -249,6 +249,11 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
 
                 // update personal info in the navigation drawer
                 activity.updatePersonalInfo(detailsResponse.getDriverAccountDetails());
+
+                // update cached user
+                User user = AppUtils.getCachedUser(activity);
+                user.setAccountDetails(detailsResponse.getDriverAccountDetails());
+                AppUtils.cacheUser(activity, user);
             } else {
                 // invalid response
                 // show error toast & exit
@@ -284,6 +289,9 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
 
     @Override
     public void onFail(String message, String apiName) {
+        // dismiss progress dialog
+        progressDialog.dismiss();
+
         // check api name
         if (apiName.equals(Const.MESSAGE_DRIVER_ACCOUNT_DETAILS)) {
             // show error toast & exits

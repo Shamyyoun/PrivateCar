@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.models.entities.StatementSearchResult;
+import com.privatecar.privatecar.models.entities.StatementsGroup;
+import com.privatecar.privatecar.utils.DateUtil;
+import com.privatecar.privatecar.utils.Utils;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by basim on 17/2/16.
@@ -18,10 +20,10 @@ import java.util.ArrayList;
 
 public class StatementSearchResultsRVAdapter extends RecyclerView.Adapter<StatementSearchResultsRVAdapter.ResultViewHolder> {
 
-    private ArrayList<StatementSearchResult> results;
+    private List<StatementsGroup> results;
 
 
-    public StatementSearchResultsRVAdapter(ArrayList<StatementSearchResult> results) {
+    public StatementSearchResultsRVAdapter(List<StatementsGroup> results) {
         this.results = results;
     }
 
@@ -33,11 +35,16 @@ public class StatementSearchResultsRVAdapter extends RecyclerView.Adapter<Statem
 
     @Override
     public void onBindViewHolder(StatementSearchResultsRVAdapter.ResultViewHolder holder, int position) {
-        StatementSearchResult result = results.get(position);
+        StatementsGroup group = results.get(position);
 
-        holder.tvDate.setText(String.format("%s\n%s", "Monday", "20-10-2015"));
-        holder.tvTrips.setText(String.valueOf(result.getTripCount()));
-        holder.tvProfit.setText(String.valueOf(result.getProfit()));
+        // set date
+        String date = DateUtil.getDayName(group.getDate());
+        date += "\n" + DateUtil.convertToString(group.getDate(), "d-M-yyyy");
+        holder.tvDate.setText(date);
+
+        // set other data
+        holder.tvTrips.setText(String.valueOf(group.getTripCount()));
+        holder.tvProfit.setText(Utils.formatDouble(group.getProfit()));
     }
 
     @Override

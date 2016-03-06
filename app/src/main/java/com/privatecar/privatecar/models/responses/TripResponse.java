@@ -3,19 +3,22 @@ package com.privatecar.privatecar.models.responses;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.privatecar.privatecar.models.entities.DriverAccountDetails;
+import com.privatecar.privatecar.models.entities.Trip;
 
-public class DriverAccountDetailsResponse {
+import java.util.ArrayList;
+import java.util.List;
+
+public class TripResponse {
 
     @SerializedName("status")
     @Expose
     private boolean status;
     @SerializedName("content")
     @Expose
-    private DriverAccountDetails driverAccountDetails;
+    private Trip trip;
     @SerializedName("validation")
     @Expose
-    private Object validation;
+    private List<String> validation = new ArrayList<>();
 
     /**
      * @return The status
@@ -32,30 +35,30 @@ public class DriverAccountDetailsResponse {
     }
 
     /**
-     * @return The driverAccountDetails
+     * @return The trip
      */
-    public DriverAccountDetails getDriverAccountDetails() {
-        return driverAccountDetails;
+    public Trip getTrip() {
+        return trip;
     }
 
     /**
-     * @param driverAccountDetails The driverAccountDetails
+     * @param trip The trip
      */
-    public void setDriverAccountDetails(DriverAccountDetails driverAccountDetails) {
-        this.driverAccountDetails = driverAccountDetails;
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
 
     /**
      * @return The validation
      */
-    public Object getValidation() {
+    public List<String> getValidation() {
         return validation;
     }
 
     /**
      * @param validation The validation
      */
-    public void setValidation(Object validation) {
+    public void setValidation(List<String> validation) {
         this.validation = validation;
     }
 

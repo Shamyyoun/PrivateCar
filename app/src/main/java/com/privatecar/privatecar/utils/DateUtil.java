@@ -13,8 +13,7 @@ public class DateUtil {
         try {
             final DateFormat df = new SimpleDateFormat(strFormat);
             calendar.setTime(df.parse(strDate));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -36,5 +35,20 @@ public class DateUtil {
 
     public static String formatDate(String strDate, String originalFormat, String desiredFormat) {
         return convertToString(convertToCalendar(strDate, originalFormat), desiredFormat);
+    }
+
+    public static String getDayName(String date, String dateFormat) {
+        Calendar calendar = convertToCalendar(date, dateFormat);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+        String dayName = sdf.format(calendar.getTime());
+
+        return dayName;
+    }
+
+    public static String getDayName(Calendar date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+        String dayName = sdf.format(date.getTime());
+
+        return dayName;
     }
 }
