@@ -222,4 +222,5 @@
     <string name="cancel_trip_q">Cancel trip ?</string>
     <string name="error_loading_ads">Error loading ads</string>
     <string name="loading_ads_please_wait">Loading ads, please wait...</string>
+    <string name="your_balance_c">Your balance:</string>
 </resources>

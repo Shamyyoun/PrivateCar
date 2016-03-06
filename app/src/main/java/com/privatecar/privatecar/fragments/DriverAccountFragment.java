@@ -1,6 +1,7 @@
 package com.privatecar.privatecar.fragments;
 
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,24 +10,46 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverAddCarActivity;
 import com.privatecar.privatecar.activities.DriverDocumentsActivity;
 import com.privatecar.privatecar.activities.DriverSettingsActivity;
+import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.Utils;
 
 public class DriverAccountFragment extends BaseFragment implements View.OnClickListener {
-
+    private Activity activity;
+    private TextView tvStatus;
+    private TextView tvCurrentCar;
+    private TextView tvCarType;
+    private TextView tvBalance;
 
     public DriverAccountFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = activity;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragment = inflater.inflate(R.layout.fragment_driver_account, container, false);
+
+        // init views
+        tvStatus = (TextView) fragment.findViewById(R.id.tv_status);
+        tvCurrentCar = (TextView) fragment.findViewById(R.id.tv_current_car);
+        tvCarType = (TextView) fragment.findViewById(R.id.tv_car_type);
+        tvBalance = (TextView) fragment.findViewById(R.id.tv_balance);
+
+        // set data
+        User user = AppUtils.getCachedUser(activity);
+        tvStatus.setText(user.isOnline() ? R.string.online : R.string.offline);
 
         Button btnChangeCar = (Button) fragment.findViewById(R.id.btn_change_car);
         Button btnChangeType = (Button) fragment.findViewById(R.id.btn_change_type);
