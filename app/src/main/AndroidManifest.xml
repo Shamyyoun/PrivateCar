@@ -231,6 +231,11 @@
         <activity
             android:name=".activities.CustomerAboutPrivateActivity"
             android:label="@string/about_private" />
+        <activity
+            android:name=".activities.DriverMessageDetails"
+            android:label="@string/message_details" />
+
+
     </application>
 
 </manifest>

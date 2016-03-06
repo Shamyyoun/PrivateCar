@@ -1,6 +1,7 @@
 package com.privatecar.privatecar.fragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,37 +15,49 @@ import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.adapters.MessagesRVAdapter;
 import com.privatecar.privatecar.models.entities.Message;
+import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.models.responses.MessagesResponse;
+import com.privatecar.privatecar.requests.DriverRequests;
+import com.privatecar.privatecar.utils.AppUtils;
+import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.RequestListener;
+import com.privatecar.privatecar.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class DriverMessageCenterFragment extends BaseFragment {
+public class DriverMessageCenterFragment extends BaseFragment implements RequestListener {
 
 
-    CheckBox cbMessages;
-    ArrayList<Message> messages = new ArrayList<>();
-    RecyclerView rvMessages;
-    MessagesRVAdapter adapter;
+    private CheckBox cbMessages;
+    private List<Message> messages = new ArrayList<>();
+    private RecyclerView rvMessages;
+    private MessagesRVAdapter adapter;
+    private ProgressDialog progressDialog;
 
     public DriverMessageCenterFragment() {
         // Required empty public constructor
     }
 
-    private void fillDummyMessages() {
-        for (int i = 0; i < 40; i++) {
-            Message message = new Message();
-            message.setTitle("This is a message title that you must read, numbered " + i);
-            message.setBody("This is a message body that you must read, numbered " + i);
-            message.setDate("20-10-2015");
+    private void getMessages(int start) {
+        // show progress dialog
+        progressDialog = DialogUtils.showProgressDialog(getActivity(), R.string.loading_latest_messages);
 
-            messages.add(message);
-        }
+        User user = AppUtils.getCachedUser(getActivity());
+        DriverRequests.getInbox(getActivity(), this, user.getAccessToken(), start);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragment = inflater.inflate(R.layout.fragment_driver_message_center, container, false);
 
-        fillDummyMessages();
+        List<Message> cachedMessages = AppUtils.getCachedMessages(getContext());
+        if (cachedMessages != null && cachedMessages.size() > 0) {
+            messages.addAll(cachedMessages);
+            getMessages(cachedMessages.get(cachedMessages.size() - 1).getId());
+        } else {
+            getMessages(0);
+        }
 
         cbMessages = (CheckBox) fragment.findViewById(R.id.cb_messages);
         cbMessages.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -69,6 +82,31 @@ public class DriverMessageCenterFragment extends BaseFragment {
         rvMessages.setAdapter(adapter);
 
         return fragment;
+    }
+
+    @Override
+    public void onSuccess(Object response, String apiName) {
+        progressDialog.dismiss();
+
+        if (response instanceof MessagesResponse) {
+            MessagesResponse messagesResponse = (MessagesResponse) response;
+
+            if (messagesResponse.isSuccess() && messagesResponse.getMessages() != null) {
+                messages.addAll(messagesResponse.getMessages());
+                adapter.notifyDataSetChanged();
+
+                AppUtils.cacheMessages(getContext(), messages);
+            }
+        }
+
+    }
+
+    @Override
+    public void onFail(String message, String apiName) {
+        progressDialog.dismiss();
+
+        Utils.showLongToast(getContext(), message);
+        Utils.LogE(message);
     }
 
 }

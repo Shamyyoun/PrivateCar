@@ -41,13 +41,6 @@
         android:orientation="vertical"
         android:padding="@dimen/widgets_vertical_space">
 
-        <TextView
-            android:id="@+id/tv_message_title"
-            style="@style/yellowish_medium_bold_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="message title" />
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">

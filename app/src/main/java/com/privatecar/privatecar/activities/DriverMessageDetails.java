@@ -25,11 +25,9 @@ public class DriverMessageDetails extends BasicBackActivity {
         }
 
         TextView tvMessageDate = (TextView) findViewById(R.id.tv_message_date);
-        TextView tvMessageTitle = (TextView) findViewById(R.id.tv_message_title);
         TextView tvMessageBody = (TextView) findViewById(R.id.tv_message_body);
 
-        tvMessageDate.setText(message.getDate());
-        tvMessageTitle.setText(message.getTitle());
-        tvMessageBody.setText(message.getBody());
+        tvMessageDate.setText(message.getCreatedAt());
+        tvMessageBody.setText(message.getMessage());
     }
 }
