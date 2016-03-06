@@ -1,14 +1,18 @@
 package com.privatecar.privatecar.services;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.NotificationCompat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -24,6 +28,7 @@ import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.activities.DriverHomeActivity;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.requests.DriverRequests;
@@ -37,7 +42,6 @@ import com.privatecar.privatecar.utils.Utils;
  */
 
 //before starting this service, check if the fine location setting is enabled.
-//TODO: make it foreground service
 public class UpdateDriverLocationService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, RequestListener {
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequestFine;
@@ -69,14 +73,18 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
         tmpLocation.setLat(location.getLatitude());
         tmpLocation.setLng(location.getLongitude());
 
-        updateLocationRequest = DriverRequests.updateLocation(this, this, user.getAccessToken(), tmpLocation.toString(), 3, 4); // TODO: get carId, driverId
+        String carId = "" + user.getAccountDetails().getDefaultCarId();
+        String driverId = "" + user.getAccountDetails().getId();
 
+        updateLocationRequest = DriverRequests.updateLocation(this, this, user.getAccessToken(), tmpLocation.toString(), carId, driverId);
     }
 
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Utils.LogE("UpdateDriverLocationService onCreate()");
 
         // Create an instance of GoogleAPIClient.
         if (googleApiClient == null) {
@@ -89,6 +97,8 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
 
         createFineLocationRequest();
 
+        //TODO: start the service as foreground
+//        runAsForeground();
     }
 
     @Override
@@ -130,10 +140,15 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
                     case LocationSettingsStatusCodes.SUCCESS:
                         // All location settings are satisfied. The client can initialize location requests here.
 //                        getLastLocation();
+
+                        Utils.LogE("UpdateDriverLocationService: LocationSettingsStatusCodes.SUCCESS");
+
                         requestLocationUpdates();
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                         // Location settings are not satisfied, but this can be fixed by showing the user a dialog.
+                        Utils.LogE("UpdateDriverLocationService: LocationSettingsStatusCodes.RESOLUTION_REQUIRED");
+
                         try {
                             // Show the dialog by calling startResolutionForResult(), and check the result in onActivityResult().
                             //TODO: start DriverHome activity with a message to enable fine location settings
@@ -195,5 +210,19 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
     @Override
     public void onFail(String message, String apiName) {
         Utils.LogE(message);
+    }
+
+    private void runAsForeground() {
+        Intent notificationIntent = new Intent(this, DriverHomeActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.toolbar_pvt_icon))
+//                .setSmallIcon(R.drawable.notification_icon_small)
+                .setContentTitle(getString(R.string.private_car))
+                .setContentText(getString(R.string.driver_state_active))
+                .setContentIntent(pendingIntent).build();
+
+        startForeground(103, notification);
     }
 }

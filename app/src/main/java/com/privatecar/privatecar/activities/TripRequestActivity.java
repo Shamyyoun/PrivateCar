@@ -121,8 +121,8 @@ public class TripRequestActivity extends BaseActivity implements RequestListener
         // create & send the request
         User user = AppUtils.getCachedUser(this);
         DriverAccountDetails accountDetails = user.getAccountDetails();
-        DriverRequests.acceptTrip(this, this, user.getAccessToken(), accountDetails.getId(), "" + tripRequest.getId(),
-                accountDetails.getDefaultCarId());
+        DriverRequests.acceptTrip(this, this, user.getAccessToken(), "" + accountDetails.getId(), "" + tripRequest.getId(),
+                "" + accountDetails.getDefaultCarId());
     }
 
     @Override

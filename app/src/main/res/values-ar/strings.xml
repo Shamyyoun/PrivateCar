@@ -56,9 +56,9 @@
     <string name="low_crowd_clients"><![CDATA[< 999 Clients]]></string>
     <string name="medium_crowd_clients">1000-1999 Clients</string>
     <string name="high_crowd_clients"><![CDATA[> 2999 Clients]]></string>
-    <string name="today_profit">TODAY PROFIT:</string>
-    <string name="total_trips">TOTAL TRIPS:</string>
-    <string name="total_hours">TOTAL HOURS:</string>
+    <string name="today_profit">TODAY PROFIT</string>
+    <string name="total_trips">TOTAL TRIPS</string>
+    <string name="total_hours">TOTAL HOURS</string>
     <string name="be_active">Be Active</string>
     <string name="online">Online</string>
     <string name="search_for_period">Search For Period</string>
@@ -125,6 +125,9 @@
     <string name="install_google_play_services">Please install Google Play Services</string>
     <string name="today_trips">Today Trips</string>
     <string name="today_hours">Today Hours</string>
+    <string name="be_inactive">be inactive</string>
+    <string name="private_car">Private Car</string>
+    <string name="driver_state_active">Driver State: Active</string>
     <string-array name="photo_sources_array">
         <item>From Gallery</item>
         <item>From Camera</item>

@@ -28,6 +28,7 @@ import com.privatecar.privatecar.models.responses.StatementsResponse;
 import com.privatecar.privatecar.models.responses.TripResponse;
 import com.privatecar.privatecar.models.wrappers.SerializableListWrapper;
 import com.privatecar.privatecar.requests.DriverRequests;
+import com.privatecar.privatecar.services.UpdateDriverLocationService;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DatePickerFragment;
 import com.privatecar.privatecar.utils.DateUtil;
@@ -84,8 +85,11 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
         btnSearch.setOnClickListener(this);
 
         // update status
-        User user = AppUtils.getCachedUser(activity);
-        tvStatus.setText(getString(user.isOnline() ? R.string.online : R.string.offline));
+        if (Utils.isServiceRunning(getContext(), UpdateDriverLocationService.class)) {
+            tvStatus.setText(R.string.online);
+        } else {
+            tvStatus.setText(R.string.offline);
+        }
 
         // load last trip
         loadLastTrip();

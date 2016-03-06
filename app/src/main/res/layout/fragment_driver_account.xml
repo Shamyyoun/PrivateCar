@@ -49,7 +49,7 @@
                     style="@style/white_medium_capitalized_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="aaa-123" />
+                    android:text="-----------" />
 
                 <Button
                     android:id="@+id/btn_change_car"
@@ -79,7 +79,7 @@
                     style="@style/white_medium_capitalized_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Business" />
+                    android:text="-----------" />
 
                 <Button
                     android:id="@+id/btn_change_type"

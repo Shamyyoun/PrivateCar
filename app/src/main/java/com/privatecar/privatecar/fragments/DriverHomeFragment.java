@@ -50,6 +50,7 @@ import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.LocationsResponse;
 import com.privatecar.privatecar.requests.DriverRequests;
+import com.privatecar.privatecar.services.UpdateDriverLocationService;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
 import com.privatecar.privatecar.utils.DialogUtils;
@@ -134,6 +135,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
         }
 
         createCoarseLocationRequest();
+        createFineLocationRequest();
 
     }
 
@@ -143,6 +145,11 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
 
         // init views
         btnBeActive = (Button) fragment.findViewById(R.id.btn_be_active);
+        if (Utils.isServiceRunning(getContext(), UpdateDriverLocationService.class)) {
+            btnBeActive.setText(R.string.be_inactive);
+        } else {
+            btnBeActive.setText(R.string.be_active);
+        }
         btnBeActive.setOnTouchListener(new ButtonHighlighterOnTouchListener(getActivity(), R.drawable.petroleum_bottom_rounded_corners_shape));
         btnBeActive.setOnClickListener(this);
         tvMessage = (TextView) fragment.findViewById(R.id.tv_message);
@@ -175,7 +182,11 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_be_active:
-                beActive(true);
+                if (Utils.isServiceRunning(getContext(), UpdateDriverLocationService.class)) {
+                    beActive(false);
+                } else {
+                    beActive(true);
+                }
                 break;
         }
     }
@@ -214,23 +225,68 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     /**
      * method, used to validate gps & send be active request to server
      */
-    private void beActive(boolean active) {
+    public void beActive(boolean active) {
+
+        if (!active) {
+            Intent intent = new Intent(getContext(), UpdateDriverLocationService.class);
+            getActivity().stopService(intent);
+            btnBeActive.setText(R.string.be_active);
+            return;
+        }
+
         // check internet connection
         if (!Utils.hasConnection(activity)) {
             Utils.showShortToast(activity, R.string.no_internet_connection);
             return;
         }
 
-        // check gps if he wanna be active
-        if (active && !Utils.isGpsEnabled(activity)) {
-            // show enable gps dialog
-            gpsOptionDialog = new GpsOptionDialog(this);
-            gpsOptionDialog.show();
+//        // check gps if he wanna be active
+//        if (active && !Utils.isGpsEnabled(activity)) {
+//            // show enable gps dialog
+//            gpsOptionDialog = new GpsOptionDialog(this);
+//            gpsOptionDialog.show();
+//
+//            return;
+//        }
 
-            return;
-        }
 
-        // TODO enable fine location && start UpdateDriverLocationService service && edit the previous logic && change button appearance
+        if (!googleApiClient.isConnected()) return;
+
+
+        LocationSettingsRequest.Builder builder =
+                new LocationSettingsRequest.Builder().addLocationRequest(locationRequestFine);
+        PendingResult<LocationSettingsResult> pendingResult =
+                LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
+
+        pendingResult.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(LocationSettingsResult result) {
+                final Status status = result.getStatus();
+                final LocationSettingsStates states = result.getLocationSettingsStates();
+
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        // All location settings are satisfied. The client can initialize location requests here.
+
+                        Intent intent = new Intent(getActivity(), UpdateDriverLocationService.class);
+                        getActivity().startService(intent);
+                        btnBeActive.setText(R.string.be_inactive);
+
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        // Location settings are not satisfied, but this can be fixed by showing the user a dialog.
+                        try {
+                            // Show the dialog by calling startResolutionForResult(), and check the result in onActivityResult().
+                            status.startResolutionForResult(getActivity(), Const.REQUEST_FINE_LOCATION_PERMISSION); //DriverHomeActivity receives the result
+                        } catch (IntentSender.SendIntentException e) {
+                            // Ignore the error.
+                        }
+                        break;
+                }
+
+
+            }
+        });
     }
 
     @Override
@@ -244,17 +300,17 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
             DriverAccountDetailsResponse detailsResponse = (DriverAccountDetailsResponse) response;
 
             // check status
-            if (detailsResponse.getDriverAccountDetails() != null) {
+            if (detailsResponse.getAccountDetails() != null) {
                 // response is valid
                 // update ui in the fragment
-                updateUI(detailsResponse.getDriverAccountDetails());
+                updateUI(detailsResponse.getAccountDetails());
 
                 // update personal info in the navigation drawer
-                activity.updatePersonalInfo(detailsResponse.getDriverAccountDetails());
+                activity.updatePersonalInfo(detailsResponse.getAccountDetails());
 
                 // update cached user
                 User user = AppUtils.getCachedUser(activity);
-                user.setAccountDetails(detailsResponse.getDriverAccountDetails());
+                user.setAccountDetails(detailsResponse.getAccountDetails());
                 AppUtils.cacheUser(activity, user);
             } else {
                 // invalid response
@@ -283,7 +339,6 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
                 } else {
                     updateHeatMap();
                 }
-
             }
 
         }
@@ -331,7 +386,8 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
 
         map = googleMap;
         map.getUiSettings().setMapToolbarEnabled(false);
-        //TODO: set map show streets only
+        map.moveCamera(CameraUpdateFactory.zoomTo(19));
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
     }
 
     @Override
@@ -375,7 +431,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
                 switch (status.getStatusCode()) {
                     case LocationSettingsStatusCodes.SUCCESS:
                         // All location settings are satisfied. The client can initialize location requests here.
-//                        getLastLocation();
+                        getLastLocation();
                         requestLocationUpdates();
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
@@ -390,7 +446,6 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
                     case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
                         // Location settings are not satisfied. However, we have no way to fix the settings so we won't show the dialog.
                         break;
-
                 }
 
 
@@ -403,12 +458,13 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
 
     @Override
     public void onConnectionSuspended(int i) {
+        Utils.LogE("onConnectionSuspended");
 
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
+        Utils.LogE("onConnectionFailed");
     }
 
     @Override
@@ -454,7 +510,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
                 locationMarker = map.addMarker(new MarkerOptions().position(markerPosition).title("current location"));
             else
                 locationMarker.setPosition(markerPosition);
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(markerPosition, 20));
+            map.moveCamera(CameraUpdateFactory.newLatLng(markerPosition));
         }
     }
 
@@ -469,6 +525,8 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
 //        heatmapData.add(new LatLng(-36.9672, 141.083));
 //        heatmapData.add(new LatLng(-37.2843, 142.927));
 //        map.moveCamera(CameraUpdateFactory.newLatLngZoom(heatmapData.get(0), 5));
+
+        if (heatmapData.size() < 1) return;
 
         // Create the gradient.
         int[] colors = {
@@ -498,8 +556,10 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     }
 
     private void updateHeatMap() {
-        provider.setData(heatmapData);
-        overlay.clearTileCache();
+        if (provider != null && overlay != null && heatmapData.size() > 0) {
+            provider.setData(heatmapData);
+            overlay.clearTileCache();
+        }
     }
 
 }

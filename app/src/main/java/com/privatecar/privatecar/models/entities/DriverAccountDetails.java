@@ -4,38 +4,41 @@ package com.privatecar.privatecar.models.entities;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DriverAccountDetails extends AccountDetails {
+import java.util.ArrayList;
+import java.util.List;
+
+public class DriverAccountDetails {
 
     @SerializedName("id")
     @Expose
-    private String id;
+    private int id;
     @SerializedName("credit")
     @Expose
-    private String credit;
+    private int credit;
     @SerializedName("low_rating_count")
     @Expose
-    private String lowRatingCount;
+    private int lowRatingCount;
     @SerializedName("noreason_decline_trip_count")
     @Expose
-    private String noreasonDeclineTripCount;
+    private int noreasonDeclineTripCount;
     @SerializedName("overall_rating")
     @Expose
-    private String overallRating;
+    private int overallRating;
     @SerializedName("civil_id")
     @Expose
-    private Object civilId;
+    private String civilId;
     @SerializedName("civil_exp_date")
     @Expose
-    private Object civilExpDate;
+    private String civilExpDate;
     @SerializedName("license_no")
     @Expose
-    private Object licenseNo;
+    private String licenseNo;
     @SerializedName("license_type")
     @Expose
-    private Object licenseType;
+    private String licenseType;
     @SerializedName("license_exp_date")
     @Expose
-    private Object licenseExpDate;
+    private String licenseExpDate;
     @SerializedName("personal_photo")
     @Expose
     private String personalPhoto;
@@ -53,7 +56,7 @@ public class DriverAccountDetails extends AccountDetails {
     private String licenseBackPhoto;
     @SerializedName("rental_company_id")
     @Expose
-    private Object rentalCompanyId;
+    private String rentalCompanyId;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -62,19 +65,19 @@ public class DriverAccountDetails extends AccountDetails {
     private String updatedAt;
     @SerializedName("deleted_at")
     @Expose
-    private Object deletedAt;
+    private String deletedAt;
     @SerializedName("user_id")
     @Expose
-    private String userId;
+    private int userId;
     @SerializedName("last_location")
     @Expose
     private String lastLocation;
     @SerializedName("default_car_id")
     @Expose
-    private String defaultCarId;
+    private int defaultCarId;
     @SerializedName("totaltrips")
     @Expose
-    private String totaltrips;
+    private int totaltrips;
     @SerializedName("fullname")
     @Expose
     private String fullname;
@@ -84,74 +87,77 @@ public class DriverAccountDetails extends AccountDetails {
     @SerializedName("todayhours")
     @Expose
     private int todayhours;
+    @SerializedName("cars")
+    @Expose
+    private List<Car> cars = new ArrayList<Car>();
 
     /**
      * @return The id
      */
-    public String getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id The id
      */
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     /**
      * @return The credit
      */
-    public String getCredit() {
+    public int getCredit() {
         return credit;
     }
 
     /**
      * @param credit The credit
      */
-    public void setCredit(String credit) {
+    public void setCredit(int credit) {
         this.credit = credit;
     }
 
     /**
      * @return The lowRatingCount
      */
-    public String getLowRatingCount() {
+    public int getLowRatingCount() {
         return lowRatingCount;
     }
 
     /**
      * @param lowRatingCount The low_rating_count
      */
-    public void setLowRatingCount(String lowRatingCount) {
+    public void setLowRatingCount(int lowRatingCount) {
         this.lowRatingCount = lowRatingCount;
     }
 
     /**
      * @return The noreasonDeclineTripCount
      */
-    public String getNoreasonDeclineTripCount() {
+    public int getNoreasonDeclineTripCount() {
         return noreasonDeclineTripCount;
     }
 
     /**
      * @param noreasonDeclineTripCount The noreason_decline_trip_count
      */
-    public void setNoreasonDeclineTripCount(String noreasonDeclineTripCount) {
+    public void setNoreasonDeclineTripCount(int noreasonDeclineTripCount) {
         this.noreasonDeclineTripCount = noreasonDeclineTripCount;
     }
 
     /**
      * @return The overallRating
      */
-    public String getOverallRating() {
+    public int getOverallRating() {
         return overallRating;
     }
 
     /**
      * @param overallRating The overall_rating
      */
-    public void setOverallRating(String overallRating) {
+    public void setOverallRating(int overallRating) {
         this.overallRating = overallRating;
     }
 
@@ -165,63 +171,63 @@ public class DriverAccountDetails extends AccountDetails {
     /**
      * @param civilId The civil_id
      */
-    public void setCivilId(Object civilId) {
+    public void setCivilId(String civilId) {
         this.civilId = civilId;
     }
 
     /**
      * @return The civilExpDate
      */
-    public Object getCivilExpDate() {
+    public String getCivilExpDate() {
         return civilExpDate;
     }
 
     /**
      * @param civilExpDate The civil_exp_date
      */
-    public void setCivilExpDate(Object civilExpDate) {
+    public void setCivilExpDate(String civilExpDate) {
         this.civilExpDate = civilExpDate;
     }
 
     /**
      * @return The licenseNo
      */
-    public Object getLicenseNo() {
+    public String getLicenseNo() {
         return licenseNo;
     }
 
     /**
      * @param licenseNo The license_no
      */
-    public void setLicenseNo(Object licenseNo) {
+    public void setLicenseNo(String licenseNo) {
         this.licenseNo = licenseNo;
     }
 
     /**
      * @return The licenseType
      */
-    public Object getLicenseType() {
+    public String getLicenseType() {
         return licenseType;
     }
 
     /**
      * @param licenseType The license_type
      */
-    public void setLicenseType(Object licenseType) {
+    public void setLicenseType(String licenseType) {
         this.licenseType = licenseType;
     }
 
     /**
      * @return The licenseExpDate
      */
-    public Object getLicenseExpDate() {
+    public String getLicenseExpDate() {
         return licenseExpDate;
     }
 
     /**
      * @param licenseExpDate The license_exp_date
      */
-    public void setLicenseExpDate(Object licenseExpDate) {
+    public void setLicenseExpDate(String licenseExpDate) {
         this.licenseExpDate = licenseExpDate;
     }
 
@@ -298,14 +304,14 @@ public class DriverAccountDetails extends AccountDetails {
     /**
      * @return The rentalCompanyId
      */
-    public Object getRentalCompanyId() {
+    public String getRentalCompanyId() {
         return rentalCompanyId;
     }
 
     /**
      * @param rentalCompanyId The rental_company_id
      */
-    public void setRentalCompanyId(Object rentalCompanyId) {
+    public void setRentalCompanyId(String rentalCompanyId) {
         this.rentalCompanyId = rentalCompanyId;
     }
 
@@ -340,28 +346,28 @@ public class DriverAccountDetails extends AccountDetails {
     /**
      * @return The deletedAt
      */
-    public Object getDeletedAt() {
+    public String getDeletedAt() {
         return deletedAt;
     }
 
     /**
      * @param deletedAt The deleted_at
      */
-    public void setDeletedAt(Object deletedAt) {
+    public void setDeletedAt(String deletedAt) {
         this.deletedAt = deletedAt;
     }
 
     /**
      * @return The userId
      */
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
     /**
      * @param userId The user_id
      */
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -382,28 +388,28 @@ public class DriverAccountDetails extends AccountDetails {
     /**
      * @return The defaultCarId
      */
-    public String getDefaultCarId() {
+    public int getDefaultCarId() {
         return defaultCarId;
     }
 
     /**
      * @param defaultCarId The default_car_id
      */
-    public void setDefaultCarId(String defaultCarId) {
+    public void setDefaultCarId(int defaultCarId) {
         this.defaultCarId = defaultCarId;
     }
 
     /**
      * @return The totaltrips
      */
-    public String getTotaltrips() {
+    public int getTotaltrips() {
         return totaltrips;
     }
 
     /**
      * @param totaltrips The totaltrips
      */
-    public void setTotaltrips(String totaltrips) {
+    public void setTotaltrips(int totaltrips) {
         this.totaltrips = totaltrips;
     }
 
@@ -447,6 +453,20 @@ public class DriverAccountDetails extends AccountDetails {
      */
     public void setTodayhours(int todayhours) {
         this.todayhours = todayhours;
+    }
+
+    /**
+     * @return The cars
+     */
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    /**
+     * @param cars The cars
+     */
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
     }
 
 }

@@ -62,9 +62,9 @@
     <string name="low_crowd_clients"><![CDATA[< 999 Clients]]></string>
     <string name="medium_crowd_clients">1000–1999 Clients</string>
     <string name="high_crowd_clients"><![CDATA[> 2999 Clients]]></string>
-    <string name="today_profit">TODAY PROFIT:</string>
-    <string name="total_trips">TOTAL TRIPS:</string>
-    <string name="total_hours">TOTAL HOURS:</string>
+    <string name="today_profit">TODAY PROFIT</string>
+    <string name="total_trips">TOTAL TRIPS</string>
+    <string name="total_hours">TOTAL HOURS</string>
     <string name="be_active">Be Active</string>
     <string name="online">Online</string>
     <string name="search_for_period">Search For Period</string>
@@ -129,7 +129,7 @@
     <string name="enter_here">Enter here</string>
     <string name="add_promo_code">Add Promo Code</string>
     <string name="select_car">Select Car</string>
-    <string name="both_economy_business">Both (Economy + Business)</string>
+    <string name="both_economy_business">Both&#160;&#160;&#160;(Economy + Business)</string>
     <string name="driver_add_car_confirmation_message">The car will be added after we review it.</string>
     <string name="message_details">Message Details</string>
     <string name="select_full_day_car_type">Select full day car type</string>
@@ -191,10 +191,6 @@
     <string name="invalid_credentials">Invalid credentials</string>
     <string name="connection_error">Connection error</string>
     <string name="hours">Hours</string>
-    <string-array name="photo_sources_array">
-        <item>From Gallery</item>
-        <item>From Camera</item>
-    </string-array>
     <string name="not_valid_email">Not Valid Email</string>
     <string name="not_valid_mobile">Not Valid Mobile</string>
     <string name="registering">Registering</string>
@@ -216,6 +212,9 @@
     <string name="trip_declined_successfully">Trip declined successfully</string>
     <string name="error_decline_this_trip">Error decline this trip</string>
     <string name="error_accepting_this_trip">Error accepting this trip</string>
+    <string name="be_inactive">Be Inactive</string>
+    <string name="private_car">Private Car</string>
+    <string name="driver_state_active">Driver State: Active</string>
     <string name="starting_trip_please_wait">Starting trip, please wait...</string>
     <string name="cancelling_trip_please_wait">Cancelling trip, please wait...</string>
     <string name="trip_cancelled_successfully">Trip cancelled successfully</string>
@@ -223,4 +222,19 @@
     <string name="error_loading_ads">Error loading ads</string>
     <string name="loading_ads_please_wait">Loading ads, please wait...</string>
     <string name="your_balance_c">Your balance:</string>
+    <string name="changing_car_please_wait">Changing car, please wait...</string>
+    <string name="your_current_car_change_to">Your current car changed to</string>
+    <string name="your_current_car_cant_be_business">Your current car can\'t be business</string>
+    <string name="changing_car_type_please_wait">Changing car type, please wait...</string>
+    <string name="your_car_to_changed_to">Your car changed to</string>
+
+    <string-array name="photo_sources_array">
+        <item>From Gallery</item>
+        <item>From Camera</item>
+    </string-array>
+
+    <string-array name="car_types">
+        <item>@string/economy</item>
+        <item>@string/business</item>
+    </string-array>
 </resources>

@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.google.gson.Gson;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.DriverAccountDetails;
@@ -117,8 +116,8 @@ public class DriverDeclineTripReasonActivity extends BasicBackActivity implement
         // create & send the request
         User user = AppUtils.getCachedUser(this);
         DriverAccountDetails accountDetails = user.getAccountDetails();
-        DriverRequests.declineTrip(this, this, user.getAccessToken(), accountDetails.getId(), "" + tripId,
-                accountDetails.getDefaultCarId(), reasonId, comment);
+        DriverRequests.declineTrip(this, this, user.getAccessToken(), "" + accountDetails.getId(), "" + tripId,
+                "" + accountDetails.getDefaultCarId(), reasonId, comment);
     }
 
     @Override

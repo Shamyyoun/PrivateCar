@@ -145,13 +145,13 @@ public class DriverRequests {
     }
 
 
-    public static RequestHelper<GeneralResponse> updateLocation(Context context, RequestListener<GeneralResponse> listener, String accessToken, String location, int carId, int driverId) {
+    public static RequestHelper<GeneralResponse> updateLocation(Context context, RequestListener<GeneralResponse> listener, String accessToken, String location, String carId, String driverId) {
         // prepare parameters
         Map<String, String> params = new HashMap<>();
         params.put("access_token", accessToken);
         params.put("location", location);
-        params.put("carId", String.valueOf(carId));
-        params.put("driverId", String.valueOf(driverId));
+        params.put("carId", carId);
+        params.put("driverId", driverId);
 
         // create & send request
         RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
@@ -204,6 +204,35 @@ public class DriverRequests {
         // create & send request
         RequestHelper<AdsResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
                 Const.MESSAGE_DRIVER_GET_ADS, AdsResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+    public static RequestHelper<GeneralResponse> changeCar(Context context, RequestListener<GeneralResponse> listener, String accessToken, int carId) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_CAR_ID, "" + carId);
+
+        // create & send request
+        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_CHANGE_CAR_TYPE, GeneralResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+    public static RequestHelper<GeneralResponse> changeCarType(Context context, RequestListener<GeneralResponse> listener, String accessToken, int carId, String carType) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_CAR_ID, "" + carId);
+        params.put(Const.MSG_PARAM_CAR_TYPE, carType);
+
+        // create & send request
+        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_CHANGE_CAR_TYPE, GeneralResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;

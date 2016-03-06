@@ -98,6 +98,7 @@ public class Const {
     public static final String MESSAGE_DRIVER_START_TRIP = "starttrip";
     public static final String MESSAGE_DRIVER_CANCEL_TRIP = "drivercanceltrip";
     public static final String MESSAGE_DRIVER_GET_ADS = "getads";
+    public static final String MESSAGE_DRIVER_CHANGE_CAR_TYPE = "changecartype";
 
 
     //parameters:----
@@ -117,6 +118,7 @@ public class Const {
     public static final String MSG_PARAM_CAR_ID = "carId";
     public static final String MSG_PARAM_REASON_ID = "reasonId";
     public static final String MSG_PARAM_COMMENT = "comment";
+    public static final String MSG_PARAM_CAR_TYPE = "carType";
 
     //Intent & bundle keys
     public static final String KEY_TRIP_REQUEST = "trip_request";
