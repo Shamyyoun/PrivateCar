@@ -23,7 +23,6 @@ import com.privatecar.privatecar.fragments.DriverHomeFragment;
 import com.privatecar.privatecar.fragments.DriverMessageCenterFragment;
 import com.privatecar.privatecar.fragments.DriverRatingsFragment;
 import com.privatecar.privatecar.fragments.DriverStatementFragment;
-import com.privatecar.privatecar.models.entities.AccountDetails;
 import com.privatecar.privatecar.models.entities.DriverAccountDetails;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -177,7 +176,7 @@ public class DriverHomeActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Const.REQUEST_COARSE_LOCATION_PERMISSION && resultCode == RESULT_OK) {//this request is emitted in DriverHomeFragment
+        if (requestCode == Const.REQUEST_COARSE_LOCATION_PERMISSION && resultCode == RESULT_OK) {//this request is sent in DriverHomeFragment
             Log.e(Const.LOG_TAG, "resultCode: " + resultCode);
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_fragment_container);
             if (fragment instanceof DriverHomeFragment) {

@@ -71,11 +71,4 @@ public class User {
         this.expiryTimestamp = expiryTimestamp;
     }
 
-    public AccountDetails getAccountDetails() {
-        return accountDetails;
-    }
-
-    public void setAccountDetails(AccountDetails accountDetails) {
-        this.accountDetails = accountDetails;
-    }
 }
