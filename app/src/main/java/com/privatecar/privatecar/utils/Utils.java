@@ -357,7 +357,6 @@ public class Utils {
             return String.format("%s", number);
     }
 
-
     /**
      * Checks if a specified service is running or not.
      *
@@ -373,6 +372,18 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    /**
+     * method, used to format the url to prevent app from crash when open browser intent
+     * @param url
+     * @return the formatted url
+     */
+    public static String formatUrl(String url) {
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            url = "http://" + url;
+        }
+        return url;
     }
 
 }

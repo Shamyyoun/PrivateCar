@@ -8,11 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.adapters.PlacesAdapter;
 import com.privatecar.privatecar.models.entities.Place;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
-import com.privatecar.privatecar.views.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;

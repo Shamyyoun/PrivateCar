@@ -210,7 +210,7 @@
     <string name="please_choose_to_date">Please choose to date</string>
     <string name="loading_your_statements">Loading your statements, please wait...</string>
     <string name="no_statements_found_in_this_period">No statements found in this period</string>
-    <string name="error_fetching_available_options">Error fetching available options</string>
+    <string name="error_fetching_available_options">Error fetching available ads</string>
     <string name="enter_your_comment">Enter your comment</string>
     <string name="please_choose_your_reason">Please choose your reason</string>
     <string name="trip_declined_successfully">Trip declined successfully</string>
@@ -219,4 +219,10 @@
     <string name="be_inactive">Be Inactive</string>
     <string name="private_car">Private Car</string>
     <string name="driver_state_active">Driver State: Active</string>
+    <string name="starting_trip_please_wait">Starting trip, please wait...</string>
+    <string name="cancelling_trip_please_wait">Cancelling trip, please wait...</string>
+    <string name="trip_cancelled_successfully">Trip cancelled successfully</string>
+    <string name="cancel_trip_q">Cancel trip ?</string>
+    <string name="error_loading_ads">Error loading ads</string>
+    <string name="loading_ads_please_wait">Loading ads, please wait...</string>
 </resources>
