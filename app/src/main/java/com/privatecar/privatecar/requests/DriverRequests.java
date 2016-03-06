@@ -70,7 +70,7 @@ public class DriverRequests {
     }
 
     public static RequestHelper<Object> statements(Context context, RequestListener<Object> listener,
-                                                               String accessToken, String fromDate, String toDate) {
+                                                   String accessToken, String fromDate, String toDate) {
         // prepare parameters
         Map<String, String> params = new HashMap<>();
         params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
@@ -80,6 +80,46 @@ public class DriverRequests {
         // create & send request
         RequestHelper<Object> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
                 Const.MESSAGE_DRIVER_GET_STATEMENT, StatementsResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+    public static RequestHelper<Object> declineTrip(Context context, RequestListener<Object> listener,
+                                                    String accessToken, String driverId, String tripId,
+                                                    String carId, String reasonId, String comment) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_DRIVER_ID, driverId);
+        params.put(Const.MSG_PARAM_TRIP_ID, tripId);
+        params.put(Const.MSG_PARAM_CAR_ID, carId);
+        if (comment == null) {
+            params.put(Const.MSG_PARAM_REASON_ID, reasonId);
+        } else {
+            params.put(Const.MSG_PARAM_COMMENT, comment);
+        }
+
+        // create & send request
+        RequestHelper<Object> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_DECLINE_TRIP, GeneralResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+    public static RequestHelper<GeneralResponse> acceptTrip(Context context, RequestListener<GeneralResponse> listener,
+                                                            String accessToken, String driverId, String tripId, String carId) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_DRIVER_ID, driverId);
+        params.put(Const.MSG_PARAM_TRIP_ID, tripId);
+        params.put(Const.MSG_PARAM_CAR_ID, carId);
+
+        // create & send request
+        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_ACCEPT_TRIP, GeneralResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;

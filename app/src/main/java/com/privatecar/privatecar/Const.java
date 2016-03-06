@@ -78,6 +78,7 @@ public class Const {
     public static final String MESSAGE_STARTUP_CONFIG = "startupconfig";
     public static final String MESSAGE_USER_CONFIG = "userconfig";
     public static final String MESSAGE_ACCESS_TOKEN = "accesstoken";
+    public static final String MESSAGE_GET_OPTIONS = "getoptions";
 
     //messages (customer):----
     public static final String MESSAGE_REGISTER_CUSTOMER = "regcustomer";
@@ -87,6 +88,8 @@ public class Const {
     public static final String MESSAGE_DRIVER_SIGNUP = "regdriver";
     public static final String MESSAGE_DRIVER_LAST_TRIP = "lasttrip";
     public static final String MESSAGE_DRIVER_GET_STATEMENT = "getstatment";
+    public static final String MESSAGE_DRIVER_DECLINE_TRIP = "declinetrip";
+    public static final String MESSAGE_DRIVER_ACCEPT_TRIP = "accepttrip";
 
 
     //parameters:----
@@ -100,8 +103,15 @@ public class Const {
     public static final String MSG_PARAM_ACCESS_TOKEN = "access_token";
     public static final String MSG_PARAM_FROM = "form";
     public static final String MSG_PARAM_TO = "to";
+    public static final String MSG_PARAM_TYPE = "type";
+    public static final String MSG_PARAM_DRIVER_ID = "driverId";
+    public static final String MSG_PARAM_TRIP_ID = "tripId";
+    public static final String MSG_PARAM_CAR_ID = "carId";
+    public static final String MSG_PARAM_REASON_ID = "reasonId";
+    public static final String MSG_PARAM_COMMENT = "comment";
 
     //Intent & bundle keys
     public static final String KEY_TRIP_REQUEST = "trip_request";
-    public static final String KEY_STATEMENTS_RESPONSE = "statements_response";
+    public static final String KEY_STATEMENT_GROUPS = "statements_groups";
+    public static final String KEY_TRIP_ID = "trip_id";
 }

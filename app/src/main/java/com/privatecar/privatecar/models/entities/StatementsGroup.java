@@ -1,20 +1,22 @@
 package com.privatecar.privatecar.models.entities;
 
+import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by basim on 17/2/16.
  */
-public class StatementSearchResult {
-    private Date date;
+public class StatementsGroup implements Serializable {
+    private Calendar date;
     private int tripCount;
     private float profit;
 
-    public Date getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 

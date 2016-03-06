@@ -11,13 +11,22 @@ import android.widget.TextView;
 
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.models.entities.DriverAccountDetails;
 import com.privatecar.privatecar.models.entities.TripRequest;
+import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.enums.PaymentType;
+import com.privatecar.privatecar.models.responses.GeneralResponse;
+import com.privatecar.privatecar.requests.DriverRequests;
+import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
+import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.RequestListener;
+import com.privatecar.privatecar.utils.Utils;
 
-public class TripRequestActivity extends BaseActivity {
+public class TripRequestActivity extends BaseActivity implements RequestListener<GeneralResponse> {
+    public static TripRequestActivity currentInstance;
+
     private TripRequest tripRequest;
-
     private TextView tvOrderNo;
     private TextView tvRideNo;
     private TextView tvClientName;
@@ -33,6 +42,7 @@ public class TripRequestActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_request);
+        currentInstance = this;
 
         // get trip request object
         tripRequest = (TripRequest) getIntent().getSerializableExtra(Const.KEY_TRIP_REQUEST);
@@ -65,8 +75,8 @@ public class TripRequestActivity extends BaseActivity {
      * method, used to render the ui
      */
     private void updateUI() {
-        tvRideNo.setText("" + tripRequest.getId());
-        tvOrderNo.setText("" + tripRequest.getCode());
+        tvRideNo.setText("" + tripRequest.getCode());
+        tvOrderNo.setText("" + tripRequest.getId());
         tvClientName.setText(tripRequest.getCustomer());
         tvMobile.setText(tripRequest.getMobile());
         tvPickupAddress.setText(tripRequest.getPickAddress());
@@ -84,12 +94,60 @@ public class TripRequestActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_accept:
-
+                acceptTrip();
                 break;
+
             case R.id.btn_decline:
-                startActivity(new Intent(this, DriverDeclineTripReasonActivity.class));
+                Intent declineIntent = new Intent(this, DriverDeclineTripReasonActivity.class);
+                declineIntent.putExtra(Const.KEY_TRIP_ID, tripRequest.getId());
+                startActivity(declineIntent);
                 break;
         }
+    }
+
+    /**
+     * method, used to send accept trip request to the server
+     */
+    private void acceptTrip() {
+        // check internet connection
+        if (!Utils.hasConnection(this)) {
+            Utils.showShortToast(this, R.string.no_internet_connection);
+            return;
+        }
+
+        // show loading
+        progressDialog = DialogUtils.showProgressDialog(this, R.string.loading_please_wait);
+
+        // create & send the request
+        User user = AppUtils.getCachedUser(this);
+        DriverAccountDetails accountDetails = (DriverAccountDetails) user.getAccountDetails();
+        DriverRequests.acceptTrip(this, this, user.getAccessToken(), accountDetails.getId(), "" + tripRequest.getId(),
+                accountDetails.getDefaultCarId());
+    }
+
+    @Override
+    public void onSuccess(GeneralResponse response, String apiName) {
+        // dismiss progress
+        progressDialog.dismiss();
+
+        // check if success
+        if (response.isSuccess()) {
+            // goto trip info activity & finish
+            Intent intent = new Intent(this, DriverTripInfoActivity.class);
+            intent.putExtra(Const.KEY_TRIP_REQUEST, tripRequest);
+            startActivity(intent);
+            finish();
+        } else {
+            // show error msg
+            Utils.showLongToast(this, R.string.error_accepting_this_trip);
+        }
+    }
+
+    @Override
+    public void onFail(String message, String apiName) {
+        // // dismiss progress & show error toast
+        progressDialog.dismiss();
+        Utils.showLongToast(this, R.string.connection_error);
     }
 
     @Override

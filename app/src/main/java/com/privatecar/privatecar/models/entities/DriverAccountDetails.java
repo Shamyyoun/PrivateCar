@@ -4,7 +4,7 @@ package com.privatecar.privatecar.models.entities;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DriverAccountDetails {
+public class DriverAccountDetails extends AccountDetails {
 
     @SerializedName("id")
     @Expose

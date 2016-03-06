@@ -14,16 +14,19 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverHomeActivity;
 import com.privatecar.privatecar.activities.DriverStatementSearchResultActivity;
+import com.privatecar.privatecar.controllers.StatementsController;
 import com.privatecar.privatecar.models.entities.Statement;
-import com.privatecar.privatecar.models.entities.StatementSearchResult;
+import com.privatecar.privatecar.models.entities.StatementsGroup;
 import com.privatecar.privatecar.models.entities.Trip;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.StatementsResponse;
 import com.privatecar.privatecar.models.responses.TripResponse;
+import com.privatecar.privatecar.models.wrappers.SerializableListWrapper;
 import com.privatecar.privatecar.requests.DriverRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DatePickerFragment;
@@ -94,10 +97,11 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ib_from:
+                // hide errors
+                tvFrom.setError(null);
+
                 // create new instance of from picker fragment
                 fromPickerFragment = new DatePickerFragment();
-
-                // pass from date if exists
                 fromPickerFragment.setDate(fromDateStr, STATEMENT_DATE_FORMAT);
 
                 // show it
@@ -112,10 +116,11 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
                 break;
 
             case R.id.ib_to:
+                // hide errors
+                tvTo.setError(null);
+
                 // create new instance of to picker fragment
                 toPickerFragment = new DatePickerFragment();
-
-                // pass to date if exists
                 toPickerFragment.setDate(toDateStr, STATEMENT_DATE_FORMAT);
 
                 // show it
@@ -167,13 +172,46 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
             // this statements request
             StatementsResponse statementsResponse = (StatementsResponse) response;
 
+            // ====DUMMY====
+            String res = "{\n" +
+                    "\"status\": true,\n" +
+                    "\"content\": [\n" +
+                    "{ \"profit\": 100, \"comment\": \"Trip fare\", \"trip_id\": 12, \"created_at\": \"2016-02-25 13:08:37\" }\n" +
+                    ",\n" +
+                    "{ \"profit\": 122, \"comment\": \"Trip cash\", \"trip_id\": 25, \"created_at\": \"2016-02-13 19:20:35\" }\n" +
+                    ",\n" +
+                    "{ \"profit\": 16, \"comment\": \"Trip fare\", \"trip_id\": 25, \"created_at\": \"2016-02-25 13:08:43\" }\n" +
+                    ",\n" +
+                    "{ \"profit\": 122, \"comment\": \"Trip cash\", \"trip_id\": 25, \"created_at\": \"2016-02-13 19:24:08\" }\n" +
+                    ",\n" +
+                    "{ \"profit\": 16, \"comment\": \"Trip fare\", \"trip_id\": 25, \"created_at\": \"2016-02-13 19:24:08\" }\n" +
+                    ",\n" +
+                    "{ \"profit\": 122, \"comment\": \"Trip cash\", \"trip_id\": 28, \"created_at\": \"2016-02-13 19:38:45\" }\n" +
+                    ",\n" +
+                    "{ \"profit\": 16, \"comment\": \"Trip fare\", \"trip_id\": 28, \"created_at\": \"2016-02-13 19:38:45\" }\n" +
+                    "],\n" +
+                    "\"validation\": null\n" +
+                    "}";
+            Gson gson = new Gson();
+            statementsResponse = gson.fromJson(res, StatementsResponse.class);
+
             // check statements size
             List<Statement> statements = statementsResponse.getStatements();
             if (statements != null && statements.size() != 0) {
+                // get statements groups
+                StatementsController controller = new StatementsController(statements);
+                List<StatementsGroup> groups = controller.getAsGroups();
+
+                // create groups wrapper to send it to the result activity
+                SerializableListWrapper<StatementsGroup> groupsWrapper = new SerializableListWrapper<StatementsGroup>(groups);
+
                 // open statements result activity
                 Intent intent = new Intent(activity, DriverStatementSearchResultActivity.class);
-                intent.putExtra(Const.KEY_STATEMENTS_RESPONSE, statementsResponse);
+                intent.putExtra(Const.KEY_STATEMENT_GROUPS, groupsWrapper);
                 startActivity(intent);
+            } else {
+                // show empty toast
+                Utils.showLongToast(activity, R.string.no_statements_found_in_this_period);
             }
 
         } else {
@@ -194,7 +232,7 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
      * method, used to validate inputs and send statement search request
      */
     private void search() {
-        // check  dates
+        // check dates
         if (fromDateStr == null) {
             // set error
             tvFrom.setError(getString(R.string.please_choose_from_date));
@@ -205,6 +243,9 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
             tvTo.setError(getString(R.string.please_choose_to_date));
             return;
         }
+
+        // show progress dialog
+        progressDialog = DialogUtils.showProgressDialog(activity, R.string.loading_your_statements);
 
         // create and send the request
         User user = AppUtils.getCachedUser(activity);

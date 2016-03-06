@@ -17,6 +17,12 @@ public class TripRequest implements Serializable {
     @SerializedName("Customer")
     @Expose
     private String Customer;
+    @SerializedName("CustomerRating")
+    @Expose
+    private float CustomerRating;
+    @SerializedName("CustomerImage")
+    @Expose
+    private String CustomerImage;
     @SerializedName("Mobile")
     @Expose
     private String Mobile;
@@ -85,6 +91,34 @@ public class TripRequest implements Serializable {
      */
     public void setCustomer(String Customer) {
         this.Customer = Customer;
+    }
+
+    /**
+     * @param CustomerRating The Customer Rating
+     */
+    public void setCustomerRating(float CustomerRating) {
+        this.CustomerRating = CustomerRating;
+    }
+
+    /**
+     * @return The Customer Rating
+     */
+    public float getCustomerRating() {
+        return CustomerRating;
+    }
+
+    /**
+     * @return The Customer Image
+     */
+    public String getCustomerImage() {
+        return CustomerImage;
+    }
+
+    /**
+     * @param CustomerImage The CustomerImage
+     */
+    public void setCustomerImage(String CustomerImage) {
+        this.CustomerImage = CustomerImage;
     }
 
     /**

@@ -206,4 +206,12 @@
     <string name="trips">Trips</string>
     <string name="please_choose_from_date">Please choose from date</string>
     <string name="please_choose_to_date">Please choose to date</string>
+    <string name="loading_your_statements">Loading your statements, please wait...</string>
+    <string name="no_statements_found_in_this_period">No statements found in this period</string>
+    <string name="error_fetching_available_options">Error fetching available options</string>
+    <string name="enter_your_comment">Enter your comment</string>
+    <string name="please_choose_your_reason">Please choose your reason</string>
+    <string name="trip_declined_successfully">Trip declined successfully</string>
+    <string name="error_decline_this_trip">Error decline this trip</string>
+    <string name="error_accepting_this_trip">Error accepting this trip</string>
 </resources>

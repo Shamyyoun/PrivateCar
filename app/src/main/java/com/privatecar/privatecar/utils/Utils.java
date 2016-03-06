@@ -343,4 +343,16 @@ public class Utils {
         }
     }
 
+    /**
+     * method, used to format a double number as string without x.0
+     * @param number
+     * @return the formatted double as string
+     */
+    public static String formatDouble(double number) {
+        if (number == (long) number)
+            return String.format("%d", (long) number);
+        else
+            return String.format("%s", number);
+    }
+
 }
