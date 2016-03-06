@@ -1,12 +1,15 @@
 package com.privatecar.privatecar.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -169,5 +172,19 @@ public class DriverHomeActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Const.REQUEST_COARSE_LOCATION_PERMISSION && resultCode == RESULT_OK) {//this request is emitted in DriverHomeFragment
+            Log.e(Const.LOG_TAG, "resultCode: " + resultCode);
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_fragment_container);
+            if (fragment instanceof DriverHomeFragment) {
+                DriverHomeFragment homeFragment = (DriverHomeFragment) fragment;
+                homeFragment.onConnected(null);
+            }
+        }
+    }
+
 
 }

@@ -123,6 +123,8 @@
     <string name="registering">Registering</string>
     <string name="short_password">Short Password</string>
     <string name="install_google_play_services">Please install Google Play Services</string>
+    <string name="today_trips">Today Trips</string>
+    <string name="today_hours">Today Hours</string>
     <string-array name="photo_sources_array">
         <item>From Gallery</item>
         <item>From Camera</item>

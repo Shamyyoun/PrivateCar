@@ -109,6 +109,8 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
 
     @Override
     public void onFail(String message, String apiName) {
+        progressDialog.dismiss();
+
         // show error toast
         Utils.showLongToast(activity, message);
         Log.e(Const.LOG_TAG, message);

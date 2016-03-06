@@ -1,7 +1,6 @@
 package com.privatecar.privatecar.models.entities;
 
 import com.privatecar.privatecar.models.enums.UserType;
-import com.privatecar.privatecar.models.responses.AccountDetailsResponse;
 
 /**
  * Created by basim on 22/1/16.
@@ -13,6 +12,8 @@ public class User {
     private String userName;
     private String password;
     private UserType type;
+    private AccountDetails accountDetails;
+    private boolean online;
 
     public String getUserName() {
         return userName;
@@ -30,8 +31,6 @@ public class User {
         this.password = password;
     }
 
-    private AccountDetailsResponse accountDetails;
-    private boolean online;
 
     public String getAccessToken() {
         return accessToken;
@@ -49,14 +48,6 @@ public class User {
         this.type = type;
     }
 
-    public AccountDetailsResponse getAccountDetails() {
-        return accountDetails;
-    }
-
-    public void setAccountDetails(AccountDetailsResponse accountDetails) {
-        this.accountDetails = accountDetails;
-    }
-
     public boolean isOnline() {
         return online;
     }
@@ -71,5 +62,13 @@ public class User {
 
     public void setExpiryTimestamp(long expiryTimestamp) {
         this.expiryTimestamp = expiryTimestamp;
+    }
+
+    public AccountDetails getAccountDetails() {
+        return accountDetails;
+    }
+
+    public void setAccountDetails(AccountDetails accountDetails) {
+        this.accountDetails = accountDetails;
     }
 }

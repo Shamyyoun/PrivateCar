@@ -9,12 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConfigResponse {
-    public static final String KEY_CURRENT_APP_VERSION = "CurrentAppVersion";
-    public static final String KEY_CUSTOMER_SERVICE_NUMBER = "CustomerServiceNumber";
-    public static final String KEY_LOGIN_ENABLED = "LoginEnabled";
-    public static final String KEY_MIN_APP_VERSION = "MinAppVersion";
-    public static final String KEY_REGISTER_ENABLED = "RegisterEnabled";
-
     @SerializedName("status")
     @Expose
     private boolean status;

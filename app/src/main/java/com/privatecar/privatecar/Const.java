@@ -11,19 +11,9 @@ public class Const {
     public static final String CLIENT_SECRET = "4c7f6f8fa93d59c45502c0ae8c4a95b";
 
     //activity requests:----------------
-    public static final int REQ_GPS_SETTINGS = 1;
-
-    //app level constants:--------------
-    public static final String LOG_TAG = "Private Car";
-    public static final String SHARED_PREFERENCES_FILE_NAME = "private_car";
-    public static final String APP_FILES_DIR = "/.private_car";
-    public static final String PACKAGE_NAME = "com.privatecar.privatecar";
-    public static final int IMAGE_SIZE_USER = 400;
-    public static final int IMAGE_SIZE = 1024;
-    public static final int EGYPT_INDEX = 61; //Egypt index in the country spinner
-    public static final int MIN_PASSWORD_LENGTH = 3;
-
-
+    public static final int REQUEST_GPS_SETTINGS = 998;
+    public static final int REQUEST_COARSE_LOCATION_PERMISSION = 999;
+    public static final int REQUEST_FINE_LOCATION_PERMISSION = 1000;
     public static final int REQUEST_CAMERA_USER_PHOTO = 1001;
     public static final int REQUEST_CAMERA_CAR_PHOTO = 1002;
     public static final int REQUEST_CAMERA_ID_FRONT = 1003;
@@ -49,7 +39,19 @@ public class Const {
     public static final int REQUEST_CROP_CAR_LICENCE_FRONT = 1023;
     public static final int REQUEST_CROP_CAR_LICENCE_BACK = 1024;
 
+    //app level constants:--------------
+    public static final String LOG_TAG = "Private Car";
+    public static final String SHARED_PREFERENCES_FILE_NAME = "private_car";
+    public static final String APP_FILES_DIR = "/.private_car";
+    public static final String PACKAGE_NAME = "com.privatecar.privatecar";
+    public static final int IMAGE_SIZE_USER = 400;
+    public static final int IMAGE_SIZE = 1024;
+    public static final int EGYPT_INDEX = 61; //Egypt index in the country spinner
+    public static final int MIN_PASSWORD_LENGTH = 3;
+    public static final int LOCATION_UPDATE_IN_MS = 2000; //location is updated in how many milliseconds
+    public static final int HEATMAP_RADIUS = 50; // in KM
 
+    //File names
     public static final String FILE_NAME_USER_PHOTO = "user_photo";
     public static final String FILE_NAME_CROPPED_USER_PHOTO = "user_photo_cropped";
     public static final String FILE_NAME_CAR_PHOTO = "car_photo";
@@ -86,6 +88,8 @@ public class Const {
     public static final String MESSAGE_DRIVER_ACCOUNT_DETAILS = "driveraccountdetails";
     public static final String MESSAGE_DRIVER_SIGNUP = "regdriver";
     public static final String MESSAGE_DRIVER_LAST_TRIP = "lasttrip";
+    public static final String MESSAGE_DRIVER_GET_CUSTOMERS_STATS = "getcustomersstats";
+    public static final String MESSAGE_DRIVER_UPDATE_LOCATION = "updatelocation";
 
 
     //parameters:----
@@ -100,4 +104,6 @@ public class Const {
 
     //Intent & bundle keys
     public static final String KEY_TRIP_REQUEST = "trip_request";
+
+
 }

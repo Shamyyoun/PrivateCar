@@ -4,7 +4,10 @@ package com.privatecar.privatecar.fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,33 +15,54 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.location.FusedLocationProviderApi;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.maps.android.heatmaps.Gradient;
+import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverHomeActivity;
 import com.privatecar.privatecar.dialogs.GpsOptionDialog;
+import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.DriverAccountDetails;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
+import com.privatecar.privatecar.models.responses.LocationsResponse;
 import com.privatecar.privatecar.requests.DriverRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
 import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.PlayServicesUtils;
+import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
-public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallback, View.OnClickListener, RequestListener {
+public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, View.OnClickListener, RequestListener {
     private DriverHomeActivity activity;
     private Button btnBeActive;
     private TextView tvMessage;
@@ -50,7 +74,34 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     private GpsOptionDialog gpsOptionDialog;
     private ProgressDialog progressDialog;
 
-    private FusedLocationProviderApi fusedLocationProviderApi = LocationServices.FusedLocationApi;
+    private GoogleMap map;
+    private Marker locationMarker;
+    private HeatmapTileProvider provider;
+    private TileOverlay overlay;
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequestCoarse, locationRequestFine;
+    private List<LatLng> heatmapData;
+
+    private RequestHelper customersStatsRequest;
+
+
+    //create coarse location request for updating the heat map
+    private void createCoarseLocationRequest() {
+        locationRequestCoarse = new LocationRequest();
+        String intervalString = AppUtils.getConfigValue(getActivity(), Config.KEY_MAP_REFRESH_RATE);
+        int interval = intervalString != null ? Integer.parseInt(intervalString) : 10;
+        locationRequestCoarse.setInterval(interval);
+        locationRequestCoarse.setFastestInterval(interval);
+        locationRequestCoarse.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+    }
+
+    //create fine location request for getting high accuracy driver location (for updatelocation message)
+    private void createFineLocationRequest() {
+        locationRequestFine = new LocationRequest();
+        locationRequestFine.setInterval(Const.LOCATION_UPDATE_IN_MS);
+        locationRequestFine.setFastestInterval(Const.LOCATION_UPDATE_IN_MS);
+        locationRequestFine.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
 
     public DriverHomeFragment() {
         // Required empty public constructor
@@ -60,6 +111,28 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     public void onAttach(Context context) {
         super.onAttach(context);
         this.activity = (DriverHomeActivity) getActivity();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (!PlayServicesUtils.isPlayServicesAvailable(getActivity())) {
+            getActivity().onBackPressed();
+            return;
+        }
+
+        // Create an instance of GoogleAPIClient.
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+
+        createCoarseLocationRequest();
+
     }
 
     @Override
@@ -97,25 +170,6 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     }
 
     @Override
-    public void onStart() {
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-        super.onStart();
-    }
-
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        GoogleMap mMap = googleMap;
-
-//        // Add a marker in Sydney, Australia, and move the camera.
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_be_active:
@@ -137,6 +191,25 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     }
 
     /**
+     * method, used to get customers lat,lng values from server to display the heatmap
+     */
+    private void getCustomersStats(Location location) {
+
+        // get cached user & send the request
+        User user = AppUtils.getCachedUser(activity);
+        //cancel the request before making new one
+        if (customersStatsRequest != null) customersStatsRequest.cancel(true);
+
+        com.privatecar.privatecar.models.entities.Location tmpLocation = new com.privatecar.privatecar.models.entities.Location();
+        tmpLocation.setLat(location.getLatitude());
+        tmpLocation.setLng(location.getLongitude());
+
+        customersStatsRequest = DriverRequests.getCustomersStats(activity, this, user.getAccessToken(), tmpLocation.toString(), Const.HEATMAP_RADIUS);
+
+    }
+
+
+    /**
      * method, used to validate gps & send be active request to server
      */
     private void beActive(boolean active) {
@@ -155,7 +228,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
             return;
         }
 
-        // TODO send goonline request
+        // TODO enable fine location && start UpdateDriverLocationService service && edit the previous logic && change button appearance
     }
 
     @Override
@@ -169,7 +242,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
             DriverAccountDetailsResponse detailsResponse = (DriverAccountDetailsResponse) response;
 
             // check status
-            if (detailsResponse != null && detailsResponse.getDriverAccountDetails() != null) {
+            if (detailsResponse.getDriverAccountDetails() != null) {
                 // response is valid
                 // update ui in the fragment
                 updateUI(detailsResponse.getDriverAccountDetails());
@@ -180,9 +253,31 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
                 // invalid response
                 // show error toast & exit
                 Utils.showLongToast(activity, R.string.unexpected_error_try_again);
-                activity.finish();
+                activity.onBackPressed();
             }
-        } else {
+        } else if (response instanceof LocationsResponse) {
+            LocationsResponse locationsResponse = (LocationsResponse) response;
+            if (locationsResponse.isSuccess() && locationsResponse.getContent() != null) {
+                ArrayList<com.privatecar.privatecar.models.entities.Location> locations = locationsResponse.getContent();
+
+                boolean firstResponse = heatmapData == null; // to addHeatmap() or updateHeatMap()
+                if (firstResponse) {
+                    heatmapData = new ArrayList<>();
+                } else {
+                    heatmapData.clear();
+                }
+
+                for (int i = 0; i < locations.size(); i++) {
+                    heatmapData.add(new LatLng(locations.get(i).getLat(), locations.get(i).getLng()));
+                }
+
+                if (firstResponse) {
+                    addHeatMap();
+                } else {
+                    updateHeatMap();
+                }
+
+            }
 
         }
     }
@@ -194,18 +289,203 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
             // show error toast & exits
             Utils.showLongToast(activity, message);
             Log.e(Const.LOG_TAG, message);
-            activity.finish();
+            activity.onBackPressed();
+        } else if (apiName.equals(Const.MESSAGE_DRIVER_GET_CUSTOMERS_STATS)) {
+            Utils.showLongToast(activity, message);
+            Log.e(Const.LOG_TAG, message);
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // check request code
-        if (requestCode == Const.REQ_GPS_SETTINGS) {
+        if (requestCode == Const.REQUEST_GPS_SETTINGS) {
             gpsOptionDialog.dismiss();
             beActive(true);
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        googleApiClient.connect();
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+        Utils.LogE("onStart");
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Utils.LogE("onMapReady");
+
+        map = googleMap;
+        map.getUiSettings().setMapToolbarEnabled(false);
+        //TODO: set map show streets only
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        googleApiClient.disconnect();
+
+        Utils.LogE("onStop");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        removeLocationUpdates();
+        Utils.LogE("onPause");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        requestLocationUpdates();
+        Utils.LogE("onResume");
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Utils.LogE("onConnected");
+
+        LocationSettingsRequest.Builder builder =
+                new LocationSettingsRequest.Builder().addLocationRequest(locationRequestCoarse);
+        PendingResult<LocationSettingsResult> pendingResult =
+                LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
+
+        pendingResult.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(LocationSettingsResult result) {
+                final Status status = result.getStatus();
+                final LocationSettingsStates states = result.getLocationSettingsStates();
+
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        // All location settings are satisfied. The client can initialize location requests here.
+//                        getLastLocation();
+                        requestLocationUpdates();
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        // Location settings are not satisfied, but this can be fixed by showing the user a dialog.
+                        try {
+                            // Show the dialog by calling startResolutionForResult(), and check the result in onActivityResult().
+                            status.startResolutionForResult(getActivity(), Const.REQUEST_COARSE_LOCATION_PERMISSION); //DriverHomeActivity receives the result
+                        } catch (IntentSender.SendIntentException e) {
+                            // Ignore the error.
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        // Location settings are not satisfied. However, we have no way to fix the settings so we won't show the dialog.
+                        break;
+
+                }
+
+
+            }
+        });
+
+
+    }
+
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Utils.LogE(">>>>> Location: " + location.getLatitude() + ", " + location.getLongitude());
+        updateMapLocation(location);
+        getCustomersStats(location);
+    }
+
+    private void getLastLocation() {
+        //TODO: support api 23 permission model
+        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        if (lastLocation != null) {
+            Utils.LogE(">>>>> Last Location: " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude());
+
+            updateMapLocation(lastLocation);
+        } else {
+            Utils.LogE("lastLocation == null");
+        }
+    }
+
+    protected void requestLocationUpdates() {
+        //TODO: handle api 23 permission
+        if (googleApiClient != null && googleApiClient.isConnected())
+            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequestCoarse, this);
+    }
+
+
+    protected void removeLocationUpdates() {
+        if (googleApiClient != null && googleApiClient.isConnected())
+            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+    }
+
+    private void updateMapLocation(Location location) {
+        if (map != null) {
+            // Add a marker in Sydney, Australia, and move the camera.
+            LatLng markerPosition = new LatLng(location.getLatitude(), location.getLongitude());
+            if (locationMarker == null)
+                locationMarker = map.addMarker(new MarkerOptions().position(markerPosition).title("current location"));
+            else
+                locationMarker.setPosition(markerPosition);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(markerPosition, 20));
+        }
+    }
+
+    private void addHeatMap() {
+        //https://developers.google.com/maps/documentation/android-api/utility/heatmap#custom
+
+//        heatmapData = new ArrayList<>();
+//        heatmapData.add(new LatLng(-37.1886, 145.708));
+//        heatmapData.add(new LatLng(-37.8361, 144.845));
+//        heatmapData.add(new LatLng(-38.4034, 144.192));
+//        heatmapData.add(new LatLng(-38.7597, 143.67));
+//        heatmapData.add(new LatLng(-36.9672, 141.083));
+//        heatmapData.add(new LatLng(-37.2843, 142.927));
+//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(heatmapData.get(0), 5));
+
+        // Create the gradient.
+        int[] colors = {
+                ContextCompat.getColor(getActivity(), R.color.low_crowd),
+                ContextCompat.getColor(getActivity(), R.color.medium_crowd),
+                ContextCompat.getColor(getActivity(), R.color.high_crowd)
+        };
+
+        float[] startPoints = {
+                0.2f,
+                0.5f,
+                0.9f
+        };
+
+        Gradient gradient = new Gradient(colors, startPoints);
+
+        // Create a heat map tile provider, passing it the latlngs
+
+        provider = new HeatmapTileProvider.Builder()
+                .data(heatmapData)
+                .gradient(gradient)
+                .build();
+
+        // Add a tile overlay to the map, using the heat map tile provider.
+        overlay = map.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
+
+    }
+
+    private void updateHeatMap() {
+        provider.setData(heatmapData);
+        overlay.clearTileCache();
+    }
+
 }

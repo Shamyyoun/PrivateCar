@@ -1,13 +1,11 @@
 package com.privatecar.privatecar.dialogs;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
@@ -52,9 +50,9 @@ public class GpsOptionDialog extends ParentDialog {
             public void onClick(View v) {
                 // open gps settings
                 if (fragment != null)
-                    fragment.startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), Const.REQ_GPS_SETTINGS);
+                    fragment.startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), Const.REQUEST_GPS_SETTINGS);
                 else
-                    activity.startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), Const.REQ_GPS_SETTINGS);
+                    activity.startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), Const.REQUEST_GPS_SETTINGS);
             }
         });
     }

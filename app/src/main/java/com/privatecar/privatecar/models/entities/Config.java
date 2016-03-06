@@ -6,6 +6,18 @@ import com.google.gson.annotations.SerializedName;
 
 public class Config {
 
+    public static final String KEY_CURRENT_APP_VERSION = "CurrentAppVersion";
+    public static final String KEY_CUSTOMER_SERVICE_NUMBER = "CustomerServiceNumber";
+    public static final String KEY_LOGIN_ENABLED = "LoginEnabled";
+    public static final String KEY_MIN_APP_VERSION = "MinAppVersion";
+    public static final String KEY_REGISTER_ENABLED = "RegisterEnabled";
+    public static final String KEY_LOW_CUSTOMER_TRIP_RATE = "LowCustomerTripRate";
+    public static final String KEY_LOW_DRIVER_TRIP_RATE = "LowDriverTripRate";
+    public static final String KEY_MAP_REFRESH_RATE = "MapRefereshRate";
+    public static final String KEY_MIN_TRIP_FARE = "MinTripFare";
+    public static final String KEY_WAITING_TIME_SPEED = "WaitingTimeSpeed";
+
+
     @SerializedName("key")
     @Expose
     private String key;

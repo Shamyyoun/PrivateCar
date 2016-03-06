@@ -5,6 +5,7 @@ import android.content.Context;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
+import com.privatecar.privatecar.models.responses.LocationsResponse;
 import com.privatecar.privatecar.models.responses.TripsResponse;
 import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
@@ -67,4 +68,41 @@ public class DriverRequests {
 
         return requestHelper;
     }
+
+
+    public static RequestHelper<LocationsResponse> getCustomersStats(Context context, RequestListener<LocationsResponse> listener, String accessToken, String location, int radiusInKM) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put("access_token", accessToken);
+        params.put("location", location);
+        params.put("radius", String.valueOf(radiusInKM));
+
+        // create & send request
+        RequestHelper<LocationsResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_GET_CUSTOMERS_STATS, LocationsResponse.class, listener, params);
+
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+
+    public static RequestHelper<GeneralResponse> updateLocation(Context context, RequestListener<GeneralResponse> listener, String accessToken, String location, int carId, int driverId) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put("access_token", accessToken);
+        params.put("location", location);
+        params.put("carId", String.valueOf(carId));
+        params.put("driverId", String.valueOf(driverId));
+
+        // create & send request
+        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_UPDATE_LOCATION, GeneralResponse.class, listener, params);
+
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+
 }
