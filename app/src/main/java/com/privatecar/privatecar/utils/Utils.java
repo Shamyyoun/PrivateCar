@@ -345,6 +345,7 @@ public class Utils {
 
     /**
      * method, used to format a double number as string without x.0
+     *
      * @param number
      * @return the formatted double as string
      */
@@ -353,6 +354,18 @@ public class Utils {
             return String.format("%d", (long) number);
         else
             return String.format("%s", number);
+    }
+
+    /**
+     * method, used to format the url to prevent app from crash when open browser intent
+     * @param url
+     * @return the formatted url
+     */
+    public static String formatUrl(String url) {
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            url = "http://" + url;
+        }
+        return url;
     }
 
 }

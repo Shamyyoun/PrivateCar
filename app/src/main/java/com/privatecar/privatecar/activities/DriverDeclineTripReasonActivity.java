@@ -131,6 +131,7 @@ public class DriverDeclineTripReasonActivity extends BasicBackActivity implement
             // this options response
             OptionsResponse optionsResponse = (OptionsResponse) response;
 
+            /*
             // ====DUMMY====
             String res = "{\n" +
                     "\"status\": true,\n" +
@@ -143,6 +144,7 @@ public class DriverDeclineTripReasonActivity extends BasicBackActivity implement
                     "}";
             Gson gson = new Gson();
             optionsResponse = gson.fromJson(res, OptionsResponse.class);
+            */
 
             // prepare options list & update the ui
             if (optionsResponse.getOptions() == null) {

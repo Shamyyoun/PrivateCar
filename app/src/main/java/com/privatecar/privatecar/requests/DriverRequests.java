@@ -3,10 +3,10 @@ package com.privatecar.privatecar.requests;
 import android.content.Context;
 
 import com.privatecar.privatecar.Const;
+import com.privatecar.privatecar.models.responses.AdsResponse;
 import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.models.responses.LocationsResponse;
-import com.privatecar.privatecar.models.responses.TripsResponse;
 import com.privatecar.privatecar.models.responses.StatementsResponse;
 import com.privatecar.privatecar.models.responses.TripResponse;
 import com.privatecar.privatecar.utils.RequestHelper;
@@ -162,5 +162,51 @@ public class DriverRequests {
         return requestHelper;
     }
 
+    public static RequestHelper<GeneralResponse> startTrip(Context context, RequestListener<GeneralResponse> listener,
+                                                           String accessToken, String driverId, String tripId, String carId) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_DRIVER_ID, driverId);
+        params.put(Const.MSG_PARAM_TRIP_ID, tripId);
+        params.put(Const.MSG_PARAM_CAR_ID, carId);
+
+        // create & send request
+        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_START_TRIP, GeneralResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+    public static RequestHelper<GeneralResponse> cancelTrip(Context context, RequestListener<GeneralResponse> listener,
+                                                            String accessToken, String driverId, String tripId, String carId) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_DRIVER_ID, driverId);
+        params.put(Const.MSG_PARAM_TRIP_ID, tripId);
+        params.put(Const.MSG_PARAM_CAR_ID, carId);
+
+        // create & send request
+        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_CANCEL_TRIP, GeneralResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+    public static RequestHelper<AdsResponse> ads(Context context, RequestListener<AdsResponse> listener, String accessToken) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+
+        // create & send request
+        RequestHelper<AdsResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_GET_ADS, AdsResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
 
 }

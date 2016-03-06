@@ -3,9 +3,14 @@ package com.privatecar.privatecar.utils;
 import android.content.Context;
 
 import com.privatecar.privatecar.Const;
+import com.privatecar.privatecar.models.entities.Ad;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.ConfigResponse;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by basim on 22/1/16.
@@ -63,6 +68,16 @@ public class AppUtils {
     public static User getCachedUser(Context ctx) {
         SavePrefs<User> savePrefs = new SavePrefs<>(ctx, User.class);
         return savePrefs.load(Const.CACHE_USER);
+    }
+
+    public static void cacheAds(Context ctx, List<Ad> ads) {
+        SavePrefs<List<Ad>> savePrefs = new SavePrefs<>(ctx, Ad[].class);
+        savePrefs.save(ads, Const.CACHE_ADS);
+    }
+
+    public static List<Ad> getCachedAds(Context ctx) {
+        SavePrefs<Ad[]> savePrefs = new SavePrefs<>(ctx, Ad[].class);
+        return Arrays.asList(savePrefs.load(Const.CACHE_ADS));
     }
 
     public static boolean isUserLoggedIn(Context ctx) {

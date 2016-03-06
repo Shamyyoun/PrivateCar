@@ -73,6 +73,7 @@ public class Const {
     //cached parameter names:---------------
     public static final String CACHE_CONFIGS = "configs_cache";
     public static final String CACHE_USER = "user_cache";
+    public static final String CACHE_ADS = "ads_cache";
 
     //messages (common):----
     public static final String IMAGES_BASE_URL = "http://ec2-54-201-70-234.us-west-2.compute.amazonaws.com/api-repo-1/";
@@ -94,6 +95,9 @@ public class Const {
     public static final String MESSAGE_DRIVER_GET_STATEMENT = "getstatment";
     public static final String MESSAGE_DRIVER_DECLINE_TRIP = "declinetrip";
     public static final String MESSAGE_DRIVER_ACCEPT_TRIP = "accepttrip";
+    public static final String MESSAGE_DRIVER_START_TRIP = "starttrip";
+    public static final String MESSAGE_DRIVER_CANCEL_TRIP = "drivercanceltrip";
+    public static final String MESSAGE_DRIVER_GET_ADS = "getads";
 
 
     //parameters:----

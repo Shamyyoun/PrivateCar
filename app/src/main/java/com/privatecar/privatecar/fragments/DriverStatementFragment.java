@@ -172,6 +172,7 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
             // this statements request
             StatementsResponse statementsResponse = (StatementsResponse) response;
 
+            /*
             // ====DUMMY====
             String res = "{\n" +
                     "\"status\": true,\n" +
@@ -194,6 +195,7 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
                     "}";
             Gson gson = new Gson();
             statementsResponse = gson.fromJson(res, StatementsResponse.class);
+            */
 
             // check statements size
             List<Statement> statements = statementsResponse.getStatements();

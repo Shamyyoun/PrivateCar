@@ -1,10 +1,12 @@
 package com.privatecar.privatecar.fragments;
 
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -418,20 +420,24 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
 
     private void getLastLocation() {
         //TODO: support api 23 permission model
-        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        if (lastLocation != null) {
-            Utils.LogE(">>>>> Last Location: " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude());
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+            if (lastLocation != null) {
+                Utils.LogE(">>>>> Last Location: " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude());
 
-            updateMapLocation(lastLocation);
-        } else {
-            Utils.LogE("lastLocation == null");
+                updateMapLocation(lastLocation);
+            } else {
+                Utils.LogE("lastLocation == null");
+            }
         }
     }
 
     protected void requestLocationUpdates() {
         //TODO: handle api 23 permission
-        if (googleApiClient != null && googleApiClient.isConnected())
-            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequestCoarse, this);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (googleApiClient != null && googleApiClient.isConnected())
+                LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequestCoarse, this);
+        }
     }
 
 

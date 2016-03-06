@@ -19,7 +19,6 @@ import java.util.List;
 
 
 public class StatementSearchResultsRVAdapter extends RecyclerView.Adapter<StatementSearchResultsRVAdapter.ResultViewHolder> {
-
     private List<StatementsGroup> results;
 
 
