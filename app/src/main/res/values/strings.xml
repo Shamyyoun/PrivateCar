@@ -242,6 +242,7 @@
     <string name="no_data_found">No data found</string>
     <string name="loading_your_documents_please_wait">Loading your documents, please wait...</string>
     <string name="no_documents_stored_in_your_account">No documents stored in your account</string>
+    <string name="adding_car">Adding car</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

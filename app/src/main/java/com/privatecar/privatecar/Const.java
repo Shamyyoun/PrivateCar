@@ -107,6 +107,7 @@ public class Const {
     public static final String MESSAGE_DRIVER_MESSAGES_DELETE = "inboxdelete";
     public static final String MESSAGE_DRIVER_CHANGE_CAR_TYPE = "changecartype";
     public static final String MESSAGE_DRIVER_GET_DOCUMENTS = "getdocuments";
+    public static final String MESSAGE_DRIVER_ADD_CAR = "addcar";
 
 
     //parameters:----

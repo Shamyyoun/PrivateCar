@@ -14,5 +14,10 @@ public class DriverAddCarConfirmationActivity extends BasicBackActivity {
     }
 
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_confirm:
+                onBackPressed();
+                break;
+        }
     }
 }

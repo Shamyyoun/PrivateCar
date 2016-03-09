@@ -315,7 +315,7 @@ public class DriverRequests {
         // create & send request
         RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
                 Const.MESSAGE_DRIVER_MESSAGES_DELETE, GeneralResponse.class, listener, params);
-requestHelper.executeFormUrlEncoded();
+        requestHelper.executeFormUrlEncoded();
 
         return requestHelper;
     }
@@ -331,6 +331,22 @@ requestHelper.executeFormUrlEncoded();
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;
+    }
+
+    public static RequestHelper<GeneralResponse> addCar(Context ctx, RequestListener<GeneralResponse> listener, String accessToken, File imageCarPhotoCropped, File imageCarLicenceFrontPhotoCropped, File imageCarLicenceBackPhotoCropped) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+
+        Map<String, File> files = new HashMap<>();
+        files.put("Carphoto", imageCarPhotoCropped);
+        files.put("Carlicense", imageCarLicenceFrontPhotoCropped);
+        files.put("CarlicenseBack", imageCarLicenceBackPhotoCropped);
+
+        RequestHelper<GeneralResponse> request = new RequestHelper<>(ctx, Const.MESSAGES_BASE_URL, Const.MESSAGE_DRIVER_ADD_CAR, GeneralResponse.class, listener, params, files);
+
+        request.executeMultiPart();
+        return request;
     }
 
 }

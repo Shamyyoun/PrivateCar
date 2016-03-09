@@ -27,6 +27,15 @@
             android:layout_marginTop="5dp"
             android:text="@string/car_photo"
             android:textAllCaps="true" />
+
+        <ImageView
+            android:id="@+id/iv_car_photo_validation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/fail_icon"
+            android:visibility="gone"
+            tools:visibility="visible" />
     </LinearLayout>
 
     <LinearLayout
@@ -48,20 +57,31 @@
             android:textColor="@color/grayish"
             android:textSize="18sp" />
 
-        <ImageButton
-            android:id="@+id/ib_browse_car_licence_front"
+        <ImageView
+            android:id="@+id/iv_car_licence_front_validation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:padding="10dp"
+            android:src="@null"
+            tools:src="@drawable/success_icon" />
+
+        <ImageButton
+            android:id="@+id/ib_car_licence_front_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
             android:background="?selectableItemBackgroundBorderless"
+            android:onClick="onClick"
             android:padding="10dp"
             android:src="@drawable/open_gallery_icon" />
 
         <ImageButton
-            android:id="@+id/ib_capture_car_licence_front"
+            android:id="@+id/ib_car_licence_front_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackgroundBorderless"
+            android:onClick="onClick"
             android:padding="10dp"
             android:src="@drawable/camera_icon" />
     </LinearLayout>
@@ -85,20 +105,31 @@
             android:textColor="@color/grayish"
             android:textSize="18sp" />
 
-        <ImageButton
-            android:id="@+id/ib_browse_car_licence_back"
+        <ImageView
+            android:id="@+id/iv_car_licence_back_validation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:padding="10dp"
+            android:src="@null"
+            tools:src="@drawable/success_icon" />
+
+        <ImageButton
+            android:id="@+id/ib_car_licence_back_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
             android:background="?selectableItemBackgroundBorderless"
+            android:onClick="onClick"
             android:padding="10dp"
             android:src="@drawable/open_gallery_icon" />
 
         <ImageButton
-            android:id="@+id/ib_capture_car_licence_back"
+            android:id="@+id/ib_car_licence_back_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackgroundBorderless"
+            android:onClick="onClick"
             android:padding="10dp"
             android:src="@drawable/camera_icon" />
     </LinearLayout>
