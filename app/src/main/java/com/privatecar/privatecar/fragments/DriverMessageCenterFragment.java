@@ -109,7 +109,6 @@ public class DriverMessageCenterFragment extends BaseFragment implements Request
             if (messagesResponse.isSuccess() && messagesResponse.getMessages() != null) {
                 messages.addAll(messagesResponse.getMessages());
                 adapter.notifyDataSetChanged();
-
                 AppUtils.cacheMessages(getContext(), messages);
             }
         } else if (response instanceof GeneralResponse) {
@@ -121,6 +120,7 @@ public class DriverMessageCenterFragment extends BaseFragment implements Request
                     if (message.isSelected()) messageIterator.remove();
                 }
                 adapter.notifyDataSetChanged();
+                AppUtils.cacheMessages(getContext(), messages);
             } else {
                 Utils.showLongToast(getContext(), R.string.failed_deleting_message);
             }
