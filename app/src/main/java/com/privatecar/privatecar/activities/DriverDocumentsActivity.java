@@ -3,42 +3,98 @@ package com.privatecar.privatecar.activities;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.adapters.DriverDocumentsRVAdapter;
+import com.privatecar.privatecar.models.entities.Documents;
+import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.models.responses.DocumentsResponse;
+import com.privatecar.privatecar.requests.DriverRequests;
+import com.privatecar.privatecar.utils.AppUtils;
+import com.privatecar.privatecar.utils.RequestListener;
+import com.privatecar.privatecar.utils.Utils;
 
-import java.util.ArrayList;
-
-public class DriverDocumentsActivity extends BasicBackActivity {
-
-
-    RecyclerView rvDocuments;
-    ArrayList<String> documents = new ArrayList<>();
+public class DriverDocumentsActivity extends ProgressBackActivity implements RequestListener<DocumentsResponse> {
+    private RecyclerView rvDocuments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_documents);
 
-        fillDumpDocuments();
-
+        // customize recycler view
         rvDocuments = (RecyclerView) findViewById(R.id.rv_documents);
-        rvDocuments.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
-//        rvDocuments.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+//        rvDocuments.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
+        rvDocuments.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         rvDocuments.setHasFixedSize(true);
-        rvDocuments.setAdapter(new DriverDocumentsRVAdapter(this, documents));
 
+        loadDocuments();
     }
 
-    private void fillDumpDocuments() {
-        documents.add("https://pmcdeadline2.files.wordpress.com/2015/01/penelope-cruz.jpg?w=446&h=299&crop=1");
-        documents.add("http://img2.timeinc.net/people/i/2007/database/penelopecruz/penelope_cruz300.jpg");
-        documents.add("http://media2.onsugar.com/files/2013/12/17/689/n/1922398/d64f96e9d3e49da6_watermark-penelope-6.jpg");
-        documents.add("http://cineuropa.org/imgCache/2014/01/21/1390305583526_0570x0365_1390305638250.jpg");
-        documents.add("http://hbz.h-cdn.co/assets/cm/15/03/54bc53c66574e_-_hbz-penelope-cruz-0512-3-xln.jpg");
-        documents.add("http://cdn02.cdn.justjared.com/wp-content/uploads/headlines/2015/04/cruz-joines-zoolander-sequel.jpg");
-        documents.add("http://images4.fanpop.com/image/photos/19100000/Pen-lope-Cruz-photoshoot-HQ-penelope-cruz-19189797-1000-1255.jpg");
-        documents.add("http://marieclaire.media.ipcdigital.co.uk/11116/00006bfd2/26b1_orh100000w440/penelope-cruz-garticle.jpg");
-        documents.add("http://www.prothinspo.com/images/penelope-cruz-1_1_.jpg");
+    private void loadDocuments() {
+        // check internet connection
+        if (!Utils.hasConnection(this)) {
+            showError(R.string.no_internet_connection);
+            return;
+        }
+
+        // show progress
+        showProgress();
+
+        // create & send the request
+        User user = AppUtils.getCachedUser(this);
+        DriverRequests.documents(this, this, user.getAccessToken());
+    }
+
+    @Override
+    public void onSuccess(DocumentsResponse response, String apiName) {
+        // check the response
+        if (response.isStatus()) {
+            // check documents
+            if (response.getDocuments() == null) {
+                // show empty
+                showEmpty(R.string.no_documents_stored_in_your_account);
+            } else if (Utils.isNullOrEmpty(response.getDocuments().getAsArray())) {
+                // show empty
+                showEmpty(R.string.no_documents_stored_in_your_account);
+            } else {
+                // update the ui
+                updateUI(response.getDocuments());
+            }
+        } else {
+            showError(R.string.unexpected_error_try_again);
+        }
+    }
+
+    private void updateUI(Documents documents) {
+        DriverDocumentsRVAdapter adapter = new DriverDocumentsRVAdapter(this, documents.getAsArray());
+        rvDocuments.setAdapter(adapter);
+        showMain();
+    }
+
+    @Override
+    public void onFail(String message, String apiName) {
+        showError(R.string.connection_error);
+    }
+
+    @Override
+    protected int getContentViewResId() {
+        return R.layout.activity_driver_documents;
+    }
+
+    @Override
+    protected int getMainViewResId() {
+        return R.id.rv_documents;
+    }
+
+    @Override
+    protected View.OnClickListener getRefreshListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadDocuments();
+            }
+        };
     }
 }

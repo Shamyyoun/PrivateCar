@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.Ad;
+import com.privatecar.privatecar.models.entities.Config;
+import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.Utils;
 
 import java.util.List;
@@ -22,7 +24,6 @@ import java.util.List;
 public class AdsRVAdapter extends RecyclerView.Adapter<AdsRVAdapter.AdHolder> {
     Context ctx;
     List<Ad> ads;
-
 
     public AdsRVAdapter(Context ctx, List<Ad> ads) {
         this.ctx = ctx;
@@ -46,8 +47,9 @@ public class AdsRVAdapter extends RecyclerView.Adapter<AdsRVAdapter.AdHolder> {
             @Override
             public void onClick(View v) {
                 // open link in the browser
+                String url = AppUtils.getConfigValue(ctx, Config.KEY_BASE_URL) + ad.getLink();
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(Utils.formatUrl(ad.getLink())));
+                intent.setData(Uri.parse(Utils.formatUrl(url)));
                 ctx.startActivity(intent);
             }
         });
@@ -70,6 +72,4 @@ public class AdsRVAdapter extends RecyclerView.Adapter<AdsRVAdapter.AdHolder> {
             btnVisit = (Button) itemView.findViewById(R.id.btn_visit);
         }
     }
-
-
 }

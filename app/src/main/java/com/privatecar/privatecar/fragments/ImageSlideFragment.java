@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.privatecar.privatecar.R;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -38,10 +40,23 @@ public class ImageSlideFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_image_slide, container, false);
         ivImage = (ImageView) view.findViewById(R.id.iv_image);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN); // coloring the progressbar white
 
         url = getArguments().getString("url");
+
+        // load the image with picasso
+        Picasso.with(getActivity()).load(url).error(R.drawable.default_image).into(ivImage, new Callback() {
+            @Override
+            public void onSuccess() {
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError() {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
 
         SimpleTarget target = new SimpleTarget<Bitmap>() {
             @Override

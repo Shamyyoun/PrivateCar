@@ -16,6 +16,7 @@ public class Config {
     public static final String KEY_MAP_REFRESH_RATE = "MapRefereshRate";
     public static final String KEY_MIN_TRIP_FARE = "MinTripFare";
     public static final String KEY_WAITING_TIME_SPEED = "WaitingTimeSpeed";
+    public static final String KEY_BASE_URL = "BaseURL";
 
 
     @SerializedName("key")

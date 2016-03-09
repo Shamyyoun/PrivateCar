@@ -106,6 +106,7 @@ public class Const {
     public static final String MESSAGE_DRIVER_MESSAGES_MARK_AS_UNREAD = "inboxmarkasunread";
     public static final String MESSAGE_DRIVER_MESSAGES_DELETE = "inboxdelete";
     public static final String MESSAGE_DRIVER_CHANGE_CAR_TYPE = "changecartype";
+    public static final String MESSAGE_DRIVER_GET_DOCUMENTS = "getdocuments";
 
 
     //parameters:----

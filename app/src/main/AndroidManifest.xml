@@ -196,7 +196,7 @@
             android:label="@string/your_documents" />
         <activity
             android:name=".activities.DriverDocumentDetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar.FullTransparent" />
+            android:theme="@style/AppTheme.BlackTheme" />
         <activity
             android:name=".activities.CustomerRideActivity"
             android:label="@string/your_ride" />

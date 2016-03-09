@@ -3,19 +3,17 @@ package com.privatecar.privatecar.models.responses;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.privatecar.privatecar.models.entities.Ad;
+import com.privatecar.privatecar.models.entities.Documents;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class AdsResponse {
-
+public class DocumentsResponse {
     @SerializedName("status")
     @Expose
     private boolean status;
     @SerializedName("content")
     @Expose
-    private List<Ad> ads = new ArrayList<Ad>();
+    private Documents documents;
     @SerializedName("validation")
     @Expose
     private List<String> validation;
@@ -35,17 +33,17 @@ public class AdsResponse {
     }
 
     /**
-     * @return The ads
+     * @return The documents
      */
-    public List<Ad> getAds() {
-        return ads;
+    public Documents getDocuments() {
+        return documents;
     }
 
     /**
-     * @param ads The ads
+     * @param documents The documents
      */
-    public void setAds(List<Ad> ads) {
-        this.ads = ads;
+    public void setDocuments(Documents documents) {
+        this.documents = documents;
     }
 
     /**
