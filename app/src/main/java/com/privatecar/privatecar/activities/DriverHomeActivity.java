@@ -191,7 +191,6 @@ public class DriverHomeActivity extends BaseActivity {
                 homeFragment.beActive(true);
             }
         }
-
     }
 
 

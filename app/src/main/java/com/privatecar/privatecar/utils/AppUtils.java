@@ -5,10 +5,10 @@ import android.content.Context;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.models.entities.Ad;
 import com.privatecar.privatecar.models.entities.Config;
+import com.privatecar.privatecar.models.entities.Message;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.ConfigResponse;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -96,5 +96,29 @@ public class AppUtils {
         long milliSecondsIn6Days = 518400000;
 
         return (expiryTimestamp - currentTimestamp) < milliSecondsIn6Days;
+    }
+
+    /**
+     * Cache message center messages
+     * @param ctx
+     * @param messages
+     */
+    public static void cacheMessages(Context ctx, List<Message> messages) {
+        SavePrefs<List<Message>> savePrefs = new SavePrefs<>(ctx, Message[].class);
+        savePrefs.save(messages, Const.CACHE_MESSAGES);
+    }
+
+    /**
+     * Get cached messages to load it into message center
+     * @param ctx
+     * @return List of messages or null if no messages cached
+     */
+    public static List<Message> getCachedMessages(Context ctx) {
+        SavePrefs<Message[]> savePrefs = new SavePrefs<>(ctx, Message[].class);
+        Message[] messages = savePrefs.load(Const.CACHE_MESSAGES);
+        if (messages != null)
+            return Arrays.asList(messages);
+
+        return null;
     }
 }

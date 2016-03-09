@@ -206,7 +206,7 @@
     <string name="please_choose_to_date">Please choose to date</string>
     <string name="loading_your_statements">Loading your statements, please wait...</string>
     <string name="no_statements_found_in_this_period">No statements found in this period</string>
-    <string name="error_fetching_available_options">Error fetching available ads</string>
+    <string name="error_fetching_available_options">Error fetching available messages</string>
     <string name="enter_your_comment">Enter your comment</string>
     <string name="please_choose_your_reason">Please choose your reason</string>
     <string name="trip_declined_successfully">Trip declined successfully</string>
@@ -219,6 +219,7 @@
     <string name="cancelling_trip_please_wait">Cancelling trip, please wait...</string>
     <string name="trip_cancelled_successfully">Trip cancelled successfully</string>
     <string name="cancel_trip_q">Cancel trip ?</string>
+    <string name="loading_latest_messages">Loading latest messages</string>
     <string name="error_loading_ads">Error loading ads</string>
     <string name="loading_ads_please_wait">Loading ads, please wait...</string>
     <string name="your_balance_c">Your balance:</string>
@@ -227,6 +228,15 @@
     <string name="your_current_car_cant_be_business">Your current car can\'t be business</string>
     <string name="changing_car_type_please_wait">Changing car type, please wait...</string>
     <string name="your_car_to_changed_to">Your car changed to</string>
+    <string name="create_message">Create Message</string>
+    <string name="please_enter_message_body">Please enter message text</string>
+    <string name="message_sent">Message sent</string>
+    <string name="failed_sending_message">Failed sending message</string>
+    <string name="please_type_your_message_here">Please type your message here...</string>
+    <string name="sending_message">Sending message</string>
+    <string name="message_deleted">Message deleted</string>
+    <string name="failed_deleting_message">Failed deleting message</string>
+    <string name="deleting_message">Deleting message</string>
     <string name="error_loading_data">Error loading data</string>
     <string name="tap_to_refresh">Tap to refresh</string>
     <string name="no_data_found">No data found</string>

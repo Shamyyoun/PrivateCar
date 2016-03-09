@@ -1,6 +1,6 @@
 package com.privatecar.privatecar.adapters;
 
-import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,20 +10,22 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.activities.DriverMessageDetails;
+import com.privatecar.privatecar.interfaces.ItemClickListener;
 import com.privatecar.privatecar.models.entities.Message;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by basim on 14/2/16.
  */
 public class MessagesRVAdapter extends RecyclerView.Adapter<MessagesRVAdapter.ViewHolder> {
 
-    private ArrayList<Message> messages;
+    private List<Message> messages;
+    private ItemClickListener itemClickListener;
 
-    public MessagesRVAdapter(ArrayList<Message> messages) {
+    public MessagesRVAdapter(List<Message> messages, ItemClickListener itemClickListener) {
         this.messages = messages;
+        this.itemClickListener = itemClickListener;
     }
 
     @Override
@@ -37,8 +39,13 @@ public class MessagesRVAdapter extends RecyclerView.Adapter<MessagesRVAdapter.Vi
         Message message = messages.get(position);
 
         holder.cbMessage.setChecked(message.isSelected());
-        holder.tvMessage.setText(message.getTitle());
-        holder.tvDate.setText(message.getDate());
+        holder.tvMessage.setText(message.getMessage());
+        holder.tvDate.setText(message.getCreatedAt());
+        if (!message.isSeen()) {
+            holder.tvMessage.setTypeface(null, Typeface.BOLD);
+        } else {
+            holder.tvMessage.setTypeface(null, Typeface.NORMAL);
+        }
     }
 
     @Override
@@ -58,9 +65,9 @@ public class MessagesRVAdapter extends RecyclerView.Adapter<MessagesRVAdapter.Vi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), DriverMessageDetails.class);
-                    intent.putExtra("message", messages.get(getAdapterPosition()));
-                    v.getContext().startActivity(intent);
+                    if (itemClickListener != null) {
+                        itemClickListener.onItemClick(getAdapterPosition());
+                    }
                 }
             });
 
