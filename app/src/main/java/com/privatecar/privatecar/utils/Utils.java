@@ -30,6 +30,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -384,6 +385,36 @@ public class Utils {
             url = "http://" + url;
         }
         return url;
+    }
+
+    /**
+     * method, used to check if string is null or empty
+     * @param str to check
+     * @return boolean true if null or empty
+     */
+    public static boolean isNullOrEmpty(String str) {
+        if (str == null) {
+            return true;
+        } else if (str.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * method, used to check if list is null or empty
+     * @param list to check
+     * @return boolean true if null or empty
+     */
+    public static boolean isNullOrEmpty(List list) {
+        if (list == null) {
+            return true;
+        } else if (list.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

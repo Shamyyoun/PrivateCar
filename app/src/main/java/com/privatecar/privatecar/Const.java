@@ -99,6 +99,7 @@ public class Const {
     public static final String MESSAGE_DRIVER_CANCEL_TRIP = "drivercanceltrip";
     public static final String MESSAGE_DRIVER_GET_ADS = "getads";
     public static final String MESSAGE_DRIVER_CHANGE_CAR_TYPE = "changecartype";
+    public static final String MESSAGE_DRIVER_GET_DOCUMENTS = "getdocuments";
 
 
     //parameters:----

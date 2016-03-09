@@ -22,5 +22,6 @@
     <color name="greenish">#56c400</color>
     <color name="reddish">#e30613</color>
     <color name="golden">#FFD700</color>
+    <color name="black_transparent">#22000000</color>
 
 </resources>

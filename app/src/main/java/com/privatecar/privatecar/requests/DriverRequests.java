@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.models.responses.AdsResponse;
+import com.privatecar.privatecar.models.responses.DocumentsResponse;
 import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.models.responses.LocationsResponse;
@@ -233,6 +234,19 @@ public class DriverRequests {
         // create & send request
         RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
                 Const.MESSAGE_DRIVER_CHANGE_CAR_TYPE, GeneralResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+    public static RequestHelper<DocumentsResponse> documents(Context context, RequestListener<DocumentsResponse> listener, String accessToken) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+
+        // create & send request
+        RequestHelper<DocumentsResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_GET_DOCUMENTS, DocumentsResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;

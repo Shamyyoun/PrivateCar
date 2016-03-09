@@ -41,6 +41,12 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="AppTheme.BlackTheme" parent="AppTheme.NoActionBar">
+        <item name="colorPrimary">@android:color/black</item>
+        <item name="colorPrimaryDark">@android:color/black</item>
+        <item name="colorAccent">@android:color/white</item>
+    </style>
+
     <!-- Transparent Screen theme. -->
     <style name="AppTheme.NoActionBar.Transparent" />
 

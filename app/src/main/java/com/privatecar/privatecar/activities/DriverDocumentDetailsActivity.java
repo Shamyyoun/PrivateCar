@@ -10,9 +10,11 @@ import android.util.Log;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.fragments.ImageSlideFragment;
+import com.privatecar.privatecar.models.wrappers.SerializableListWrapper;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DriverDocumentDetailsActivity extends BaseActivity {
 
@@ -20,7 +22,7 @@ public class DriverDocumentDetailsActivity extends BaseActivity {
     private CirclePageIndicator indicator;
     private ImageSlideViewPagerAdapter adapter;
     private int position;
-    ArrayList<String> documents;
+    List<String> documents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,7 @@ public class DriverDocumentDetailsActivity extends BaseActivity {
         setContentView(R.layout.activity_driver_document_details);
 
         position = getIntent().getIntExtra("position", 0);
-        documents = getIntent().getStringArrayListExtra("documents");
+        documents = ((SerializableListWrapper<String>) getIntent().getSerializableExtra("documents")).getList();
         if (documents == null) {
             Log.e(Const.LOG_TAG, "documents = null");
             onBackPressed();
@@ -53,9 +55,9 @@ public class DriverDocumentDetailsActivity extends BaseActivity {
     }
 
     class ImageSlideViewPagerAdapter extends FragmentStatePagerAdapter {
-        private ArrayList<String> urls;
+        private List<String> urls;
 
-        public ImageSlideViewPagerAdapter(FragmentManager manager, ArrayList<String> urls) {
+        public ImageSlideViewPagerAdapter(FragmentManager manager, List<String> urls) {
             super(manager);
             this.urls = urls;
         }

@@ -227,6 +227,11 @@
     <string name="your_current_car_cant_be_business">Your current car can\'t be business</string>
     <string name="changing_car_type_please_wait">Changing car type, please wait...</string>
     <string name="your_car_to_changed_to">Your car changed to</string>
+    <string name="error_loading_data">Error loading data</string>
+    <string name="tap_to_refresh">Tap to refresh</string>
+    <string name="no_data_found">No data found</string>
+    <string name="loading_your_documents_please_wait">Loading your documents, please wait...</string>
+    <string name="no_documents_stored_in_your_account">No documents stored in your account</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>
