@@ -12,7 +12,7 @@ public class DriverAccountDetailsResponse {
     private boolean status;
     @SerializedName("content")
     @Expose
-    private DriverAccountDetails driverAccountDetails;
+    private DriverAccountDetails accountDetails;
     @SerializedName("validation")
     @Expose
     private Object validation;
@@ -32,17 +32,17 @@ public class DriverAccountDetailsResponse {
     }
 
     /**
-     * @return The driverAccountDetails
+     * @return The accountDetails
      */
-    public DriverAccountDetails getDriverAccountDetails() {
-        return driverAccountDetails;
+    public DriverAccountDetails getAccountDetails() {
+        return accountDetails;
     }
 
     /**
-     * @param driverAccountDetails The driverAccountDetails
+     * @param accountDetails The accountDetails
      */
-    public void setDriverAccountDetails(DriverAccountDetails driverAccountDetails) {
-        this.driverAccountDetails = driverAccountDetails;
+    public void setAccountDetails(DriverAccountDetails accountDetails) {
+        this.accountDetails = accountDetails;
     }
 
     /**

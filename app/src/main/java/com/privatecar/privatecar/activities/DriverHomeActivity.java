@@ -151,7 +151,7 @@ public class DriverHomeActivity extends BaseActivity {
      */
     public void updatePersonalInfo(DriverAccountDetails accountDetails) {
         tvUserName.setText(accountDetails.getFullname());
-        tvUserID.setText(accountDetails.getId());
+        tvUserID.setText("" + accountDetails.getId());
         tvUserCredit.setText(accountDetails.getCredit() + " " + getString(R.string.currency));
 
         // load personal image
@@ -191,7 +191,6 @@ public class DriverHomeActivity extends BaseActivity {
                 homeFragment.beActive(true);
             }
         }
-
     }
 
 

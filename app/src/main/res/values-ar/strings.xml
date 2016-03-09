@@ -129,6 +129,15 @@
     <string name="private_car">Private Car</string>
     <string name="driver_state_active">Driver State: Active</string>
     <string name="loading_latest_messages">Loading lates messages</string>
+    <string name="create_message">Create Message</string>
+    <string name="please_enter_message_body">Please enter message text</string>
+    <string name="message_sent">Message sent</string>
+    <string name="failed_sending_message">Failed sending message</string>
+    <string name="please_type_your_message_here">Please type your message here...</string>
+    <string name="sending_message">Sending message</string>
+    <string name="message_deleted">Message deleted</string>
+    <string name="failed_deleting_message">Failed deleting message</string>
+    <string name="deleting_message">Deleting message</string>
     <string-array name="photo_sources_array">
         <item>From Gallery</item>
         <item>From Camera</item>

@@ -38,6 +38,7 @@ public class Const {
     public static final int REQUEST_CROP_DRIVER_LICENCE_BACK = 1022;
     public static final int REQUEST_CROP_CAR_LICENCE_FRONT = 1023;
     public static final int REQUEST_CROP_CAR_LICENCE_BACK = 1024;
+    public static final int REQUEST_MESSAGE_DETAILS = 1025;
 
     //app level constants:--------------
     public static final String LOG_TAG = "Private Car";
@@ -104,6 +105,7 @@ public class Const {
     public static final String MESSAGE_DRIVER_MESSAGES_MARK_AS_READ = "inboxmarkasread";
     public static final String MESSAGE_DRIVER_MESSAGES_MARK_AS_UNREAD = "inboxmarkasunread";
     public static final String MESSAGE_DRIVER_MESSAGES_DELETE = "inboxdelete";
+    public static final String MESSAGE_DRIVER_CHANGE_CAR_TYPE = "changecartype";
 
 
     //parameters:----
@@ -123,6 +125,7 @@ public class Const {
     public static final String MSG_PARAM_CAR_ID = "carId";
     public static final String MSG_PARAM_REASON_ID = "reasonId";
     public static final String MSG_PARAM_COMMENT = "comment";
+    public static final String MSG_PARAM_CAR_TYPE = "carType";
 
     //Intent & bundle keys
     public static final String KEY_TRIP_REQUEST = "trip_request";

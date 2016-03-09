@@ -1,6 +1,5 @@
 package com.privatecar.privatecar.adapters;
 
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,9 +10,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.activities.DriverMessageDetails;
+import com.privatecar.privatecar.interfaces.ItemClickListener;
 import com.privatecar.privatecar.models.entities.Message;
-import com.privatecar.privatecar.utils.AppUtils;
 
 import java.util.List;
 
@@ -23,9 +21,11 @@ import java.util.List;
 public class MessagesRVAdapter extends RecyclerView.Adapter<MessagesRVAdapter.ViewHolder> {
 
     private List<Message> messages;
+    private ItemClickListener itemClickListener;
 
-    public MessagesRVAdapter(List<Message> messages) {
+    public MessagesRVAdapter(List<Message> messages, ItemClickListener itemClickListener) {
         this.messages = messages;
+        this.itemClickListener = itemClickListener;
     }
 
     @Override
@@ -65,12 +65,9 @@ public class MessagesRVAdapter extends RecyclerView.Adapter<MessagesRVAdapter.Vi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), DriverMessageDetails.class);
-                    intent.putExtra("message", messages.get(getAdapterPosition()));
-                    v.getContext().startActivity(intent);
-                    messages.get(getAdapterPosition()).setSeen(true);
-                    notifyItemChanged(getAdapterPosition());
-                    AppUtils.cacheMessages(v.getContext(), messages);
+                    if (itemClickListener != null) {
+                        itemClickListener.onItemClick(getAdapterPosition());
+                    }
                 }
             });
 

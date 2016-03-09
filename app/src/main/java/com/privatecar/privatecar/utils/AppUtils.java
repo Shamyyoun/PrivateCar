@@ -98,11 +98,21 @@ public class AppUtils {
         return (expiryTimestamp - currentTimestamp) < milliSecondsIn6Days;
     }
 
+    /**
+     * Cache message center messages
+     * @param ctx
+     * @param messages
+     */
     public static void cacheMessages(Context ctx, List<Message> messages) {
         SavePrefs<List<Message>> savePrefs = new SavePrefs<>(ctx, Message[].class);
         savePrefs.save(messages, Const.CACHE_MESSAGES);
     }
 
+    /**
+     * Get cached messages to load it into message center
+     * @param ctx
+     * @return List of messages or null if no messages cached
+     */
     public static List<Message> getCachedMessages(Context ctx) {
         SavePrefs<Message[]> savePrefs = new SavePrefs<>(ctx, Message[].class);
         Message[] messages = savePrefs.load(Const.CACHE_MESSAGES);

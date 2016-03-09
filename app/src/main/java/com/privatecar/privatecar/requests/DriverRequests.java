@@ -234,7 +234,35 @@ public class DriverRequests {
         // create & send request
         RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
                 Const.MESSAGE_DRIVER_SEND_MESSAGE, GeneralResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
 
+        return requestHelper;
+    }
+
+    public static RequestHelper<GeneralResponse> changeCar(Context context, RequestListener<GeneralResponse> listener, String accessToken, int carId) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_CAR_ID, "" + carId);
+
+        // create & send request
+        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_CHANGE_CAR_TYPE, GeneralResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+    public static RequestHelper<GeneralResponse> changeCarType(Context context, RequestListener<GeneralResponse> listener, String accessToken, int carId, String carType) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_CAR_ID, "" + carId);
+        params.put(Const.MSG_PARAM_CAR_TYPE, carType);
+
+        // create & send request
+        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_CHANGE_CAR_TYPE, GeneralResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;
@@ -270,12 +298,18 @@ public class DriverRequests {
         return requestHelper;
     }
 
-
-    public static RequestHelper<GeneralResponse> messagesDelete(Context context, RequestListener<GeneralResponse> listener, String accessToken, int messagesIds) {
+    /**
+     * @param context
+     * @param listener
+     * @param accessToken
+     * @param messagesIds comma separated message ids (2,34,22,....)
+     * @return
+     */
+    public static RequestHelper<GeneralResponse> messagesDelete(Context context, RequestListener<GeneralResponse> listener, String accessToken, String messagesIds) {
         // prepare parameters
         Map<String, String> params = new HashMap<>();
         params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
-        params.put("messages_ids", String.valueOf(messagesIds));
+        params.put("messages_ids", messagesIds);
 
         // create & send request
         RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
@@ -285,6 +319,5 @@ public class DriverRequests {
 
         return requestHelper;
     }
-
 
 }

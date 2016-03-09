@@ -300,17 +300,17 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
             DriverAccountDetailsResponse detailsResponse = (DriverAccountDetailsResponse) response;
 
             // check status
-            if (detailsResponse.getDriverAccountDetails() != null) {
+            if (detailsResponse.getAccountDetails() != null) {
                 // response is valid
                 // update ui in the fragment
-                updateUI(detailsResponse.getDriverAccountDetails());
+                updateUI(detailsResponse.getAccountDetails());
 
                 // update personal info in the navigation drawer
-                activity.updatePersonalInfo(detailsResponse.getDriverAccountDetails());
+                activity.updatePersonalInfo(detailsResponse.getAccountDetails());
 
                 // update cached user
                 User user = AppUtils.getCachedUser(activity);
-                user.setAccountDetails(detailsResponse.getDriverAccountDetails());
+                user.setAccountDetails(detailsResponse.getAccountDetails());
                 AppUtils.cacheUser(activity, user);
             } else {
                 // invalid response

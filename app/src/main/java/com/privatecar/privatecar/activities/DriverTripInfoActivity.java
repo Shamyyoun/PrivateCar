@@ -128,8 +128,8 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
         // create & send the request
         User user = AppUtils.getCachedUser(this);
         DriverAccountDetails accountDetails = user.getAccountDetails();
-        DriverRequests.startTrip(this, this, user.getAccessToken(), accountDetails.getId(), "" + tripRequest.getId(),
-                accountDetails.getDefaultCarId());
+        DriverRequests.startTrip(this, this, user.getAccessToken(), "" + accountDetails.getId(), "" + tripRequest.getId(),
+                "" + accountDetails.getDefaultCarId());
     }
 
     /**
@@ -164,8 +164,8 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
         // create & send the request
         User user = AppUtils.getCachedUser(this);
         DriverAccountDetails accountDetails = user.getAccountDetails();
-        DriverRequests.cancelTrip(this, this, user.getAccessToken(), accountDetails.getId(), "" + tripRequest.getId(),
-                accountDetails.getDefaultCarId());
+        DriverRequests.cancelTrip(this, this, user.getAccessToken(), "" + accountDetails.getId(), "" + tripRequest.getId(),
+                "" + accountDetails.getDefaultCarId());
     }
 
     @Override

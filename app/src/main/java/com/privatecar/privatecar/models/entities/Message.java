@@ -33,7 +33,7 @@ public class Message implements Serializable {
     private Integer status;
 
     private transient Boolean selected = false;
-    private transient Boolean seen = false;
+    private Boolean seen = false;
 
     /**
      * @return The id

@@ -45,10 +45,11 @@
                     android:text="Current Car" />
 
                 <TextView
+                    android:id="@+id/tv_current_car"
                     style="@style/white_medium_capitalized_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="aaa-123" />
+                    android:text="-----------" />
 
                 <Button
                     android:id="@+id/btn_change_car"
@@ -74,10 +75,11 @@
                     android:text="Car Type" />
 
                 <TextView
+                    android:id="@+id/tv_car_type"
                     style="@style/white_medium_capitalized_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Business" />
+                    android:text="-----------" />
 
                 <Button
                     android:id="@+id/btn_change_type"
@@ -104,6 +106,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_balance"
                 style="@style/white_medium_bold_capitalized_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
