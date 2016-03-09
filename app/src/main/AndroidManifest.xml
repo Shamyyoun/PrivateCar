@@ -217,7 +217,7 @@
             android:label="@string/rate"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activities.CustomerChangePasswordActivity"
+            android:name=".activities.ChangePasswordActivity"
             android:label="@string/change_password" />
         <activity
             android:name=".activities.CustomerAddCreditCardActivity"

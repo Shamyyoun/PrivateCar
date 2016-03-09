@@ -82,6 +82,7 @@ public class Const {
     public static final String MESSAGE_USER_CONFIG = "userconfig";
     public static final String MESSAGE_ACCESS_TOKEN = "accesstoken";
     public static final String MESSAGE_GET_OPTIONS = "getoptions";
+    public static final String MESSAGE_CHANGE_PASSWORD = "changepassword";
 
     //messages (customer):----
     public static final String MESSAGE_REGISTER_CUSTOMER = "regcustomer";
@@ -120,6 +121,8 @@ public class Const {
     public static final String MSG_PARAM_REASON_ID = "reasonId";
     public static final String MSG_PARAM_COMMENT = "comment";
     public static final String MSG_PARAM_CAR_TYPE = "carType";
+    public static final String MSG_PARAM_OLD_PASSWORD = "oldpassword";
+    public static final String MSG_PARAM_NEW_PASSWORD = "newpassword";
 
     //Intent & bundle keys
     public static final String KEY_TRIP_REQUEST = "trip_request";

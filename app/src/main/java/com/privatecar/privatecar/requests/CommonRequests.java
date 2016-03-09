@@ -6,6 +6,7 @@ import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.models.enums.GrantType;
 import com.privatecar.privatecar.models.responses.AccessTokenResponse;
 import com.privatecar.privatecar.models.responses.ConfigResponse;
+import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.models.responses.OptionsResponse;
 import com.privatecar.privatecar.utils.PlayServicesUtils;
 import com.privatecar.privatecar.utils.RequestHelper;
@@ -52,6 +53,21 @@ public class CommonRequests {
 
         // create & send request
         RequestHelper<Object> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_GET_OPTIONS, OptionsResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+    public static RequestHelper changePassword(Context context, RequestListener<GeneralResponse> listener, String accessToken, String oldPassword, String newPassword) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_OLD_PASSWORD, oldPassword);
+        params.put(Const.MSG_PARAM_NEW_PASSWORD, newPassword);
+
+        // create & send request
+        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context,
+                Const.MESSAGES_BASE_URL, Const.MESSAGE_CHANGE_PASSWORD, GeneralResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;
