@@ -13,7 +13,7 @@ import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.CustomerAboutPrivateActivity;
 import com.privatecar.privatecar.activities.CustomerAddCreditCardActivity;
 import com.privatecar.privatecar.activities.CustomerAddPromoCodeActivity;
-import com.privatecar.privatecar.activities.CustomerChangePasswordActivity;
+import com.privatecar.privatecar.activities.ChangePasswordActivity;
 import com.privatecar.privatecar.activities.CustomerInviteFriendsActivity;
 import com.privatecar.privatecar.dialogs.CustomerChangeLanguageDialog;
 
@@ -79,7 +79,7 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
         switch (v.getId()) {
             case R.id.layout_change_password:
                 // open change password activity
-                startActivity(new Intent(activity, CustomerChangePasswordActivity.class));
+                startActivity(new Intent(activity, ChangePasswordActivity.class));
                 break;
 
             case R.id.layout_add_credit_card:

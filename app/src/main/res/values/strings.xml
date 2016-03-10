@@ -89,7 +89,6 @@
     <string name="min">min</string>
     <string name="your_ride">Your Ride</string>
     <string name="pickup">Pickup</string>
-
     <string name="pickup_location">Pickup Location</string>
     <string name="verify">Verify</string>
     <string name="dropoff">Dropoff</string>
@@ -243,6 +242,15 @@
     <string name="loading_your_documents_please_wait">Loading your documents, please wait...</string>
     <string name="no_documents_stored_in_your_account">No documents stored in your account</string>
     <string name="adding_car">Adding car</string>
+    <string name="enter_your_current_password">Enter your current password</string>
+    <string name="your_current_password_isnt_correct">Your current password isn\'t correct</string>
+    <string name="password_length_error">Password length must be more than 3 and less than 32 characters</string>
+    <string name="enter_the_new_password">Enter the new password</string>
+    <string name="passwords_doesnt_match">Passwords doesn\'t match</string>
+    <string name="changing_password_please_wait">Changing password, please wait...</string>
+    <string name="your_password_changed_successfully">Your password changed successfully</string>
+    <string name="error_while_changing_your_password">Error while changing your password\n
+        Please check your old password and try again</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>
@@ -253,4 +261,10 @@
         <item>@string/economy</item>
         <item>@string/business</item>
     </string-array>
+
+    <string-array name="languages">
+        <item>@string/english</item>
+        <item>@string/arabic</item>
+    </string-array>
+
 </resources>

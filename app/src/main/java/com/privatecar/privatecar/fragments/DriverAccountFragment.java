@@ -2,6 +2,7 @@ package com.privatecar.privatecar.fragments;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,9 +57,9 @@ public class DriverAccountFragment extends BaseFragment implements RequestListen
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.activity = activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.activity = getActivity();
     }
 
     @Override
