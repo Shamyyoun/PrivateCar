@@ -100,6 +100,7 @@ public class AppUtils {
 
     /**
      * Cache message center messages
+     *
      * @param ctx
      * @param messages
      */
@@ -110,6 +111,7 @@ public class AppUtils {
 
     /**
      * Get cached messages to load it into message center
+     *
      * @param ctx
      * @return List of messages or null if no messages cached
      */
@@ -120,5 +122,27 @@ public class AppUtils {
             return Arrays.asList(messages);
 
         return null;
+    }
+
+    /**
+     * method, used to clear all cache to sign out the user
+     *
+     * @param context
+     */
+    public static void clearCache(Context context) {
+        // clear user prefs
+        SavePrefs<User> userPrefs = new SavePrefs<>(context, User.class);
+        userPrefs.clear();
+
+        // clear ads prefs
+        SavePrefs<List<Ad>> adsPrefs = new SavePrefs<>(context, Ad[].class);
+        adsPrefs.clear();
+
+        // clear messages prefs
+        SavePrefs<List<Message>> messagePrefs = new SavePrefs<>(context, Message[].class);
+        messagePrefs.clear();
+
+        // clear locale
+        Utils.clearCachedKey(context, Const.CACHE_LOCALE);
     }
 }

@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -24,7 +23,6 @@ import com.privatecar.privatecar.utils.Utils;
 
 public class DriverSigninActivity extends BasicBackActivity implements View.OnClickListener, RequestListener<AccessTokenResponse> {
     private EditText etUsername, etPassword;
-    private Button btnSignIn;
     private ProgressDialog progressDialog;
 
 
@@ -48,10 +46,6 @@ public class DriverSigninActivity extends BasicBackActivity implements View.OnCl
                 return false;
             }
         });
-
-        // init sign in button
-        btnSignIn = (Button) findViewById(R.id.btn_sign_in);
-        btnSignIn.setOnClickListener(this);
     }
 
     @Override
@@ -61,7 +55,8 @@ public class DriverSigninActivity extends BasicBackActivity implements View.OnCl
                 signIn();
                 break;
             case R.id.btn_forgot_password:
-
+                // open forget password activity
+                startActivity(new Intent(this, ForgotPasswordActivity.class));
                 break;
         }
     }

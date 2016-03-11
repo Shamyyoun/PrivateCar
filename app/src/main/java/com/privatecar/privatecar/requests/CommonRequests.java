@@ -72,4 +72,17 @@ public class CommonRequests {
 
         return requestHelper;
     }
+
+    public static RequestHelper forgetPassword(Context context, RequestListener<GeneralResponse> listener, String email) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_EMAIL, email);
+
+        // create & send request
+        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context,
+                Const.MESSAGES_BASE_URL, Const.MESSAGE_FORGET_PASSWORD, GeneralResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
 }

@@ -22,7 +22,7 @@
     <string name="verify_your_account">Verify Your Account</string>
     <string name="verification_code">Verification Code</string>
     <string name="done">Done</string>
-    <string name="forgot_password">Forgot Password?</string>
+    <string name="forgot_password_q">Forgot Password?</string>
     <string name="question_mark">" ?"</string>
     <string name="menu">Menu</string>
     <string name="book_a_lift">Book A Lift</string>
@@ -251,6 +251,11 @@
     <string name="your_password_changed_successfully">Your password changed successfully</string>
     <string name="error_while_changing_your_password">Error while changing your password\n
         Please check your old password and try again</string>
+
+    <string name="forgot_password">Forgot Password</string>
+    <string name="enter_your_email_address">Enter your email address</string>
+    <string name="please_enter_your_email_used_in_registration">Please enter your email used in registration</string>
+    <string name="please_check_your_inbox_and_follow_instructions">Please check your inbox and follow instructions</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>
