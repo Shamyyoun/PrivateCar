@@ -237,6 +237,9 @@
         <activity
             android:name=".activities.DriverCreateMessageActivity"
             android:label="@string/create_message" />
+        <activity
+            android:name=".activities.ForgotPasswordActivity"
+            android:label="@string/forgot_password" />
     </application>
 
 </manifest>

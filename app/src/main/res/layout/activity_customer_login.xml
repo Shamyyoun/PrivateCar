@@ -103,7 +103,7 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_marginTop="@dimen/widgets_vertical_space"
                 android:onClick="onClick"
-                android:text="@string/forgot_password"
+                android:text="@string/forgot_password_q"
                 android:textColor="@color/colorAccent" />
         </LinearLayout>
     </ScrollView>

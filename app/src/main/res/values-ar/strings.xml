@@ -17,7 +17,7 @@
     <string name="verify_your_account">تأكيد حسابك</string>
     <string name="verification_code">كود التأكيد</string>
     <string name="done">تم</string>
-    <string name="forgot_password">نسيت كلمة المرور؟</string>
+    <string name="forgot_password_q">نسيت كلمة المرور؟</string>
     <string name="question_mark">" ؟"</string>
     <string name="menu">القائمة</string>
     <string name="book_a_lift">احجز توصيلة</string>
@@ -251,4 +251,8 @@
     <string name="your_password_changed_successfully">تم تغيير كلمة المرور بنجاح</string>
     <string name="error_while_changing_your_password">حدث خطأ اثناء تغيير كلمة المرور\nبرجاء التأكد من كلمة المرور القديمة واعادة المحاولة</string>
 
+    <string name="forgot_password">استعادة كلمة السر</string>
+    <string name="enter_your_email_address">ادخل البريد الالكتروني</string>
+    <string name="please_enter_your_email_used_in_registration">من فضلك أدخل عنوان البريد الالكتروني المستخدم في التسجيل</string>
+    <string name="please_check_your_inbox_and_follow_instructions">من فضلك تفحص صندوق الوارد واتبع التعليماتث</string>
 </resources>

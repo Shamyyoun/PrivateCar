@@ -60,7 +60,7 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
     private ProgressDialog progressDialog;
 
     private EditText etEmail, etPassword;
-    private Button btnSignInFacebook, btnSignInGooglePlus, btnSignIn, btnForgetPassword;
+    private Button btnSignInFacebook, btnSignInGooglePlus, btnSignIn;
     private int loginType;
 
     @Override
@@ -77,7 +77,6 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
         btnSignInFacebook = (Button) findViewById(R.id.btn_sign_in_facebook);
         btnSignInGooglePlus = (Button) findViewById(R.id.btn_sign_in_google_plus);
         btnSignIn = (Button) findViewById(R.id.btn_sign_in);
-        btnForgetPassword = (Button) findViewById(R.id.btn_forgot_password);
 
         // add touch listeners
         btnSignInFacebook.setOnTouchListener(new ButtonHighlighterOnTouchListener(this, R.drawable.sign_in_facebook));
@@ -165,6 +164,10 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
                 break;
             case R.id.btn_sign_in:
                 login();
+                break;
+            case R.id.btn_forgot_password:
+                // open forget password activity
+                startActivity(new Intent(this, ForgotPasswordActivity.class));
                 break;
         }
     }
