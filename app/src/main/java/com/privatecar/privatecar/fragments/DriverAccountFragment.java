@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.activities.AnonymousHomeActivity;
 import com.privatecar.privatecar.activities.DriverAddCarActivity;
 import com.privatecar.privatecar.activities.DriverDocumentsActivity;
 import com.privatecar.privatecar.activities.DriverSettingsActivity;
@@ -46,6 +47,7 @@ public class DriverAccountFragment extends BaseFragment implements RequestListen
     private View layoutAddCar;
     private View layoutDocuments;
     private View layoutSettings;
+    private View layoutSignOut;
 
     private int currentRequest; // used to hold number to indicate which request is being handled
     private AlertDialog visibleDialog; // used to hold current visible visibleDialog
@@ -76,6 +78,7 @@ public class DriverAccountFragment extends BaseFragment implements RequestListen
         layoutSettings = fragment.findViewById(R.id.layout_settings);
         layoutDocuments = fragment.findViewById(R.id.layout_documents);
         layoutAddCar = fragment.findViewById(R.id.layout_add_car);
+        layoutSignOut = fragment.findViewById(R.id.layout_sign_out);
 
         // get cached user & details
         user = AppUtils.getCachedUser(activity);
@@ -107,6 +110,7 @@ public class DriverAccountFragment extends BaseFragment implements RequestListen
         layoutAddCar.setOnClickListener(this);
         layoutDocuments.setOnClickListener(this);
         layoutSettings.setOnClickListener(this);
+        layoutSignOut.setOnClickListener(this);
 
         return fragment;
     }
@@ -145,6 +149,13 @@ public class DriverAccountFragment extends BaseFragment implements RequestListen
                 break;
             case R.id.layout_settings:
                 startActivity(new Intent(getActivity(), DriverSettingsActivity.class));
+                break;
+            case R.id.layout_sign_out:
+                // clear cache and goto anonymous home activity
+                AppUtils.clearCache(activity);
+                Intent intent = new Intent(activity, AnonymousHomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 break;
         }
     }
