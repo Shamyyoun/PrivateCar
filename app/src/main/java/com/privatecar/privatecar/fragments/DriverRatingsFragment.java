@@ -17,6 +17,7 @@ import com.privatecar.privatecar.models.entities.Ad;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.AdsResponse;
 import com.privatecar.privatecar.requests.DriverRequests;
+import com.privatecar.privatecar.services.UpdateDriverLocationService;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.RequestListener;
@@ -57,8 +58,12 @@ public class DriverRatingsFragment extends BaseFragment implements RequestListen
         rvAds.addItemDecoration(new DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST));
 
         // set driver info
+        if (Utils.isServiceRunning(getContext(), UpdateDriverLocationService.class)) {
+            tvStatus.setText(R.string.online);
+        } else {
+            tvStatus.setText(R.string.offline);
+        }
         User user = AppUtils.getCachedUser(activity);
-        tvStatus.setText(user.isOnline() ? R.string.online : R.string.offline);
         tvTripsCount.setText(user.getAccountDetails().getTotaltrips() + " " + getString(R.string.trips));
 
         // load ads
