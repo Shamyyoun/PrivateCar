@@ -96,8 +96,7 @@
             android:id="@+id/tv_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="This is an example message from application manager to you."
-            android:visibility="gone" />
+            tools:text="This is an example message from application manager to you." />
 
         <LinearLayout
             android:layout_width="match_parent"

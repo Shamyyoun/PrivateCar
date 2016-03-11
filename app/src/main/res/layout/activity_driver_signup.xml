@@ -279,8 +279,7 @@
                 android:onClick="onClick"
                 android:padding="10dp"
                 android:src="@drawable/camera_icon" />
-
-
+            
         </LinearLayout>
 
         <LinearLayout

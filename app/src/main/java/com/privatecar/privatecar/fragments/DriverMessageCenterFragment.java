@@ -107,7 +107,7 @@ public class DriverMessageCenterFragment extends BaseFragment implements Request
             MessagesResponse messagesResponse = (MessagesResponse) response;
 
             if (messagesResponse.isSuccess() && messagesResponse.getMessages() != null) {
-                messages.addAll(messagesResponse.getMessages());
+                messages.addAll(0, messagesResponse.getMessages());
                 adapter.notifyDataSetChanged();
                 AppUtils.cacheMessages(getContext(), messages);
             }
@@ -140,7 +140,6 @@ public class DriverMessageCenterFragment extends BaseFragment implements Request
         super.onClick(v);
         switch (v.getId()) {
             case R.id.ib_delete_messages:
-                progressDialog = DialogUtils.showProgressDialog(getActivity(), R.string.deleting_message);
                 StringBuilder ids = new StringBuilder();
                 boolean firstId = true;// don't put comma before the first id
                 for (int i = 0; i < messages.size(); i++) {
@@ -155,6 +154,7 @@ public class DriverMessageCenterFragment extends BaseFragment implements Request
                     }
                 }
                 if (firstId) return; //no message selected
+                progressDialog = DialogUtils.showProgressDialog(getActivity(), R.string.deleting_message);
                 DriverRequests.messagesDelete(getActivity(), this, AppUtils.getCachedUser(getContext()).getAccessToken(), ids.toString());
                 break;
             case R.id.ib_new_message:
