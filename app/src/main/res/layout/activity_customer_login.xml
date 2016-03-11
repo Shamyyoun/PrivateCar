@@ -105,9 +105,6 @@
                 android:onClick="onClick"
                 android:text="@string/forgot_password"
                 android:textColor="@color/colorAccent" />
-
-
         </LinearLayout>
-
     </ScrollView>
 </RelativeLayout>
