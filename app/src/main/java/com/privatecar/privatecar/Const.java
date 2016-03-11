@@ -39,6 +39,7 @@ public class Const {
     public static final int REQUEST_CROP_CAR_LICENCE_FRONT = 1023;
     public static final int REQUEST_CROP_CAR_LICENCE_BACK = 1024;
     public static final int REQUEST_MESSAGE_DETAILS = 1025;
+    public static final int REQUEST_GOOGLE_PLUS_SIGN_IN = 1026;
 
     //app level constants:--------------
     public static final String LOG_TAG = "Private Car";
@@ -140,5 +141,10 @@ public class Const {
     public static final String KEY_TRIP_REQUEST = "trip_request";
     public static final String KEY_STATEMENT_GROUPS = "statements_groups";
     public static final String KEY_TRIP_ID = "trip_id";
-
+    public static final String KEY_FIRST_NAME = "first_name";
+    public static final String KEY_LAST_NAME = "last_name";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_ID = "id";
+    public static final String KEY_TOKEN = "token";
+    public static final String KEY_PROVIDER = "provider";
 }

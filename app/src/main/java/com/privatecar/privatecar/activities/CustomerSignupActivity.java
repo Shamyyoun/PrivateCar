@@ -4,9 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.facebook.AccessToken;
@@ -30,7 +33,12 @@ import com.google.android.gms.common.api.Status;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.adapters.CountryAdapter;
+import com.privatecar.privatecar.models.responses.GeneralResponse;
+import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
+import com.privatecar.privatecar.utils.CountriesUtils;
+import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
 import org.json.JSONException;
@@ -38,15 +46,14 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-public class CustomerSignupActivity extends BasicBackActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
-
-    private static final int REQUEST_CODE_GOOGLE_PLUS_SIGN_IN = 9001;
+public class CustomerSignupActivity extends BasicBackActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, RequestListener<GeneralResponse> {
 
     private CallbackManager callbackManager;
     private GoogleApiClient googleApiClient;
     private ProgressDialog progressDialog;
 
-    private Button btnSignUpFacebook, btnSignUpGooglePlus, btnSignUp;
+    private Button btnSignUpFacebook, btnSignUpGooglePlus;
+    private EditText etFirstName, etLastName, etEmail, etPassword, etMobile;
     private Spinner spinner;
 
 
@@ -60,18 +67,129 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
 
         btnSignUpFacebook = (Button) findViewById(R.id.btn_sign_up_facebook);
         btnSignUpGooglePlus = (Button) findViewById(R.id.btn_sign_up_google_plus);
-        btnSignUp = (Button) findViewById(R.id.btn_sign_up);
 
         btnSignUpFacebook.setOnTouchListener(new ButtonHighlighterOnTouchListener(this, R.drawable.sign_up_facebook));
         btnSignUpGooglePlus.setOnTouchListener(new ButtonHighlighterOnTouchListener(this, R.drawable.sign_up_google_plus));
-        btnSignUp.setOnTouchListener(new ButtonHighlighterOnTouchListener(this, R.drawable.petroleum_rounded_corners_shape));
-
 
         spinner = (Spinner) findViewById(R.id.spinner_countries);
         CountryAdapter adapter = new CountryAdapter(this);
         spinner.setAdapter(adapter);
-        spinner.setSelection(61); //set egypt the default
+        spinner.setSelection(Const.EGYPT_INDEX); //set egypt the default
 
+        etFirstName = (EditText) findViewById(R.id.et_first_name);
+        etFirstName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (Utils.isEmpty(s)) {
+                    etFirstName.setError(getString(R.string.required));
+                } else {
+                    etFirstName.setError(null);
+                }
+            }
+        });
+
+        etLastName = (EditText) findViewById(R.id.et_last_name);
+        etLastName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (Utils.isEmpty(s)) {
+                    etLastName.setError(getString(R.string.required));
+                } else {
+                    etLastName.setError(null);
+                }
+            }
+        });
+
+
+        etEmail = (EditText) findViewById(R.id.et_email);
+        etEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Utils.isValidEmail(s.toString())) {
+                    etEmail.setError(getString(R.string.not_valid_email));
+                } else {
+                    etEmail.setError(null);
+                }
+            }
+        });
+
+
+        etPassword = (EditText) findViewById(R.id.et_password);
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() < Const.MIN_PASSWORD_LENGTH) {
+                    etPassword.setError(getString(R.string.short_password));
+                } else {
+                    etPassword.setError(null);
+                }
+            }
+        });
+
+
+        etMobile = (EditText) findViewById(R.id.et_mobile);
+        etMobile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX) {
+                    if (!Utils.isValidEgyptianMobileNumber("0" + s.toString())) {
+                        etMobile.setError(getString(R.string.not_valid_mobile));
+                    } else {
+                        etMobile.setError(null);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -122,7 +240,7 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
         //Google+ signIn
-        if (requestCode == REQUEST_CODE_GOOGLE_PLUS_SIGN_IN) {
+        if (requestCode == Const.REQUEST_GOOGLE_PLUS_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleGoogleSignInResult(result);
         }
@@ -140,9 +258,65 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
                 signInGoogle();
                 break;
             case R.id.btn_sign_up:
-                startActivity(new Intent(getApplicationContext(), UserVerificationActivity.class));
+                customerSignup();
                 break;
         }
+    }
+
+    private boolean customerValidation() {
+        boolean valid = true;
+
+        if (Utils.isEmpty(etFirstName)) {
+            etFirstName.setError(getString(R.string.required));
+            valid = false;
+        } else {
+            etFirstName.setError(null);
+        }
+
+        if (Utils.isEmpty(etLastName)) {
+            etLastName.setError(getString(R.string.required));
+            valid = false;
+        } else {
+            etLastName.setError(null);
+        }
+
+        if (!Utils.isValidEmail(Utils.getText(etEmail))) {
+            etEmail.setError(getString(R.string.not_valid_email));
+            valid = false;
+        } else {
+            etEmail.setError(null);
+        }
+
+        if (Utils.isEmpty(etPassword)) {
+            etPassword.setError(getString(R.string.required));
+            valid = false;
+        } else if (Utils.getText(etPassword).length() < Const.MIN_PASSWORD_LENGTH) {
+            etPassword.setError(getString(R.string.short_password));
+            valid = false;
+        } else {
+            etPassword.setError(null);
+        }
+
+        if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX) {
+            if (!Utils.isValidEgyptianMobileNumber("0" + Utils.getText(etMobile))) {
+                etMobile.setError(getString(R.string.not_valid_mobile));
+                valid = false;
+            } else {
+                etMobile.setError(null);
+            }
+        }
+
+        return valid;
+    }
+
+    private void customerSignup() {
+        if (!customerValidation()) return;
+
+        String code = new CountriesUtils().getCountryCodes()[spinner.getSelectedItemPosition()];
+        showProgressDialog(R.string.registering);
+        Utils.hideKeyboard(etMobile);
+        CustomerRequests.regCustomerEmailPassword(this, this, Utils.getText(etFirstName), Utils.getText(etLastName), Utils.getText(etEmail), Utils.getText(etPassword), code + Utils.getText(etMobile));
+
     }
 
     // =============================== Facebook ==================================
@@ -155,7 +329,7 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(final LoginResult result) {
-                        showProgressDialog();
+                        showProgressDialog(R.string.loading);
 
                         Bundle parameters = new Bundle();
                         parameters.putString("fields", "id,name,first_name,last_name,email");
@@ -185,7 +359,15 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
                                             Log.e(Const.LOG_TAG, email);
                                             Log.e(Const.LOG_TAG, token);
 
-                                            //TODO: fill in fields with retrieved data
+
+                                            Intent intent = new Intent(CustomerSignupActivity.this, CustomerSocialSignupActivity.class);
+                                            intent.putExtra(Const.KEY_FIRST_NAME, firstName);
+                                            intent.putExtra(Const.KEY_LAST_NAME, lastName);
+                                            intent.putExtra(Const.KEY_EMAIL, email);
+                                            intent.putExtra(Const.KEY_ID, id);
+                                            intent.putExtra(Const.KEY_TOKEN, token);
+                                            intent.putExtra(Const.KEY_PROVIDER, "facebook");
+                                            startActivity(intent);
 
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -218,8 +400,7 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
                     @Override
                     public void onCancel() {
                         hideProgressDialog();
-
-                        Utils.showLongToast(getApplicationContext(), "Login cancelled");
+                        Utils.LogE("Login cancelled");
                     }
                 });
     }
@@ -247,9 +428,9 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
     }
 
     private void signInGoogle() {
-        showProgressDialog();
+        showProgressDialog(R.string.loading);
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-        startActivityForResult(signInIntent, REQUEST_CODE_GOOGLE_PLUS_SIGN_IN);
+        startActivityForResult(signInIntent, Const.REQUEST_GOOGLE_PLUS_SIGN_IN);
     }
 
     private void signOut() {
@@ -282,21 +463,38 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
         hideProgressDialog();
 
         Log.e("Google+", "handleGoogleSignInResult:" + result.isSuccess());
-        if (result.isSuccess()) { //signed in
+        if (result.isSuccess() && result.getSignInAccount() != null) { //signed in
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
+
             Log.e("Google+", "Id: " + acct.getId());
             Log.e("Google+", "DisplayName: " + acct.getDisplayName());
             Log.e("Google+", "Email: " + acct.getEmail());
             Log.e("Google+", "ServerAuthCode: " + acct.getServerAuthCode()); //used to get access token
             Log.e("Google+", "AccessToken: " + acct.getIdToken());
 
-            //TODO: fill in fields with retrieved data
+            Intent intent = new Intent(CustomerSignupActivity.this, CustomerSocialSignupActivity.class);
+            if (acct.getDisplayName() != null) {
+                String[] namesArr = acct.getDisplayName().split(" ");
+                String firstName = namesArr.length > 0 ? namesArr[0] : "";
+                String lastName = namesArr.length > 1 ? namesArr[1] : "";
+                intent.putExtra(Const.KEY_FIRST_NAME, firstName);
+                intent.putExtra(Const.KEY_LAST_NAME, lastName);
+                intent.putExtra(Const.KEY_EMAIL, acct.getEmail());
+                intent.putExtra(Const.KEY_ID, acct.getId());
+                intent.putExtra(Const.KEY_TOKEN, acct.getIdToken());
+                intent.putExtra(Const.KEY_PROVIDER, "google");
+                startActivity(intent);
+            }
 
-        } else { //not signed in
+
+        } else
+
+        { //not signed in
             // Signed out, show unauthenticated UI.
             Log.e("Google+", "Not signed in");
         }
+
     }
 
     @Override
@@ -316,19 +514,41 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
 
     // =====================================================================================
 
-    private void showProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage(getString(R.string.loading));
-            progressDialog.setIndeterminate(true);
-        }
-
-        progressDialog.show();
+    private void showProgressDialog(int messageResId) {
+        progressDialog = DialogUtils.showProgressDialog(this, messageResId, true);
     }
 
     private void hideProgressDialog() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.hide();
         }
+    }
+
+    @Override
+    public void onSuccess(GeneralResponse response, String apiName) {
+        hideProgressDialog();
+
+        if (response.isSuccess()) {
+            startActivity(new Intent(this, UserVerificationActivity.class));
+            this.onBackPressed();
+        } else {
+            if (response.getValidation() != null) {
+                String validation = "";
+                for (int i = 0; i < response.getValidation().size(); i++) {
+                    if (i == 0)
+                        validation += response.getValidation().get(i);
+                    else
+                        validation += "\n" + response.getValidation().get(i);
+                }
+
+                DialogUtils.showAlertDialog(this, validation, null);
+            }
+        }
+    }
+
+    @Override
+    public void onFail(String message, String apiName) {
+        hideProgressDialog();
+        Utils.showLongToast(this, message);
     }
 }

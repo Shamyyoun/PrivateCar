@@ -43,7 +43,7 @@ public class Utils {
 
     /**
      * Checks if the app has permission to write to device storage
-     * <p/>
+     * <p>
      * If the app does not has permission then the user will be prompted to grant permissions
      *
      * @param activity
@@ -263,10 +263,31 @@ public class Utils {
         return oldNumber.replaceAll("[()\\s-]", "").replace("+", "00");
     }
 
-    public static Boolean isEmpty(EditText et) {
+    /**
+     * Checks to see if EditText contains whitespace or no text
+     *
+     * @param et the EditText
+     * @return true if EditText contains whitespace or no text otherwise false
+     */
+    public static boolean isEmpty(EditText et) {
         return TextUtils.isEmpty(et.getText().toString().trim());
     }
 
+    /**
+     * Checks to see if text contains whitespace or no content
+     *
+     * @param charSequence
+     * @return true if text contains whitespace or no content otherwise false
+     */
+    public static boolean isEmpty(CharSequence charSequence) {
+        return TextUtils.isEmpty(charSequence.toString().trim());
+    }
+
+    /**
+     * Get the EditText text trimmed
+     * @param et
+     * @return the EditText text trimmed
+     */
     public static String getText(EditText et) {
         return et.getText().toString().trim();
     }
@@ -377,6 +398,7 @@ public class Utils {
 
     /**
      * method, used to format the url to prevent app from crash when open browser intent
+     *
      * @param url
      * @return the formatted url
      */
@@ -389,32 +411,22 @@ public class Utils {
 
     /**
      * method, used to check if string is null or empty
+     *
      * @param str to check
      * @return boolean true if null or empty
      */
     public static boolean isNullOrEmpty(String str) {
-        if (str == null) {
-            return true;
-        } else if (str.isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return str == null || str.isEmpty();
     }
 
     /**
      * method, used to check if list is null or empty
+     *
      * @param list to check
      * @return boolean true if null or empty
      */
     public static boolean isNullOrEmpty(List list) {
-        if (list == null) {
-            return true;
-        } else if (list.isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return list == null || list.isEmpty();
     }
 
 }
