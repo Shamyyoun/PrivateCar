@@ -91,6 +91,7 @@ public class Const {
 
     //messages (customer):----
     public static final String MESSAGE_REGISTER_CUSTOMER = "regcustomer";
+    public static final String MESSAGE_CUSTOMER_ACCOUNT_DETAILS = "customeraccountdetails";
 
     //messages (driver):----
     public static final String MESSAGE_DRIVER_ACCOUNT_DETAILS = "driveraccountdetails";
@@ -150,4 +151,5 @@ public class Const {
     public static final String KEY_ID = "id";
     public static final String KEY_TOKEN = "token";
     public static final String KEY_PROVIDER = "provider";
+    public static final String KEY_NOW = "now";
 }

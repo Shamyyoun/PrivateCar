@@ -3,6 +3,8 @@ package com.privatecar.privatecar.requests;
 import android.content.Context;
 
 import com.privatecar.privatecar.Const;
+import com.privatecar.privatecar.models.responses.CustomerAccountDetailsResponse;
+import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
@@ -51,4 +53,15 @@ public class CustomerRequests {
     }
 
 
+    public static RequestHelper<CustomerAccountDetailsResponse> accountDetails(Context context, RequestListener<CustomerAccountDetailsResponse> listener, String accessToken) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+
+        // create & send request
+        RequestHelper<CustomerAccountDetailsResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_CUSTOMER_ACCOUNT_DETAILS, CustomerAccountDetailsResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
 }

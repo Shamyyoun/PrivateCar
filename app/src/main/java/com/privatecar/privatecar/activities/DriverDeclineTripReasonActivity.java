@@ -115,7 +115,7 @@ public class DriverDeclineTripReasonActivity extends BasicBackActivity implement
 
         // create & send the request
         User user = AppUtils.getCachedUser(this);
-        DriverAccountDetails accountDetails = user.getAccountDetails();
+        DriverAccountDetails accountDetails = user.getDriverAccountDetails();
         DriverRequests.declineTrip(this, this, user.getAccessToken(), "" + accountDetails.getId(), "" + tripId,
                 "" + accountDetails.getDefaultCarId(), reasonId, comment);
     }

@@ -64,7 +64,7 @@ public class DriverRatingsFragment extends BaseFragment implements RequestListen
             tvStatus.setText(R.string.offline);
         }
         User user = AppUtils.getCachedUser(activity);
-        tvTripsCount.setText(user.getAccountDetails().getTotaltrips() + " " + getString(R.string.trips));
+        tvTripsCount.setText(user.getDriverAccountDetails().getTotaltrips() + " " + getString(R.string.trips));
 
         // load ads
         loadAds();

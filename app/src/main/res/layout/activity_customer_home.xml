@@ -39,7 +39,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:background="@color/colorAccent"
-        app:headerLayout="@layout/customer_menu_header"
+        app:headerLayout="@layout/menu_header"
         app:itemBackground="@android:color/transparent"
         app:itemIconTint="@color/navigation_item_color"
         app:itemTextAppearance="@style/navigation_item_text_appearance"
@@ -58,10 +58,10 @@
             android:paddingTop="5dp">
 
             <TextView
-                android:id="@+id/tv_user_balance"
+                android:id="@+id/tv_credit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="200 EGP"
+                android:text="0 EGP"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textStyle="bold" />
 

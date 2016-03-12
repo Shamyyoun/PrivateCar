@@ -82,7 +82,7 @@ public class DriverAccountFragment extends BaseFragment implements RequestListen
 
         // get cached user & details
         user = AppUtils.getCachedUser(activity);
-        accountDetails = user.getAccountDetails();
+        accountDetails = user.getDriverAccountDetails();
 
         // update status according to running service
         if (Utils.isServiceRunning(getContext(), UpdateDriverLocationService.class)) {
@@ -279,7 +279,7 @@ public class DriverAccountFragment extends BaseFragment implements RequestListen
 
                 // change cached default car
                 accountDetails.setDefaultCarId(carBeingChanged.getId());
-                user.setAccountDetails(accountDetails);
+                user.setDriverAccountDetails(accountDetails);
                 AppUtils.cacheUser(activity, user);
             } else {
                 // show error toast

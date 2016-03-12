@@ -73,8 +73,8 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
         tmpLocation.setLat(location.getLatitude());
         tmpLocation.setLng(location.getLongitude());
 
-        String carId = "" + user.getAccountDetails().getDefaultCarId();
-        String driverId = "" + user.getAccountDetails().getId();
+        String carId = "" + user.getDriverAccountDetails().getDefaultCarId();
+        String driverId = "" + user.getDriverAccountDetails().getId();
 
         updateLocationRequest = DriverRequests.updateLocation(this, this, user.getAccessToken(), tmpLocation.toString(), carId, driverId);
     }

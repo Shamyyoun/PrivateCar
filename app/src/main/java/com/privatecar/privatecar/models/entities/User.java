@@ -15,7 +15,8 @@ public class User {
     private String socialToken;
     private String socialProvider;
     private UserType type;
-    private DriverAccountDetails accountDetails;
+    private DriverAccountDetails driverAccountDetails;
+    private CustomerAccountDetails customerAccountDetails;
 
     public String getAccessToken() {
         return accessToken;
@@ -81,12 +82,19 @@ public class User {
         this.type = type;
     }
 
-    public DriverAccountDetails getAccountDetails() {
-        return accountDetails;
+    public DriverAccountDetails getDriverAccountDetails() {
+        return driverAccountDetails;
     }
 
-    public void setAccountDetails(DriverAccountDetails accountDetails) {
-        this.accountDetails = accountDetails;
+    public void setDriverAccountDetails(DriverAccountDetails driverAccountDetails) {
+        this.driverAccountDetails = driverAccountDetails;
     }
 
+    public CustomerAccountDetails getCustomerAccountDetails() {
+        return customerAccountDetails;
+    }
+
+    public void setCustomerAccountDetails(CustomerAccountDetails customerAccountDetails) {
+        this.customerAccountDetails = customerAccountDetails;
+    }
 }

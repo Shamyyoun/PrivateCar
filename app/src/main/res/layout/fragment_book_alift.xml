@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/tv_welcome"
-            android:text="Penelope Cruz"
+            android:text="-----------"
             android:textColor="@color/textColorPrimary"
             android:textStyle="bold" />
 
@@ -41,7 +41,7 @@
             android:layout_centerVertical="true"
             android:layout_marginBottom="5dp"
             android:layout_marginEnd="5dp"
-            android:layout_toStartOf="@id/tv_user_id"
+            android:layout_toStartOf="@+id/tv_user_id"
             android:text="@string/your_id"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:text="1500"
+            android:text="----"
             android:textColor="@color/textColorPrimary"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -82,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_info"
-        android:background="#Afff"
+        android:background="#75ffffff"
         android:gravity="center">
 
         <LinearLayout

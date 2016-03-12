@@ -17,19 +17,23 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.fragments.BookALiftFragment;
 import com.privatecar.privatecar.fragments.CustomerMyRidesFragment;
 import com.privatecar.privatecar.fragments.CustomerPricesFragment;
 import com.privatecar.privatecar.fragments.CustomerSettingsFragment;
+import com.privatecar.privatecar.models.entities.CustomerAccountDetails;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public class CustomerHomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout dlDrawer;
     NavigationView nvDrawer;
     View nvHeader;
-    ImageView ivUserImage;
-    TextView tvUserName, tvUserID, tvUserBalance;
+    ImageView ivUserDefImage, ivUserImage;
+    TextView tvUserName, tvUserID, tvUserCredit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +55,11 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
         nvDrawer.setNavigationItemSelectedListener(this);
 
         nvHeader = nvDrawer.getHeaderView(0);
+        ivUserDefImage = (ImageView) nvHeader.findViewById(R.id.iv_user_def_image);
         ivUserImage = (ImageView) nvHeader.findViewById(R.id.iv_user_image);
         tvUserName = (TextView) nvHeader.findViewById(R.id.tv_user_name);
         tvUserID = (TextView) nvHeader.findViewById(R.id.tv_user_id);
-        tvUserBalance = (TextView) nvHeader.findViewById(R.id.tv_user_balance);
+        tvUserCredit = (TextView) nvDrawer.findViewById(R.id.tv_credit);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.layout_fragment_container, new BookALiftFragment(), BookALiftFragment.TAG)
@@ -179,5 +184,32 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * method, used to update data in the navigation drawer
+     */
+    public void updatePersonalInfo(CustomerAccountDetails accountDetails) {
+        tvUserName.setText(accountDetails.getFullname());
+        tvUserID.setText("" + accountDetails.getId());
+        tvUserCredit.setText(accountDetails.getCredit() + " " + getString(R.string.currency));
+
+        // load personal image
+        String imageUrl = Const.IMAGES_BASE_URL + accountDetails.getPersonalPhoto();
+        Picasso.with(this).load(imageUrl).into(ivUserImage, new Callback() {
+            @Override
+            public void onSuccess() {
+                // hide default image
+                ivUserDefImage.setVisibility(View.GONE);
+                ivUserImage.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onError() {
+                // show default image
+                ivUserDefImage.setVisibility(View.VISIBLE);
+                ivUserImage.setVisibility(View.GONE);
+            }
+        });
     }
 }

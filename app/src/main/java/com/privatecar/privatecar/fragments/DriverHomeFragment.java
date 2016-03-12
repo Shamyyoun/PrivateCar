@@ -318,7 +318,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
 
                 // update cached user
                 User user = AppUtils.getCachedUser(activity);
-                user.setAccountDetails(detailsResponse.getAccountDetails());
+                user.setDriverAccountDetails(detailsResponse.getAccountDetails());
                 AppUtils.cacheUser(activity, user);
             } else {
                 // invalid response

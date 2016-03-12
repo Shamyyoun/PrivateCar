@@ -3,18 +3,18 @@ package com.privatecar.privatecar.models.responses;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.privatecar.privatecar.models.entities.DriverAccountDetails;
+import com.privatecar.privatecar.models.entities.CustomerAccountDetails;
 
 import java.util.List;
 
-public class DriverAccountDetailsResponse {
+public class CustomerAccountDetailsResponse {
 
     @SerializedName("status")
     @Expose
     private boolean status;
     @SerializedName("content")
     @Expose
-    private DriverAccountDetails accountDetails;
+    private CustomerAccountDetails accountDetails;
     @SerializedName("validation")
     @Expose
     private List<String> validation;
@@ -36,14 +36,14 @@ public class DriverAccountDetailsResponse {
     /**
      * @return The accountDetails
      */
-    public DriverAccountDetails getAccountDetails() {
+    public CustomerAccountDetails getAccountDetails() {
         return accountDetails;
     }
 
     /**
      * @param accountDetails The accountDetails
      */
-    public void setAccountDetails(DriverAccountDetails accountDetails) {
+    public void setAccountDetails(CustomerAccountDetails accountDetails) {
         this.accountDetails = accountDetails;
     }
 

@@ -59,7 +59,7 @@
         android:layout_toEndOf="@+id/tv_welcome"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="Penelope Cruz"
+        android:text="-----------"
         android:textColor="@color/textColorPrimary"
         android:textStyle="bold" />
 
@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tv_desc_id"
         android:layout_toEndOf="@+id/tv_desc_id"
-        android:text="1500"
+        android:text="----"
         android:textColor="@color/textColorPrimary"
         android:textStyle="bold" />
 
