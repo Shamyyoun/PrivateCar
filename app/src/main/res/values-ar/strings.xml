@@ -255,4 +255,5 @@
     <string name="enter_your_email_address">ادخل البريد الالكتروني</string>
     <string name="please_enter_your_email_used_in_registration">من فضلك أدخل عنوان البريد الالكتروني المستخدم في التسجيل</string>
     <string name="please_check_your_inbox_and_follow_instructions">من فضلك تفحص صندوق الوارد واتبع التعليماتث</string>
+    <string name="please_wait">برجاء الانتظار</string>
 </resources>

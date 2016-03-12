@@ -11,9 +11,27 @@ public class User {
     private long expiryTimestamp; // expiry timestamp
     private String userName;
     private String password;
+    private String socialUserId;
+    private String socialToken;
+    private String socialProvider;
     private UserType type;
     private DriverAccountDetails accountDetails;
-    private boolean online;
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public long getExpiryTimestamp() {
+        return expiryTimestamp;
+    }
+
+    public void setExpiryTimestamp(long expiryTimestamp) {
+        this.expiryTimestamp = expiryTimestamp;
+    }
 
     public String getUserName() {
         return userName;
@@ -31,12 +49,28 @@ public class User {
         this.password = password;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getSocialUserId() {
+        return socialUserId;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setSocialUserId(String socialUserId) {
+        this.socialUserId = socialUserId;
+    }
+
+    public String getSocialToken() {
+        return socialToken;
+    }
+
+    public void setSocialToken(String socialToken) {
+        this.socialToken = socialToken;
+    }
+
+    public String getSocialProvider() {
+        return socialProvider;
+    }
+
+    public void setSocialProvider(String socialProvider) {
+        this.socialProvider = socialProvider;
     }
 
     public UserType getType() {
@@ -53,22 +87,6 @@ public class User {
 
     public void setAccountDetails(DriverAccountDetails accountDetails) {
         this.accountDetails = accountDetails;
-    }
-
-    public boolean isOnline() {
-        return online;
-    }
-
-    public void setOnline(boolean online) {
-        this.online = online;
-    }
-
-    public long getExpiryTimestamp() {
-        return expiryTimestamp;
-    }
-
-    public void setExpiryTimestamp(long expiryTimestamp) {
-        this.expiryTimestamp = expiryTimestamp;
     }
 
 }

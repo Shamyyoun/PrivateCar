@@ -256,6 +256,7 @@
     <string name="enter_your_email_address">Enter your email address</string>
     <string name="please_enter_your_email_used_in_registration">Please enter your email used in registration</string>
     <string name="please_check_your_inbox_and_follow_instructions">Please check your inbox and follow instructions</string>
+    <string name="please_wait">Please wait... </string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

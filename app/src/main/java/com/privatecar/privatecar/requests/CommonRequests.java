@@ -37,6 +37,25 @@ public class CommonRequests {
         return requestHelper;
     }
 
+    public static RequestHelper socialLogin(Context context, RequestListener<AccessTokenResponse> listener, String id, String token, String provider) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_CLIENT_ID, Const.CLIENT_ID);
+        params.put(Const.MSG_PARAM_CLIENT_SECRET, Const.CLIENT_SECRET);
+        params.put(Const.MSG_PARAM_GRANT_TYPE, GrantType.SOCIAL.getValue());
+        params.put(Const.MSG_PARAM_OS, "1");
+        params.put(Const.MSG_PARAM_GCM_ACCESS_TOKEN, PlayServicesUtils.getCachedGCMToken(context));
+        params.put(Const.MSG_PARAM_ID, id);
+        params.put(Const.MSG_PARAM_TOKEN, token);
+        params.put(Const.MSG_PARAM_PROVIDER, provider);
+
+        // create & send request
+        RequestHelper<AccessTokenResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_ACCESS_TOKEN, AccessTokenResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
     public static RequestHelper startupConfig(Context context, RequestListener<ConfigResponse> listener) {
         // create & send request
         RequestHelper<ConfigResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_STARTUP_CONFIG, ConfigResponse.class, listener);

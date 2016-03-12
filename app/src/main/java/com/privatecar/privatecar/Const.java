@@ -135,6 +135,9 @@ public class Const {
     public static final String MSG_PARAM_OLD_PASSWORD = "oldpassword";
     public static final String MSG_PARAM_NEW_PASSWORD = "newpassword";
     public static final String MSG_PARAM_EMAIL = "email";
+    public static final String MSG_PARAM_ID = "id";
+    public static final String MSG_PARAM_TOKEN = "token";
+    public static final String MSG_PARAM_PROVIDER = "provider";
 
     //Intent & bundle keys
     public static final String KEY_TRIP_REQUEST = "trip_request";

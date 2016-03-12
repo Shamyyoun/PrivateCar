@@ -17,9 +17,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookAuthorizationException;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
@@ -33,6 +30,7 @@ import com.google.android.gms.common.api.Status;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.models.enums.SocialProvider;
 import com.privatecar.privatecar.models.enums.UserType;
 import com.privatecar.privatecar.models.responses.AccessTokenResponse;
 import com.privatecar.privatecar.requests.CommonRequests;
@@ -42,14 +40,10 @@ import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Arrays;
 
 public class CustomerSignInActivity extends BasicBackActivity implements RequestListener<AccessTokenResponse>,
-        GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks {
+        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, FacebookCallback<LoginResult> {
     private static final int LOGIN_NORMAL = 1;
     private static final int LOGIN_FACEBOOK = 2;
     private static final int LOGIN_GPLUS = 3;
@@ -62,6 +56,7 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
     private EditText etEmail, etPassword;
     private Button btnSignInFacebook, btnSignInGooglePlus, btnSignIn;
     private int loginType;
+    private String socialUserId, socialToken, socialProvider; // used to hold social parameters to save them after successful login
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +64,7 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
         setContentView(R.layout.activity_customer_login);
 
         prepareLoginWithFacebook();
-        prepareSigninWithGoogle();
+        prepareLoginWithGoogle();
 
         // init views
         etEmail = (EditText) findViewById(R.id.et_email);
@@ -100,31 +95,7 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
     @Override
     public void onStart() {
         super.onStart();
-
         googleApiClient.connect();
-
-//        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
-//        if (opr.isDone()) {
-//            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-//            // and the GoogleSignInResult will be available instantly.
-//            Log.d("Google+", "Got cached sign-in");
-//            GoogleSignInResult result = opr.get();
-//            handleGoogleSignInResult(result);
-//        } else {
-//            // If the user has not previously signed in on this device or the sign-in has expired,
-//            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-//            // single sign-on will occur in this branch.
-//            showProgressDialog();
-//            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-//                @Override
-//                public void onResult(GoogleSignInResult googleSignInResult) {
-//                    hideProgressDialog();
-//                    handleGoogleSignInResult(googleSignInResult);
-//                }
-//            });
-//        }
-
-
     }
 
 
@@ -141,30 +112,30 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //Facebook signIn
+        // Facebook login
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
-        //Google+ signIn
-        if (requestCode == REQUEST_CODE_GOOGLE_PLUS_SIGN_IN) {
+        // Google+ login
+        if (requestCode == REQUEST_CODE_GOOGLE_PLUS_SIGN_IN && resultCode == RESULT_OK) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleGoogleSignInResult(result);
         }
-
-
     }
-
 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_sign_in_facebook:
-                logInFacebook();
+                loginWithFacebook();
                 break;
+
             case R.id.btn_sign_in_google_plus:
-                loginGoogle();
+                loginWithGoogle();
                 break;
+
             case R.id.btn_sign_in:
                 login();
                 break;
+
             case R.id.btn_forgot_password:
                 // open forget password activity
                 startActivity(new Intent(this, ForgotPasswordActivity.class));
@@ -208,6 +179,27 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
         CommonRequests.normalLogin(this, this, username, password);
     }
 
+    /**
+     * method, used to send social login request to the server
+     *
+     * @param id       id of the user on the social provider
+     * @param token    access token of the user to the provider
+     * @param provider provider type, facebook or google plus
+     */
+    private void socialLogin(String id, String token, SocialProvider provider) {
+        // show progress dialog
+        progressDialog = DialogUtils.showProgressDialog(this, R.string.please_wait);
+
+        // hold social parameters
+        socialUserId = id;
+        socialToken = token;
+        socialProvider = provider.getValue();
+
+        // create & send the request
+        loginType = provider == SocialProvider.FACEBOOK ? LOGIN_FACEBOOK : LOGIN_GPLUS;
+        CommonRequests.socialLogin(this, this, id, token, provider.getValue());
+    }
+
     @Override
     public void onSuccess(AccessTokenResponse response, String apiName) {
         // dismiss progress dialog
@@ -221,11 +213,22 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
                 // cache response
                 User user = new User();
                 user.setType(UserType.CUSTOMER);
-                user.setUserName(Utils.getText(etEmail));
-                user.setPassword(Utils.getText(etPassword));
                 user.setAccessToken(response.getAccessToken());
                 int expiryIn = response.getExpiresIn() * 1000; //in melli seconds
                 user.setExpiryTimestamp(System.currentTimeMillis() + expiryIn);
+
+                // check login type
+                if (loginType == LOGIN_NORMAL) {
+                    // normal login, save username & password
+                    user.setUserName(Utils.getText(etEmail));
+                    user.setPassword(Utils.getText(etPassword));
+                } else {
+                    // social login, save social parameters
+                    user.setSocialUserId(socialUserId);
+                    user.setSocialToken(socialToken);
+                    user.setSocialProvider(socialProvider);
+                }
+
                 AppUtils.cacheUser(this, user);
 
                 // goto home activity
@@ -251,7 +254,7 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
                 Utils.showLongToast(this, errorMsg);
             }
         } else {
-            // show error dialog
+            // show error msg
             Utils.showLongToast(this, R.string.unexpected_error_try_again);
         }
     }
@@ -261,100 +264,76 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
         // dismiss progress dialog
         progressDialog.dismiss();
 
+        // end facebook session
+        signOutFacebook();
+
+        // end google+ session
+        signOutGoogle();
+
         // show error
         Utils.showLongToast(this, message);
         Log.e(Const.LOG_TAG, message);
     }
 
     // =============================== Facebook ==================================
-
     private void prepareLoginWithFacebook() {
-
         callbackManager = CallbackManager.Factory.create();
-
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(final LoginResult result) {
-                        showProgressDialog();
-
-                        Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id,name,first_name,last_name,email");
-                        new GraphRequest(
-                                result.getAccessToken(), "/me",
-                                parameters, HttpMethod.GET,
-                                new GraphRequest.Callback() {
-                                    @Override
-                                    public void onCompleted(GraphResponse response) {
-                                        hideProgressDialog();
-
-                                        Log.e(Const.LOG_TAG, response.getJSONObject().toString());
-
-                                        JSONObject jsonResponse = response.getJSONObject();
-                                        try {
-                                            String id = jsonResponse.getString("id");
-                                            String firstName = jsonResponse.getString("first_name");
-                                            String lastName = jsonResponse.getString("last_name");
-                                            String name = jsonResponse.getString("name");
-                                            String email = jsonResponse.getString("email");
-                                            String token = result.getAccessToken().getToken();
-
-                                            Log.e(Const.LOG_TAG, id);
-                                            Log.e(Const.LOG_TAG, firstName);
-                                            Log.e(Const.LOG_TAG, lastName);
-                                            Log.e(Const.LOG_TAG, name);
-                                            Log.e(Const.LOG_TAG, email);
-                                            Log.e(Const.LOG_TAG, token);
-
-                                            //TODO: fill in fields with retrieved data
-
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-
-                                    }
-                                }).executeAsync();
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-                        hideProgressDialog();
-
-                        if (error instanceof FacebookAuthorizationException) {
-                            if (AccessToken.getCurrentAccessToken() != null) { //handle logging with another account
-                                LoginManager.getInstance().logOut();
-                                Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        logInFacebook();
-                                    }
-                                }, 2000);
-                            }
-                        } else {
-                            Utils.showLongToast(getApplicationContext(), error.toString());
-                        }
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        hideProgressDialog();
-
-                        Utils.showLongToast(getApplicationContext(), "Login cancelled");
-                    }
-                });
+        LoginManager.getInstance().registerCallback(callbackManager, this);
     }
 
-    private void logInFacebook() {
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
+    private void loginWithFacebook() {
+        // check internet connection
+        if (!Utils.hasConnection(this)) {
+            // show error toast
+            Utils.showShortToast(this, R.string.no_internet_connection);
+            return;
+        }
+
+        // login with facebook
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
     }
 
+    private void signOutFacebook() {
+        try {
+            LoginManager.getInstance().logOut();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onSuccess(LoginResult loginResult) {
+        socialLogin(loginResult.getAccessToken().getUserId(), loginResult.getAccessToken().getToken(), SocialProvider.FACEBOOK);
+    }
+
+    @Override
+    public void onCancel() {
+        Log.e("Facebook", "Cancelled");
+    }
+
+    @Override
+    public void onError(FacebookException error) {
+        if (error instanceof FacebookAuthorizationException) {
+            if (AccessToken.getCurrentAccessToken() != null) { //handle logging with another account
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loginWithFacebook();
+                    }
+                }, 1000);
+            }
+        } else {
+            Utils.showShortToast(this, error.toString());
+        }
+
+        // end facebook session
+        signOutFacebook();
+    }
 
     // =============================== Google+ ==================================
-
-    private void prepareSigninWithGoogle() {
+    private void prepareLoginWithGoogle() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
                 .requestIdToken(getString(R.string.server_client_id))
                 .requestServerAuthCode(getString(R.string.server_client_id))
                 .build();
@@ -367,13 +346,12 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
                 .build();
     }
 
-    private void loginGoogle() {
-        showProgressDialog();
+    private void loginWithGoogle() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(signInIntent, REQUEST_CODE_GOOGLE_PLUS_SIGN_IN);
     }
 
-    private void signOut() {
+    private void signOutGoogle() {
         if (googleApiClient.isConnected()) {
             Log.e("Google+", "Logging out");
             Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
@@ -386,42 +364,24 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
         }
     }
 
-    private void revokeAccess() {
-        if (googleApiClient.isConnected()) {
-            Log.e("Google+", "Revoke");
-            Auth.GoogleSignInApi.revokeAccess(googleApiClient).setResultCallback(
-                    new ResultCallback<Status>() {
-                        @Override
-                        public void onResult(Status status) {
-                            Log.e("Google+", "revoke: " + status.toString());
-                        }
-                    });
-        }
-    }
-
     private void handleGoogleSignInResult(GoogleSignInResult result) {
-        hideProgressDialog();
-
         Log.e("Google+", "handleGoogleSignInResult:" + result.isSuccess());
-        if (result.isSuccess()) { //signed in
-            // Signed in successfully, show authenticated UI.
+        if (result.isSuccess()) {
+            //signed in
+            // send social login request to the server
             GoogleSignInAccount acct = result.getSignInAccount();
-            Log.e("Google+", "Id: " + acct.getId());
-            Log.e("Google+", "DisplayName: " + acct.getDisplayName());
-            Log.e("Google+", "Email: " + acct.getEmail());
-            Log.e("Google+", "ServerAuthCode: " + acct.getServerAuthCode()); //used to get access token
-            Log.e("Google+", "AccessToken: " + acct.getIdToken());
+            socialLogin(acct.getId(), acct.getIdToken(), SocialProvider.GPLUS);
 
-            //TODO: fill in fields with retrieved data
-
-        } else { //not signed in
-            // Signed out, show unauthenticated UI.
+        } else {
+            // not signed in
             Log.e("Google+", "Not signed in");
         }
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+        // end google plus session
+        signOutGoogle();
         Log.e("Google+", connectionResult.toString());
     }
 
@@ -432,24 +392,8 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
 
     @Override
     public void onConnectionSuspended(int i) {
+        // end google plus session
+        signOutGoogle();
         Log.e("Google+", "onConnectionSuspended: " + i);
-    }
-
-    // =====================================================================================
-
-    private void showProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage(getString(R.string.loading));
-            progressDialog.setIndeterminate(true);
-        }
-
-        progressDialog.show();
-    }
-
-    private void hideProgressDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.hide();
-        }
     }
 }
