@@ -548,6 +548,7 @@ public class DriverSignupActivity extends BasicBackActivity implements RequestLi
         if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX) {
             if (!Utils.isValidEgyptianMobileNumber("0" + etMobile.getText().toString())) {
                 etMobile.setError(getString(R.string.not_valid_mobile));
+                valid = false;
             } else {
                 etMobile.setError(null);
             }
@@ -620,7 +621,7 @@ public class DriverSignupActivity extends BasicBackActivity implements RequestLi
         String code = new CountriesUtils().getCountryCodes()[spinner.getSelectedItemPosition()];
 
         dialog = DialogUtils.showProgressDialog(this, R.string.registering, false);
-
+        Utils.hideKeyboard(etMobile);
         DriverRequests.driverSignup(this, this, Utils.getText(etFirstName), Utils.getText(etLastName), Utils.getText(etEmail), Utils.getText(etPassword), code + Utils.getText(etMobile), imageUserPhotoCropped, imageCarPhotoCropped, imageIdFrontPhotoCropped, imageIdBackPhotoCropped, imageDriverLicenceFrontPhotoCropped, imageDriverLicenceBackPhotoCropped, imageCarLicenceFrontPhotoCropped, imageCarLicenceBackPhotoCropped);
 
     }

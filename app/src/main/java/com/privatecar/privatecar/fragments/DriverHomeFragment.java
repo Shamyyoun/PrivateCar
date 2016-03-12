@@ -46,6 +46,7 @@ import com.privatecar.privatecar.activities.DriverHomeActivity;
 import com.privatecar.privatecar.dialogs.GpsOptionDialog;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.DriverAccountDetails;
+import com.privatecar.privatecar.models.entities.Message;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.LocationsResponse;
@@ -176,6 +177,13 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
         tvTodayProfit.setText(detailsDriverAccountDetails.getCredit() + " " + getString(R.string.currency));
         tvTotalTrips.setText(detailsDriverAccountDetails.getTotaltrips() + " " + getString(R.string.trips));
         tvTotalHours.setText(detailsDriverAccountDetails.getTodayhours() + " " + getString(R.string.hours));
+        List<Message> messages = AppUtils.getCachedMessages(getContext());
+        if (messages != null && messages.size() > 0) {
+            tvMessage.setText(messages.get(0).getMessage());
+        } else {
+            tvMessage.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

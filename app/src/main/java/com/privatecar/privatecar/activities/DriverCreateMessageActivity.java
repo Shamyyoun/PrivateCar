@@ -56,6 +56,7 @@ public class DriverCreateMessageActivity extends BasicBackActivity implements Vi
         dialog.dismiss();
         if (response.isSuccess()) {
             Utils.showLongToast(this, R.string.message_sent);
+            onBackPressed();
         } else {
             Utils.showLongToast(this, R.string.failed_sending_message);
         }
