@@ -10,12 +10,14 @@ import android.widget.TextView;
 
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.models.entities.DriverAccountDetails;
+import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.Utils;
 
 public class DriverSettingsActivity extends BasicBackActivity {
     private View layoutChangePassword, layoutChangeLanguage;
     private ImageButton ibUserPhoto;
-    private TextView tvLanguage;
+    private TextView tvLanguage, tvName, tvMobile, tvEmail;
     AlertDialog.Builder builder;
 
     @Override
@@ -36,6 +38,15 @@ public class DriverSettingsActivity extends BasicBackActivity {
         } else {
             tvLanguage.setText(R.string.english);
         }
+
+        DriverAccountDetails details = AppUtils.getCachedUser(getApplicationContext()).getDriverAccountDetails();
+
+        tvName = (TextView) findViewById(R.id.tv_driver_name);
+        tvName.setText(details.getFullname());
+        tvMobile = (TextView) findViewById(R.id.tv_mobile);
+//        tvMobile.setText(details.); //TODO: set this value
+        tvEmail = (TextView) findViewById(R.id.tv_email);
+//        tvEmail.setText(details.); //TODO: set this value
 
     }
 

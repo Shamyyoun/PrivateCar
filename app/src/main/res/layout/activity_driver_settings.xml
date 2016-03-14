@@ -56,12 +56,13 @@
                 android:text="@string/name" />
 
             <TextView
+                android:id="@+id/tv_driver_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="Hossam Eleraky"
+                tools:text="Hossam Eleraky"
                 android:textColor="@color/grayish" />
         </LinearLayout>
 
@@ -91,12 +92,13 @@
                 android:text="@string/mobile" />
 
             <TextView
+                android:id="@+id/tv_mobile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="01011510905"
+                tools:text="01011510905"
                 android:textColor="@color/grayish" />
         </LinearLayout>
 
@@ -126,12 +128,13 @@
                 android:text="@string/email" />
 
             <TextView
+                android:id="@+id/tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="shamyyoun@gmail.com"
+                tools:text="shamyyoun@gmail.com"
                 android:textColor="@color/grayish" />
         </LinearLayout>
 
