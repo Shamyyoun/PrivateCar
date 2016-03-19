@@ -110,7 +110,7 @@ public class CustomerSocialSignupActivity extends BasicBackActivity implements R
         String code = new CountriesUtils().getCountryCodes()[spinner.getSelectedItemPosition()];
         progressDialog = DialogUtils.showProgressDialog(this, R.string.registering, true);
         Utils.hideKeyboard(etMobile);
-        CustomerRequests.regCustomerSocial(this, this, firstName, lastName, "shamyshamy@gmail.com", code + Utils.getText(etMobile), provider, id, token);
+        CustomerRequests.regCustomerSocial(this, this, firstName, lastName, email, code + Utils.getText(etMobile), provider, id, token);
     }
 
     @Override
