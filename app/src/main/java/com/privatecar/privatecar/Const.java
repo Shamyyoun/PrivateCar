@@ -92,6 +92,7 @@ public class Const {
     //messages (customer):----
     public static final String MESSAGE_REGISTER_CUSTOMER = "regcustomer";
     public static final String MESSAGE_CUSTOMER_ACCOUNT_DETAILS = "customeraccountdetails";
+    public static final String MESSAGE_CUSTOMER_VERIFY_USER = "verifyuser";
 
     //messages (driver):----
     public static final String MESSAGE_DRIVER_ACCOUNT_DETAILS = "driveraccountdetails";
@@ -140,6 +141,7 @@ public class Const {
     public static final String MSG_PARAM_ID = "id";
     public static final String MSG_PARAM_TOKEN = "token";
     public static final String MSG_PARAM_PROVIDER = "provider";
+    public static final String MSG_PARAM_CODE = "code";
 
     //Intent & bundle keys
     public static final String KEY_TRIP_REQUEST = "trip_request";
@@ -152,4 +154,5 @@ public class Const {
     public static final String KEY_TOKEN = "token";
     public static final String KEY_PROVIDER = "provider";
     public static final String KEY_NOW = "now";
+    public static final String KEY_PASSWORD = "password";
 }

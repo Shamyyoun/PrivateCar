@@ -19,9 +19,6 @@ public class AccessTokenResponse {
     @SerializedName("status")
     @Expose
     private boolean status;
-    @SerializedName("content")
-    @Expose
-    private Object content;
     @SerializedName("validation")
     @Expose
     private List<String> validation = new ArrayList<>();
@@ -66,20 +63,6 @@ public class AccessTokenResponse {
      */
     public void setStatus(boolean status) {
         this.status = status;
-    }
-
-    /**
-     * @return The content
-     */
-    public Object getContent() {
-        return content;
-    }
-
-    /**
-     * @param content The content
-     */
-    public void setContent(Object content) {
-        this.content = content;
     }
 
     /**

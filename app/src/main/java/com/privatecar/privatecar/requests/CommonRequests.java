@@ -1,6 +1,7 @@
 package com.privatecar.privatecar.requests;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.models.enums.GrantType;
@@ -20,7 +21,7 @@ import java.util.Map;
  * Created by Shamyyoun on 2/24/2016.
  */
 public class CommonRequests {
-    public static RequestHelper normalLogin(Context context, RequestListener<Object> listener, String username, String password) {
+    public static RequestHelper<Object> normalLogin(Context context, RequestListener<Object> listener, String username, String password) {
         // prepare parameters
         Map<String, String> params = new HashMap<>();
         params.put(Const.MSG_PARAM_CLIENT_ID, Const.CLIENT_ID);

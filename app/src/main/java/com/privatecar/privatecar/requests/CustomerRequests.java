@@ -1,8 +1,10 @@
 package com.privatecar.privatecar.requests;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.privatecar.privatecar.Const;
+import com.privatecar.privatecar.models.responses.AccessTokenResponse;
 import com.privatecar.privatecar.models.responses.CustomerAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
@@ -60,6 +62,22 @@ public class CustomerRequests {
 
         // create & send request
         RequestHelper<CustomerAccountDetailsResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_CUSTOMER_ACCOUNT_DETAILS, CustomerAccountDetailsResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+    public static RequestHelper<AccessTokenResponse> verifyUser(Context context, RequestListener<AccessTokenResponse> listener, String email, String code) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_CLIENT_ID, Const.CLIENT_ID);
+        params.put(Const.MSG_PARAM_CLIENT_SECRET, Const.CLIENT_SECRET);
+        params.put(Const.MSG_PARAM_GRANT_TYPE, "verify");
+        params.put(Const.MSG_PARAM_EMAIL, email);
+        params.put(Const.MSG_PARAM_CODE, code);
+
+        // create & send request
+        RequestHelper<AccessTokenResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_CUSTOMER_VERIFY_USER, AccessTokenResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;

@@ -211,7 +211,7 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
         // validate response
         if (accessTokenResponse != null) {
             // check response
-            if (accessTokenResponse.getAccessToken() != null && !accessTokenResponse.getAccessToken().isEmpty()) {
+            if (!Utils.isNullOrEmpty(accessTokenResponse.getAccessToken())) {
                 // success
                 // cache response
                 User user = new User();
@@ -242,19 +242,41 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
                 // failed
                 // prepare error msg
                 String errorMsg = "";
+                boolean wentToVerificationScreen = false;
                 if (accessTokenResponse.getValidation().size() == 0) {
                     errorMsg = getString(R.string.invalid_credentials);
                 } else {
                     for (int i = 0; i < accessTokenResponse.getValidation().size(); i++) {
-                        if (i != 0) {
-                            errorMsg += "\n";
+                        String validationItem = accessTokenResponse.getValidation().get(i);
+
+                        // check this validation item
+                        if (validationItem.toLowerCase().contains("not verif")) {
+                            // the user credentials is ok but he is not verified
+                            // open user verification activity
+                            Intent intent = new Intent(this, UserVerificationActivity.class);
+                            intent.putExtra(Const.KEY_EMAIL, Utils.getText(etEmail));
+                            intent.putExtra(Const.KEY_PASSWORD, Utils.getText(etPassword));
+                            startActivity(intent);
+
+                            // finish this activity
+                            wentToVerificationScreen = true;
+                            onBackPressed();
+                            break;
+                        } else {
+                            // append to the error msg
+                            if (i != 0) {
+                                errorMsg += "\n";
+                            }
+                            errorMsg += accessTokenResponse.getValidation().get(i);
                         }
-                        errorMsg += accessTokenResponse.getValidation().get(i);
                     }
                 }
 
-                // show the error msg
-                Utils.showLongToast(this, errorMsg);
+                // check if went to the verification screen
+                if (!wentToVerificationScreen) {
+                    // show the error msg
+                    Utils.showLongToast(this, errorMsg);
+                }
             }
         } else {
             // show error msg

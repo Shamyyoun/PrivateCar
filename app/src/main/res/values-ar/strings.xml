@@ -257,4 +257,5 @@
     <string name="please_check_your_inbox_and_follow_instructions">من فضلك تفحص صندوق الوارد واتبع التعليماتث</string>
     <string name="please_wait">برجاء الانتظار</string>
     <string name="success">تمت العملية بنجاح</string>
+    <string name="verifying_your_account_please_wait">جاري تفعيل حسابك، برجاء الانتظار</string>
 </resources>
