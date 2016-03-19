@@ -20,10 +20,11 @@
 
             <ImageButton
                 android:id="@+id/ib_user_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:background="?selectableItemBackgroundBorderless"
                 android:onClick="onClick"
+                android:scaleType="centerCrop"
                 android:src="@drawable/add_placeholder" />
 
             <TextView
@@ -62,8 +63,8 @@
                 android:layout_marginStart="10dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                tools:text="Hossam Eleraky"
-                android:textColor="@color/grayish" />
+                android:textColor="@color/grayish"
+                tools:text="Hossam Eleraky" />
         </LinearLayout>
 
         <View
@@ -98,8 +99,8 @@
                 android:layout_marginStart="10dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                tools:text="01011510905"
-                android:textColor="@color/grayish" />
+                android:textColor="@color/grayish"
+                tools:text="01011510905" />
         </LinearLayout>
 
         <View
@@ -134,8 +135,8 @@
                 android:layout_marginStart="10dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                tools:text="shamyyoun@gmail.com"
-                android:textColor="@color/grayish" />
+                android:textColor="@color/grayish"
+                tools:text="shamyyoun@gmail.com" />
         </LinearLayout>
 
         <View

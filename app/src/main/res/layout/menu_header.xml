@@ -16,22 +16,11 @@
         android:layout_marginTop="@dimen/toolbar_padding_top">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/iv_user_def_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/def_user_photo"
-            app:riv_border_color="@color/textColorPrimary"
-            app:riv_border_width="0.5dip"
-            app:riv_corner_radius="5dip"
-            app:riv_mutate_background="true"
-            app:riv_oval="false" />
-
-        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iv_user_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
+            android:src="@drawable/def_user_photo"
             app:riv_border_color="@color/textColorPrimary"
             app:riv_border_width="0.5dip"
             app:riv_corner_radius="5dip"

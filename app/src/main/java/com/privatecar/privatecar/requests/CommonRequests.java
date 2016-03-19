@@ -12,6 +12,7 @@ import com.privatecar.privatecar.utils.PlayServicesUtils;
 import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -103,5 +104,19 @@ public class CommonRequests {
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;
+    }
+
+    public static RequestHelper<GeneralResponse> changePhoto(Context ctx, RequestListener<GeneralResponse> listener, String accessToken, File imageUserPhotoCropped) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+
+        Map<String, File> files = new HashMap<>();
+        files.put("Userphoto", imageUserPhotoCropped);
+
+        RequestHelper<GeneralResponse> request = new RequestHelper<>(ctx, Const.MESSAGES_BASE_URL, Const.MESSAGE_DRIVER_CHANGE_PHOTO, GeneralResponse.class, listener, params, files);
+
+        request.executeMultiPart();
+        return request;
     }
 }

@@ -23,16 +23,19 @@ import com.privatecar.privatecar.fragments.DriverHomeFragment;
 import com.privatecar.privatecar.fragments.DriverMessageCenterFragment;
 import com.privatecar.privatecar.fragments.DriverRatingsFragment;
 import com.privatecar.privatecar.fragments.DriverStatementFragment;
+import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.DriverAccountDetails;
-import com.squareup.picasso.Callback;
+import com.privatecar.privatecar.utils.AppUtils;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 public class DriverHomeActivity extends BaseActivity {
 
     DrawerLayout dlDrawer;
     NavigationView nvDrawer;
     View nvHeader;
-    ImageView ivUserDefImage, ivUserImage;
+    ImageView ivUserImage;
     TextView tvUserName, tvUserID, tvUserCredit;
 
     @Override
@@ -103,7 +106,6 @@ public class DriverHomeActivity extends BaseActivity {
         });
 
         nvHeader = nvDrawer.getHeaderView(0);
-        ivUserDefImage = (ImageView) nvHeader.findViewById(R.id.iv_user_def_image);
         ivUserImage = (ImageView) nvHeader.findViewById(R.id.iv_user_image);
         tvUserName = (TextView) nvHeader.findViewById(R.id.tv_user_name);
         tvUserID = (TextView) nvHeader.findViewById(R.id.tv_user_id);
@@ -155,22 +157,8 @@ public class DriverHomeActivity extends BaseActivity {
         tvUserCredit.setText(accountDetails.getCredit() + " " + getString(R.string.currency));
 
         // load personal image
-        String imageUrl = Const.IMAGES_BASE_URL + accountDetails.getPersonalPhoto();
-        Picasso.with(this).load(imageUrl).into(ivUserImage, new Callback() {
-            @Override
-            public void onSuccess() {
-                // hide default image
-                ivUserDefImage.setVisibility(View.GONE);
-                ivUserImage.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onError() {
-                // show default image
-                ivUserDefImage.setVisibility(View.VISIBLE);
-                ivUserImage.setVisibility(View.GONE);
-            }
-        });
+        String imageUrl = AppUtils.getConfigValue(getApplicationContext(), Config.KEY_BASE_URL) + File.separator + accountDetails.getPersonalPhoto();
+        Picasso.with(this).load(imageUrl).error(R.drawable.def_user_photo).placeholder(R.drawable.def_user_photo).into(ivUserImage);
     }
 
     @Override

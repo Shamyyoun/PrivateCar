@@ -23,7 +23,7 @@ public class DriverAccountDetails {
     private int noreasonDeclineTripCount;
     @SerializedName("overall_rating")
     @Expose
-    private int overallRating;
+    private float overallRating;
     @SerializedName("civil_id")
     @Expose
     private String civilId;
@@ -150,14 +150,14 @@ public class DriverAccountDetails {
     /**
      * @return The overallRating
      */
-    public int getOverallRating() {
+    public float getOverallRating() {
         return overallRating;
     }
 
     /**
      * @param overallRating The overall_rating
      */
-    public void setOverallRating(int overallRating) {
+    public void setOverallRating(float overallRating) {
         this.overallRating = overallRating;
     }
 
