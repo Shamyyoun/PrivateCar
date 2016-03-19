@@ -1,8 +1,9 @@
-package com.privatecar.privatecar.activities;
+package com.privatecar.privatecar.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.custom_views.EmptyView;
@@ -12,27 +13,29 @@ import com.privatecar.privatecar.custom_views.ProgressView;
 /**
  * Created by Shamyyoun on 3/9/2016.
  */
-public abstract class ProgressActivity extends BaseActivity {
+public abstract class ProgressFragment extends BaseFragment {
+    protected View rootView;
     private ProgressView progressView;
     private ErrorView errorView;
     private EmptyView emptyView;
     private View mainView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(getContentViewResId());
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(getContentViewResId(), container, false);
 
         // init views
-        progressView = (ProgressView) findViewById(R.id.progress_view);
-        errorView = (ErrorView) findViewById(R.id.error_view);
-        emptyView = (EmptyView) findViewById(R.id.empty_view);
-        mainView = findViewById(getMainViewResId());
+        progressView = (ProgressView) rootView.findViewById(R.id.progress_view);
+        errorView = (ErrorView) rootView.findViewById(R.id.error_view);
+        emptyView = (EmptyView) rootView.findViewById(R.id.empty_view);
+        mainView = rootView.findViewById(getMainViewResId());
 
         // add refresh click listener if error view is not null
         if (errorView != null) {
             errorView.setRefreshListener(getRefreshListener());
         }
+
+        return rootView;
     }
 
     protected abstract int getContentViewResId();

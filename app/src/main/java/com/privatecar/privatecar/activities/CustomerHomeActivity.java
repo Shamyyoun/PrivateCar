@@ -24,7 +24,6 @@ import com.privatecar.privatecar.fragments.CustomerMyRidesFragment;
 import com.privatecar.privatecar.fragments.CustomerPricesFragment;
 import com.privatecar.privatecar.fragments.CustomerSettingsFragment;
 import com.privatecar.privatecar.models.entities.CustomerAccountDetails;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class CustomerHomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -195,20 +194,6 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
 
         // load personal image
         String imageUrl = Const.IMAGES_BASE_URL + accountDetails.getPersonalPhoto();
-        Picasso.with(this).load(imageUrl).into(ivUserImage, new Callback() {
-            @Override
-            public void onSuccess() {
-                // hide default image
-                ivUserDefImage.setVisibility(View.GONE);
-                ivUserImage.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onError() {
-                // show default image
-                ivUserDefImage.setVisibility(View.VISIBLE);
-                ivUserImage.setVisibility(View.GONE);
-            }
-        });
+        Picasso.with(this).load(imageUrl).error(R.drawable.def_user_photo).placeholder(R.drawable.def_user_photo).into(ivUserImage);
     }
 }

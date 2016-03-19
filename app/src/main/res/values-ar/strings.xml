@@ -110,7 +110,7 @@
     <string name="add_details_for_pick_up">اضف معلومات مكان البداية لمساعدة السائق في الوصول اليك</string>
     <string name="save">حفظ</string>
     <string name="date">التاريخ</string>
-    <string name="trip">الرحلات</string>
+    <string name="driverTrip">الرحلات</string>
     <string name="profit">الربح</string>
     <string name="search_for_place">البحث عن مكان</string>
     <string name="select_on_map">الاختيار من الخريطة</string>
@@ -194,7 +194,7 @@
     <string name="offline">غير متاح</string>
     <string name="today_trips">عدد الرحلات اليوم</string>
     <string name="today_hours">عدد الساعات اليوم</string>
-    <string name="trips">رحلة</string>
+    <string name="driverTrips">رحلة</string>
     <string name="please_choose_from_date">من فضلك اختر تاريخ البداية</string>
     <string name="please_choose_to_date">من فضلك اختر تاريخ النهاية</string>
     <string name="loading_your_statements">جاري تحميل احصائياتك، برجاء الانتظار</string>
@@ -258,4 +258,8 @@
     <string name="please_wait">برجاء الانتظار</string>
     <string name="success">تمت العملية بنجاح</string>
     <string name="verifying_your_account_please_wait">جاري تفعيل حسابك، برجاء الانتظار</string>
+    <string name="total_rides_c">اجمالي الرحلات:</string>
+    <string name="total_money_c">اجمالي النقدية:</string>
+    <string name="rides">رحلة</string>
+    <string name="you_have_not_do_any_trip_yet">لم تقم بأي رحلة حتى الآن</string>
 </resources>
