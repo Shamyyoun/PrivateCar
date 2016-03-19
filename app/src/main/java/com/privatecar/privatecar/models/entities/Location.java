@@ -9,6 +9,15 @@ public class Location {
     private double lat;
     private double lng;
 
+    public Location() {
+        
+    }
+
+    public Location(android.location.Location location) {
+        this.lat = location.getLatitude();
+        this.lng = location.getLongitude();
+    }
+
     public double getLat() {
         return lat;
     }

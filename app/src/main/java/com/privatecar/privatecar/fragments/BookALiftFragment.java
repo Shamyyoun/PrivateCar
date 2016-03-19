@@ -1,33 +1,53 @@
 package com.privatecar.privatecar.fragments;
 
 
-import android.app.Activity;
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.CustomerHomeActivity;
 import com.privatecar.privatecar.activities.CustomerPickupActivity;
 import com.privatecar.privatecar.dialogs.GpsOptionDialog;
+import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.CustomerAccountDetails;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.CustomerAccountDetailsResponse;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.PlayServicesUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class BookALiftFragment extends BaseFragment implements OnMapReadyCallback, RequestListener<CustomerAccountDetailsResponse> {
+public class BookALiftFragment extends BaseFragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, RequestListener<CustomerAccountDetailsResponse> {
     public static final String TAG = BookALiftFragment.class.getName();
 
     private CustomerHomeActivity activity;
@@ -35,16 +55,50 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
     private TextView tvUserName, tvUserID;
     private View layoutPickNow, layoutPickLater;
     private GpsOptionDialog gpsOptionDialog;
-    private boolean now; // boolean flag used to hold now value to re call pickup method after return from gps settings
+
+    private GoogleMap map;
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequestCoarse;
+
+    //create coarse location request for updating the heat map
+    private void createCoarseLocationRequest() {
+        locationRequestCoarse = new LocationRequest();
+        String intervalString = AppUtils.getConfigValue(getActivity(), Config.KEY_MAP_REFRESH_RATE);
+        int interval = intervalString != null ? Integer.parseInt(intervalString) : 10;
+        locationRequestCoarse.setInterval(interval);
+        locationRequestCoarse.setFastestInterval(interval);
+        locationRequestCoarse.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+    }
 
     public BookALiftFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.activity = (CustomerHomeActivity) activity;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (!PlayServicesUtils.isPlayServicesAvailable(getActivity())) {
+            getActivity().onBackPressed();
+            return;
+        }
+
+        // Create an instance of GoogleAPIClient.
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+
+        createCoarseLocationRequest();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.activity = (CustomerHomeActivity) getActivity();
     }
 
     @Override
@@ -128,22 +182,36 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
 
     @Override
     public void onStart() {
+        super.onStart();
+
+        googleApiClient.connect();
+
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        super.onStart();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        googleApiClient.disconnect();
+
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        GoogleMap mMap = googleMap;
-        mMap.getUiSettings().setAllGesturesEnabled(false);
+        map = googleMap;
+        map.getUiSettings().setAllGesturesEnabled(false);
+        map.getUiSettings().setMapToolbarEnabled(false);
 
-//        // Add a marker in Sydney, Australia, and move the camera.
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //override the click listener of the "lite" map, as it opens google maps by default.
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                //do nothing
+            }
+        });
     }
 
     @Override
@@ -164,9 +232,7 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
      *
      * @param now boolean flag that is true if should pickup now and false otherwise
      */
-    private void pickUp(boolean now) {
-        this.now = now;
-
+    private void pickUp(final boolean now) {
         // check internet connection
         if (!Utils.hasConnection(activity)) {
             // show error toast
@@ -174,33 +240,115 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
             return;
         }
 
-        // check if gps is enabled
-        if (!Utils.isGpsEnabled(activity)) {
-            // show enable gps dialog
-            gpsOptionDialog = new GpsOptionDialog(this);
-            gpsOptionDialog.show();
+        // check if the user enabled the coarse location in the settings, if successful open CustomerPickupActivity
 
-            return;
-        }
+        LocationSettingsRequest.Builder builder =
+                new LocationSettingsRequest.Builder().addLocationRequest(locationRequestCoarse);
+        PendingResult<LocationSettingsResult> pendingResult =
+                LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
 
-        // gps is enabled, open pickup activity
-        Intent intent = new Intent(activity, CustomerPickupActivity.class);
-        intent.putExtra(Const.KEY_NOW, now);
-        startActivity(intent);
+        pendingResult.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(LocationSettingsResult result) {
+                final Status status = result.getStatus();
+                final LocationSettingsStates states = result.getLocationSettingsStates();
+
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        // All location settings are satisfied. The client can initialize location requests here.
+
+                        // location is enabled, open pickup activity
+                        Intent intent = new Intent(activity, CustomerPickupActivity.class);
+                        intent.putExtra(Const.KEY_NOW, now);
+                        startActivity(intent);
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        // Location settings are not satisfied, but this can be fixed by showing the user a dialog.
+                        try {
+                            // Show the dialog by calling startResolutionForResult(), and check the result in onActivityResult().
+                            status.startResolutionForResult(getActivity(), Const.REQUEST_COARSE_LOCATION_PERMISSION); //CustomerHomeActivity receives the result
+                        } catch (IntentSender.SendIntentException e) {
+                            // Ignore the error.
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        // Location settings are not satisfied. However, we have no way to fix the settings so we won't show the dialog.
+                        break;
+                }
+
+            }
+        });
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Const.REQUEST_GPS_SETTINGS) {
-            gpsOptionDialog.dismiss();
+    public void onConnected(Bundle bundle) {
+        //request locationRequestCoarse
 
-            // check gps
-            if (Utils.isGpsEnabled(activity)) {
-                // enabled, re call pick up
-                pickUp(now);
+        LocationSettingsRequest.Builder builder =
+                new LocationSettingsRequest.Builder().addLocationRequest(locationRequestCoarse);
+        PendingResult<LocationSettingsResult> pendingResult =
+                LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
+
+        pendingResult.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(LocationSettingsResult result) {
+                final Status status = result.getStatus();
+                final LocationSettingsStates states = result.getLocationSettingsStates();
+
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        // All location settings are satisfied. The client can initialize location requests here.
+                        getLastLocation();
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        // Location settings are not satisfied, but this can be fixed by showing the user a dialog.
+                        try {
+                            // Show the dialog by calling startResolutionForResult(), and check the result in onActivityResult().
+                            status.startResolutionForResult(getActivity(), Const.REQUEST_COARSE_LOCATION_PERMISSION); //CustomerHomeActivity receives the result
+                        } catch (IntentSender.SendIntentException e) {
+                            // Ignore the error.
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        // Location settings are not satisfied. However, we have no way to fix the settings so we won't show the dialog.
+                        break;
+                }
+
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+        });
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+
+    private void getLastLocation() {
+        //TODO: support api 23 permission model
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+            if (lastLocation != null) {
+                Utils.LogE(">>>>> Last Location: " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude());
+
+                updateMapLocation(lastLocation);
+            } else {
+                Utils.LogE("lastLocation == null");
+            }
         }
     }
+
+    private void updateMapLocation(Location location) {
+        if (map != null) {
+            LatLng curLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            map.moveCamera(CameraUpdateFactory.newLatLng(curLocation));
+        }
+    }
+
 }

@@ -11,6 +11,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,16 +24,19 @@ import com.privatecar.privatecar.fragments.BookALiftFragment;
 import com.privatecar.privatecar.fragments.CustomerMyRidesFragment;
 import com.privatecar.privatecar.fragments.CustomerPricesFragment;
 import com.privatecar.privatecar.fragments.CustomerSettingsFragment;
+import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.CustomerAccountDetails;
-import com.squareup.picasso.Callback;
+import com.privatecar.privatecar.utils.AppUtils;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 public class CustomerHomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout dlDrawer;
     NavigationView nvDrawer;
     View nvHeader;
-    ImageView ivUserDefImage, ivUserImage;
+    ImageView ivUserImage;
     TextView tvUserName, tvUserID, tvUserCredit;
 
     @Override
@@ -55,7 +59,6 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
         nvDrawer.setNavigationItemSelectedListener(this);
 
         nvHeader = nvDrawer.getHeaderView(0);
-        ivUserDefImage = (ImageView) nvHeader.findViewById(R.id.iv_user_def_image);
         ivUserImage = (ImageView) nvHeader.findViewById(R.id.iv_user_image);
         tvUserName = (TextView) nvHeader.findViewById(R.id.tv_user_name);
         tvUserID = (TextView) nvHeader.findViewById(R.id.tv_user_id);
@@ -195,21 +198,23 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
         tvUserCredit.setText(accountDetails.getCredit() + " " + getString(R.string.currency));
 
         // load personal image
-        String imageUrl = Const.IMAGES_BASE_URL + accountDetails.getPersonalPhoto();
-        Picasso.with(this).load(imageUrl).into(ivUserImage, new Callback() {
-            @Override
-            public void onSuccess() {
-                // hide default image
-                ivUserDefImage.setVisibility(View.GONE);
-                ivUserImage.setVisibility(View.VISIBLE);
-            }
+        String imageUrl = AppUtils.getConfigValue(getApplicationContext(), Config.KEY_BASE_URL) + File.separator + accountDetails.getPersonalPhoto();
+        Picasso.with(this).load(imageUrl).error(R.drawable.def_user_photo).placeholder(R.drawable.def_user_photo).into(ivUserImage);
 
-            @Override
-            public void onError() {
-                // show default image
-                ivUserDefImage.setVisibility(View.VISIBLE);
-                ivUserImage.setVisibility(View.GONE);
-            }
-        });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Const.REQUEST_COARSE_LOCATION_PERMISSION && resultCode == RESULT_OK) {//this request is sent in BookALiftFragment
+            Log.e(Const.LOG_TAG, "resultCode: " + resultCode);
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_fragment_container);
+            if (fragment instanceof BookALiftFragment) {
+                BookALiftFragment homeFragment = (BookALiftFragment) fragment;
+                homeFragment.onConnected(null);
+            }
+        }
+    }
+
+
 }

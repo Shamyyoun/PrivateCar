@@ -43,7 +43,6 @@ import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverHomeActivity;
-import com.privatecar.privatecar.dialogs.GpsOptionDialog;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.DriverAccountDetails;
 import com.privatecar.privatecar.models.entities.Message;
@@ -75,7 +74,6 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     private TextView tvTotalTrips;
     private TextView tvTotalHours;
 
-    private GpsOptionDialog gpsOptionDialog;
     private ProgressDialog progressDialog;
 
     private GoogleMap map;
@@ -369,13 +367,13 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Const.REQUEST_GPS_SETTINGS) {
-            gpsOptionDialog.dismiss();
-            beActive(true);
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == Const.REQUEST_GPS_SETTINGS) {
+//            gpsOptionDialog.dismiss();
+//            beActive(true);
+//        }
+//    }
 
     @Override
     public void onStart() {
@@ -456,10 +454,8 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
                         break;
                 }
 
-
             }
         });
-
 
     }
 
@@ -512,7 +508,6 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
 
     private void updateMapLocation(Location location) {
         if (map != null) {
-            // Add a marker in Sydney, Australia, and move the camera.
             LatLng markerPosition = new LatLng(location.getLatitude(), location.getLongitude());
             if (locationMarker == null)
                 locationMarker = map.addMarker(new MarkerOptions().position(markerPosition).title("current location"));

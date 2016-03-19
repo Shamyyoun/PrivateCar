@@ -92,6 +92,7 @@ public class Const {
     //messages (customer):----
     public static final String MESSAGE_REGISTER_CUSTOMER = "regcustomer";
     public static final String MESSAGE_CUSTOMER_ACCOUNT_DETAILS = "customeraccountdetails";
+    public static final String MESSAGE_NEAR_DRIVERS = "neardrivers";
 
     //messages (driver):----
     public static final String MESSAGE_DRIVER_ACCOUNT_DETAILS = "driveraccountdetails";

@@ -3,9 +3,10 @@ package com.privatecar.privatecar.requests;
 import android.content.Context;
 
 import com.privatecar.privatecar.Const;
+import com.privatecar.privatecar.models.entities.Location;
 import com.privatecar.privatecar.models.responses.CustomerAccountDetailsResponse;
-import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
+import com.privatecar.privatecar.models.responses.NearDriversResponse;
 import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 
@@ -64,4 +65,19 @@ public class CustomerRequests {
 
         return requestHelper;
     }
+
+    public static RequestHelper<NearDriversResponse> nearDrivers(Context context, RequestListener<NearDriversResponse> listener, String accessToken, Location location) {
+
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put("location", location.toString());
+
+        // create & send request
+        RequestHelper<NearDriversResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_NEAR_DRIVERS, NearDriversResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
 }
