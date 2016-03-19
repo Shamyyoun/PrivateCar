@@ -20,7 +20,7 @@ import java.util.Map;
  * Created by Shamyyoun on 2/24/2016.
  */
 public class CommonRequests {
-    public static RequestHelper normalLogin(Context context, RequestListener<AccessTokenResponse> listener, String username, String password) {
+    public static RequestHelper normalLogin(Context context, RequestListener<Object> listener, String username, String password) {
         // prepare parameters
         Map<String, String> params = new HashMap<>();
         params.put(Const.MSG_PARAM_CLIENT_ID, Const.CLIENT_ID);
@@ -32,13 +32,13 @@ public class CommonRequests {
         params.put(Const.MSG_PARAM_PASSWORD, password);
 
         // create & send request
-        RequestHelper<AccessTokenResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_ACCESS_TOKEN, AccessTokenResponse.class, listener, params);
+        RequestHelper<Object> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_ACCESS_TOKEN, AccessTokenResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;
     }
 
-    public static RequestHelper socialLogin(Context context, RequestListener<AccessTokenResponse> listener, String id, String token, String provider) {
+    public static RequestHelper socialLogin(Context context, RequestListener<Object> listener, String id, String token, String provider) {
         // prepare parameters
         Map<String, String> params = new HashMap<>();
         params.put(Const.MSG_PARAM_CLIENT_ID, Const.CLIENT_ID);
@@ -51,7 +51,7 @@ public class CommonRequests {
         params.put(Const.MSG_PARAM_PROVIDER, provider);
 
         // create & send request
-        RequestHelper<AccessTokenResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_ACCESS_TOKEN, AccessTokenResponse.class, listener, params);
+        RequestHelper<Object> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_ACCESS_TOKEN, AccessTokenResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;

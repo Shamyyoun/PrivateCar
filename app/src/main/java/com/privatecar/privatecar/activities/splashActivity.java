@@ -57,13 +57,14 @@ public class SplashActivity extends BaseActivity implements RequestListener<Conf
         if (user != null) { //if there is a signed in user, update its access token if expired
             long expiryTimestamp = user.getExpiryTimestamp();
             if (AppUtils.isTokenExpired(expiryTimestamp)) {
-                CommonRequests.normalLogin(this, new RequestListener<AccessTokenResponse>() {
+                CommonRequests.normalLogin(this, new RequestListener<Object>() {
                     @Override
-                    public void onSuccess(AccessTokenResponse response, String apiName) {
-                        if (response.getAccessToken() != null) {
+                    public void onSuccess(Object response, String apiName) {
+                        AccessTokenResponse accessTokenResponse = (AccessTokenResponse) response;
+                        if (accessTokenResponse.getAccessToken() != null) {
                             // cache response
-                            user.setAccessToken(response.getAccessToken());
-                            int expiryIn = response.getExpiresIn() * 1000; //in melli seconds
+                            user.setAccessToken(accessTokenResponse.getAccessToken());
+                            int expiryIn = accessTokenResponse.getExpiresIn() * 1000; //in melli seconds
                             user.setExpiryTimestamp(System.currentTimeMillis() + expiryIn);
                             AppUtils.cacheUser(SplashActivity.this, user);
                         }

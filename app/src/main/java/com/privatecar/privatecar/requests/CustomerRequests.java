@@ -34,7 +34,7 @@ public class CustomerRequests {
         return request;
     }
 
-    public static RequestHelper<GeneralResponse> regCustomerSocial(Context ctx, RequestListener<GeneralResponse> listener, String firstName, String lastName, String email, String mobile, String provider, String id, String token) {
+    public static RequestHelper<Object> regCustomerSocial(Context ctx, RequestListener<Object> listener, String firstName, String lastName, String email, String mobile, String provider, String id, String token) {
 
         Map<String, String> params = new HashMap<>();
         params.put("FirstName", firstName);
@@ -46,7 +46,7 @@ public class CustomerRequests {
         params.put("Mobile", mobile);
         params.put("RegisterType", "2");
 
-        RequestHelper<GeneralResponse> request = new RequestHelper<>(ctx, Const.MESSAGES_BASE_URL, Const.MESSAGE_REGISTER_CUSTOMER, GeneralResponse.class, listener, params);
+        RequestHelper<Object> request = new RequestHelper<>(ctx, Const.MESSAGES_BASE_URL, Const.MESSAGE_REGISTER_CUSTOMER, GeneralResponse.class, listener, params);
 
         request.executeFormUrlEncoded();
         return request;

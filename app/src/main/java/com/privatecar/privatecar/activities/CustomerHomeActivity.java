@@ -40,7 +40,6 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_home);
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
