@@ -6,6 +6,7 @@ import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.models.responses.AccessTokenResponse;
 import com.privatecar.privatecar.models.responses.CustomerAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.CustomerTripsResponse;
+import com.privatecar.privatecar.models.responses.FaresResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
@@ -90,6 +91,20 @@ public class CustomerRequests {
 
         // create & send request
         RequestHelper<CustomerTripsResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_CUSTOMER_TRIPS, CustomerTripsResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+    public static RequestHelper<FaresResponse> fares(Context context, RequestListener<FaresResponse> listener, String accessToken, String theClass, String pickupTime) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_CLASS, theClass);
+        params.put(Const.MSG_PARAM_PICKUP_TIME, pickupTime);
+
+        // create & send request
+        RequestHelper<FaresResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_CUSTOMER_FARES, FaresResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;

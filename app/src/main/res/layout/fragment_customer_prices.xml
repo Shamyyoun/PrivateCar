@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -64,13 +63,13 @@
             android:text="@string/counter_start" />
 
         <TextView
-            android:id="@+id/tv_counter_start"
+            android:id="@+id/tv_counter_start_fare"
             style="@style/PetroleumPinnedLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@+id/tv_counter_start_view"
-            android:text="10 EGP" />
+            android:text="0" />
 
         <TextView
             android:id="@+id/tv_1_km_view"
@@ -81,7 +80,7 @@
             android:text="@string/_1_km" />
 
         <TextView
-            android:id="@+id/tv_1_km"
+            android:id="@+id/tv_km_fare"
             style="@style/PetroleumPinnedLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,7 +88,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="15dp"
             android:layout_toEndOf="@+id/tv_1_km_view"
-            android:text="2 EGP" />
+            android:text="0" />
 
         <TextView
             android:id="@+id/tv_1_min_wait_view"
@@ -100,7 +99,7 @@
             android:text="@string/_1_min_wait" />
 
         <TextView
-            android:id="@+id/tv_1_min_wait"
+            android:id="@+id/tv_min_wait_fare"
             style="@style/YellowishPinnedLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -108,18 +107,36 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="15dp"
             android:layout_toEndOf="@+id/tv_1_min_wait_view"
-            android:text="0.25 EGP" />
+            android:text="0" />
 
-        <ScrollView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tv_1_min_wait_view"
             android:layout_marginTop="30dp">
 
-            <TextView
+            <com.privatecar.privatecar.custom_views.ProgressView
+                android:id="@+id/progress_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah " />
-        </ScrollView>
+                android:layout_height="match_parent" />
+
+            <com.privatecar.privatecar.custom_views.ErrorView
+                android:id="@+id/error_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+            <ScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="ifContentScrolls">
+
+                <TextView
+                    android:id="@+id/tv_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </ScrollView>
+        </FrameLayout>
     </RelativeLayout>
 </LinearLayout>

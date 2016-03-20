@@ -46,7 +46,7 @@
                 style="@style/yellowish_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="price: " />
+                android:text="fares: " />
 
             <TextView
                 android:id="@+id/tv_last_trip_price"
