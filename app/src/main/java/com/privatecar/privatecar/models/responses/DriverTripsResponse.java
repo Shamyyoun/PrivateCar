@@ -8,14 +8,14 @@ import com.privatecar.privatecar.models.entities.DriverTrip;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TripResponse {
+public class DriverTripsResponse {
 
     @SerializedName("status")
     @Expose
     private boolean status;
     @SerializedName("content")
     @Expose
-    private DriverTrip driverTrip;
+    private List<DriverTrip> driverTrips = new ArrayList<>();
     @SerializedName("validation")
     @Expose
     private List<String> validation = new ArrayList<>();
@@ -35,17 +35,17 @@ public class TripResponse {
     }
 
     /**
-     * @return The driverTrip
+     * @return The driverTrips
      */
-    public DriverTrip getDriverTrip() {
-        return driverTrip;
+    public List<DriverTrip> getDriverTrips() {
+        return driverTrips;
     }
 
     /**
-     * @param driverTrip The driverTrip
+     * @param driverTrips The driverTrips
      */
-    public void setDriverTrip(DriverTrip driverTrip) {
-        this.driverTrip = driverTrip;
+    public void setDriverTrips(List<DriverTrip> driverTrips) {
+        this.driverTrips = driverTrips;
     }
 
     /**

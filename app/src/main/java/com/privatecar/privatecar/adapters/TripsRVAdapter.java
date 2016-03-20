@@ -1,5 +1,6 @@
 package com.privatecar.privatecar.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,20 +8,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.models.entities.Ride;
+import com.privatecar.privatecar.models.responses.CustomerTrip;
+import com.privatecar.privatecar.utils.DateUtil;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by basim on 20/2/16.
- *
  */
-public class RidesRVAdapter extends RecyclerView.Adapter<RidesRVAdapter.RideViewHolder> {
+public class TripsRVAdapter extends RecyclerView.Adapter<TripsRVAdapter.RideViewHolder> {
+    private Context context;
+    private List<CustomerTrip> trips;
 
-    ArrayList<Ride> rides;
-
-    public RidesRVAdapter(ArrayList<Ride> rides) {
-        this.rides = rides;
+    public TripsRVAdapter(Context context, List<CustomerTrip> trips) {
+        this.context = context;
+        this.trips = trips;
     }
 
     @Override
@@ -31,27 +33,25 @@ public class RidesRVAdapter extends RecyclerView.Adapter<RidesRVAdapter.RideView
 
     @Override
     public void onBindViewHolder(RideViewHolder holder, int position) {
-        Ride ride = rides.get(position);
+        CustomerTrip trip = trips.get(position);
 
-        holder.tvRideNumber.setText(String.valueOf(ride.getRideNumber()));
-        holder.tvReceiptNumber.setText(String.valueOf(ride.getReceiptNumber()));
-        holder.tvPickupAddress.setText(ride.getPickupAddress());
-        holder.tvDropOffAddress.setText(ride.getDropOffAddress());
-        holder.tvPrice.setText(String.valueOf(ride.getPrice()));
-        holder.tvDate.setText(ride.getDate());
-
+        holder.tvRideNumber.setText(String.valueOf(trip.getCode()));
+        holder.tvPickupAddress.setText(trip.getPickupaddress());
+        holder.tvDropOffAddress.setText(trip.getDestinationaddress());
+        holder.tvPrice.setText(trip.getFare() + " " + context.getString(R.string.currency));
+        String date = DateUtil.formatDate(trip.getDate(), "yyyy-MM-dd hh:mm:ss", "d MMM yyyy");
+        holder.tvDate.setText("" + date);
     }
 
     @Override
     public int getItemCount() {
-        return rides.size();
+        return trips.size();
     }
 
 
     public static class RideViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvRideNumber;
-        TextView tvReceiptNumber;
         TextView tvPickupAddress;
         TextView tvDropOffAddress;
         TextView tvPrice;
@@ -61,7 +61,6 @@ public class RidesRVAdapter extends RecyclerView.Adapter<RidesRVAdapter.RideView
             super(itemView);
 
             tvRideNumber = (TextView) itemView.findViewById(R.id.tv_ride_number);
-            tvReceiptNumber = (TextView) itemView.findViewById(R.id.tv_receipt_number);
             tvPickupAddress = (TextView) itemView.findViewById(R.id.tv_pickup_address);
             tvDropOffAddress = (TextView) itemView.findViewById(R.id.tv_drop_off_address);
             tvPrice = (TextView) itemView.findViewById(R.id.tv_price);

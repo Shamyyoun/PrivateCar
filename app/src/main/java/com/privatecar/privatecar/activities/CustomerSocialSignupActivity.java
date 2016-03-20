@@ -12,14 +12,19 @@ import android.widget.Spinner;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.adapters.CountryAdapter;
+import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.models.enums.UserType;
+import com.privatecar.privatecar.models.responses.AccessTokenResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
+import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.requests.CustomerRequests;
+import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.CountriesUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class CustomerSocialSignupActivity extends BasicBackActivity implements RequestListener<GeneralResponse> {
+public class CustomerSocialSignupActivity extends BasicBackActivity implements RequestListener<Object> {
     private Spinner spinner;
     private EditText etMobile;
     private ProgressDialog progressDialog;
@@ -109,25 +114,62 @@ public class CustomerSocialSignupActivity extends BasicBackActivity implements R
     }
 
     @Override
-    public void onSuccess(GeneralResponse response, String apiName) {
-        progressDialog.dismiss();
+    public void onSuccess(Object response, String apiName) {
+        // check response
+        if (response instanceof GeneralResponse) {
+            // this was the social sign up request
+            // cast the response
+            GeneralResponse generalResponse = (GeneralResponse) response;
 
-        if (response.isSuccess()) {
+            // check the response
+            if (generalResponse.isSuccess()) {
+                // successful request
+                // send access token request
+                CommonRequests.socialLogin(this, this, id, token, provider);
+            } else {
+                // hide the progress dialog
+                progressDialog.dismiss();
+
+                // prepare error msg
+                String errorMsg = "";
+                if (generalResponse.getValidation() != null) {
+                    for (int i = 0; i < generalResponse.getValidation().size(); i++) {
+                        if (i == 0)
+                            errorMsg += generalResponse.getValidation().get(i);
+                        else
+                            errorMsg += "\n" + generalResponse.getValidation().get(i);
+                    }
+                }
+
+                // show the suitable error dialog
+                if (errorMsg.isEmpty()) {
+                    errorMsg = getString(R.string.unexpected_error_try_again);
+                }
+                DialogUtils.showAlertDialog(this, errorMsg, null);
+            }
+        } else {
+            // this was the access token request
+            // hide the progress dialog
+            progressDialog.dismiss();
+
+            // cast the response
+            AccessTokenResponse accessTokenResponse = (AccessTokenResponse) response;
+
+            // create and cache new user object
+            User user = new User();
+            user.setAccessToken(accessTokenResponse.getAccessToken());
+            long expiryTimestamp = System.currentTimeMillis() + (accessTokenResponse.getExpiresIn() * 1000);
+            user.setExpiryTimestamp(expiryTimestamp);
+            user.setType(UserType.CUSTOMER);
+            user.setSocialProvider(provider);
+            user.setSocialToken(token);
+            user.setSocialUserId(id);
+            AppUtils.cacheUser(this, user);
+
+            // open customer home activity
             Intent intent = new Intent(this, CustomerHomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-        } else {
-            if (response.getValidation() != null) {
-                String validation = "";
-                for (int i = 0; i < response.getValidation().size(); i++) {
-                    if (i == 0)
-                        validation += response.getValidation().get(i);
-                    else
-                        validation += "\n" + response.getValidation().get(i);
-                }
-
-                DialogUtils.showAlertDialog(this, validation, null);
-            }
         }
     }
 

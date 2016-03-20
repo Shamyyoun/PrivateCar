@@ -14,7 +14,6 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverHomeActivity;
@@ -22,7 +21,7 @@ import com.privatecar.privatecar.activities.DriverStatementSearchResultActivity;
 import com.privatecar.privatecar.controllers.StatementsController;
 import com.privatecar.privatecar.models.entities.Statement;
 import com.privatecar.privatecar.models.entities.StatementsGroup;
-import com.privatecar.privatecar.models.entities.Trip;
+import com.privatecar.privatecar.models.entities.DriverTrip;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.StatementsResponse;
 import com.privatecar.privatecar.models.responses.TripResponse;
@@ -164,11 +163,11 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
             TripResponse tripResponse = (TripResponse) response;
 
             // check last trip
-            Trip trip = tripResponse.getTrip();
-            if (tripResponse.getTrip() != null) {
+            DriverTrip driverTrip = tripResponse.getDriverTrip();
+            if (tripResponse.getDriverTrip() != null) {
                 // render response to the ui
-                tvLastTripPrice.setText(trip.getEstimateFare() + " " + getString(R.string.currency));
-                tvLastTripDate.setText(DateUtil.formatDate(trip.getPickupDateTime(), "yyyy-MM-dd hh:mm:ss", TRIP_DATE_FORMAT));
+                tvLastTripPrice.setText(driverTrip.getEstimateFare() + " " + getString(R.string.currency));
+                tvLastTripDate.setText(DateUtil.formatDate(driverTrip.getPickupDateTime(), "yyyy-MM-dd hh:mm:ss", TRIP_DATE_FORMAT));
             } else {
                 Utils.showLongToast(activity, R.string.unexpected_error_try_again);
             }

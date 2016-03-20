@@ -3,22 +3,22 @@ package com.privatecar.privatecar.models.responses;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.privatecar.privatecar.models.entities.DriverTrip;
+import com.privatecar.privatecar.models.entities.Fare;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TripResponse {
+public class FaresResponse {
 
     @SerializedName("status")
     @Expose
     private boolean status;
     @SerializedName("content")
     @Expose
-    private DriverTrip driverTrip;
+    private List<Fare> fares = new ArrayList<Fare>();
     @SerializedName("validation")
     @Expose
-    private List<String> validation = new ArrayList<>();
+    private List<String> validation = new ArrayList<String>();
 
     /**
      * @return The status
@@ -35,17 +35,17 @@ public class TripResponse {
     }
 
     /**
-     * @return The driverTrip
+     * @return The fares
      */
-    public DriverTrip getDriverTrip() {
-        return driverTrip;
+    public List<Fare> getFares() {
+        return fares;
     }
 
     /**
-     * @param driverTrip The driverTrip
+     * @param fares The fares
      */
-    public void setDriverTrip(DriverTrip driverTrip) {
-        this.driverTrip = driverTrip;
+    public void setFares(List<Fare> fares) {
+        this.fares = fares;
     }
 
     /**

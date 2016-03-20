@@ -20,7 +20,7 @@ import com.privatecar.privatecar.utils.PlayServicesUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class SplashActivity extends BaseActivity implements RequestListener<ConfigResponse> {
+public class SplashActivity extends BaseActivity implements RequestListener {
 
     private ProgressBar progressBar;
 
@@ -51,46 +51,24 @@ public class SplashActivity extends BaseActivity implements RequestListener<Conf
 
         // send startup config request
         CommonRequests.startupConfig(this, this);
-
-        // get cached user
-        final User user = AppUtils.getCachedUser(this);
-        if (user != null) { //if there is a signed in user, update its access token if expired
-            long expiryTimestamp = user.getExpiryTimestamp();
-            if (AppUtils.isTokenExpired(expiryTimestamp)) {
-                CommonRequests.normalLogin(this, new RequestListener<AccessTokenResponse>() {
-                    @Override
-                    public void onSuccess(AccessTokenResponse response, String apiName) {
-                        if (response.getAccessToken() != null) {
-                            // cache response
-                            user.setAccessToken(response.getAccessToken());
-                            int expiryIn = response.getExpiresIn() * 1000; //in melli seconds
-                            user.setExpiryTimestamp(System.currentTimeMillis() + expiryIn);
-                            AppUtils.cacheUser(SplashActivity.this, user);
-                        }
-                    }
-
-                    @Override
-                    public void onFail(String message, String apiName) {
-
-                    }
-                }, user.getUserName(), user.getPassword());
-            }
-        }
-
-
     }
 
     @Override
-    public void onSuccess(ConfigResponse response, String apiName) {
-        progressBar.setVisibility(View.GONE);
+    public void onSuccess(Object response, String apiName) {
+        // check the response
+        if (response instanceof ConfigResponse) {
+            // this was the startup config
+            // hide the progress bar
+            progressBar.setVisibility(View.GONE);
 
-        // validate response
-        if (response != null) {
+            // cast the response
+            ConfigResponse configResponse = (ConfigResponse) response;
+
             // cache configs response
-            AppUtils.cacheConfigs(getApplicationContext(), response);
+            AppUtils.cacheConfigs(getApplicationContext(), configResponse);
 
             // print them
-            for (Config config : response.getConfigs()) {
+            for (Config config : configResponse.getConfigs()) {
                 Log.e(Const.LOG_TAG, config.getKey() + " : " + config.getValue());
             }
 
@@ -103,22 +81,67 @@ public class SplashActivity extends BaseActivity implements RequestListener<Conf
                 // no logged in user
                 // goto anonymous home activity
                 intent = new Intent(SplashActivity.this, AnonymousHomeActivity.class);
-            } else if (user.getType() == UserType.DRIVER) {
-                // goto driver home activity
-                intent = new Intent(SplashActivity.this, DriverHomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             } else {
-                // goto customer home activity
-                intent = new Intent(SplashActivity.this, CustomerHomeActivity.class);
+                // check the user expiry timestamp to obtain new access token if expired
+                long expiryTimestamp = user.getExpiryTimestamp();
+                if (AppUtils.isTokenExpired(expiryTimestamp)) {
+                    // check the user grant type
+                    if (!Utils.isNullOrEmpty(user.getUserName())) {
+                        // user had registered with normal login request
+                        // resend normal login request to obtain new access token
+                        CommonRequests.normalLogin(this, this, user.getUserName(), user.getPassword());
+                    } else {
+                        // user had registered with social login request
+                        // resend social login request to obtain new access token
+                        CommonRequests.socialLogin(this, this, user.getSocialUserId(), user.getSocialToken(), user.getSocialProvider());
+                    }
+                } else {
+                    openHomeActivity();
+                }
             }
-
-            // goto activity
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
         } else {
-            // show error toast
-            Utils.showLongToast(getApplicationContext(), R.string.connection_error);
-            finish();
+            // this was access token request
+            // cast the response
+            AccessTokenResponse accessTokenResponse = (AccessTokenResponse) response;
+
+            // check the access token
+            if (!Utils.isNullOrEmpty(accessTokenResponse.getAccessToken())) {
+                // succeed
+                // cache the new access token
+                User user = AppUtils.getCachedUser(this);
+                user.setAccessToken(accessTokenResponse.getAccessToken());
+                long expiryTimestamp = System.currentTimeMillis() + (accessTokenResponse.getExpiresIn() * 1000);
+                user.setExpiryTimestamp(expiryTimestamp);
+                AppUtils.cacheUser(this, user);
+
+                // open suitable home activity
+                openHomeActivity();
+            } else {
+                // failed
+                // show error toast & exit
+                Utils.showLongToast(getApplicationContext(), R.string.unexpected_error_try_again);
+                finish();
+            }
         }
+    }
+
+    private void openHomeActivity() {
+        // check the cached user type
+        User user = AppUtils.getCachedUser(this);
+        Intent intent;
+        if (user.getType() == UserType.DRIVER) {
+            // goto driver home activity
+            intent = new Intent(SplashActivity.this, DriverHomeActivity.class);
+        } else {
+            // goto customer home activity
+            intent = new Intent(SplashActivity.this, CustomerHomeActivity.class);
+        }
+
+        // start the suitable activity
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override

@@ -90,6 +90,12 @@ public class DriverAccountDetails {
     @SerializedName("cars")
     @Expose
     private List<Car> cars = new ArrayList<Car>();
+    @SerializedName("mobile")
+    @Expose
+    private String mobile;
+    @SerializedName("email")
+    @Expose
+    private String email;
 
     /**
      * @return The id
@@ -467,6 +473,34 @@ public class DriverAccountDetails {
      */
     public void setCars(List<Car> cars) {
         this.cars = cars;
+    }
+
+    /**
+     * @return The mobile
+     */
+    public String getMobile() {
+        return mobile;
+    }
+
+    /**
+     * @param mobile The mobile
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    /**
+     * @return The email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email The email
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

@@ -15,7 +15,7 @@
         <item
             android:id="@+id/nav_prices"
             android:icon="@drawable/nav_icon_prices"
-            android:title="@string/prices" />
+            android:title="@string/fares" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/nav_icon_settings"

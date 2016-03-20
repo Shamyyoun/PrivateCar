@@ -19,13 +19,15 @@
             style="@style/white_medium_bold_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Rides: " />
+            android:text="@string/total_rides_c" />
 
         <TextView
+            android:id="@+id/tv_total_rides"
             style="@style/white_medium_bold_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="210 Rides" />
+            android:layout_marginStart="5dp"
+            android:text="0" />
     </LinearLayout>
 
     <LinearLayout
@@ -39,19 +41,41 @@
             style="@style/white_medium_bold_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Money: " />
+            android:text="@string/total_money_c" />
 
         <TextView
+            android:id="@+id/tv_total_money"
             style="@style/white_medium_bold_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2100 EGP" />
+            android:layout_marginStart="5dp"
+            android:text="0" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_rides"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+        <com.privatecar.privatecar.custom_views.ProgressView
+            android:id="@+id/progress_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.privatecar.privatecar.custom_views.ErrorView
+            android:id="@+id/error_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <com.privatecar.privatecar.custom_views.EmptyView
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_trips"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 </LinearLayout>

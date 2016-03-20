@@ -33,6 +33,7 @@ import com.google.android.gms.common.api.Status;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.adapters.CountryAdapter;
+import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
@@ -529,7 +530,11 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
         hideProgressDialog();
 
         if (response.isSuccess()) {
-            startActivity(new Intent(this, UserVerificationActivity.class));
+            // open user verification activity
+            Intent intent = new Intent(this, UserVerificationActivity.class);
+            intent.putExtra(Const.KEY_EMAIL, Utils.getText(etEmail));
+            intent.putExtra(Const.KEY_PASSWORD, Utils.getText(etPassword));
+            startActivity(intent);
             this.onBackPressed();
         } else {
             if (response.getValidation() != null) {

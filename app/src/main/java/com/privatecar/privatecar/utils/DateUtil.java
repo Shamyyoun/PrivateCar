@@ -3,6 +3,7 @@ package com.privatecar.privatecar.utils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by Shamyyoun on 2/22/2015.
@@ -50,5 +51,14 @@ public class DateUtil {
         String dayName = sdf.format(date.getTime());
 
         return dayName;
+    }
+
+    public static String getCurrentTime() {
+        Calendar c = Calendar.getInstance(Locale.getDefault());
+        int seconds = c.get(Calendar.SECOND);
+        int minutes = c.get(Calendar.MINUTE);
+        int hours = c.get(Calendar.HOUR_OF_DAY);
+
+        return hours + ":" + minutes + ":" + seconds;
     }
 }

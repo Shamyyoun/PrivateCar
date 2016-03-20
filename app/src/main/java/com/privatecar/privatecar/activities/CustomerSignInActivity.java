@@ -42,7 +42,7 @@ import com.privatecar.privatecar.utils.Utils;
 
 import java.util.Arrays;
 
-public class CustomerSignInActivity extends BasicBackActivity implements RequestListener<AccessTokenResponse>,
+public class CustomerSignInActivity extends BasicBackActivity implements RequestListener<Object>,
         GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, FacebookCallback<LoginResult> {
     private static final int LOGIN_NORMAL = 1;
     private static final int LOGIN_FACEBOOK = 2;
@@ -201,20 +201,23 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
     }
 
     @Override
-    public void onSuccess(AccessTokenResponse response, String apiName) {
+    public void onSuccess(Object response, String apiName) {
         // dismiss progress dialog
         progressDialog.dismiss();
 
+        // cast the response
+        AccessTokenResponse accessTokenResponse = (AccessTokenResponse) response;
+
         // validate response
-        if (response != null) {
+        if (accessTokenResponse != null) {
             // check response
-            if (response.getAccessToken() != null && !response.getAccessToken().isEmpty()) {
+            if (!Utils.isNullOrEmpty(accessTokenResponse.getAccessToken())) {
                 // success
                 // cache response
                 User user = new User();
                 user.setType(UserType.CUSTOMER);
-                user.setAccessToken(response.getAccessToken());
-                int expiryIn = response.getExpiresIn() * 1000; //in melli seconds
+                user.setAccessToken(accessTokenResponse.getAccessToken());
+                int expiryIn = accessTokenResponse.getExpiresIn() * 1000; //in melli seconds
                 user.setExpiryTimestamp(System.currentTimeMillis() + expiryIn);
 
                 // check login type
@@ -239,19 +242,41 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
                 // failed
                 // prepare error msg
                 String errorMsg = "";
-                if (response.getValidation().size() == 0) {
+                boolean wentToVerificationScreen = false;
+                if (accessTokenResponse.getValidation().size() == 0) {
                     errorMsg = getString(R.string.invalid_credentials);
                 } else {
-                    for (int i = 0; i < response.getValidation().size(); i++) {
-                        if (i != 0) {
-                            errorMsg += "\n";
+                    for (int i = 0; i < accessTokenResponse.getValidation().size(); i++) {
+                        String validationItem = accessTokenResponse.getValidation().get(i);
+
+                        // check this validation item
+                        if (validationItem.toLowerCase().contains("not verif")) {
+                            // the user credentials is ok but he is not verified
+                            // open user verification activity
+                            Intent intent = new Intent(this, UserVerificationActivity.class);
+                            intent.putExtra(Const.KEY_EMAIL, Utils.getText(etEmail));
+                            intent.putExtra(Const.KEY_PASSWORD, Utils.getText(etPassword));
+                            startActivity(intent);
+
+                            // finish this activity
+                            wentToVerificationScreen = true;
+                            onBackPressed();
+                            break;
+                        } else {
+                            // append to the error msg
+                            if (i != 0) {
+                                errorMsg += "\n";
+                            }
+                            errorMsg += accessTokenResponse.getValidation().get(i);
                         }
-                        errorMsg += response.getValidation().get(i);
                     }
                 }
 
-                // show the error msg
-                Utils.showLongToast(this, errorMsg);
+                // check if went to the verification screen
+                if (!wentToVerificationScreen) {
+                    // show the error msg
+                    Utils.showLongToast(this, errorMsg);
+                }
             }
         } else {
             // show error msg

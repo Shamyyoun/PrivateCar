@@ -21,7 +21,7 @@ import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class DriverSigninActivity extends BasicBackActivity implements View.OnClickListener, RequestListener<AccessTokenResponse> {
+public class DriverSigninActivity extends BasicBackActivity implements View.OnClickListener, RequestListener<Object> {
     private EditText etUsername, etPassword;
     private ProgressDialog progressDialog;
 
@@ -97,22 +97,25 @@ public class DriverSigninActivity extends BasicBackActivity implements View.OnCl
     }
 
     @Override
-    public void onSuccess(AccessTokenResponse response, String apiName) {
+    public void onSuccess(Object response, String apiName) {
         // dismiss progress dialog
         progressDialog.dismiss();
 
+        // cast the response
+        AccessTokenResponse accessTokenResponse = (AccessTokenResponse) response;
+
         // validate response
-        if (response != null) {
+        if (accessTokenResponse != null) {
             // check response
-            if (response.getAccessToken() != null && !response.getAccessToken().isEmpty()) {
+            if (accessTokenResponse.getAccessToken() != null && !accessTokenResponse.getAccessToken().isEmpty()) {
                 // success
                 // cache response
                 User user = new User();
                 user.setType(UserType.DRIVER);
                 user.setUserName(Utils.getText(etUsername));
                 user.setPassword(Utils.getText(etPassword));
-                user.setAccessToken(response.getAccessToken());
-                int expiryIn = response.getExpiresIn() * 1000; //in melli seconds
+                user.setAccessToken(accessTokenResponse.getAccessToken());
+                int expiryIn = accessTokenResponse.getExpiresIn() * 1000; //in melli seconds
                 user.setExpiryTimestamp(System.currentTimeMillis() + expiryIn);
                 AppUtils.cacheUser(this, user);
 
@@ -124,14 +127,14 @@ public class DriverSigninActivity extends BasicBackActivity implements View.OnCl
                 // failed
                 // prepare error msg
                 String errorMsg = "";
-                if (response.getValidation().size() == 0) {
+                if (accessTokenResponse.getValidation().size() == 0) {
                     errorMsg = getString(R.string.invalid_credentials);
                 } else {
-                    for (int i = 0; i < response.getValidation().size(); i++) {
+                    for (int i = 0; i < accessTokenResponse.getValidation().size(); i++) {
                         if (i != 0) {
                             errorMsg += "\n";
                         }
-                        errorMsg += response.getValidation().get(i);
+                        errorMsg += accessTokenResponse.getValidation().get(i);
                     }
                 }
 

@@ -7,14 +7,32 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.models.entities.Fare;
+import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.models.responses.FaresResponse;
+import com.privatecar.privatecar.requests.CustomerRequests;
+import com.privatecar.privatecar.utils.AppUtils;
+import com.privatecar.privatecar.utils.DateUtil;
+import com.privatecar.privatecar.utils.RequestListener;
+import com.privatecar.privatecar.utils.Utils;
 
-public class CustomerPricesFragment extends BaseFragment {
+import java.util.Locale;
+
+public class CustomerPricesFragment extends ProgressFragment implements RequestListener<FaresResponse> {
     public static final String TAG = CustomerPricesFragment.class.getName();
 
-    Activity activity;
-    View rootView;
+    private Activity activity;
+    private RadioGroup rgTripType;
+    private TextView tvCounterStartFare;
+    private TextView tvKMFare;
+    private TextView tvMinWaitFare;
+    private TextView tvDesc;
+
+    private int selectedRadioPosition; // used to hold the selected radio button item's position
 
     public CustomerPricesFragment() {
         // Required empty public constructor
@@ -29,9 +47,134 @@ public class CustomerPricesFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null) {
-            rootView = inflater.inflate(R.layout.fragment_customer_prices, container, false);
+            // create parent view
+            super.onCreateView(inflater, container, savedInstanceState);
+
+            // init views
+            rgTripType = (RadioGroup) rootView.findViewById(R.id.rg_trip_type);
+            tvCounterStartFare = (TextView) rootView.findViewById(R.id.tv_counter_start_fare);
+            tvKMFare = (TextView) rootView.findViewById(R.id.tv_km_fare);
+            tvMinWaitFare = (TextView) rootView.findViewById(R.id.tv_min_wait_fare);
+            tvDesc = (TextView) rootView.findViewById(R.id.tv_desc);
+
+            // add radio group listener
+
+            rgTripType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    // get selected item index
+                    switch (checkedId) {
+                        case R.id.rb_economy:
+                            selectedRadioPosition = 0;
+                            break;
+
+                        case R.id.rb_business:
+                            selectedRadioPosition = 1;
+                            break;
+
+                        case R.id.rb_full_day:
+                            selectedRadioPosition = 2;
+                            break;
+                    }
+
+                    // load fares
+                    loadFares();
+                }
+            });
+
+            // load the first fares
+            loadFares();
         }
 
         return rootView;
+    }
+
+    /**
+     * method, used to fetch fares from the server
+     */
+    private void loadFares() {
+        // check the internet connection
+        if (!Utils.hasConnection(activity)) {
+            // show error view
+            showError(R.string.no_internet_connection);
+            return;
+        }
+
+        // show progress
+        tvCounterStartFare.setText("0");
+        tvKMFare.setText("0");
+        tvMinWaitFare.setText("0");
+        showProgress();
+
+        // create & send the request
+        User user = AppUtils.getCachedUser(activity);
+        CustomerRequests.fares(activity, this, user.getAccessToken(), "" + (selectedRadioPosition + 1), DateUtil.getCurrentTime());
+    }
+
+    @Override
+    public void onSuccess(FaresResponse response, String apiName) {
+        // check the fares
+        if (!Utils.isNullOrEmpty(response.getFares())) {
+            // update the ui
+            updateUI(response.getFares().get(response.getFares().size() - 1));
+            showMain();
+        } else {
+            // prepare error msg
+            String errorMsg = "";
+            if (response.getValidation() != null) {
+                for (int i = 0; i < response.getValidation().size(); i++) {
+                    if (i == 0)
+                        errorMsg += response.getValidation().get(i);
+                    else
+                        errorMsg += "\n" + response.getValidation().get(i);
+                }
+            }
+
+            // show the suitable error dialog
+            if (errorMsg.isEmpty()) {
+                errorMsg = getString(R.string.unexpected_error_try_again);
+            }
+            showError(errorMsg);
+        }
+    }
+
+    /**
+     * method, used to update the ui
+     *
+     * @param fare
+     */
+    private void updateUI(Fare fare) {
+        tvCounterStartFare.setText(fare.getOpenFare() + " " + getString(R.string.currency));
+        tvKMFare.setText(fare.getKilometerFare() + " " + getString(R.string.currency));
+        tvMinWaitFare.setText(fare.getMinuteWaitFare() + " " + getString(R.string.currency));
+
+        tvDesc.setText(Utils.getAppLanguage().equals(Locale.ENGLISH.getLanguage()) ? fare.getEnDesc() : fare.getArDesc());
+    }
+
+    @Override
+    public void onFail(String message, String apiName) {
+        // show error view
+        showError(R.string.connection_error);
+        Utils.LogE("ERROR: " + message);
+    }
+
+    @Override
+    protected int getContentViewResId() {
+        return R.layout.fragment_customer_prices;
+    }
+
+    @Override
+    protected int getMainViewResId() {
+        return R.id.scroll_view;
+    }
+
+    @Override
+    protected View.OnClickListener getRefreshListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFares();
+            }
+        };
     }
 }
