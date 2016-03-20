@@ -1,6 +1,5 @@
 package com.privatecar.privatecar.activities;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,8 +14,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.dialogs.ChangeLanguageDialog;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.DriverAccountDetails;
+import com.privatecar.privatecar.models.enums.Language;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.utils.AppUtils;
@@ -36,7 +37,7 @@ public class DriverSettingsActivity extends BasicBackActivity {
     AlertDialog.Builder builder;
     File imageUserPhoto, imageUserPhotoCropped;
 
-    private ProgressDialog progressDialog;
+    private ChangeLanguageDialog languageDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +63,9 @@ public class DriverSettingsActivity extends BasicBackActivity {
         tvName = (TextView) findViewById(R.id.tv_driver_name);
         tvName.setText(details.getFullname());
         tvMobile = (TextView) findViewById(R.id.tv_mobile);
-//        tvMobile.setText(details.); //TODO: set this value
+        tvMobile.setText(details.getMobile());
         tvEmail = (TextView) findViewById(R.id.tv_email);
-//        tvEmail.setText(details.); //TODO: set this value
+        tvEmail.setText(details.getEmail());
 
         ibUserPhoto = (ImageButton) findViewById(R.id.ib_user_photo);
         String photoUrl = AppUtils.getConfigValue(getApplicationContext(), Config.KEY_BASE_URL) + File.separator + details.getPersonalPhoto();
@@ -80,29 +81,11 @@ public class DriverSettingsActivity extends BasicBackActivity {
                 // open change password activity
                 startActivity(new Intent(this, ChangePasswordActivity.class));
                 break;
+
             case R.id.layout_change_language:
-                builder = new AlertDialog.Builder(this);
-                builder.setItems(R.array.languages, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0: //english
-                                Utils.changeAppLocale(getApplicationContext(), "en");
-                                Utils.cacheString(getApplicationContext(), Const.CACHE_LOCALE, "en");
-                                break;
-                            case 1: //arabic
-                                Utils.changeAppLocale(getApplicationContext(), "ar");
-                                Utils.cacheString(getApplicationContext(), Const.CACHE_LOCALE, "ar");
-                                break;
-                        }
-
-                        Intent intent = new Intent(DriverSettingsActivity.this, DriverHomeActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    }
-                });
-                builder.show();
-
+                onChangeLanguage();
                 break;
+
             case R.id.ib_user_photo:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setItems(R.array.photo_sources_array, new DialogInterface.OnClickListener() {
@@ -121,6 +104,24 @@ public class DriverSettingsActivity extends BasicBackActivity {
 
                 break;
         }
+    }
+
+    private void onChangeLanguage() {
+        languageDialog = new ChangeLanguageDialog(this, new ChangeLanguageDialog.OnLanguageSelectedListener() {
+            @Override
+            public void onLanguageSelected(Language language) {
+                // change app locale and cache it
+                Utils.changeAppLocale(DriverSettingsActivity.this, language.getValue());
+                Utils.cacheString(DriverSettingsActivity.this, Const.CACHE_LOCALE, language.getValue());
+
+                // finish and start driver home activity again
+                Intent intent = new Intent(DriverSettingsActivity.this, DriverHomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
+        languageDialog.show();
     }
 
 

@@ -27,6 +27,7 @@
         android:background="@color/colorAccent" />
 
     <Button
+        android:id="@+id/btn_english"
         style="?attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,6 +45,7 @@
         android:background="@color/grayish_highlight" />
 
     <Button
+        android:id="@+id/btn_arabic"
         style="?attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

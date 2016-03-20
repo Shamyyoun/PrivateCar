@@ -53,6 +53,7 @@
                 android:text="@string/name" />
 
             <TextView
+                android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -88,6 +89,7 @@
                 android:text="@string/mobile" />
 
             <TextView
+                android:id="@+id/tv_mobile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -123,6 +125,7 @@
                 android:text="@string/email" />
 
             <TextView
+                android:id="@+id/tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -172,7 +175,8 @@
             android:background="@drawable/grayish_rounded_corners_selector"
             android:clickable="true"
             android:gravity="center_vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="20dp"
@@ -243,10 +247,11 @@
                 android:text="@string/language" />
 
             <TextView
+                android:id="@+id/tv_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/english"
                 android:textColor="@color/grayish" />
 
@@ -332,6 +337,34 @@
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:text="@string/customer_services" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/end_petroleum_arrow_icon" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_sign_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/grayish_rounded_corners_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/exit_icon" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/sign_out" />
 
             <ImageView
                 android:layout_width="wrap_content"
