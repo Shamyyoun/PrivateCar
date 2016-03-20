@@ -187,8 +187,11 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
         googleApiClient.connect();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        if (mapFragment.getView() != null)
+            mapFragment.getView().setClickable(false); //disable click events for lite mode map
 
+
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -196,7 +199,6 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
         super.onStop();
 
         googleApiClient.disconnect();
-
     }
 
     @Override
@@ -204,14 +206,6 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
         map = googleMap;
         map.getUiSettings().setAllGesturesEnabled(false);
         map.getUiSettings().setMapToolbarEnabled(false);
-
-        //override the click listener of the "lite" map, as it opens google maps by default.
-        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                //do nothing
-            }
-        });
     }
 
     @Override
