@@ -10,12 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.activities.ChangePasswordActivity;
 import com.privatecar.privatecar.activities.CustomerAboutPrivateActivity;
 import com.privatecar.privatecar.activities.CustomerAddCreditCardActivity;
 import com.privatecar.privatecar.activities.CustomerAddPromoCodeActivity;
-import com.privatecar.privatecar.activities.ChangePasswordActivity;
 import com.privatecar.privatecar.activities.CustomerInviteFriendsActivity;
 import com.privatecar.privatecar.dialogs.CustomerChangeLanguageDialog;
+import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.utils.AppUtils;
+import com.privatecar.privatecar.utils.Utils;
 
 public class CustomerSettingsFragment extends BaseFragment implements View.OnClickListener {
     public static final String TAG = CustomerSettingsFragment.class.getName();
@@ -78,8 +81,7 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_change_password:
-                // open change password activity
-                startActivity(new Intent(activity, ChangePasswordActivity.class));
+                onChangePassword();
                 break;
 
             case R.id.layout_add_credit_card:
@@ -111,6 +113,19 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
                 startActivity(new Intent(activity, CustomerAboutPrivateActivity.class));
                 break;
 
+        }
+    }
+
+    private void onChangePassword() {
+        // check the user grant type
+        User user = AppUtils.getCachedUser(activity);
+        if (Utils.isNullOrEmpty(user.getUserName())) {
+            // this is a social user
+            // show msg
+            Utils.showLongToast(activity, R.string.social_users_cant_change_password);
+        } else {
+            // open change password activity
+            startActivity(new Intent(activity, ChangePasswordActivity.class));
         }
     }
 }
