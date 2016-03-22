@@ -3,6 +3,7 @@ package com.privatecar.privatecar.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,13 @@ import android.widget.ProgressBar;
 
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverDocumentDetailsActivity;
+import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.wrappers.SerializableListWrapper;
+import com.privatecar.privatecar.utils.AppUtils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -41,7 +45,8 @@ public class DriverDocumentsRVAdapter extends RecyclerView.Adapter<DriverDocumen
         holder.progressBar.setVisibility(View.VISIBLE);
 
         // load image with picasso
-        Picasso.with(ctx).load(documents.get(position)).error(R.drawable.default_image).into(holder.ivDocument, new Callback() {
+        String documentUrl = AppUtils.getConfigValue(ctx, Config.KEY_BASE_URL) + File.separator + documents.get(position);
+        Picasso.with(ctx).load(documentUrl).error(R.drawable.default_image).into(holder.ivDocument, new Callback() {
             @Override
             public void onSuccess() {
                 holder.progressBar.setVisibility(View.GONE);
