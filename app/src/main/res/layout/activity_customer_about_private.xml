@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_update"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:text="@string/website_c" />
 
     <TextView
@@ -43,9 +43,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_update"
-        android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/tv_website_view"
+        android:padding="5dp"
         android:text="@string/private_website"
         android:textColor="@color/colorAccent" />
 </RelativeLayout>

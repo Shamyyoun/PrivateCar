@@ -40,20 +40,32 @@ public class CustomerAboutPrivateActivity extends BasicBackActivity {
 
         // get installed app version & compare it
         int installedAppVersion = Utils.getAppVersion(this);
-        if (configAppVersion > installedAppVersion) {
-            // not the latest version
-            // add click listener to update button
-            btnUpdate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // open app page in google play
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
-                }
-            });
-        } else {
+        if (configAppVersion <= installedAppVersion) {
             // the latest version is installed
             // disable update button
             btnUpdate.setEnabled(false);
+        }
+
+        // add click listeners
+        btnUpdate.setOnClickListener(this);
+        tvWebsite.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_update:
+                // open app page in google play
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
+                break;
+
+            case R.id.tv_website:
+                // open private website
+                Utils.openBrowser(this, tvWebsite.getText().toString());
+                break;
+
+            default:
+                super.onClick(v);
         }
     }
 }
