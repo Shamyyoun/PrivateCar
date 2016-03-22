@@ -263,4 +263,7 @@
     <string name="rides">رحلة</string>
     <string name="you_have_not_do_any_trip_yet">لم تقم بأي رحلة حتى الآن</string>
     <string name="social_users_cant_change_password">العملاء القادمين من الشبكات الاجتماعية لا يمكنهم تغيير كلمة السر</string>
+    <string name="activating_promo_code_please_wait">جاري تفعيل الكوبون، برجاء الانتظار...</string>
+    <string name="promo_code_activated_successfully">تم تفعيل الكوبون بنجاح</string>
+    <string name="error_activating_promo_code">خطأ في تفعيل الكوبون</string>
 </resources>

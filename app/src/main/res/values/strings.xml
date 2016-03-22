@@ -264,6 +264,9 @@
     <string name="rides">Rides</string>
     <string name="you_have_not_do_any_trip_yet">You have not do any trip yet</string>
     <string name="social_users_cant_change_password">Social users can\'t change password</string>
+    <string name="activating_promo_code_please_wait">Activating promo code, please wait...</string>
+    <string name="promo_code_activated_successfully">Promo code activated successfully</string>
+    <string name="error_activating_promo_code">Error activating promo code</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

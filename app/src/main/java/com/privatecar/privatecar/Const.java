@@ -96,6 +96,7 @@ public class Const {
     public static final String MESSAGE_CUSTOMER_VERIFY_USER = "verifyuser";
     public static final String MESSAGE_CUSTOMER_TRIPS = "customertrips";
     public static final String MESSAGE_CUSTOMER_FARES = "getfares";
+    public static final String MESSAGE_CUSTOMER_ACTIVATE_PROMO_CODE = "activatepromocode";
 
 
     //messages (driver):----
@@ -149,6 +150,7 @@ public class Const {
     public static final String MSG_PARAM_CUSTOMER_ID = "CustomerId";
     public static final String MSG_PARAM_CLASS = "class";
     public static final String MSG_PARAM_PICKUP_TIME = "pickup_time";
+    public static final String MSG_PARAM_PROMO_CODE = "PromoCode";
 
     //Intent & bundle keys
     public static final String KEY_TRIP_REQUEST = "trip_request";
