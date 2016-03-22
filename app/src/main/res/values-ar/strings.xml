@@ -110,7 +110,7 @@
     <string name="add_details_for_pick_up">اضف معلومات مكان البداية لمساعدة السائق في الوصول اليك</string>
     <string name="save">حفظ</string>
     <string name="date">التاريخ</string>
-    <string name="driverTrip">الرحلات</string>
+    <string name="trips">الرحلات</string>
     <string name="profit">الربح</string>
     <string name="search_for_place">البحث عن مكان</string>
     <string name="select_on_map">الاختيار من الخريطة</string>
