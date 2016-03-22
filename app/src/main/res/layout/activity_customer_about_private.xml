@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_app_version_view"
         android:layout_marginTop="15dp"
-        android:background="@drawable/petroleum_rounded_corners_shape"
+        android:background="@drawable/petroleum_rounded_corners_selector"
         android:text="@string/update_now"
         android:textAllCaps="true"
         android:textAppearance="?android:textAppearanceMedium"

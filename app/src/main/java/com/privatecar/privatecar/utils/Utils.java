@@ -43,7 +43,7 @@ public class Utils {
 
     /**
      * Checks if the app has permission to write to device storage
-     * <p>
+     * <p/>
      * If the app does not has permission then the user will be prompted to grant permissions
      *
      * @param activity
@@ -285,6 +285,7 @@ public class Utils {
 
     /**
      * Get the EditText text trimmed
+     *
      * @param et
      * @return the EditText text trimmed
      */
@@ -429,4 +430,20 @@ public class Utils {
         return list == null || list.isEmpty();
     }
 
+    /**
+     * method, used to return installed app version
+     *
+     * @param context
+     * @return
+     */
+    public static int getAppVersion(Context context) {
+        try {
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            return info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }
