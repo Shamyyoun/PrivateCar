@@ -42,6 +42,10 @@ import java.util.Locale;
 public class Utils {
     public static final String KEY_APP_VERSION_CODE = "app_version_code_key";
     public static final int PERM_REQ_WRITE_STORAGE = 1;
+    public static final String PACKAGE_FACEBOOK = "com.facebook.katana";
+    public static final String PACKAGE_FACEBOOK_MESSENGER = "com.facebook.orca";
+    public static final String PACKAGE_GOOGLE_PLUS = "com.google.android.apps.plus";
+    public static final String PACKAGE_WHATSAPP = "com.whatsapp";
 
     /**
      * Checks if the app has permission to write to device storage
@@ -461,5 +465,47 @@ public class Utils {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         context.startActivity(intent);
+    }
+
+    /**
+     * method, used to check if app is installed in the device or not
+     *
+     * @param context
+     * @param appPackageName
+     * @return
+     */
+    public static boolean isAppInstalledAndEnabled(Context context, String appPackageName) {
+        try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo info = pm.getPackageInfo(appPackageName, PackageManager.GET_ACTIVITIES);
+            boolean installed = true;
+            boolean enabled = info.applicationInfo.enabled;
+
+            return installed && enabled;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    /**
+     * method, used to share text to specific app
+     *
+     * @param context
+     * @param appPackageName
+     * @param text
+     * @return
+     */
+    public static boolean shareTextToApp(Context context, String appPackageName, String text) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.setPackage(appPackageName);
+            intent.putExtra(Intent.EXTRA_TEXT, text);
+            context.startActivity(intent);
+            return true;
+        } catch (Exception e) {
+            // app is not installed
+            return false;
+        }
     }
 }
