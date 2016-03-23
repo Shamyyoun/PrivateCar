@@ -115,6 +115,11 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
                     fragment = new CustomerSettingsFragment();
                 break;
 
+            case R.id.nav_call_us:
+                AppUtils.showCallCustomerServiceDialog(this);
+                selectItem = false;
+                break;
+
             case R.id.nav_promo_code:
                 // open add promo code activity
                 selectItem = false;
@@ -147,10 +152,10 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
             // add to back stackk & commit transaction
             ft.addToBackStack(tag);
             ft.commitAllowingStateLoss();
-        }
 
-        // select / unselect item
-        item.setChecked(selectItem);
+            // select / unselect item
+            item.setChecked(selectItem);
+        }
 
         // close navigation drawer after static time
         new Handler().postDelayed(new Runnable() {

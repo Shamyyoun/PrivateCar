@@ -1,8 +1,17 @@
 package com.privatecar.privatecar.utils;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import com.privatecar.privatecar.Const;
+import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.Ad;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.Message;
@@ -144,5 +153,30 @@ public class AppUtils {
 
         // clear locale
         Utils.clearCachedKey(context, Const.CACHE_LOCALE);
+    }
+
+    /**
+     * method, used to show call customer service dialog
+     *
+     * @param context
+     */
+    public static void showCallCustomerServiceDialog(final Context context) {
+        final String customerServiceNumber = getConfigValue(context, Config.KEY_CUSTOMER_SERVICE_NUMBER);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(context.getString(R.string.call) + " " + customerServiceNumber + context.getString(R.string.question_mark));
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + customerServiceNumber));
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO get marshmallow permission
+                    return;
+                }
+                context.startActivity(intent);
+            }
+        });
+        builder.setNegativeButton(R.string.no, null);
+        builder.show();
     }
 }
