@@ -183,7 +183,7 @@
 
     <string name="required">Required</string>
     <string name="no_internet_connection">No internet connection</string>
-    <string name="loading_please_wait">Loading, pleas wait...</string>
+    <string name="loading_please_wait">Loading, please wait...</string>
     <string name="gps_option">GPS Option</string>
     <string name="enable_gps_to_use_app">To use this app you should turn on your GPS so please go to settings and turn it on.</string>
     <string name="unexpected_error_try_again">Unexpected error, try again</string>
@@ -268,6 +268,7 @@
     <string name="promo_code_activated_successfully">Promo code activated successfully</string>
     <string name="error_activating_promo_code">Error activating promo code</string>
     <string name="invite_msg">Hi, I\'m using Private app. You can try it now for free,</string>
+    <string name="please_call_us_to_know_more">Please call us to know more</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

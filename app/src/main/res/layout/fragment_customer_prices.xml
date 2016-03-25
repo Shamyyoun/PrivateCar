@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -48,9 +48,10 @@
     </RadioGroup>
 
     <RelativeLayout
+        android:id="@+id/layout_main"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rg_trip_type"
         android:paddingBottom="15dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
@@ -139,4 +140,32 @@
             </ScrollView>
         </FrameLayout>
     </RelativeLayout>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_call_us"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rg_trip_type"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/please_call_us_to_know_more"
+            android:textAppearance="?android:textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/btn_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/petroleum_rounded_corners_selector"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:text="@string/call" />
+    </LinearLayout>
+</RelativeLayout>

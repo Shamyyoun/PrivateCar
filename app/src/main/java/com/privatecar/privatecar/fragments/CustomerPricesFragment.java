@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -26,11 +27,14 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
     public static final String TAG = CustomerPricesFragment.class.getName();
 
     private Activity activity;
+    private View layoutMain;
     private RadioGroup rgTripType;
     private TextView tvCounterStartFare;
     private TextView tvKMFare;
     private TextView tvMinWaitFare;
     private TextView tvDesc;
+    private View layoutCallUs;
+    private Button btnCall;
 
     private int selectedRadioPosition; // used to hold the selected radio button item's position
 
@@ -51,14 +55,16 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
             super.onCreateView(inflater, container, savedInstanceState);
 
             // init views
+            layoutMain = rootView.findViewById(R.id.layout_main);
             rgTripType = (RadioGroup) rootView.findViewById(R.id.rg_trip_type);
             tvCounterStartFare = (TextView) rootView.findViewById(R.id.tv_counter_start_fare);
             tvKMFare = (TextView) rootView.findViewById(R.id.tv_km_fare);
             tvMinWaitFare = (TextView) rootView.findViewById(R.id.tv_min_wait_fare);
             tvDesc = (TextView) rootView.findViewById(R.id.tv_desc);
+            layoutCallUs = rootView.findViewById(R.id.layout_call_us);
+            btnCall = (Button) rootView.findViewById(R.id.btn_call);
 
             // add radio group listener
-
             rgTripType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -66,19 +72,29 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
                     switch (checkedId) {
                         case R.id.rb_economy:
                             selectedRadioPosition = 0;
+                            showFullDayView(false);
+                            loadFares();
                             break;
 
                         case R.id.rb_business:
                             selectedRadioPosition = 1;
+                            showFullDayView(false);
+                            loadFares();
                             break;
 
                         case R.id.rb_full_day:
-                            selectedRadioPosition = 2;
+                            showFullDayView(true);
                             break;
                     }
+                }
+            });
 
-                    // load fares
-                    loadFares();
+            // add call button click listener
+            btnCall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // show call dialog
+                    AppUtils.showCallCustomerServiceDialog(activity);
                 }
             });
 
@@ -87,6 +103,16 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
         }
 
         return rootView;
+    }
+
+    /**
+     * method, used to show / hide call layout &  main layout
+     *
+     * @param show
+     */
+    private void showFullDayView(boolean show) {
+        layoutCallUs.setVisibility(show ? View.VISIBLE : View.GONE);
+        layoutMain.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
     /**
