@@ -50,57 +50,55 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootView == null) {
-            // create parent view
-            super.onCreateView(inflater, container, savedInstanceState);
+        // create parent view
+        super.onCreateView(inflater, container, savedInstanceState);
 
-            // init views
-            layoutMain = rootView.findViewById(R.id.layout_main);
-            rgTripType = (RadioGroup) rootView.findViewById(R.id.rg_trip_type);
-            tvCounterStartFare = (TextView) rootView.findViewById(R.id.tv_counter_start_fare);
-            tvKMFare = (TextView) rootView.findViewById(R.id.tv_km_fare);
-            tvMinWaitFare = (TextView) rootView.findViewById(R.id.tv_min_wait_fare);
-            tvDesc = (TextView) rootView.findViewById(R.id.tv_desc);
-            layoutCallUs = rootView.findViewById(R.id.layout_call_us);
-            btnCall = (Button) rootView.findViewById(R.id.btn_call);
+        // init views
+        layoutMain = rootView.findViewById(R.id.layout_main);
+        rgTripType = (RadioGroup) rootView.findViewById(R.id.rg_trip_type);
+        tvCounterStartFare = (TextView) rootView.findViewById(R.id.tv_counter_start_fare);
+        tvKMFare = (TextView) rootView.findViewById(R.id.tv_km_fare);
+        tvMinWaitFare = (TextView) rootView.findViewById(R.id.tv_min_wait_fare);
+        tvDesc = (TextView) rootView.findViewById(R.id.tv_desc);
+        layoutCallUs = rootView.findViewById(R.id.layout_call_us);
+        btnCall = (Button) rootView.findViewById(R.id.btn_call);
 
-            // add radio group listener
-            rgTripType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    // get selected item index
-                    switch (checkedId) {
-                        case R.id.rb_economy:
-                            selectedRadioPosition = 0;
-                            showFullDayView(false);
-                            loadFares();
-                            break;
+        // add radio group listener
+        rgTripType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // get selected item index
+                switch (checkedId) {
+                    case R.id.rb_economy:
+                        selectedRadioPosition = 0;
+                        showFullDayView(false);
+                        loadFares();
+                        break;
 
-                        case R.id.rb_business:
-                            selectedRadioPosition = 1;
-                            showFullDayView(false);
-                            loadFares();
-                            break;
+                    case R.id.rb_business:
+                        selectedRadioPosition = 1;
+                        showFullDayView(false);
+                        loadFares();
+                        break;
 
-                        case R.id.rb_full_day:
-                            showFullDayView(true);
-                            break;
-                    }
+                    case R.id.rb_full_day:
+                        showFullDayView(true);
+                        break;
                 }
-            });
+            }
+        });
 
-            // add call button click listener
-            btnCall.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // show call dialog
-                    AppUtils.showCallCustomerServiceDialog(activity);
-                }
-            });
+        // add call button click listener
+        btnCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // show call dialog
+                AppUtils.showCallCustomerServiceDialog(activity);
+            }
+        });
 
-            // load the first fares
-            loadFares();
-        }
+        // load the first fares
+        loadFares();
 
         return rootView;
     }

@@ -34,7 +34,6 @@ public class DriverSettingsActivity extends BasicBackActivity {
     private View layoutChangePassword, layoutChangeLanguage;
     private ImageButton ibUserPhoto;
     private TextView tvLanguage, tvName, tvMobile, tvEmail;
-    AlertDialog.Builder builder;
     File imageUserPhoto, imageUserPhotoCropped;
 
     private ChangeLanguageDialog languageDialog;
@@ -70,7 +69,7 @@ public class DriverSettingsActivity extends BasicBackActivity {
         ibUserPhoto = (ImageButton) findViewById(R.id.ib_user_photo);
         String photoUrl = AppUtils.getConfigValue(getApplicationContext(), Config.KEY_BASE_URL) + File.separator + details.getPersonalPhoto();
         Utils.LogE(photoUrl);
-        Picasso.with(this).load(photoUrl).error(R.drawable.add_placeholder).into(ibUserPhoto);
+        Picasso.with(this).load(photoUrl).error(R.drawable.def_user_photo).placeholder(R.drawable.def_user_photo).into(ibUserPhoto);
 
     }
 

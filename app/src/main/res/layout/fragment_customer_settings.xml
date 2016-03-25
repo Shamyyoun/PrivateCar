@@ -18,9 +18,12 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/ib_user_photo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:adjustViewBounds="true"
                 android:background="?selectableItemBackgroundBorderless"
+                android:scaleType="centerCrop"
                 android:src="@drawable/add_placeholder" />
 
             <TextView
@@ -318,6 +321,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_customer_service"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

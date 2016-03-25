@@ -22,10 +22,10 @@
                 android:id="@+id/ib_user_photo"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:onClick="onClick"
+                android:adjustViewBounds="true"
+                android:background="@null"
                 android:scaleType="centerCrop"
-                android:src="@drawable/add_placeholder" />
+                android:src="@drawable/def_user_photo" />
 
             <TextView
                 android:layout_width="wrap_content"

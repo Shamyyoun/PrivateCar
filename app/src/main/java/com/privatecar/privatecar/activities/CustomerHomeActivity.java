@@ -18,6 +18,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.fragments.BookALiftFragment;
@@ -26,10 +28,12 @@ import com.privatecar.privatecar.fragments.CustomerPricesFragment;
 import com.privatecar.privatecar.fragments.CustomerSettingsFragment;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.CustomerAccountDetails;
+import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.net.UnknownServiceException;
 
 public class CustomerHomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,6 +42,7 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
     View nvHeader;
     ImageView ivUserImage;
     TextView tvUserName, tvUserID, tvUserCredit;
+    public CustomerSettingsFragment settingsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +68,17 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
         tvUserID = (TextView) nvHeader.findViewById(R.id.tv_user_id);
         tvUserCredit = (TextView) nvDrawer.findViewById(R.id.tv_credit);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.layout_fragment_container, new BookALiftFragment(), BookALiftFragment.TAG)
-                .commit();
-
+        // check saved instance state
+        if (savedInstanceState == null) {
+            // load book lift fragment
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.layout_fragment_container, new BookALiftFragment(), BookALiftFragment.TAG)
+                    .commit();
+        } else {
+            // update personal info from the cached user
+            User user = AppUtils.getCachedUser(this);
+            updatePersonalInfo(user.getCustomerAccountDetails());
+        }
     }
 
     /**
@@ -85,34 +97,21 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
 
         // get the suitable fragment
         Fragment fragment = null;
-        String tag = null;
         switch (item.getItemId()) {
             case R.id.nav_book_lift:
-                tag = BookALiftFragment.TAG;
-                fragment = fm.findFragmentByTag(tag);
-                if (fragment == null)
-                    fragment = new BookALiftFragment();
+                fragment = new BookALiftFragment();
                 break;
 
             case R.id.nav_my_rides:
-                tag = CustomerMyRidesFragment.TAG;
-                fragment = fm.findFragmentByTag(tag);
-                if (fragment == null)
-                    fragment = new CustomerMyRidesFragment();
+                fragment = new CustomerMyRidesFragment();
                 break;
 
             case R.id.nav_prices:
-                tag = CustomerPricesFragment.TAG;
-                fragment = fm.findFragmentByTag(tag);
-                if (fragment == null)
-                    fragment = new CustomerPricesFragment();
+                fragment = new CustomerPricesFragment();
                 break;
 
             case R.id.nav_settings:
-                tag = CustomerSettingsFragment.TAG;
-                fragment = fm.findFragmentByTag(tag);
-                if (fragment == null)
-                    fragment = new CustomerSettingsFragment();
+                fragment = new CustomerSettingsFragment();
                 break;
 
             case R.id.nav_call_us:
@@ -141,16 +140,7 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
 
         // check fragment
         if (fragment != null) {
-
-            // check to add fragment or replace it
-            if (fragment.isAdded()) {
-                ft.show(fragment);
-            } else {
-                ft.replace(R.id.layout_fragment_container, fragment, tag);
-            }
-
-            // add to back stackk & commit transaction
-            ft.addToBackStack(tag);
+            ft.replace(R.id.layout_fragment_container, fragment);
             ft.commitAllowingStateLoss();
 
             // select / unselect item
@@ -204,12 +194,28 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
         // load personal image
         String imageUrl = AppUtils.getConfigValue(getApplicationContext(), Config.KEY_BASE_URL) + File.separator + accountDetails.getPersonalPhoto();
         Picasso.with(this).load(imageUrl).error(R.drawable.def_user_photo).placeholder(R.drawable.def_user_photo).into(ivUserImage);
+    }
 
+    /**
+     * method, used to update the personal photo in the drawer with the new one after user update it in settings
+     *
+     * @param photoFile
+     */
+    public void updatePersonalPhoto(File photoFile) {
+        Glide.with(this).load(photoFile).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivUserImage);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        // check settings fragment
+        if (settingsFragment != null) {
+            // fire onActivityResult
+            settingsFragment.onActivityResult(requestCode, resultCode, data);
+        }
+
+        // check request code
         if (requestCode == Const.REQUEST_COARSE_LOCATION_PERMISSION && resultCode == RESULT_OK) {//this request is sent in BookALiftFragment
             Log.e(Const.LOG_TAG, "resultCode: " + resultCode);
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_fragment_container);

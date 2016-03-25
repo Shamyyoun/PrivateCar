@@ -103,22 +103,19 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // check root view
-        if (rootView == null) {
-            rootView = inflater.inflate(R.layout.fragment_book_alift, container, false);
+        rootView = inflater.inflate(R.layout.fragment_book_alift, container, false);
 
-            tvUserName = (TextView) rootView.findViewById(R.id.tv_user_name);
-            tvUserID = (TextView) rootView.findViewById(R.id.tv_user_id);
-            layoutPickNow = rootView.findViewById(R.id.layout_pick_now);
-            layoutPickLater = rootView.findViewById(R.id.layout_pick_later);
+        tvUserName = (TextView) rootView.findViewById(R.id.tv_user_name);
+        tvUserID = (TextView) rootView.findViewById(R.id.tv_user_id);
+        layoutPickNow = rootView.findViewById(R.id.layout_pick_now);
+        layoutPickLater = rootView.findViewById(R.id.layout_pick_later);
 
-            // add click listeners
-            layoutPickNow.setOnClickListener(this);
-            layoutPickLater.setOnClickListener(this);
+        // add click listeners
+        layoutPickNow.setOnClickListener(this);
+        layoutPickLater.setOnClickListener(this);
 
-            // load account details
-            loadAccountDetails();
-        }
+        // load account details
+        loadAccountDetails();
 
         return rootView;
     }

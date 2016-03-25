@@ -227,7 +227,6 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
 
     }
 
-
     /**
      * method, used to validate gps & send be active request to server
      */
