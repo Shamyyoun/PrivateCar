@@ -18,6 +18,7 @@ import com.privatecar.privatecar.models.responses.FaresResponse;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DateUtil;
+import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
@@ -37,6 +38,7 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
     private Button btnCall;
 
     private int selectedRadioPosition; // used to hold the selected radio button item's position
+    private RequestHelper requestHelper; // used to hold request helper object to cancel it if required
 
     public CustomerPricesFragment() {
         // Required empty public constructor
@@ -97,9 +99,6 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
             }
         });
 
-        // load the first fares
-        loadFares();
-
         return rootView;
     }
 
@@ -111,6 +110,14 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
     private void showFullDayView(boolean show) {
         layoutCallUs.setVisibility(show ? View.VISIBLE : View.GONE);
         layoutMain.setVisibility(show ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // load the first fares
+        loadFares();
     }
 
     /**
@@ -132,7 +139,7 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
 
         // create & send the request
         User user = AppUtils.getCachedUser(activity);
-        CustomerRequests.fares(activity, this, user.getAccessToken(), "" + (selectedRadioPosition + 1), DateUtil.getCurrentTime());
+        requestHelper = CustomerRequests.fares(activity, this, user.getAccessToken(), "" + (selectedRadioPosition + 1), DateUtil.getCurrentTime());
     }
 
     @Override
@@ -180,6 +187,14 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
         // show error view
         showError(R.string.connection_error);
         Utils.LogE("ERROR: " + message);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // cancel request if still running
+        requestHelper.cancel(true);
     }
 
     @Override
