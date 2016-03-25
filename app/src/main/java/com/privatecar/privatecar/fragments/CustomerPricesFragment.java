@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.privatecar.privatecar.models.responses.FaresResponse;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DateUtil;
+import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
@@ -26,13 +28,17 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
     public static final String TAG = CustomerPricesFragment.class.getName();
 
     private Activity activity;
+    private View layoutMain;
     private RadioGroup rgTripType;
     private TextView tvCounterStartFare;
     private TextView tvKMFare;
     private TextView tvMinWaitFare;
     private TextView tvDesc;
+    private View layoutCallUs;
+    private Button btnCall;
 
     private int selectedRadioPosition; // used to hold the selected radio button item's position
+    private RequestHelper requestHelper; // used to hold request helper object to cancel it if required
 
     public CustomerPricesFragment() {
         // Required empty public constructor
@@ -46,47 +52,72 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootView == null) {
-            // create parent view
-            super.onCreateView(inflater, container, savedInstanceState);
+        // create parent view
+        super.onCreateView(inflater, container, savedInstanceState);
 
-            // init views
-            rgTripType = (RadioGroup) rootView.findViewById(R.id.rg_trip_type);
-            tvCounterStartFare = (TextView) rootView.findViewById(R.id.tv_counter_start_fare);
-            tvKMFare = (TextView) rootView.findViewById(R.id.tv_km_fare);
-            tvMinWaitFare = (TextView) rootView.findViewById(R.id.tv_min_wait_fare);
-            tvDesc = (TextView) rootView.findViewById(R.id.tv_desc);
+        // init views
+        layoutMain = rootView.findViewById(R.id.layout_main);
+        rgTripType = (RadioGroup) rootView.findViewById(R.id.rg_trip_type);
+        tvCounterStartFare = (TextView) rootView.findViewById(R.id.tv_counter_start_fare);
+        tvKMFare = (TextView) rootView.findViewById(R.id.tv_km_fare);
+        tvMinWaitFare = (TextView) rootView.findViewById(R.id.tv_min_wait_fare);
+        tvDesc = (TextView) rootView.findViewById(R.id.tv_desc);
+        layoutCallUs = rootView.findViewById(R.id.layout_call_us);
+        btnCall = (Button) rootView.findViewById(R.id.btn_call);
 
-            // add radio group listener
+        // add radio group listener
+        rgTripType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // get selected item index
+                switch (checkedId) {
+                    case R.id.rb_economy:
+                        selectedRadioPosition = 0;
+                        showFullDayView(false);
+                        loadFares();
+                        break;
 
-            rgTripType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    // get selected item index
-                    switch (checkedId) {
-                        case R.id.rb_economy:
-                            selectedRadioPosition = 0;
-                            break;
+                    case R.id.rb_business:
+                        selectedRadioPosition = 1;
+                        showFullDayView(false);
+                        loadFares();
+                        break;
 
-                        case R.id.rb_business:
-                            selectedRadioPosition = 1;
-                            break;
-
-                        case R.id.rb_full_day:
-                            selectedRadioPosition = 2;
-                            break;
-                    }
-
-                    // load fares
-                    loadFares();
+                    case R.id.rb_full_day:
+                        showFullDayView(true);
+                        break;
                 }
-            });
+            }
+        });
 
-            // load the first fares
-            loadFares();
-        }
+        // add call button click listener
+        btnCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // show call dialog
+                AppUtils.showCallCustomerServiceDialog(activity);
+            }
+        });
 
         return rootView;
+    }
+
+    /**
+     * method, used to show / hide call layout &  main layout
+     *
+     * @param show
+     */
+    private void showFullDayView(boolean show) {
+        layoutCallUs.setVisibility(show ? View.VISIBLE : View.GONE);
+        layoutMain.setVisibility(show ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // load the first fares
+        loadFares();
     }
 
     /**
@@ -108,7 +139,7 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
 
         // create & send the request
         User user = AppUtils.getCachedUser(activity);
-        CustomerRequests.fares(activity, this, user.getAccessToken(), "" + (selectedRadioPosition + 1), DateUtil.getCurrentTime());
+        requestHelper = CustomerRequests.fares(activity, this, user.getAccessToken(), "" + (selectedRadioPosition + 1), DateUtil.getCurrentTime());
     }
 
     @Override
@@ -156,6 +187,14 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
         // show error view
         showError(R.string.connection_error);
         Utils.LogE("ERROR: " + message);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // cancel request if still running
+        requestHelper.cancel(true);
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.privatecar.privatecar.models.responses.CustomerTripsResponse;
 import com.privatecar.privatecar.models.responses.FaresResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.models.responses.NearDriversResponse;
+import com.privatecar.privatecar.models.responses.PromoCodeResponse;
 import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 
@@ -122,7 +123,21 @@ public class CustomerRequests {
         // create & send request
         RequestHelper<FaresResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_CUSTOMER_FARES, FaresResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
-        
+
+        return requestHelper;
+    }
+
+    public static RequestHelper<PromoCodeResponse> activatePromoCodde(Context context, RequestListener<PromoCodeResponse> listener, String accessToken, int customerId, String promoCode) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_CUSTOMER_ID, "" + customerId);
+        params.put(Const.MSG_PARAM_PROMO_CODE, promoCode);
+
+        // create & send request
+        RequestHelper<PromoCodeResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_CUSTOMER_ACTIVATE_PROMO_CODE, PromoCodeResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
         return requestHelper;
     }
 }

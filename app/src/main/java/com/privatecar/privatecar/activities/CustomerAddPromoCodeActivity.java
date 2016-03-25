@@ -9,9 +9,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.models.responses.GeneralResponse;
+import com.privatecar.privatecar.models.responses.PromoCodeResponse;
+import com.privatecar.privatecar.requests.CustomerRequests;
+import com.privatecar.privatecar.utils.AppUtils;
+import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class CustomerAddPromoCodeActivity extends BasicBackActivity {
+public class CustomerAddPromoCodeActivity extends BasicBackActivity implements RequestListener<PromoCodeResponse>{
     private EditText etPromoCode;
     private Button btnSave;
 
@@ -65,6 +72,41 @@ public class CustomerAddPromoCodeActivity extends BasicBackActivity {
             return;
         }
 
-        // create and send the request TODO
+        // show progress dialog
+        progressDialog = DialogUtils.showProgressDialog(this, R.string.activating_promo_code_please_wait, false);
+
+        // create and send the request
+        User user = AppUtils.getCachedUser(this);
+        CustomerRequests.activatePromoCodde(this, this, user.getAccessToken(), user.getCustomerAccountDetails().getId(), Utils.getText(etPromoCode));
+    }
+
+    @Override
+    public void onSuccess(PromoCodeResponse response, String apiName) {
+        // hide progress dialog
+        progressDialog.dismiss();
+
+        // check response
+        if (response.isSuccess()) {
+            // show success msg & finish
+            Utils.showLongToast(this, R.string.promo_code_activated_successfully);
+            finish();
+        } else {
+            // prepare error msg
+            String errorMsg = response.getValidation();
+            if (Utils.isNullOrEmpty(errorMsg)) {
+                errorMsg = getString(R.string.error_activating_promo_code);
+            }
+
+            // show error msg
+            Utils.showLongToast(this, errorMsg);
+        }
+    }
+
+    @Override
+    public void onFail(String message, String apiName) {
+        // hide progress dialog & show error msg
+        progressDialog.dismiss();
+        Utils.showLongToast(this, R.string.connection_error);
+        Utils.LogE("ERROR: " + message);
     }
 }

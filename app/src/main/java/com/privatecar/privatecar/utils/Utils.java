@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.content.res.Configuration;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -40,6 +42,10 @@ import java.util.Locale;
 public class Utils {
     public static final String KEY_APP_VERSION_CODE = "app_version_code_key";
     public static final int PERM_REQ_WRITE_STORAGE = 1;
+    public static final String PACKAGE_FACEBOOK = "com.facebook.katana";
+    public static final String PACKAGE_FACEBOOK_MESSENGER = "com.facebook.orca";
+    public static final String PACKAGE_GOOGLE_PLUS = "com.google.android.apps.plus";
+    public static final String PACKAGE_WHATSAPP = "com.whatsapp";
 
     /**
      * Checks if the app has permission to write to device storage
@@ -430,4 +436,76 @@ public class Utils {
         return list == null || list.isEmpty();
     }
 
+    /**
+     * method, used to return installed app version
+     *
+     * @param context
+     * @return
+     */
+    public static int getAppVersion(Context context) {
+        try {
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            return info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    /**
+     * method, used to prepare the url and open it in the browswer
+     *
+     * @param context
+     * @param url
+     */
+    public static void openBrowser(Context context, String url) {
+        if (!url.startsWith("http://") && !url.startsWith("https://"))
+            url = "http://" + url;
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        context.startActivity(intent);
+    }
+
+    /**
+     * method, used to check if app is installed in the device or not
+     *
+     * @param context
+     * @param appPackageName
+     * @return
+     */
+    public static boolean isAppInstalledAndEnabled(Context context, String appPackageName) {
+        try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo info = pm.getPackageInfo(appPackageName, PackageManager.GET_ACTIVITIES);
+            boolean installed = true;
+            boolean enabled = info.applicationInfo.enabled;
+
+            return installed && enabled;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    /**
+     * method, used to share text to specific app
+     *
+     * @param context
+     * @param appPackageName
+     * @param text
+     * @return
+     */
+    public static boolean shareTextToApp(Context context, String appPackageName, String text) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.setPackage(appPackageName);
+            intent.putExtra(Intent.EXTRA_TEXT, text);
+            context.startActivity(intent);
+            return true;
+        } catch (Exception e) {
+            // app is not installed
+            return false;
+        }
+    }
 }

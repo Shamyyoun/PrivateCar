@@ -10,25 +10,22 @@
     android:paddingTop="25dp">
 
     <Button
+        android:id="@+id/btn_facebook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/invite_friends_from_facebook"
-        android:focusable="true"
-        android:focusableInTouchMode="true" />
+        android:background="@drawable/invite_friends_from_facebook" />
 
     <Button
+        android:id="@+id/btn_google_plus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/invite_friends_from_google_plus"
-        android:focusable="true"
-        android:focusableInTouchMode="true" />
+        android:background="@drawable/invite_friends_from_google_plus" />
 
     <Button
+        android:id="@+id/btn_whats_app"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/invite_friends_from_whats_app"
-        android:focusable="true"
-        android:focusableInTouchMode="true" />
+        android:background="@drawable/invite_friends_from_whats_app" />
 </LinearLayout>

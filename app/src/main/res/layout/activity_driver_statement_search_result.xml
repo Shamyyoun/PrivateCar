@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="10dp"
-            android:text="@string/driverTrip" />
+            android:text="@string/trips" />
 
         <TextView
             style="@style/white_medium_bold_text"

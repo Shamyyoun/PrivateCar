@@ -183,7 +183,7 @@
 
     <string name="required">Required</string>
     <string name="no_internet_connection">No internet connection</string>
-    <string name="loading_please_wait">Loading, pleas wait...</string>
+    <string name="loading_please_wait">Loading, please wait...</string>
     <string name="gps_option">GPS Option</string>
     <string name="enable_gps_to_use_app">To use this app you should turn on your GPS so please go to settings and turn it on.</string>
     <string name="unexpected_error_try_again">Unexpected error, try again</string>
@@ -209,15 +209,15 @@
     <string name="enter_your_comment">Enter your comment</string>
     <string name="please_choose_your_reason">Please choose your reason</string>
     <string name="trip_declined_successfully">Trip declined successfully</string>
-    <string name="error_decline_this_trip">Error decline this driverTrip</string>
-    <string name="error_accepting_this_trip">Error accepting this driverTrip</string>
+    <string name="error_decline_this_trip">Error decline this trip</string>
+    <string name="error_accepting_this_trip">Error accepting this trip</string>
     <string name="be_inactive">Be Inactive</string>
     <string name="private_car">Private Car</string>
     <string name="driver_state_active">Driver State: Active</string>
-    <string name="starting_trip_please_wait">Starting driverTrip, please wait...</string>
-    <string name="cancelling_trip_please_wait">Cancelling driverTrip, please wait...</string>
+    <string name="starting_trip_please_wait">Starting trip, please wait...</string>
+    <string name="cancelling_trip_please_wait">Cancelling trip, please wait...</string>
     <string name="trip_cancelled_successfully">Trip cancelled successfully</string>
-    <string name="cancel_trip_q">Cancel driverTrip ?</string>
+    <string name="cancel_trip_q">Cancel trip ?</string>
     <string name="loading_latest_messages">Loading latest messages</string>
     <string name="error_loading_ads">Error loading ads</string>
     <string name="loading_ads_please_wait">Loading ads, please wait...</string>
@@ -264,6 +264,11 @@
     <string name="rides">Rides</string>
     <string name="you_have_not_do_any_trip_yet">You have not do any trip yet</string>
     <string name="social_users_cant_change_password">Social users can\'t change password</string>
+    <string name="activating_promo_code_please_wait">Activating promo code, please wait...</string>
+    <string name="promo_code_activated_successfully">Promo code activated successfully</string>
+    <string name="error_activating_promo_code">Error activating promo code</string>
+    <string name="invite_msg">Hi, I\'m using Private app. You can try it now for free,</string>
+    <string name="please_call_us_to_know_more">Please call us to know more</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

@@ -8,7 +8,7 @@ public class Statement {
 
     @SerializedName("profit")
     @Expose
-    private int profit;
+    private float profit;
     @SerializedName("comment")
     @Expose
     private String comment;
@@ -22,14 +22,14 @@ public class Statement {
     /**
      * @return The profit
      */
-    public int getProfit() {
+    public float getProfit() {
         return profit;
     }
 
     /**
      * @param profit The profit
      */
-    public void setProfit(int profit) {
+    public void setProfit(float profit) {
         this.profit = profit;
     }
 

@@ -151,11 +151,15 @@ public class DriverAccountFragment extends BaseFragment implements RequestListen
                 startActivity(new Intent(getActivity(), DriverSettingsActivity.class));
                 break;
             case R.id.layout_sign_out:
+                // stop update service if running
+                Intent locationIntent = new Intent(getContext(), UpdateDriverLocationService.class);
+                activity.stopService(locationIntent);
+
                 // clear cache and goto anonymous home activity
                 AppUtils.clearCache(activity);
-                Intent intent = new Intent(activity, AnonymousHomeActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                Intent homeIntent = new Intent(activity, AnonymousHomeActivity.class);
+                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(homeIntent);
                 break;
         }
     }

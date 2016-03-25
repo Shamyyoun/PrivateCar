@@ -16,8 +16,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.models.entities.Config;
+import com.privatecar.privatecar.utils.AppUtils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -43,7 +47,9 @@ public class ImageSlideFragment extends BaseFragment {
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN); // coloring the progressbar white
 
+        // get url & append it with the images url from configs
         url = getArguments().getString("url");
+        url = AppUtils.getConfigValue(getActivity(), Config.KEY_BASE_URL) + File.separator + url;
 
         // load the image with picasso
         Picasso.with(getActivity()).load(url).error(R.drawable.default_image).into(ivImage, new Callback() {

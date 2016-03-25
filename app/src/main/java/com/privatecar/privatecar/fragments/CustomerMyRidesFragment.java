@@ -18,6 +18,7 @@ import com.privatecar.privatecar.models.responses.CustomerTrip;
 import com.privatecar.privatecar.models.responses.CustomerTripsResponse;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
+import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
@@ -31,6 +32,7 @@ public class CustomerMyRidesFragment extends ProgressFragment implements Request
     private TextView tvTotalMoney;
     private RecyclerView rvTrips;
     private TripsRVAdapter adapter;
+    private RequestHelper requestHelper;
 
     public CustomerMyRidesFragment() {
         // Required empty public constructor
@@ -56,10 +58,15 @@ public class CustomerMyRidesFragment extends ProgressFragment implements Request
         rvTrips.setLayoutManager(linearLayoutManager);
         rvTrips.setHasFixedSize(true);
 
+        return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
         // load trips
         loadTrips();
-
-        return rootView;
     }
 
     /**
@@ -78,7 +85,7 @@ public class CustomerMyRidesFragment extends ProgressFragment implements Request
 
         // create & send the request
         User user = AppUtils.getCachedUser(activity);
-        CustomerRequests.trips(activity, this, user.getAccessToken(), user.getCustomerAccountDetails().getId());
+        requestHelper = CustomerRequests.trips(activity, this, user.getAccessToken(), user.getCustomerAccountDetails().getId());
     }
 
     @Override
@@ -143,5 +150,13 @@ public class CustomerMyRidesFragment extends ProgressFragment implements Request
                 loadTrips();
             }
         };
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (requestHelper != null) {
+            requestHelper.cancel(true);
+        }
     }
 }

@@ -11,7 +11,7 @@ public class PrivateCar extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+//        Fabric.with(this, new Crashlytics());
         FacebookSdk.sdkInitialize(getApplicationContext());
     }
 }

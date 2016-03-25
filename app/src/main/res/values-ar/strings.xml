@@ -60,7 +60,7 @@
     <string name="today_profit">الربح اليوم</string>
     <string name="total_trips">عدد الرحلات الكلي</string>
     <string name="total_hours">عدد الساعات الكلي</string>
-    <string name="be_active">كن نشطا</string>
+    <string name="be_active">كن نشطاً</string>
     <string name="online">متاح</string>
     <string name="search_for_period">بحث عن مدة</string>
     <string name="add_car">اضافة سيارة</string>
@@ -110,7 +110,7 @@
     <string name="add_details_for_pick_up">اضف معلومات مكان البداية لمساعدة السائق في الوصول اليك</string>
     <string name="save">حفظ</string>
     <string name="date">التاريخ</string>
-    <string name="driverTrip">الرحلات</string>
+    <string name="trips">الرحلات</string>
     <string name="profit">الربح</string>
     <string name="search_for_place">البحث عن مكان</string>
     <string name="select_on_map">الاختيار من الخريطة</string>
@@ -205,7 +205,7 @@
     <string name="trip_declined_successfully">تم رفض الرحلة بنجاح</string>
     <string name="error_decline_this_trip">خطأ في رفض هذه الرحلة</string>
     <string name="error_accepting_this_trip">خطأ في قبول هذه الرحلة</string>
-    <string name="be_inactive">كن نشطا</string>
+    <string name="be_inactive">كن غير نشطاُ</string>
     <string name="private_car">Private Car</string>
 
     <string name="loading_latest_messages">تحميل آخر الرسائل</string>
@@ -263,4 +263,9 @@
     <string name="rides">رحلة</string>
     <string name="you_have_not_do_any_trip_yet">لم تقم بأي رحلة حتى الآن</string>
     <string name="social_users_cant_change_password">العملاء القادمين من الشبكات الاجتماعية لا يمكنهم تغيير كلمة السر</string>
+    <string name="activating_promo_code_please_wait">جاري تفعيل الكوبون، برجاء الانتظار...</string>
+    <string name="promo_code_activated_successfully">تم تفعيل الكوبون بنجاح</string>
+    <string name="error_activating_promo_code">خطأ في تفعيل الكوبون</string>
+    <string name="invite_msg">مرحبا، انا استخدم تطبيق برايفت. يمكنك تجربته الآن مجانا،</string>
+    <string name="please_call_us_to_know_more">للمزيد، من فضلك قم بالاتصال بنا</string>
 </resources>
