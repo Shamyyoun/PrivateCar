@@ -158,7 +158,7 @@ public class DriverDeclineTripReasonActivity extends BasicBackActivity implement
             if (generalResponse.isSuccess()) {
                 // show msg and finish this & trip request activity
                 Utils.showLongToast(this, R.string.trip_declined_successfully);
-                TripRequestActivity.currentInstance.finish();
+                DriverTripRequestActivity.currentInstance.finish();
                 finish();
             } else {
                 // show error msg

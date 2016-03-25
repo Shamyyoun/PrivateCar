@@ -1,5 +1,7 @@
 package com.privatecar.privatecar.models.entities;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.Locale;
 
 /**
@@ -10,13 +12,19 @@ public class Location {
     private double lng;
 
     public Location() {
-        
+
     }
 
     public Location(android.location.Location location) {
         this.lat = location.getLatitude();
         this.lng = location.getLongitude();
     }
+
+    public Location(LatLng latLng) {
+        this.lat = latLng.latitude;
+        this.lng = latLng.longitude;
+    }
+
 
     public double getLat() {
         return lat;

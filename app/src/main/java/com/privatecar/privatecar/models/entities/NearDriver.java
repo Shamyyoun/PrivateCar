@@ -21,7 +21,7 @@ public class NearDriver {
     private Integer lowRatingCount;
     @SerializedName("overall_rating")
     @Expose
-    private Integer overallRating;
+    private Float overallRating;
     @SerializedName("personal_photo")
     @Expose
     private String personalPhoto;
@@ -36,7 +36,7 @@ public class NearDriver {
     private String fullname;
     @SerializedName("todayprofit")
     @Expose
-    private Integer todayprofit;
+    private Float todayProfit;
     @SerializedName("todayhours")
     @Expose
     private Integer todayhours;
@@ -100,14 +100,14 @@ public class NearDriver {
     /**
      * @return The overallRating
      */
-    public Integer getOverallRating() {
+    public float getOverallRating() {
         return overallRating;
     }
 
     /**
      * @param overallRating The overall_rating
      */
-    public void setOverallRating(Integer overallRating) {
+    public void setOverallRating(float overallRating) {
         this.overallRating = overallRating;
     }
 
@@ -168,17 +168,17 @@ public class NearDriver {
     }
 
     /**
-     * @return The todayprofit
+     * @return The todayProfit
      */
-    public Integer getTodayprofit() {
-        return todayprofit;
+    public float getTodayProfit() {
+        return todayProfit;
     }
 
     /**
-     * @param todayprofit The todayprofit
+     * @param todayProfit The todayProfit
      */
-    public void setTodayprofit(Integer todayprofit) {
-        this.todayprofit = todayprofit;
+    public void setTodayProfit(float todayProfit) {
+        this.todayProfit = todayProfit;
     }
 
     /**
@@ -194,5 +194,5 @@ public class NearDriver {
     public void setTodayhours(Integer todayhours) {
         this.todayhours = todayhours;
     }
-    
+
 }

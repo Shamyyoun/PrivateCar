@@ -64,7 +64,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_info"
         map:cameraZoom="14"
-        map:liteMode="true"
         map:mapType="normal"
         map:uiCompass="false"
         map:uiRotateGestures="false"
@@ -78,7 +77,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_info"
-        android:background="#75ffffff"
         android:gravity="center">
 
         <LinearLayout

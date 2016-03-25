@@ -187,8 +187,10 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
         googleApiClient.connect();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment.getView() != null)
+        if (mapFragment.getView() != null) {
             mapFragment.getView().setClickable(false); //disable click events for lite mode map
+            mapFragment.getView().setAlpha(0.5f); //set the map transparent
+        }
 
 
         mapFragment.getMapAsync(this);

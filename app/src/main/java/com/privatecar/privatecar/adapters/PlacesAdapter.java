@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.models.entities.Place;
+import com.privatecar.privatecar.models.entities.PrivateCarPlace;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ import java.util.List;
  */
 public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder> {
     private Context context;
-    private List<Place> data;
+    private List<PrivateCarPlace> data;
     private int layoutResourceId;
     private OnItemClickListener onItemClickListener;
 
-    public PlacesAdapter(Context context, List<Place> data, int layoutResourceId) {
+    public PlacesAdapter(Context context, List<PrivateCarPlace> data, int layoutResourceId) {
         this.context = context;
         this.data = data;
         this.layoutResourceId = layoutResourceId;
@@ -30,7 +30,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        Place place = data.get(position);
+        PrivateCarPlace place = data.get(position);
 
         // set data
         holder.textTitle.setText(place.getTitle());

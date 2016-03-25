@@ -3,9 +3,10 @@ package com.privatecar.privatecar.models.entities;
 /**
  * Created by Shamyyoun on 2/15/2016.
  */
-public class Place {
+public class PrivateCarPlace {
     private String title;
     private String address;
+    private Location location;
     private int time;
     private boolean myLocation;
 
@@ -39,5 +40,13 @@ public class Place {
 
     public void setMyLocation(boolean myLocation) {
         this.myLocation = myLocation;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

@@ -61,7 +61,7 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_login);
+        setContentView(R.layout.activity_customer_signin);
 
         prepareLoginWithFacebook();
         prepareLoginWithGoogle();
@@ -76,7 +76,6 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
         // add touch listeners
         btnSignInFacebook.setOnTouchListener(new ButtonHighlighterOnTouchListener(this, R.drawable.sign_in_facebook));
         btnSignInGooglePlus.setOnTouchListener(new ButtonHighlighterOnTouchListener(this, R.drawable.sign_in_google_plus));
-        btnSignIn.setOnTouchListener(new ButtonHighlighterOnTouchListener(this, R.drawable.petroleum_rounded_corners_shape));
 
         // add done click listener to password edit text
         etPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {

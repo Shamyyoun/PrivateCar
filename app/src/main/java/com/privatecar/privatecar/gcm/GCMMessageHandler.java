@@ -13,7 +13,7 @@ import com.google.android.gms.gcm.GcmListenerService;
 import com.google.gson.Gson;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.activities.TripRequestActivity;
+import com.privatecar.privatecar.activities.DriverTripRequestActivity;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.enums.UserType;
 import com.privatecar.privatecar.models.payload.TripRequestPayload;
@@ -47,7 +47,7 @@ public class GCMMessageHandler extends GcmListenerService {
                     TripRequestPayload requestPayload = gson.fromJson(json, TripRequestPayload.class);
 
                     // open trip request activity
-                    Intent intent = new Intent(this, TripRequestActivity.class);
+                    Intent intent = new Intent(this, DriverTripRequestActivity.class);
                     intent.putExtra(Const.KEY_TRIP_REQUEST, requestPayload.getTripRequest());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

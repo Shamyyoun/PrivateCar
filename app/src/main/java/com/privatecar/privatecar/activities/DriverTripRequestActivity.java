@@ -23,8 +23,8 @@ import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class TripRequestActivity extends BaseActivity implements RequestListener<GeneralResponse> {
-    public static TripRequestActivity currentInstance;
+public class DriverTripRequestActivity extends BaseActivity implements RequestListener<GeneralResponse> {
+    public static DriverTripRequestActivity currentInstance;
 
     private TripRequest tripRequest;
     private TextView tvOrderNo;
@@ -41,7 +41,7 @@ public class TripRequestActivity extends BaseActivity implements RequestListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trip_request);
+        setContentView(R.layout.activity_driver_trip_request);
         currentInstance = this;
 
         // get trip request object

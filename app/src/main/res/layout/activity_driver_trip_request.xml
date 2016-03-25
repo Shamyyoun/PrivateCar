@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/trip_background"
     android:orientation="vertical"
-    tools:context="com.privatecar.privatecar.activities.TripRequestActivity">
+    tools:context=".activities.DriverTripRequestActivity">
 
     <LinearLayout
         android:id="@+id/layout_content"

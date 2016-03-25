@@ -4,8 +4,13 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +18,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -26,19 +33,22 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.places.PlaceLikelihood;
+import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.adapters.PlacesAdapter;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.NearDriver;
-import com.privatecar.privatecar.models.entities.Place;
+import com.privatecar.privatecar.models.entities.PrivateCarPlace;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.NearDriversResponse;
 import com.privatecar.privatecar.requests.CustomerRequests;
@@ -49,24 +59,32 @@ import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CustomerPickupActivity extends BasicBackActivity implements View.OnClickListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, RequestListener<NearDriversResponse> {
     ImageButton buttonSearch;
+    View layoutMap, layoutSearch, layoutMarker;
+    TextView tvMarker;
+    ProgressBar pbMarker;
     RecyclerView recyclerView;
+    List<PrivateCarPlace> places = new ArrayList<>();
     PlacesAdapter adapter;
 
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequestCoarse;
     private GoogleMap map;
-    private Marker locationMarker;
+    private Geocoder geocoder;
 
+    GetAddressAsyncTask getAddressAsyncTask;
     private boolean now = true;
-    private boolean firstTime = true; //first time only to move map camera
 
+    private boolean firstTime = true; //first time only to move map camera
     RequestHelper<NearDriversResponse> requestHelper;
     List<NearDriver> nearDrivers;
+    PendingResult<PlaceLikelihoodBuffer> currentPlaceResult;
 
     //create coarse location request for updating the heat map
     private void createCoarseLocationRequest() {
@@ -95,8 +113,12 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
+                    .addApi(Places.PLACE_DETECTION_API)
+                    .addApi(Places.GEO_DATA_API)
                     .build();
         }
+
+        geocoder = new Geocoder(this, Locale.getDefault());
 
         createCoarseLocationRequest();
 
@@ -107,6 +129,15 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         buttonSearch.setOnTouchListener(new ButtonHighlighterOnTouchListener(this, R.drawable.search_icon));
         buttonSearch.setOnClickListener(this);
 
+        layoutSearch = findViewById(R.id.layout_search);
+        layoutMap = findViewById(R.id.layout_map);
+
+        layoutMarker = findViewById(R.id.layout_marker);
+        tvMarker = (TextView) findViewById(R.id.tv_marker);
+        pbMarker = (ProgressBar) findViewById(R.id.pb_marker);
+
+        layoutMarker.setVisibility(View.INVISIBLE); //invisible not gone
+
         // customize recycler view
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -115,15 +146,9 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         // ===== DUMMY DATA =====
-        List<Place> places = new ArrayList<>();
-        Place myLocationPlace = new Place();
-        myLocationPlace.setTitle("My Location");
-        myLocationPlace.setAddress("Abbas Elakkad, Nasr City");
-        myLocationPlace.setMyLocation(true);
-        places.add(myLocationPlace);
 
         for (int i = 0; i < 15; i++) {
-            Place place = new Place();
+            PrivateCarPlace place = new PrivateCarPlace();
             place.setTitle("Title " + i);
             place.setAddress("Address " + i);
             place.setTime(5);
@@ -139,6 +164,25 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                 startActivity(new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class));
             }
         });
+    }
+
+    /**
+     * Hides the textView in the marker and show the progressbar
+     */
+    private void setMarkerLoading() {
+        tvMarker.setVisibility(View.INVISIBLE);
+        pbMarker.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Hides the marker's progressbar and set the texView with the given value
+     *
+     * @param value The value to set
+     */
+    private void setMarkerText(String value) {
+        pbMarker.setVisibility(View.INVISIBLE);
+        tvMarker.setVisibility(View.VISIBLE);
+        tvMarker.setText(value);
     }
 
     @Override
@@ -214,6 +258,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                         // All location settings are satisfied. The client can initialize location requests here.
                         getLastLocation();
                         requestLocationUpdates();
+                        getCurrentAddress();
 
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
@@ -263,6 +308,9 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
     private void getLastLocation() {
         //TODO: support api 23 permission model
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            //enable my location layer
+            map.setMyLocationEnabled(true);
+
             Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
             if (lastLocation != null) {
                 Utils.LogE(">>>>> Last Location: " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude());
@@ -273,7 +321,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         }
     }
 
-    protected void requestLocationUpdates() {
+    private void requestLocationUpdates() {
         //TODO: handle api 23 permission
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (googleApiClient != null && googleApiClient.isConnected())
@@ -281,12 +329,46 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         }
     }
 
-    protected void removeLocationUpdates() {
+    private void removeLocationUpdates() {
         if (googleApiClient != null && googleApiClient.isConnected())
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
     }
 
-    private void updateMapLocation(Location location) {
+    private void getCurrentPlace() {
+        Log.e("_____", "getCurrentPlace");
+
+        //TODO: handle api 23 permission
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (googleApiClient != null && googleApiClient.isConnected()) {
+                if (currentPlaceResult != null && !currentPlaceResult.isCanceled())
+                    currentPlaceResult.cancel();
+                currentPlaceResult = Places.PlaceDetectionApi.getCurrentPlace(googleApiClient, null);
+                currentPlaceResult.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
+                    @Override
+                    public void onResult(@NonNull PlaceLikelihoodBuffer likelyPlaces) {
+                        for (PlaceLikelihood placeLikelihood : likelyPlaces) {
+                            Log.e("_____", String.format("Place '%s' has likelihood: %g",
+                                    placeLikelihood.getPlace().getName(),
+                                    placeLikelihood.getLikelihood()));
+                        }
+
+                        likelyPlaces.release();
+                    }
+                });
+            }
+        }
+    }
+
+    private void getCurrentAddress() {
+        Log.e("_______", "getCurrentAddress");
+
+        if (getAddressAsyncTask != null) getAddressAsyncTask.cancel(true);
+
+        getAddressAsyncTask = new GetAddressAsyncTask(geocoder, map.getCameraPosition().target, this);
+        Utils.executeAsyncTask(getAddressAsyncTask);
+    }
+
+    private synchronized void updateMapLocation(Location location) {
         Utils.LogE(location.toString());
 
         if (map != null) {
@@ -294,6 +376,25 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
 
             if (firstTime) {
                 map.moveCamera(CameraUpdateFactory.newLatLng(curLocation));
+
+//                map.addCircle(new CircleOptions().center(curLocation).fillColor(0xf00).radius(3));
+                //add the layout marker - set its middle bottom as the anchor point
+                Point point = map.getProjection().toScreenLocation(curLocation);
+                layoutMarker.setVisibility(View.VISIBLE);
+                layoutMarker.setX(point.x - layoutMarker.getWidth() / 2.0f);
+                layoutMarker.setY(point.y - layoutMarker.getHeight());
+
+                map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+                    @Override
+                    public void onCameraChange(CameraPosition cameraPosition) {
+                        Utils.LogE("__onCameraChange" + cameraPosition.target.toString());
+
+                        setMarkerLoading();
+
+                        getCurrentAddress();
+                    }
+                });
+
             }
 
             //get near drivers
@@ -319,4 +420,78 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         Utils.LogE(message);
         Utils.showLongToast(this, message);
     }
+
+    private static class GetAddressAsyncTask extends AsyncTask<Void, Void, Void> {
+        Geocoder geocoder;
+        LatLng latLng;
+        String title;
+        String description;
+
+        WeakReference<CustomerPickupActivity> activityReference;
+
+        public GetAddressAsyncTask(Geocoder geocoder, LatLng latLng, CustomerPickupActivity customerPickupActivity) {
+            this.geocoder = geocoder;
+            this.latLng = latLng;
+            activityReference = new WeakReference<>(customerPickupActivity);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+
+                if (addresses != null && addresses.size() > 0) {
+                    Address address = addresses.get(0);
+                    title = address.getAddressLine(0);
+                    StringBuilder strDescription = new StringBuilder();
+                    for (int i = 1; i < address.getMaxAddressLineIndex(); i++) {
+                        if (i != 1) strDescription.append(", ");
+                        strDescription.append(address.getAddressLine(i));
+                    }
+
+                    description = strDescription.toString();
+
+                    Utils.LogE("Address: " + strDescription.toString());
+                } else {
+                    Utils.LogE("No address returned");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            if (activityReference != null) {
+                activityReference.get().updateRVFirstItem(latLng, title, description);
+            }
+        }
+    }
+
+    // update the first item in the recyclerview to set it to the marker position
+    public void updateRVFirstItem(LatLng latLng, String title, String description) {
+        PrivateCarPlace place = new PrivateCarPlace();
+        place.setTitle(title);
+        place.setAddress(description);
+        place.setLocation(new com.privatecar.privatecar.models.entities.Location(latLng));
+        place.setMyLocation(true);
+
+        if (places.size() > 0) {
+            if (places.get(0).isMyLocation()) {
+                places.set(0, place);
+                adapter.notifyItemChanged(0);
+            } else {
+                places.add(0, place);
+                adapter.notifyItemInserted(0);
+            }
+
+            recyclerView.smoothScrollToPosition(0);
+        }
+
+    }
+
 }
