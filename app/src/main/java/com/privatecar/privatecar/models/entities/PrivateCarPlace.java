@@ -1,9 +1,11 @@
 package com.privatecar.privatecar.models.entities;
 
+import java.io.Serializable;
+
 /**
  * Created by Shamyyoun on 2/15/2016.
  */
-public class PrivateCarPlace {
+public class PrivateCarPlace implements Serializable {
     private String title;
     private String address;
     private Location location;

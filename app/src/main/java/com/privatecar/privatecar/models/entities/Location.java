@@ -2,12 +2,13 @@ package com.privatecar.privatecar.models.entities;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 /**
  * Created by basim on 27/2/16.
  */
-public class Location {
+public class Location implements Serializable {
     private double lat;
     private double lng;
 

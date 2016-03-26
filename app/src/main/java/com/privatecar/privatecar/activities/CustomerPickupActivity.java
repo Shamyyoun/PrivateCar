@@ -79,7 +79,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
     private Geocoder geocoder;
 
     GetAddressAsyncTask getAddressAsyncTask;
-    private boolean now = true;
+    private boolean now = true; //now or later
 
     private boolean firstTime = true; //first time only to move map camera
     RequestHelper<NearDriversResponse> requestHelper;
@@ -161,7 +161,10 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
             @Override
             public void onItemClick(View view, int position) {
                 // open verify trip activity
-                startActivity(new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class));
+                Intent intent = new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class);
+                intent.putExtra(Const.KEY_NOW, now);
+                intent.putExtra(Const.KEY_PICKUP_PLACE, places.get(position));
+                startActivity(intent);
             }
         });
     }
@@ -472,7 +475,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         }
     }
 
-    // update the first item in the recyclerview to set it to the marker position
+    // update the first item in the recyclerView to set it to the marker position
     public void updateRVFirstItem(LatLng latLng, String title, String description) {
         PrivateCarPlace place = new PrivateCarPlace();
         place.setTitle(title);

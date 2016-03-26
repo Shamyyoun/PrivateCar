@@ -164,4 +164,5 @@ public class Const {
     public static final String KEY_PROVIDER = "provider";
     public static final String KEY_NOW = "now";
     public static final String KEY_PASSWORD = "password";
+    public static final String KEY_PICKUP_PLACE = "pickup_place";
 }
