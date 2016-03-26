@@ -6,19 +6,21 @@
     android:padding="15dp">
 
     <TextView
+        android:id="@+id/tv_pickup_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Abbas Elakad - Nasr City"
         android:textStyle="bold" />
 
     <ScrollView
-        android:background="@drawable/edit_text_rounded_grayish_border"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@drawable/edit_text_rounded_grayish_border">
 
         <EditText
+            android:id="@+id/et_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -33,6 +35,7 @@
     </ScrollView>
 
     <Button
+        android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
