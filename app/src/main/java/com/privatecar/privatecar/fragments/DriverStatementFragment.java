@@ -3,7 +3,6 @@ package com.privatecar.privatecar.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,9 +18,9 @@ import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverHomeActivity;
 import com.privatecar.privatecar.activities.DriverStatementSearchResultActivity;
 import com.privatecar.privatecar.controllers.StatementsController;
+import com.privatecar.privatecar.models.entities.DriverTrip;
 import com.privatecar.privatecar.models.entities.Statement;
 import com.privatecar.privatecar.models.entities.StatementsGroup;
-import com.privatecar.privatecar.models.entities.DriverTrip;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.StatementsResponse;
 import com.privatecar.privatecar.models.responses.TripResponse;
@@ -32,6 +31,7 @@ import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DatePickerFragment;
 import com.privatecar.privatecar.utils.DateUtil;
 import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
@@ -54,7 +54,9 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
     private DatePickerFragment toPickerFragment;
     private String fromDateStr;
     private String toDateStr;
-    private ProgressDialog progressDialog;
+
+    private RequestHelper lastTripRequest;
+    private RequestHelper statementsRequest;
 
     public DriverStatementFragment() {
         // Required empty public constructor
@@ -149,7 +151,7 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
 
         // create & send the request
         User user = AppUtils.getCachedUser(activity);
-        DriverRequests.lastTrip(activity, this, user.getAccessToken());
+        lastTripRequest = DriverRequests.lastTrip(activity, this, user.getAccessToken());
     }
 
     @Override
@@ -254,6 +256,14 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
 
         // create and send the request
         User user = AppUtils.getCachedUser(activity);
-        DriverRequests.statements(activity, this, user.getAccessToken(), fromDateStr, toDateStr);
+        statementsRequest = DriverRequests.statements(activity, this, user.getAccessToken(), fromDateStr, toDateStr);
+    }
+
+    @Override
+    public void onDestroy() {
+        // cancel running requests
+        if (lastTripRequest != null) lastTripRequest.cancel(true);
+        if (statementsRequest != null) statementsRequest.cancel(true);
+        super.onDestroy();
     }
 }

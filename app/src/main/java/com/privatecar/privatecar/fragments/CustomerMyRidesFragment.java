@@ -58,15 +58,10 @@ public class CustomerMyRidesFragment extends ProgressFragment implements Request
         rvTrips.setLayoutManager(linearLayoutManager);
         rvTrips.setHasFixedSize(true);
 
-        return rootView;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
         // load trips
         loadTrips();
+
+        return rootView;
     }
 
     /**
@@ -153,10 +148,10 @@ public class CustomerMyRidesFragment extends ProgressFragment implements Request
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        if (requestHelper != null) {
-            requestHelper.cancel(true);
-        }
+    public void onDestroy() {
+        // cancel request if still running
+        if (requestHelper != null) requestHelper.cancel(true);
+
+        super.onDestroy();
     }
 }

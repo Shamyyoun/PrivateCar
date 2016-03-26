@@ -17,6 +17,8 @@ public class Config {
     public static final String KEY_MIN_TRIP_FARE = "MinTripFare";
     public static final String KEY_WAITING_TIME_SPEED = "WaitingTimeSpeed";
     public static final String KEY_BASE_URL = "BaseURL";
+    public static final String KEY_WEBSITE_URL = "WebSiteURL";
+    public static final String KEY_INVITE_TEMPLATE = "InviteTemplate";
 
 
     @SerializedName("key")

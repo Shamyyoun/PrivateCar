@@ -28,6 +28,7 @@ import com.privatecar.privatecar.models.responses.MessagesResponse;
 import com.privatecar.privatecar.requests.DriverRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
@@ -44,6 +45,7 @@ public class DriverMessageCenterFragment extends BaseFragment implements Request
     private RecyclerView rvMessages;
     private MessagesRVAdapter adapter;
     private ProgressDialog progressDialog;
+    private RequestHelper requestHelper;
 
     public DriverMessageCenterFragment() {
         // Required empty public constructor
@@ -54,7 +56,7 @@ public class DriverMessageCenterFragment extends BaseFragment implements Request
         progressDialog = DialogUtils.showProgressDialog(getActivity(), R.string.loading_latest_messages);
 
         User user = AppUtils.getCachedUser(getActivity());
-        DriverRequests.getInbox(getActivity(), this, user.getAccessToken(), start);
+        requestHelper = DriverRequests.getInbox(getActivity(), this, user.getAccessToken(), start);
     }
 
     @Override
@@ -185,5 +187,12 @@ public class DriverMessageCenterFragment extends BaseFragment implements Request
                 AppUtils.cacheMessages(getContext(), messages);
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        // cancel request if still running
+        if (requestHelper != null) requestHelper.cancel(true);
+        super.onDestroy();
     }
 }

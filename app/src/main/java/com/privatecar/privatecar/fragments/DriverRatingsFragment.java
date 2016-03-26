@@ -20,6 +20,7 @@ import com.privatecar.privatecar.requests.DriverRequests;
 import com.privatecar.privatecar.services.UpdateDriverLocationService;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
@@ -32,6 +33,7 @@ public class DriverRatingsFragment extends BaseFragment implements RequestListen
     private TextView tvTripsCount;
     private TextView tvAds;
     private RecyclerView rvAds;
+    private RequestHelper requestHelper;
 
     public DriverRatingsFragment() {
         // Required empty public constructor
@@ -81,7 +83,7 @@ public class DriverRatingsFragment extends BaseFragment implements RequestListen
 
         // create & send the request
         User user = AppUtils.getCachedUser(activity);
-        DriverRequests.ads(activity, this, user.getAccessToken());
+        requestHelper = DriverRequests.ads(activity, this, user.getAccessToken());
     }
 
     @Override
@@ -127,5 +129,12 @@ public class DriverRatingsFragment extends BaseFragment implements RequestListen
         AdsRVAdapter adapter = new AdsRVAdapter(activity, ads);
         rvAds.setAdapter(adapter);
         tvAds.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onDestroy() {
+        // cancel request if still running
+        if (requestHelper != null) requestHelper.cancel(true);
+        super.onDestroy();
     }
 }
