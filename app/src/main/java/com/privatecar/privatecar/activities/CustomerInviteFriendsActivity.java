@@ -1,11 +1,12 @@
 package com.privatecar.privatecar.activities;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.models.entities.Config;
+import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
 import com.privatecar.privatecar.utils.Utils;
 
@@ -17,6 +18,7 @@ public class CustomerInviteFriendsActivity extends BasicBackActivity {
     private Button btnGooglePlus;
     private Button btnWhatsApp;
     private String inviteMsg;
+    private String website;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +36,9 @@ public class CustomerInviteFriendsActivity extends BasicBackActivity {
             btnWhatsApp.setVisibility(View.GONE);
         }
 
-        // prepare invite msg
-        inviteMsg = getString(R.string.invite_msg);
-        inviteMsg += "\n" + getString(R.string.private_website);
+        // get values from config
+        website = AppUtils.getConfigValue(this, Config.KEY_WEBSITE_URL);
+        inviteMsg = AppUtils.getConfigValue(this, Config.KEY_INVITE_TEMPLATE) + "\n" + website;
 
         // add touch listeners
         btnFacebook.setOnTouchListener(new ButtonHighlighterOnTouchListener(this, R.drawable.invite_friends_from_facebook));
@@ -62,7 +64,7 @@ public class CustomerInviteFriendsActivity extends BasicBackActivity {
                     Utils.shareTextToApp(this, Utils.PACKAGE_FACEBOOK, inviteMsg);
                 } else {
                     // open the facebook sharer url
-                    String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u=" + getString(R.string.private_website);
+                    String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u=" + website;
                     Utils.openBrowser(this, sharerUrl);
                 }
                 break;
@@ -74,7 +76,7 @@ public class CustomerInviteFriendsActivity extends BasicBackActivity {
                     Utils.shareTextToApp(this, Utils.PACKAGE_GOOGLE_PLUS, inviteMsg);
                 } else {
                     // open google+ sharer url
-                    String sharerUrl = "https://plus.google.com/share?url=" + getString(R.string.private_website);
+                    String sharerUrl = "https://plus.google.com/share?url=" + website;
                     Utils.openBrowser(this, sharerUrl);
                 }
                 break;

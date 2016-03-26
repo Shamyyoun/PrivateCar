@@ -99,6 +99,9 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
             }
         });
 
+        // load the first fares
+        loadFares();
+
         return rootView;
     }
 
@@ -110,14 +113,6 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
     private void showFullDayView(boolean show) {
         layoutCallUs.setVisibility(show ? View.VISIBLE : View.GONE);
         layoutMain.setVisibility(show ? View.GONE : View.VISIBLE);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // load the first fares
-        loadFares();
     }
 
     /**
@@ -190,14 +185,6 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-
-        // cancel request if still running
-        requestHelper.cancel(true);
-    }
-
-    @Override
     protected int getContentViewResId() {
         return R.layout.fragment_customer_prices;
     }
@@ -215,5 +202,12 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
                 loadFares();
             }
         };
+    }
+
+    @Override
+    public void onDestroy() {
+        // cancel request if still running
+        if (requestHelper != null) requestHelper.cancel(true);
+        super.onDestroy();
     }
 }

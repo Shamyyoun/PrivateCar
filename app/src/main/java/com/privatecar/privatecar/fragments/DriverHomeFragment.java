@@ -164,6 +164,9 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         tvDate.setText(dateFormat.format(calendar.getTime()));
 
+        // load account details
+        loadAccountDetails();
+
         return fragment;
     }
 
@@ -381,9 +384,6 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        // load account details
-        loadAccountDetails();
-
         Utils.LogE("onStart");
     }
 
@@ -402,8 +402,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
         super.onStop();
         googleApiClient.disconnect();
 
-        // cancel running requests
-        if (accountDetailsRequest != null) accountDetailsRequest.cancel(true);
+        // cancel states request
         if (customersStatsRequest != null) customersStatsRequest.cancel(true);
 
         Utils.LogE("onStop");
@@ -569,4 +568,10 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
         }
     }
 
+    @Override
+    public void onDestroy() {
+        // cancel details request
+        if (accountDetailsRequest != null) accountDetailsRequest.cancel(true);
+        super.onDestroy();
+    }
 }

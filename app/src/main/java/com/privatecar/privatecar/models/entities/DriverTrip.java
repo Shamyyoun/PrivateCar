@@ -76,7 +76,7 @@ public class DriverTrip implements Serializable {
     private Object deletedAt;
     @SerializedName("estimate_distance")
     @Expose
-    private int estimateDistance;
+    private float estimateDistance;
     @SerializedName("estimate_time")
     @Expose
     private double estimateTime;
@@ -407,14 +407,14 @@ public class DriverTrip implements Serializable {
     /**
      * @return The estimateDistance
      */
-    public int getEstimateDistance() {
+    public float getEstimateDistance() {
         return estimateDistance;
     }
 
     /**
      * @param estimateDistance The estimate_distance
      */
-    public void setEstimateDistance(int estimateDistance) {
+    public void setEstimateDistance(float estimateDistance) {
         this.estimateDistance = estimateDistance;
     }
 

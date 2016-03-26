@@ -46,6 +46,6 @@
         android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/tv_website_view"
         android:padding="5dp"
-        android:text="@string/private_website"
+        android:text="www.google.com"
         android:textColor="@color/colorAccent" />
 </RelativeLayout>

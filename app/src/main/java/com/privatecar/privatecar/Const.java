@@ -40,6 +40,7 @@ public class Const {
     public static final int REQUEST_CROP_CAR_LICENCE_BACK = 1024;
     public static final int REQUEST_MESSAGE_DETAILS = 1025;
     public static final int REQUEST_GOOGLE_PLUS_SIGN_IN = 1026;
+    public static final int REQUEST_ADD_DETAILS = 1027;
 
     //app level constants:--------------
     public static final String LOG_TAG = "Private Car";
@@ -165,4 +166,5 @@ public class Const {
     public static final String KEY_NOW = "now";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_PICKUP_PLACE = "pickup_place";
+    public static final String KEY_DETAILS = "details";
 }

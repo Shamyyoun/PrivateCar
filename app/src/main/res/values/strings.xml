@@ -179,7 +179,6 @@
     <string name="invite_friends">Invite Friends</string>
     <string name="app_version">App Version</string>
     <string name="website_c">Website:</string>
-    <string name="private_website">www.private.ws</string>
     <string name="update_now">Update Now</string>
 
     <string name="required">Required</string>
@@ -270,6 +269,7 @@
     <string name="error_activating_promo_code">Error activating promo code</string>
     <string name="invite_msg">Hi, I\'m using Private app. You can try it now for free,</string>
     <string name="please_call_us_to_know_more">Please call us to know more</string>
+    <string name="change_details">Change\nDetails</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

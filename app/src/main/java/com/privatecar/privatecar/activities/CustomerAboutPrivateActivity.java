@@ -30,6 +30,9 @@ public class CustomerAboutPrivateActivity extends BasicBackActivity {
         btnUpdate = (Button) findViewById(R.id.btn_update);
         tvWebsite = (TextView) findViewById(R.id.tv_website);
 
+        // set the website from the config
+        tvWebsite.setText(AppUtils.getConfigValue(this, Config.KEY_WEBSITE_URL));
+
         // get current app version from cached configs and set it
         int configAppVersion = 0;
         try {
