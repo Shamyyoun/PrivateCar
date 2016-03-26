@@ -1,9 +1,9 @@
 package com.privatecar.privatecar.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,13 +28,14 @@ import java.util.List;
 import java.util.Locale;
 
 public class DriverDeclineTripReasonActivity extends BasicBackActivity implements RequestListener<Object> {
+    private static final int OPTION_OTHER = 99999999;
+
     private int tripId;
     private View layoutContent;
     private RadioGroup rgOptions;
     private EditText etOther;
     private Button btnSend;
     private List<Option> options;
-    private int selectedOptionIndex = -2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,14 @@ public class DriverDeclineTripReasonActivity extends BasicBackActivity implement
         rgOptions = (RadioGroup) findViewById(R.id.rg_options);
         etOther = (EditText) findViewById(R.id.et_other);
         btnSend = (Button) findViewById(R.id.btn_send);
+
+        // add listeners
+        rgOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                etOther.setError(null);
+            }
+        });
         btnSend.setOnClickListener(this);
 
         // load available options
@@ -89,14 +98,14 @@ public class DriverDeclineTripReasonActivity extends BasicBackActivity implement
             return;
         }
 
+        // hide keyboard
+        Utils.hideKeyboard(etOther);
+
         // get reason id & comment
+        int selectedOptionIndex = rgOptions.getCheckedRadioButtonId();
         String reasonId = null;
         String comment = null;
-        if (selectedOptionIndex == -2) {
-            // show toast
-            Utils.showShortToast(this, R.string.please_choose_your_reason);
-            return;
-        } else if (selectedOptionIndex == -1) {
+        if (selectedOptionIndex == OPTION_OTHER) {
             // other option is selected
             // must have comment
             if (etOther.getText().toString().trim().isEmpty()) {
@@ -176,16 +185,8 @@ public class DriverDeclineTripReasonActivity extends BasicBackActivity implement
             // create new radio button with this option
             Option option = options.get(i);
             RadioButton radioButton = new RadioButton(this);
+            radioButton.setId(i);
             radioButton.setText(lang.equals(Locale.ENGLISH.getLanguage()) ? option.getName() : option.getNameAr());
-
-            // add check change listener
-            final int finalI = i;
-            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    selectedOptionIndex = finalI;
-                }
-            });
 
             // add to the radio group
             rgOptions.addView(radioButton);
@@ -194,20 +195,15 @@ public class DriverDeclineTripReasonActivity extends BasicBackActivity implement
         // create & add the other button
         final RadioButton radioButton = new RadioButton(this);
         radioButton.setText(R.string.other);
+        radioButton.setId(OPTION_OTHER);
 
         // check options size
-        if (options.size() > 0) {
-            // add check change listener
-            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    selectedOptionIndex = -1;
-                }
-            });
-        } else {
+        if (options.size() == 0) {
             // check other button
             radioButton.setChecked(true);
-            selectedOptionIndex = -1;
+        } else {
+            // check first button by default
+            rgOptions.check(0);
         }
 
         // add to the radio group
