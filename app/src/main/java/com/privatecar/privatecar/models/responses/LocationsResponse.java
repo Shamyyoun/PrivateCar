@@ -1,6 +1,6 @@
 package com.privatecar.privatecar.models.responses;
 
-import com.privatecar.privatecar.models.entities.Location;
+import com.privatecar.privatecar.models.entities.PrivateCarLocation;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class LocationsResponse {
     private boolean status;
-    private ArrayList<Location> content;
+    private ArrayList<PrivateCarLocation> content;
     private ArrayList<String> validation;
 
     public boolean isSuccess() {
@@ -29,11 +29,11 @@ public class LocationsResponse {
         this.validation = validation;
     }
 
-    public ArrayList<Location> getContent() {
+    public ArrayList<PrivateCarLocation> getContent() {
         return content;
     }
 
-    public void setContent(ArrayList<Location> content) {
+    public void setContent(ArrayList<PrivateCarLocation> content) {
         this.content = content;
     }
 }

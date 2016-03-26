@@ -6,18 +6,18 @@ import java.io.Serializable;
  * Created by Shamyyoun on 2/15/2016.
  */
 public class PrivateCarPlace implements Serializable {
-    private String title;
+    private String name;
     private String address;
-    private Location location;
+    private PrivateCarLocation location;
     private int time;
-    private boolean myLocation;
+    private boolean markerLocation;
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
@@ -36,19 +36,19 @@ public class PrivateCarPlace implements Serializable {
         this.time = time;
     }
 
-    public boolean isMyLocation() {
-        return myLocation;
+    public boolean isMarkerLocation() {
+        return markerLocation;
     }
 
-    public void setMyLocation(boolean myLocation) {
-        this.myLocation = myLocation;
+    public void setMarkerLocation(boolean markerLocation) {
+        this.markerLocation = markerLocation;
     }
 
-    public Location getLocation() {
+    public PrivateCarLocation getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(PrivateCarLocation location) {
         this.location = location;
     }
 }

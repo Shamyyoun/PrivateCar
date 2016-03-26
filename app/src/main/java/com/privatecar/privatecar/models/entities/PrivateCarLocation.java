@@ -8,20 +8,20 @@ import java.util.Locale;
 /**
  * Created by basim on 27/2/16.
  */
-public class Location implements Serializable {
+public class PrivateCarLocation implements Serializable {
     private double lat;
     private double lng;
 
-    public Location() {
+    public PrivateCarLocation() {
 
     }
 
-    public Location(android.location.Location location) {
+    public PrivateCarLocation(android.location.Location location) {
         this.lat = location.getLatitude();
         this.lng = location.getLongitude();
     }
 
-    public Location(LatLng latLng) {
+    public PrivateCarLocation(LatLng latLng) {
         this.lat = latLng.latitude;
         this.lng = latLng.longitude;
     }

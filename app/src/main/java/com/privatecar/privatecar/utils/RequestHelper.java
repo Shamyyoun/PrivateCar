@@ -19,10 +19,11 @@ import java.util.Map;
 import java.util.concurrent.CancellationException;
 
 /**
- * Created by basim on 1/3/16.
- * A helper class for making requests using requests using Ion library.
+ * Created by basim.alamuddin@gmail.com on 3/1/16.
+ * A helper class for making requests using Ion library.
  */
 
+//TODO: handle with response code
 public class RequestHelper<T> {
 
     private static final String LOG_TAG = "request_helper";
@@ -32,7 +33,7 @@ public class RequestHelper<T> {
     String apiName;
     Class<?> cls;
     RequestListener<T> listener;
-    Map<String, List<String>> params;
+    Map<String, List<String>> params; //Ion accepts parameters as a map of key value pair of String and List<String>
     Map<String, File> files;
 
     Future<String> future;
@@ -198,23 +199,21 @@ public class RequestHelper<T> {
     private void handleOnCompleted(Exception e, String result) {
         printLogs(1);  // request finished
 
-        if (listener != null) {
-            if (e != null && !(e instanceof CancellationException)) { //on request failure
-                listener.onFail(e.toString(), apiName);
-                e.printStackTrace();
-            } else if (result != null) {
-                Log.e(LOG_TAG, "Response: " + result);
+        if (e != null && !(e instanceof CancellationException)) { //on request failure
+            e.printStackTrace();
+            if (listener != null) listener.onFail(e.toString(), apiName);
+        } else if (result != null) {
+            Log.e(LOG_TAG, "Response: " + result);
 
-                if (cls == null) { //T must be of type: Object or String
-                    listener.onSuccess((T) result, apiName);
-                } else {
-                    try {
-                        listener.onSuccess((T) new Gson().fromJson(result, cls), apiName);
-                    } catch (Exception ex) {
-                        Log.e(LOG_TAG, "Parsing Exception: " + ex.toString());
-                        listener.onFail("Parsing Exception: " + ex.toString(), apiName);
-                        ex.printStackTrace();
-                    }
+            if (cls == null && listener != null) { //T must be of type: Object or String
+                listener.onSuccess((T) result, apiName);
+            } else if (listener != null) {
+                try {
+                    listener.onSuccess((T) new Gson().fromJson(result, cls), apiName);
+                } catch (Exception ex) {
+                    Log.e(LOG_TAG, "Parsing Exception: " + ex.toString());
+                    listener.onFail("Parsing Exception: " + ex.toString(), apiName);
+                    ex.printStackTrace();
                 }
             }
         }

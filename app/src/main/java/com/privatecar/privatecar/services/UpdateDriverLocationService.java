@@ -29,6 +29,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverHomeActivity;
+import com.privatecar.privatecar.models.entities.PrivateCarLocation;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.requests.DriverRequests;
@@ -69,7 +70,7 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
         //cancel the request before making new one
         if (updateLocationRequest != null) updateLocationRequest.cancel(true);
 
-        com.privatecar.privatecar.models.entities.Location tmpLocation = new com.privatecar.privatecar.models.entities.Location();
+        PrivateCarLocation tmpLocation = new PrivateCarLocation();
         tmpLocation.setLat(location.getLatitude());
         tmpLocation.setLng(location.getLongitude());
 

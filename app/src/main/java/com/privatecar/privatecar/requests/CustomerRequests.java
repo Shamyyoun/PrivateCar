@@ -3,10 +3,9 @@ package com.privatecar.privatecar.requests;
 import android.content.Context;
 
 import com.privatecar.privatecar.Const;
-import com.privatecar.privatecar.models.entities.Location;
+import com.privatecar.privatecar.models.entities.PrivateCarLocation;
 import com.privatecar.privatecar.models.responses.CustomerAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.AccessTokenResponse;
-import com.privatecar.privatecar.models.responses.CustomerAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.CustomerTripsResponse;
 import com.privatecar.privatecar.models.responses.FaresResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
@@ -71,7 +70,7 @@ public class CustomerRequests {
         return requestHelper;
     }
 
-    public static RequestHelper<NearDriversResponse> nearDrivers(Context context, RequestListener<NearDriversResponse> listener, String accessToken, Location location) {
+    public static RequestHelper<NearDriversResponse> nearDrivers(Context context, RequestListener<NearDriversResponse> listener, String accessToken, PrivateCarLocation location) {
 
         // prepare parameters
         Map<String, String> params = new HashMap<>();

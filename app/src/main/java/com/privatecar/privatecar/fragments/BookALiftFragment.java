@@ -306,7 +306,6 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
                         // Location settings are not satisfied. However, we have no way to fix the settings so we won't show the dialog.
                         break;
                 }
-
             }
         });
 

@@ -46,6 +46,7 @@ import com.privatecar.privatecar.activities.DriverHomeActivity;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.DriverAccountDetails;
 import com.privatecar.privatecar.models.entities.Message;
+import com.privatecar.privatecar.models.entities.PrivateCarLocation;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.LocationsResponse;
@@ -217,7 +218,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
         //cancel the request before making new one
         if (customersStatsRequest != null) customersStatsRequest.cancel(true);
 
-        com.privatecar.privatecar.models.entities.Location tmpLocation = new com.privatecar.privatecar.models.entities.Location();
+        PrivateCarLocation tmpLocation = new PrivateCarLocation();
         tmpLocation.setLat(location.getLatitude());
         tmpLocation.setLng(location.getLongitude());
 
@@ -324,7 +325,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
         } else if (response instanceof LocationsResponse) {
             LocationsResponse locationsResponse = (LocationsResponse) response;
             if (locationsResponse.isSuccess() && locationsResponse.getContent() != null) {
-                ArrayList<com.privatecar.privatecar.models.entities.Location> locations = locationsResponse.getContent();
+                ArrayList<PrivateCarLocation> locations = locationsResponse.getContent();
 
                 boolean firstResponse = heatmapData == null; // to addHeatmap() or updateHeatMap()
                 if (firstResponse) {

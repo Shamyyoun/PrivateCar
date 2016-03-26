@@ -11,9 +11,9 @@ public class Const {
     public static final String CLIENT_SECRET = "4c7f6f8fa93d59c45502c0ae8c4a95b";
 
     //activity requests:----------------
-    public static final int REQUEST_GPS_SETTINGS = 998;
-    public static final int REQUEST_COARSE_LOCATION_PERMISSION = 999;
-    public static final int REQUEST_FINE_LOCATION_PERMISSION = 1000;
+    public static final int REQUEST_GPS_SETTINGS = 199;
+    public static final int REQUEST_COARSE_LOCATION_PERMISSION = 200;
+    public static final int REQUEST_FINE_LOCATION_PERMISSION = 201;
     public static final int REQUEST_CAMERA_USER_PHOTO = 1001;
     public static final int REQUEST_CAMERA_CAR_PHOTO = 1002;
     public static final int REQUEST_CAMERA_ID_FRONT = 1003;

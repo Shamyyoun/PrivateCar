@@ -10,7 +10,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,8 +33,6 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.location.places.PlaceLikelihood;
-import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,6 +46,7 @@ import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.adapters.PlacesAdapter;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.NearDriver;
+import com.privatecar.privatecar.models.entities.PrivateCarLocation;
 import com.privatecar.privatecar.models.entities.PrivateCarPlace;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.NearDriversResponse;
@@ -64,7 +63,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class CustomerPickupActivity extends BasicBackActivity implements View.OnClickListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, RequestListener<NearDriversResponse> {
+public class CustomerPickupActivity extends BasicBackActivity implements View.OnClickListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, RequestListener {
     ImageButton buttonSearch;
     View layoutMap, layoutSearch, layoutMarker;
     TextView tvMarker;
@@ -82,9 +81,12 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
     private boolean now = true; //now or later
 
     private boolean firstTime = true; //first time only to move map camera
-    RequestHelper<NearDriversResponse> requestHelper;
+    RequestHelper<NearDriversResponse> requestNearDrivers;
     List<NearDriver> nearDrivers;
-    PendingResult<PlaceLikelihoodBuffer> currentPlaceResult;
+    RequestHelper<String> requestNearPlaces;
+
+    Handler handler = new Handler();
+    MapCameraChangeRunnable runnable;
 
     //create coarse location request for updating the heat map
     private void createCoarseLocationRequest() {
@@ -94,6 +96,21 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         locationRequestCoarse.setInterval(interval);
         locationRequestCoarse.setFastestInterval(interval);
         locationRequestCoarse.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+    }
+
+    private static class MapCameraChangeRunnable implements Runnable {
+
+        WeakReference<CustomerPickupActivity> activityReference;
+
+        public MapCameraChangeRunnable(CustomerPickupActivity customerPickupActivity) {
+            activityReference = new WeakReference<>(customerPickupActivity);
+        }
+
+        @Override
+        public void run() {
+            activityReference.get().getStreetName();
+            activityReference.get().getNearbyPlaces();
+        }
     }
 
 
@@ -119,6 +136,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         }
 
         geocoder = new Geocoder(this, Locale.getDefault());
+        runnable = new MapCameraChangeRunnable(this);
 
         createCoarseLocationRequest();
 
@@ -149,7 +167,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
 
         for (int i = 0; i < 15; i++) {
             PrivateCarPlace place = new PrivateCarPlace();
-            place.setTitle("Title " + i);
+            place.setName("Title " + i);
             place.setAddress("Address " + i);
             place.setTime(5);
             places.add(place);
@@ -261,7 +279,6 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                         // All location settings are satisfied. The client can initialize location requests here.
                         getLastLocation();
                         requestLocationUpdates();
-                        getCurrentAddress();
 
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
@@ -300,6 +317,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
     @Override
     public void onLocationChanged(Location location) {
         updateMapLocation(location);
+        getNearDrivers();
         firstTime = false;
     }
 
@@ -337,37 +355,13 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
     }
 
-    private void getCurrentPlace() {
-        Log.e("_____", "getCurrentPlace");
-
-        //TODO: handle api 23 permission
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            if (googleApiClient != null && googleApiClient.isConnected()) {
-                if (currentPlaceResult != null && !currentPlaceResult.isCanceled())
-                    currentPlaceResult.cancel();
-                currentPlaceResult = Places.PlaceDetectionApi.getCurrentPlace(googleApiClient, null);
-                currentPlaceResult.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
-                    @Override
-                    public void onResult(@NonNull PlaceLikelihoodBuffer likelyPlaces) {
-                        for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                            Log.e("_____", String.format("Place '%s' has likelihood: %g",
-                                    placeLikelihood.getPlace().getName(),
-                                    placeLikelihood.getLikelihood()));
-                        }
-
-                        likelyPlaces.release();
-                    }
-                });
-            }
-        }
-    }
-
-    private void getCurrentAddress() {
-        Log.e("_______", "getCurrentAddress");
+    private void getStreetName() {
+        Log.e("_______", "getStreetName");
 
         if (getAddressAsyncTask != null) getAddressAsyncTask.cancel(true);
 
-        getAddressAsyncTask = new GetAddressAsyncTask(geocoder, map.getCameraPosition().target, this);
+        LatLng latLng = map.getCameraPosition().target;
+        getAddressAsyncTask = new GetAddressAsyncTask(geocoder, latLng, this);
         Utils.executeAsyncTask(getAddressAsyncTask);
     }
 
@@ -381,6 +375,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                 map.moveCamera(CameraUpdateFactory.newLatLng(curLocation));
 
 //                map.addCircle(new CircleOptions().center(curLocation).fillColor(0xf00).radius(3));
+
                 //add the layout marker - set its middle bottom as the anchor point
                 Point point = map.getProjection().toScreenLocation(curLocation);
                 layoutMarker.setVisibility(View.VISIBLE);
@@ -389,37 +384,36 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
 
                 map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
                     @Override
-                    public void onCameraChange(CameraPosition cameraPosition) {
+                    public void onCameraChange(final CameraPosition cameraPosition) {
+                        if (handler != null)
+                            handler.removeCallbacks(runnable);
                         Utils.LogE("__onCameraChange" + cameraPosition.target.toString());
-
+                        //run this after the map settles (after about 2 sec)
+                        handler.postDelayed(runnable, 2000);
                         setMarkerLoading();
-
-                        getCurrentAddress();
                     }
                 });
 
             }
 
-            //get near drivers
-            User user = AppUtils.getCachedUser(getApplicationContext());
-            if (requestHelper != null)
-                requestHelper.cancel(true); //cancel the request before making new one
-
-            requestHelper = CustomerRequests.
-                    nearDrivers(this, this, user.getAccessToken(), new com.privatecar.privatecar.models.entities.Location(location));
-
         }
     }
 
     @Override
-    public void onSuccess(NearDriversResponse response, String apiName) {
-        if (response.isSuccess()) {
-            nearDrivers = response.getDrivers();
+    public synchronized void onSuccess(Object response, String apiName) {
+        if (response instanceof NearDriversResponse) {
+            NearDriversResponse nearDriversResponse = (NearDriversResponse) response;
+            if (nearDriversResponse.isSuccess()) {
+                nearDrivers = nearDriversResponse.getDrivers();
+            }
+        } else if (response instanceof String) { //nearby places api
+            String stringResponse = (String) response;
+            Log.e("****", stringResponse);
         }
     }
 
     @Override
-    public void onFail(String message, String apiName) {
+    public synchronized void onFail(String message, String apiName) {
         Utils.LogE(message);
         Utils.showLongToast(this, message);
     }
@@ -454,10 +448,11 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
 
                     description = strDescription.toString();
 
-                    Utils.LogE("Address: " + strDescription.toString());
+                    Utils.LogE("Address: " + title + ", " + description);
                 } else {
                     Utils.LogE("No address returned");
                 }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -478,13 +473,13 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
     // update the first item in the recyclerView to set it to the marker position
     public void updateRVFirstItem(LatLng latLng, String title, String description) {
         PrivateCarPlace place = new PrivateCarPlace();
-        place.setTitle(title);
+        place.setName(title);
         place.setAddress(description);
-        place.setLocation(new com.privatecar.privatecar.models.entities.Location(latLng));
-        place.setMyLocation(true);
+        place.setLocation(new PrivateCarLocation(latLng));
+        place.setMarkerLocation(true);
 
         if (places.size() > 0) {
-            if (places.get(0).isMyLocation()) {
+            if (places.get(0).isMarkerLocation()) {
                 places.set(0, place);
                 adapter.notifyItemChanged(0);
             } else {
@@ -496,5 +491,33 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         }
 
     }
+
+    //get near drivers
+    private RequestHelper<NearDriversResponse> getNearDrivers() {
+        if (requestNearDrivers != null)
+            requestNearDrivers.cancel(true); //cancel the request before making new one
+
+        User user = AppUtils.getCachedUser(getApplicationContext());
+        LatLng latLng = map.getCameraPosition().target;
+        requestNearDrivers = CustomerRequests.
+                nearDrivers(this, this, user.getAccessToken(), new PrivateCarLocation(latLng));
+
+        return requestNearDrivers;
+    }
+
+    private RequestHelper<String> getNearbyPlaces() {
+        LatLng latLng = map.getCameraPosition().target;
+        int radiusInMeters = 5000; //5000 meters
+        String language = Utils.getAppLanguage();
+        String serverApiKey = getString(R.string.server_api_key);
+
+        String url = String.format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=%d&language=%s&key=%s", latLng.latitude, latLng.longitude, radiusInMeters, language, serverApiKey);
+
+        if (requestNearPlaces != null) requestNearPlaces.cancel(true);
+        requestNearPlaces = new RequestHelper<>(this, "", url, null, this);
+        requestNearPlaces.executeFormUrlEncoded();
+        return requestNearPlaces;
+    }
+
 
 }

@@ -33,16 +33,16 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
         PrivateCarPlace place = data.get(position);
 
         // set data
-        holder.textTitle.setText(place.getTitle());
+        holder.textName.setText(place.getName());
         holder.textAddress.setText(place.getAddress());
-        if (place.isMyLocation()) {
+        if (place.isMarkerLocation()) {
             // show pin image
             holder.timeLayout.setVisibility(View.GONE);
             holder.imagePin.setVisibility(View.VISIBLE);
         } else {
             // show time layout
-            holder.textTime.setText("" + place.getTime() + " " + context.getString(R.string.min));
-            holder.timeLayout.setVisibility(View.VISIBLE);
+//            holder.textTime.setText("" + place.getTime() + " " + context.getString(R.string.min));
+//            holder.timeLayout.setVisibility(View.VISIBLE);
             holder.imagePin.setVisibility(View.GONE);
         }
     }
@@ -65,11 +65,11 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
     }
 
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView textTitle;
+        public TextView textName;
         public TextView textAddress;
         public View timeLayout;
         public TextView textTime;
@@ -77,7 +77,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
 
         public ViewHolder(View v) {
             super(v);
-            textTitle = (TextView) v.findViewById(R.id.tv_place_title);
+            textName = (TextView) v.findViewById(R.id.tv_place_title);
             textAddress = (TextView) v.findViewById(R.id.tv_place_address);
             timeLayout = v.findViewById(R.id.layout_time);
             textTime = (TextView) v.findViewById(R.id.tv_time);
@@ -89,7 +89,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
         @Override
         public void onClick(View v) {
             if (onItemClickListener != null) {
-                onItemClickListener.onItemClick(v, getPosition());
+                onItemClickListener.onItemClick(v, getAdapterPosition());
             }
         }
     }
