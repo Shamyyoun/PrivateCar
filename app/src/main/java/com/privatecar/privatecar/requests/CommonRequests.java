@@ -1,20 +1,25 @@
 package com.privatecar.privatecar.requests;
 
 import android.content.Context;
-import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.privatecar.privatecar.Const;
+import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.enums.GrantType;
 import com.privatecar.privatecar.models.responses.AccessTokenResponse;
 import com.privatecar.privatecar.models.responses.ConfigResponse;
+import com.privatecar.privatecar.models.responses.DistanceMatrixResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
+import com.privatecar.privatecar.models.responses.NearbyPlacesResponse;
 import com.privatecar.privatecar.models.responses.OptionsResponse;
 import com.privatecar.privatecar.utils.PlayServicesUtils;
 import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
+import com.privatecar.privatecar.utils.Utils;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -120,4 +125,31 @@ public class CommonRequests {
         request.executeMultiPart();
         return request;
     }
+
+    public static RequestHelper<NearbyPlacesResponse> getNearbyPlacesByPlacesApi(Context ctx, RequestListener<NearbyPlacesResponse> listener, LatLng latLng) {
+        int radiusInMeters = 1000; //1000 meters
+        String language = Utils.getAppLanguage();
+        String serverApiKey = ctx.getString(R.string.server_api_key);
+
+        String url = String.format(Locale.ENGLISH, "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=%d&language=%s&key=%s", latLng.latitude, latLng.longitude, radiusInMeters, language, serverApiKey);
+
+        RequestHelper<NearbyPlacesResponse> requestNearbyPlaces = new RequestHelper<>(ctx, "", url, NearbyPlacesResponse.class, listener);
+        requestNearbyPlaces.executeFormUrlEncoded();
+
+        return requestNearbyPlaces;
+    }
+
+    public static RequestHelper<DistanceMatrixResponse> getTravelTimeByDistanceMatrixApi(Context ctx, RequestListener<DistanceMatrixResponse> listener,String origin, LatLng destination) {
+        String language = Utils.getAppLanguage();
+        String serverApiKey = ctx.getString(R.string.server_api_key);
+
+        String url = String.format(Locale.ENGLISH, "https://maps.googleapis.com/maps/api/distancematrix/json?origins=%s&destinations=%f,%f&language=%s&key=%s", origin, destination.latitude, destination.longitude, language, serverApiKey);
+
+        RequestHelper<DistanceMatrixResponse> distanceMatrixRequest = new RequestHelper<>(ctx, "", url, DistanceMatrixResponse.class, listener);
+        distanceMatrixRequest.executeFormUrlEncoded();
+
+        return distanceMatrixRequest;
+    }
+
+
 }

@@ -157,7 +157,7 @@ public class DriverSignupActivity extends BasicBackActivity implements RequestLi
             @Override
             public void afterTextChanged(Editable s) {
                 if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX) {
-                    if (!Utils.isValidEgyptianMobileNumber("0" + s.toString())) {
+                    if (!Utils.isValidEgyptianMobileNumber(s.toString()) && !Utils.isValidEgyptianMobileNumber("0" + s.toString())) {
                         etMobile.setError(getString(R.string.not_valid_mobile));
                     } else {
                         etMobile.setError(null);
@@ -546,7 +546,7 @@ public class DriverSignupActivity extends BasicBackActivity implements RequestLi
         }
 
         if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX) {
-            if (!Utils.isValidEgyptianMobileNumber("0" + etMobile.getText().toString())) {
+            if (!Utils.isValidEgyptianMobileNumber(Utils.getText(etMobile)) && !Utils.isValidEgyptianMobileNumber("0" + Utils.getText(etMobile))) {
                 etMobile.setError(getString(R.string.not_valid_mobile));
                 valid = false;
             } else {
@@ -619,10 +619,13 @@ public class DriverSignupActivity extends BasicBackActivity implements RequestLi
             return;
 
         String code = new CountriesUtils().getCountryCodes()[spinner.getSelectedItemPosition()];
+        String mobile = Utils.getText(etMobile);
+        if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX && mobile.charAt(0) == '0') //if the egyptian number starts with 0
+            code = "+2";
 
         dialog = DialogUtils.showProgressDialog(this, R.string.registering, false);
         Utils.hideKeyboard(etMobile);
-        DriverRequests.driverSignup(this, this, Utils.getText(etFirstName), Utils.getText(etLastName), Utils.getText(etEmail), Utils.getText(etPassword), code + Utils.getText(etMobile), imageUserPhotoCropped, imageCarPhotoCropped, imageIdFrontPhotoCropped, imageIdBackPhotoCropped, imageDriverLicenceFrontPhotoCropped, imageDriverLicenceBackPhotoCropped, imageCarLicenceFrontPhotoCropped, imageCarLicenceBackPhotoCropped);
+        DriverRequests.driverSignup(this, this, Utils.getText(etFirstName), Utils.getText(etLastName), Utils.getText(etEmail), Utils.getText(etPassword), code + mobile, imageUserPhotoCropped, imageCarPhotoCropped, imageIdFrontPhotoCropped, imageIdBackPhotoCropped, imageDriverLicenceFrontPhotoCropped, imageDriverLicenceBackPhotoCropped, imageCarLicenceFrontPhotoCropped, imageCarLicenceBackPhotoCropped);
 
     }
 

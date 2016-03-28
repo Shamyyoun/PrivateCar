@@ -57,6 +57,7 @@ import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.DistanceMatrixResponse;
 import com.privatecar.privatecar.models.responses.NearDriversResponse;
 import com.privatecar.privatecar.models.responses.NearbyPlacesResponse;
+import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
@@ -221,8 +222,8 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         switch (v.getId()) {
             case R.id.btn_search:
                 try {
-                    Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
-//                    Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
+//                    Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
+                    Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
                     startActivityForResult(intent, Const.REQUEST_PLACE_AUTOCOMPLETE);
                 } catch (GooglePlayServicesRepairableException e) {
                 } catch (GooglePlayServicesNotAvailableException e) {
@@ -518,31 +519,18 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         return requestNearDrivers;
     }
 
-    private RequestHelper<NearbyPlacesResponse> getNearbyPlaces() {
+    private void getNearbyPlaces() {
         LatLng latLng = map.getCameraPosition().target;
-        int radiusInMeters = 1000; //1000 meters
-        String language = Utils.getAppLanguage();
-        String serverApiKey = getString(R.string.server_api_key);
-
-        String url = String.format(Locale.ENGLISH, "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=%d&language=%s&key=%s", latLng.latitude, latLng.longitude, radiusInMeters, language, serverApiKey);
 
         if (requestNearbyPlaces != null) requestNearbyPlaces.cancel(false);
-        requestNearbyPlaces = new RequestHelper<>(this, "", url, NearbyPlacesResponse.class, this);
-        requestNearbyPlaces.executeFormUrlEncoded();
-        return requestNearbyPlaces;
+        requestNearbyPlaces = CommonRequests.getNearbyPlacesByPlacesApi(this, this, latLng);
     }
 
     private void getNearestDriverArrivalTime(NearDriver nearestDriver) {
-
         LatLng latLng = map.getCameraPosition().target;
-        String language = Utils.getAppLanguage();
-        String serverApiKey = getString(R.string.server_api_key);
 
-        String url = String.format(Locale.ENGLISH, "https://maps.googleapis.com/maps/api/distancematrix/json?origins=%s&destinations=%f,%f&language=%s&key=%s", nearestDriver.getLastLocation(), latLng.latitude, latLng.longitude, language, serverApiKey);
         if (distanceMatrixRequest != null) distanceMatrixRequest.cancel(false);
-        distanceMatrixRequest = new RequestHelper<>(this, "", url, DistanceMatrixResponse.class, this);
-        distanceMatrixRequest.executeFormUrlEncoded();
-
+        distanceMatrixRequest = CommonRequests.getTravelTimeByDistanceMatrixApi(this, this, nearestDriver.getLastLocation(), latLng);
     }
 
     @Override

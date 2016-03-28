@@ -33,7 +33,6 @@ import com.google.android.gms.common.api.Status;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.adapters.CountryAdapter;
-import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
@@ -183,7 +182,7 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
             @Override
             public void afterTextChanged(Editable s) {
                 if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX) {
-                    if (!Utils.isValidEgyptianMobileNumber("0" + s.toString())) {
+                    if (!Utils.isValidEgyptianMobileNumber(s.toString()) && !Utils.isValidEgyptianMobileNumber("0" + s.toString())) {
                         etMobile.setError(getString(R.string.not_valid_mobile));
                     } else {
                         etMobile.setError(null);
@@ -299,7 +298,8 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
         }
 
         if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX) {
-            if (!Utils.isValidEgyptianMobileNumber("0" + Utils.getText(etMobile))) {
+            if (!Utils.isValidEgyptianMobileNumber(Utils.getText(etMobile))
+                    && !Utils.isValidEgyptianMobileNumber("0" + Utils.getText(etMobile))) {
                 etMobile.setError(getString(R.string.not_valid_mobile));
                 valid = false;
             } else {
@@ -314,9 +314,13 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
         if (!customerValidation()) return;
 
         String code = new CountriesUtils().getCountryCodes()[spinner.getSelectedItemPosition()];
+        String mobile = Utils.getText(etMobile);
+        if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX && mobile.charAt(0) == '0') //if the egyptian number starts with 0
+            code = "+2";
+
         showProgressDialog(R.string.registering);
         Utils.hideKeyboard(etMobile);
-        CustomerRequests.regCustomerEmailPassword(this, this, Utils.getText(etFirstName), Utils.getText(etLastName), Utils.getText(etEmail), Utils.getText(etPassword), code + Utils.getText(etMobile));
+        CustomerRequests.regCustomerEmailPassword(this, this, Utils.getText(etFirstName), Utils.getText(etLastName), Utils.getText(etEmail), Utils.getText(etPassword), code + mobile);
 
     }
 
