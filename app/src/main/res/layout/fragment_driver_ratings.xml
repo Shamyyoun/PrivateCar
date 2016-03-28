@@ -32,7 +32,7 @@
             style="@style/white_medium_bold_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your Rate" />
+            android:text="@string/your_rate" />
 
         <TextView
             android:id="@+id/tv_rating"
@@ -53,14 +53,15 @@
                 style="@style/white_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LifeTime Trips: " />
+                android:layout_marginEnd="5dp"
+                android:text="@string/total_trips" />
 
             <TextView
                 android:id="@+id/tv_trips_count"
                 style="@style/white_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="200 driverTrip" />
+                tools:text="200" />
         </LinearLayout>
     </LinearLayout>
 
@@ -71,9 +72,10 @@
         android:layout_below="@+id/layout_header"
         android:layout_margin="15dp"
         android:layout_marginBottom="5dp"
-        android:text="Important Links: "
+        android:text="@string/important_links"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        tools:visibility="visible"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_ads"

@@ -2,6 +2,7 @@ package com.privatecar.privatecar.activities;
 
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -33,6 +34,23 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // a work around for the actionbar title, not respecting the default language localization set.
+        // http://stackoverflow.com/a/28113929
+        try {
+            ActivityInfo ai = getPackageManager().getActivityInfo(getComponentName(), PackageManager.GET_ACTIVITIES | PackageManager.GET_META_DATA);
+            if (ai.labelRes != 0) {
+                if (getSupportActionBar() != null)
+                    getSupportActionBar().setTitle(ai.labelRes);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

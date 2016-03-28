@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="5dp"
     android:background="@drawable/yellowish_rounded_corners_shape"
     android:gravity="center_vertical"
@@ -17,13 +18,13 @@
             style="@style/white_medium_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contact Cars:" />
+            tools:text="Contact Cars:" />
 
         <TextView
             android:id="@+id/tv_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="www.contactcars.com"
+            tools:text="www.contactcars.com"
             android:textColor="@color/textColorPrimary" />
     </LinearLayout>
 
@@ -40,6 +41,6 @@
         android:drawablePadding="5dp"
         android:drawableStart="@drawable/globe_icon"
         android:minHeight="40dp"
-        android:text="Visit Website"
+        android:text="@string/visit_website"
         android:textAllCaps="false" />
 </LinearLayout>

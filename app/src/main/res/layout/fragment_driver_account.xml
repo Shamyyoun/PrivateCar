@@ -42,14 +42,14 @@
                     style="@style/white_medium_capitalized_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Current Car" />
+                    android:text="@string/current_car" />
 
                 <TextView
                     android:id="@+id/tv_current_car"
                     style="@style/white_medium_capitalized_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="-----------" />
+                    tools:text="-----------" />
 
                 <Button
                     android:id="@+id/btn_change_car"
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/yellowish_rounded_corners_selector"
-                    android:text="Change Car" />
+                    android:text="@string/change_car" />
 
             </LinearLayout>
 
@@ -72,14 +72,14 @@
                     style="@style/white_medium_capitalized_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Car Type" />
+                    android:text="@string/car_type" />
 
                 <TextView
                     android:id="@+id/tv_car_type"
                     style="@style/white_medium_capitalized_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="-----------" />
+                    tools:text="-----------" />
 
                 <Button
                     android:id="@+id/btn_change_type"
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/yellowish_rounded_corners_selector"
-                    android:text="Change Type" />
+                    android:text="@string/change_type" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/yellowish_rounded_corners_shape"
                 android:gravity="center"
-                android:text="your balance: 1000 EGP" />
+                tools:text="your balance: 1000 EGP" />
 
             <LinearLayout
                 android:id="@+id/layout_add_car"

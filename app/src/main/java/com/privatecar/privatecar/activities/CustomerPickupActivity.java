@@ -555,7 +555,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                 //TODO: animate near drivers markers
                 if (nearDrivers.size() == 0) { //no near drivers found
                     Utils.showLongToast(getApplicationContext(), R.string.no_driver);
-                    setMarkerText("?");
+                    setMarkerText(getString(R.string.question_mark));
                 } else if (!nearestDriverArrivalTimeGot) { //near drivers found
                     getNearestDriverArrivalTime(nearDrivers.get(0));
                 }
@@ -577,11 +577,11 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                     setMarkerText(durationInMin + "\n" + getString(R.string.min));
                 } else {
                     Utils.showLongToast(getApplicationContext(), R.string.could_not_get_time);
-                    setMarkerText("?");
+                    setMarkerText(getString(R.string.question_mark));
                 }
             } else {
                 Utils.showLongToast(getApplicationContext(), R.string.could_not_get_time);
-                setMarkerText("?");
+                setMarkerText(getString(R.string.question_mark));
             }
         }
     }

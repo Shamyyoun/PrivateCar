@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Last driverTrip" />
+            android:text="@string/last_trip" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,14 +46,15 @@
                 style="@style/yellowish_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="fares: " />
+                android:layout_marginEnd="5dp"
+                android:text="@string/fare" />
 
             <TextView
                 android:id="@+id/tv_last_trip_price"
                 style="@style/white_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0 EGP" />
+                tools:text="0 EGP" />
 
             <View
                 android:layout_width="0dp"
@@ -65,14 +66,15 @@
                 style="@style/yellowish_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date: " />
+                android:layout_marginEnd="5dp"
+                android:text="@string/date" />
 
             <TextView
                 android:id="@+id/tv_last_trip_date"
                 style="@style/white_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="dd/mm/yyyy" />
+                tools:text="dd/mm/yyyy" />
         </LinearLayout>
     </LinearLayout>
 
@@ -87,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="50dp"
-            android:text="From"
+            android:text="@string/from"
             android:textColor="@color/grayish" />
 
         <TextView
@@ -117,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="50dp"
-            android:text="To"
+            android:text="@string/to"
             android:textColor="@color/grayish" />
 
         <TextView
@@ -140,6 +142,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@drawable/yellowish_rounded_corners_selector"
-        android:text="@string/search_for_period"
+        android:text="@string/search"
         android:textSize="@dimen/medium_text_size" />
 </LinearLayout>
