@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName;
  * Created by basim on 19/3/16.
  */
 public class NearDriver {
+
+    private int id;
     @SerializedName("first_name")
     @Expose
     private String firstName;
@@ -28,6 +30,8 @@ public class NearDriver {
     @SerializedName("last_location")
     @Expose
     private String lastLocation;
+    private float bearing;
+
     @SerializedName("totaltrips")
     @Expose
     private Integer totaltrips;
@@ -195,4 +199,19 @@ public class NearDriver {
         this.todayhours = todayhours;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public float getBearing() {
+        return bearing;
+    }
+
+    public void setBearing(float bearing) {
+        this.bearing = bearing;
+    }
 }

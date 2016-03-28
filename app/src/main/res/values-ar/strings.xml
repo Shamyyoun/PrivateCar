@@ -81,7 +81,7 @@
     <string name="business">بيزنس</string>
     <string name="full_day">طوال اليوم</string>
     <string name="where_should_we_pick_you_up">اين يجب ان نلتقطك؟</string>
-    <string name="min">د</string>
+    <string name="min">دق</string>
     <string name="your_ride">رحلتك</string>
     <string name="pickup">البداية</string>
 
@@ -269,4 +269,6 @@
     <string name="invite_msg">مرحبا، انا استخدم تطبيق برايفت. يمكنك تجربته الآن مجانا،</string>
     <string name="please_call_us_to_know_more">للمزيد، من فضلك قم بالاتصال بنا</string>
     <string name="change_details">تغيير\nالتفاصيل</string>
+    <string name="no_driver">لا يوجد سائقين</string>
+    <string name="could_not_get_time">لم نتمكن من حساب الوقت</string>
 </resources>

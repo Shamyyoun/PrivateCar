@@ -270,6 +270,8 @@
     <string name="invite_msg">Hi, I\'m using Private app. You can try it now for free,</string>
     <string name="please_call_us_to_know_more">Please call us to know more</string>
     <string name="change_details">Change\nDetails</string>
+    <string name="no_driver">No drivers around</string>
+    <string name="could_not_get_time">Couldn\'t get time</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

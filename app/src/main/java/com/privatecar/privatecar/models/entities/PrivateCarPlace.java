@@ -10,7 +10,7 @@ public class PrivateCarPlace implements Serializable {
     private String address;
     private PrivateCarLocation location;
     private int time;
-    private boolean markerLocation;
+    private boolean markerLocation = false;
 
     public String getName() {
         return name;
