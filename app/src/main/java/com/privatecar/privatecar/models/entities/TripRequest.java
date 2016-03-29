@@ -13,7 +13,7 @@ public class TripRequest implements Serializable {
     private int Id;
     @SerializedName("Code")
     @Expose
-    private int Code;
+    private String Code;
     @SerializedName("Customer")
     @Expose
     private String Customer;
@@ -68,14 +68,14 @@ public class TripRequest implements Serializable {
     /**
      * @return The Code
      */
-    public int getCode() {
+    public String getCode() {
         return Code;
     }
 
     /**
      * @param Code The Code
      */
-    public void setCode(int Code) {
+    public void setCode(String Code) {
         this.Code = Code;
     }
 

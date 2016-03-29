@@ -39,6 +39,7 @@ public class GCMMessageHandler extends GcmListenerService {
             // check logged in user type
             User user = AppUtils.getCachedUser(this);
             if (user != null && user.getType() != null && user.getType() == UserType.DRIVER) {
+
                 // this is a driver user
                 // check the key
                 if (key.equals("trip_request")) {

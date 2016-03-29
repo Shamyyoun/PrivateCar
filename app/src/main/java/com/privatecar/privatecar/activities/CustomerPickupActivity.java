@@ -20,6 +20,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -58,6 +59,7 @@ import com.privatecar.privatecar.models.entities.NearDriver;
 import com.privatecar.privatecar.models.entities.PrivateCarLocation;
 import com.privatecar.privatecar.models.entities.PrivateCarPlace;
 import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.models.enums.CarType;
 import com.privatecar.privatecar.models.responses.DistanceMatrixResponse;
 import com.privatecar.privatecar.models.responses.NearDriversResponse;
 import com.privatecar.privatecar.models.responses.NearbyPlacesResponse;
@@ -83,6 +85,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
     View layoutMap, layoutSearch, layoutMarker;
     TextView tvMarker;
     ProgressBar pbMarker;
+    RadioGroup rgTripType;
     RecyclerView rvNearPlaces;
     List<PrivateCarPlace> nearPlaces = new ArrayList<>();
     PlacesAdapter rvNearPlacesAdapter;
@@ -106,6 +109,8 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
 
     Handler handler = new Handler();
     MapCameraChangeRunnable runnable;
+
+    CarType carType = CarType.ECONOMY;
 
 
     //create coarse location request for updating the heat map
@@ -177,6 +182,24 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         pbMarker = (ProgressBar) findViewById(R.id.pb_marker);
 
         layoutMarker.setVisibility(View.INVISIBLE); //invisible not gone
+
+        rgTripType = (RadioGroup) findViewById(R.id.rg_trip_type);
+        rgTripType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_economy:
+                        carType = CarType.ECONOMY;
+                        break;
+                    case R.id.rb_business:
+                        carType = CarType.BUSINESS;
+                        break;
+                    case R.id.rb_full_day:
+                        AppUtils.showCallCustomerServiceDialog(CustomerPickupActivity.this);
+                        break;
+                }
+            }
+        });
 
         // customize recycler view
         rvNearPlaces = (RecyclerView) findViewById(R.id.recycler_view);
