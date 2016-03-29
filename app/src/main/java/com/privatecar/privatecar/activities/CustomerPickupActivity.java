@@ -16,6 +16,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -42,8 +43,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
@@ -61,6 +65,8 @@ import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
+import com.privatecar.privatecar.utils.LatLngInterpolator;
+import com.privatecar.privatecar.utils.MarkerAnimation;
 import com.privatecar.privatecar.utils.PlayServicesUtils;
 import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
@@ -92,6 +98,8 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
     private boolean firstTime = true; //first time only to move map camera
     RequestHelper<NearDriversResponse> requestNearDrivers;
     List<NearDriver> nearDrivers = new ArrayList<>();
+    SparseArray<Marker> sparseMarkersArray = new SparseArray<>(); //Integer(driverId) , Marker
+
     RequestHelper<NearbyPlacesResponse> requestNearbyPlaces;
     RequestHelper<DistanceMatrixResponse> distanceMatrixRequest;
     private boolean nearestDriverArrivalTimeGot = false; //ensure that request is called only once
@@ -540,12 +548,57 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
             if (nearDriversResponse.isSuccess()) {
                 nearDrivers.clear();
                 nearDrivers.addAll(nearDriversResponse.getDrivers());
-                //TODO: animate near drivers markers
+
                 if (nearDrivers.size() == 0) { //no near drivers found
                     Utils.showLongToast(getApplicationContext(), R.string.no_driver);
-                    setMarkerText(getString(R.string.question_mark));
+                    setMarkerText(getString(R.string.question_mark_without_space));
                 } else if (!nearestDriverArrivalTimeGot) { //near drivers found
                     getNearestDriverArrivalTime(nearDrivers.get(0));
+                }
+
+                if (nearDrivers.size() == 0) {
+                    map.clear(); // clear all markers
+                    sparseMarkersArray.clear(); // clear the map
+                } else {
+                    SparseArray<Marker> tmpSparseMarkersArray = new SparseArray<>();
+
+                    for (NearDriver nearDriver : nearDrivers) {
+                        int id = nearDriver.getId();
+                        String location = nearDriver.getLastLocation();
+                        double lat = Float.parseFloat(location.split(",")[0]);
+                        double lng = Float.parseFloat(location.split(",")[1]);
+                        LatLng nearDriverLatLng = new LatLng(lat, lng);
+                        float bearing = nearDriver.getBearing();
+
+                        if (sparseMarkersArray.indexOfKey(id) >= 0) { // id found in the array
+                            // animate the marker in the array with the new location of the near driver then add it to the tmpSparseArray
+                            Marker marker = sparseMarkersArray.get(id);
+                            MarkerAnimation.animateMarkerToICS(marker, nearDriverLatLng, bearing, new LatLngInterpolator.LinearFixed());
+
+                            tmpSparseMarkersArray.append(id, marker);
+                            sparseMarkersArray.remove(id);
+
+                        } else {
+                            // add a new marker to the map and add it to the tmpSparseMarkersArray
+
+                            Marker marker = map.addMarker(new MarkerOptions()
+                                    .position(nearDriverLatLng)
+                                    .rotation(bearing)
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.car_icon_top_view))
+                                    .anchor(0.5f, 0.5f)
+                                    .flat(true));
+
+                            tmpSparseMarkersArray.append(id, marker);
+                        }
+                    }
+
+                    for (int i = 0; i < sparseMarkersArray.size(); i++) { //remove all remaining markers from the map
+                        Marker marker = sparseMarkersArray.valueAt(i);
+                        marker.remove();
+                        sparseMarkersArray.removeAt(i);
+                    }
+
+                    sparseMarkersArray = tmpSparseMarkersArray;
                 }
             }
         } else if (response instanceof NearbyPlacesResponse) { //nearby places api
@@ -565,11 +618,11 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                     setMarkerText(durationInMin + "\n" + getString(R.string.min));
                 } else {
                     Utils.showLongToast(getApplicationContext(), R.string.could_not_get_time);
-                    setMarkerText(getString(R.string.question_mark));
+                    setMarkerText(getString(R.string.question_mark_without_space));
                 }
             } else {
                 Utils.showLongToast(getApplicationContext(), R.string.could_not_get_time);
-                setMarkerText(getString(R.string.question_mark));
+                setMarkerText(getString(R.string.question_mark_without_space));
             }
         }
     }

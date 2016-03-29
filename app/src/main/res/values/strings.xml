@@ -25,6 +25,7 @@
     <string name="done">Done</string>
     <string name="forgot_password_q">Forgot Password?</string>
     <string name="question_mark">" ?"</string>
+    <string name="question_mark_without_space">"?"</string>
     <string name="menu">Menu</string>
     <string name="book_a_lift">Book A Lift</string>
     <string name="my_rides">My Rides</string>

@@ -19,6 +19,7 @@
     <string name="done">تم</string>
     <string name="forgot_password_q">نسيت كلمة المرور؟</string>
     <string name="question_mark">" ؟"</string>
+    <string name="question_mark_without_space">"؟"</string>
     <string name="menu">القائمة</string>
     <string name="book_a_lift">احجز توصيلة</string>
     <string name="my_rides">رحلاتي</string>
