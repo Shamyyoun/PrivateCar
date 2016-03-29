@@ -147,11 +147,12 @@ public class DriverRequests {
     }
 
 
-    public static RequestHelper<GeneralResponse> updateLocation(Context context, RequestListener<GeneralResponse> listener, String accessToken, String location, String carId, String driverId) {
+    public static RequestHelper<GeneralResponse> updateLocation(Context context, RequestListener<GeneralResponse> listener, String accessToken, String location, float bearing, String carId, String driverId) {
         // prepare parameters
         Map<String, String> params = new HashMap<>();
         params.put("access_token", accessToken);
         params.put("location", location);
+        params.put("bearing", String.valueOf(bearing));
         params.put("carId", carId);
         params.put("driverId", driverId);
 

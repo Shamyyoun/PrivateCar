@@ -22,6 +22,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -33,7 +35,9 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -45,11 +49,15 @@ import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.adapters.PlacesAdapter;
 import com.privatecar.privatecar.models.entities.Config;
+import com.privatecar.privatecar.models.entities.DistanceMatrixElement;
 import com.privatecar.privatecar.models.entities.NearDriver;
 import com.privatecar.privatecar.models.entities.PrivateCarLocation;
 import com.privatecar.privatecar.models.entities.PrivateCarPlace;
 import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.models.responses.DistanceMatrixResponse;
 import com.privatecar.privatecar.models.responses.NearDriversResponse;
+import com.privatecar.privatecar.models.responses.NearbyPlacesResponse;
+import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
@@ -64,13 +72,14 @@ import java.util.List;
 import java.util.Locale;
 
 public class CustomerPickupActivity extends BasicBackActivity implements View.OnClickListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, RequestListener {
+
     ImageButton buttonSearch;
     View layoutMap, layoutSearch, layoutMarker;
     TextView tvMarker;
     ProgressBar pbMarker;
-    RecyclerView recyclerView;
-    List<PrivateCarPlace> places = new ArrayList<>();
-    PlacesAdapter adapter;
+    RecyclerView rvNearPlaces;
+    List<PrivateCarPlace> nearPlaces = new ArrayList<>();
+    PlacesAdapter rvNearPlacesAdapter;
 
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequestCoarse;
@@ -82,11 +91,14 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
 
     private boolean firstTime = true; //first time only to move map camera
     RequestHelper<NearDriversResponse> requestNearDrivers;
-    List<NearDriver> nearDrivers;
-    RequestHelper<String> requestNearPlaces;
+    List<NearDriver> nearDrivers = new ArrayList<>();
+    RequestHelper<NearbyPlacesResponse> requestNearbyPlaces;
+    RequestHelper<DistanceMatrixResponse> distanceMatrixRequest;
+    private boolean nearestDriverArrivalTimeGot = false; //ensure that request is called only once
 
     Handler handler = new Handler();
     MapCameraChangeRunnable runnable;
+
 
     //create coarse location request for updating the heat map
     private void createCoarseLocationRequest() {
@@ -98,6 +110,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         locationRequestCoarse.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
     }
 
+    //a runnable to call some methods in this activity when the map camera is changed
     private static class MapCameraChangeRunnable implements Runnable {
 
         WeakReference<CustomerPickupActivity> activityReference;
@@ -110,6 +123,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         public void run() {
             activityReference.get().getStreetName();
             activityReference.get().getNearbyPlaces();
+            activityReference.get().getNearDrivers();
         }
     }
 
@@ -157,32 +171,29 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         layoutMarker.setVisibility(View.INVISIBLE); //invisible not gone
 
         // customize recycler view
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        rvNearPlaces = (RecyclerView) findViewById(R.id.recycler_view);
+        rvNearPlaces.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvNearPlaces.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+        rvNearPlaces.setHasFixedSize(true);
+        rvNearPlaces.setItemAnimator(new DefaultItemAnimator());
 
-        // ===== DUMMY DATA =====
-
-        for (int i = 0; i < 15; i++) {
-            PrivateCarPlace place = new PrivateCarPlace();
-            place.setName("Title " + i);
-            place.setAddress("Address " + i);
-            place.setTime(5);
-            places.add(place);
-        }
-
-        adapter = new PlacesAdapter(this, places, R.layout.item_places);
-        recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new PlacesAdapter.OnItemClickListener() {
+        rvNearPlacesAdapter = new PlacesAdapter(this, nearPlaces, R.layout.item_places);
+        rvNearPlaces.setAdapter(rvNearPlacesAdapter);
+        rvNearPlacesAdapter.setOnItemClickListener(new PlacesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                // open verify trip activity
-                Intent intent = new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class);
-                intent.putExtra(Const.KEY_NOW, now);
-                intent.putExtra(Const.KEY_PICKUP_PLACE, places.get(position));
-                startActivity(intent);
+                PrivateCarPlace place = nearPlaces.get(position);
+
+                if (place.isMarkerLocation()) {
+                    // open verify trip activity
+                    Intent intent = new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class);
+                    intent.putExtra(Const.KEY_NOW, now);
+                    intent.putExtra(Const.KEY_PICKUP_PLACE, nearPlaces.get(position));
+                    startActivity(intent);
+                } else {
+                    LatLng latLng = new LatLng(place.getLocation().getLat(), place.getLocation().getLng());
+                    map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                }
             }
         });
     }
@@ -210,7 +221,13 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_search:
-                // TODO
+                try {
+//                    Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
+                    Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
+                    startActivityForResult(intent, Const.REQUEST_PLACE_AUTOCOMPLETE);
+                } catch (GooglePlayServicesRepairableException e) {
+                } catch (GooglePlayServicesNotAvailableException e) {
+                }
                 break;
         }
     }
@@ -303,9 +320,20 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Const.REQUEST_COARSE_LOCATION_PERMISSION && resultCode == RESULT_OK) {//this request is sent in DriverHomeFragment
+        if (requestCode == Const.REQUEST_COARSE_LOCATION_PERMISSION && resultCode == RESULT_OK) {
             Log.e(Const.LOG_TAG, "resultCode: " + resultCode);
             onConnected(null);
+        } else if (requestCode == Const.REQUEST_PLACE_AUTOCOMPLETE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                map.moveCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
+                Log.e("_____", "Place: " + place.getName() + ", " + place.getAddress() + ", " + place.getLatLng().toString());
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
+                Log.i("____", status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
         }
     }
 
@@ -358,7 +386,8 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
     private void getStreetName() {
         Log.e("_______", "getStreetName");
 
-        if (getAddressAsyncTask != null) getAddressAsyncTask.cancel(true);
+        if (getAddressAsyncTask != null && !getAddressAsyncTask.isCancelled())
+            getAddressAsyncTask.cancel(false);
 
         LatLng latLng = map.getCameraPosition().target;
         getAddressAsyncTask = new GetAddressAsyncTask(geocoder, latLng, this);
@@ -366,8 +395,6 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
     }
 
     private synchronized void updateMapLocation(Location location) {
-        Utils.LogE(location.toString());
-
         if (map != null) {
             LatLng curLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
@@ -390,7 +417,10 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                         Utils.LogE("__onCameraChange" + cameraPosition.target.toString());
                         //run this after the map settles (after about 2 sec)
                         handler.postDelayed(runnable, 2000);
+                        nearestDriverArrivalTimeGot = false; //reset to call nearest driver arrival time request
                         setMarkerLoading();
+                        nearPlaces.clear();
+                        rvNearPlacesAdapter.notifyDataSetChanged();
                     }
                 });
 
@@ -399,29 +429,10 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         }
     }
 
-    @Override
-    public synchronized void onSuccess(Object response, String apiName) {
-        if (response instanceof NearDriversResponse) {
-            NearDriversResponse nearDriversResponse = (NearDriversResponse) response;
-            if (nearDriversResponse.isSuccess()) {
-                nearDrivers = nearDriversResponse.getDrivers();
-            }
-        } else if (response instanceof String) { //nearby places api
-            String stringResponse = (String) response;
-            Log.e("****", stringResponse);
-        }
-    }
-
-    @Override
-    public synchronized void onFail(String message, String apiName) {
-        Utils.LogE(message);
-        Utils.showLongToast(this, message);
-    }
-
     private static class GetAddressAsyncTask extends AsyncTask<Void, Void, Void> {
         Geocoder geocoder;
         LatLng latLng;
-        String title;
+        String name;
         String description;
 
         WeakReference<CustomerPickupActivity> activityReference;
@@ -439,7 +450,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
 
                 if (addresses != null && addresses.size() > 0) {
                     Address address = addresses.get(0);
-                    title = address.getAddressLine(0);
+                    name = address.getAddressLine(0);
                     StringBuilder strDescription = new StringBuilder();
                     for (int i = 1; i < address.getMaxAddressLineIndex(); i++) {
                         if (i != 1) strDescription.append(", ");
@@ -448,7 +459,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
 
                     description = strDescription.toString();
 
-                    Utils.LogE("Address: " + title + ", " + description);
+                    Utils.LogE("Address: " + name + ", " + description);
                 } else {
                     Utils.LogE("No address returned");
                 }
@@ -464,38 +475,41 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (activityReference != null) {
-                activityReference.get().updateRVFirstItem(latLng, title, description);
+            if (activityReference != null && !Utils.isEmpty(name)) {
+                activityReference.get().updateRVMarkerLocation(latLng, name, description);
             }
         }
     }
 
     // update the first item in the recyclerView to set it to the marker position
-    public void updateRVFirstItem(LatLng latLng, String title, String description) {
+    public void updateRVMarkerLocation(LatLng latLng, String name, String description) {
+
         PrivateCarPlace place = new PrivateCarPlace();
-        place.setName(title);
+        place.setName(name);
         place.setAddress(description);
         place.setLocation(new PrivateCarLocation(latLng));
         place.setMarkerLocation(true);
 
-        if (places.size() > 0) {
-            if (places.get(0).isMarkerLocation()) {
-                places.set(0, place);
-                adapter.notifyItemChanged(0);
+        if (nearPlaces.size() > 0) {
+            if (nearPlaces.get(0).isMarkerLocation()) {
+                nearPlaces.set(0, place);
+                rvNearPlacesAdapter.notifyItemChanged(0);
             } else {
-                places.add(0, place);
-                adapter.notifyItemInserted(0);
+                nearPlaces.add(0, place);
+                rvNearPlacesAdapter.notifyItemInserted(0);
             }
 
-            recyclerView.smoothScrollToPosition(0);
+            rvNearPlaces.smoothScrollToPosition(0);
+        } else {
+            nearPlaces.add(place);
+            rvNearPlacesAdapter.notifyItemInserted(0);
         }
-
     }
 
     //get near drivers
     private RequestHelper<NearDriversResponse> getNearDrivers() {
         if (requestNearDrivers != null)
-            requestNearDrivers.cancel(true); //cancel the request before making new one
+            requestNearDrivers.cancel(false); //cancel the request before making new one
 
         User user = AppUtils.getCachedUser(getApplicationContext());
         LatLng latLng = map.getCameraPosition().target;
@@ -505,19 +519,65 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         return requestNearDrivers;
     }
 
-    private RequestHelper<String> getNearbyPlaces() {
+    private void getNearbyPlaces() {
         LatLng latLng = map.getCameraPosition().target;
-        int radiusInMeters = 5000; //5000 meters
-        String language = Utils.getAppLanguage();
-        String serverApiKey = getString(R.string.server_api_key);
 
-        String url = String.format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=%d&language=%s&key=%s", latLng.latitude, latLng.longitude, radiusInMeters, language, serverApiKey);
-
-        if (requestNearPlaces != null) requestNearPlaces.cancel(true);
-        requestNearPlaces = new RequestHelper<>(this, "", url, null, this);
-        requestNearPlaces.executeFormUrlEncoded();
-        return requestNearPlaces;
+        if (requestNearbyPlaces != null) requestNearbyPlaces.cancel(false);
+        requestNearbyPlaces = CommonRequests.getNearbyPlacesByPlacesApi(this, this, latLng);
     }
 
+    private void getNearestDriverArrivalTime(NearDriver nearestDriver) {
+        LatLng latLng = map.getCameraPosition().target;
+
+        if (distanceMatrixRequest != null) distanceMatrixRequest.cancel(false);
+        distanceMatrixRequest = CommonRequests.getTravelTimeByDistanceMatrixApi(this, this, nearestDriver.getLastLocation(), latLng);
+    }
+
+    @Override
+    public synchronized void onSuccess(Object response, String apiName) {
+        if (response instanceof NearDriversResponse) { //near drivers
+            NearDriversResponse nearDriversResponse = (NearDriversResponse) response;
+            if (nearDriversResponse.isSuccess()) {
+                nearDrivers.clear();
+                nearDrivers.addAll(nearDriversResponse.getDrivers());
+                //TODO: animate near drivers markers
+                if (nearDrivers.size() == 0) { //no near drivers found
+                    Utils.showLongToast(getApplicationContext(), R.string.no_driver);
+                    setMarkerText(getString(R.string.question_mark));
+                } else if (!nearestDriverArrivalTimeGot) { //near drivers found
+                    getNearestDriverArrivalTime(nearDrivers.get(0));
+                }
+            }
+        } else if (response instanceof NearbyPlacesResponse) { //nearby places api
+            NearbyPlacesResponse nearbyPlacesResponse = (NearbyPlacesResponse) response;
+            if (nearbyPlacesResponse.isOk()) {
+                nearPlaces.addAll(nearbyPlacesResponse.getPrivateCarPlaces());
+                rvNearPlacesAdapter.notifyDataSetChanged();
+            }
+        } else if (response instanceof DistanceMatrixResponse) {
+            nearestDriverArrivalTimeGot = true;
+            DistanceMatrixResponse distanceMatrixResponse = (DistanceMatrixResponse) response;
+            if (distanceMatrixResponse.isOk()) {
+                DistanceMatrixElement element = distanceMatrixResponse.getRows().get(0).getElements().get(0);
+                if (element.isOk()) {
+                    int duration = element.getDuration().getValue(); // in seconds
+                    int durationInMin = duration / 60 + 1;
+                    setMarkerText(durationInMin + "\n" + getString(R.string.min));
+                } else {
+                    Utils.showLongToast(getApplicationContext(), R.string.could_not_get_time);
+                    setMarkerText(getString(R.string.question_mark));
+                }
+            } else {
+                Utils.showLongToast(getApplicationContext(), R.string.could_not_get_time);
+                setMarkerText(getString(R.string.question_mark));
+            }
+        }
+    }
+
+    @Override
+    public synchronized void onFail(String message, String apiName) {
+        Utils.LogE(message);
+        Utils.showLongToast(this, message);
+    }
 
 }

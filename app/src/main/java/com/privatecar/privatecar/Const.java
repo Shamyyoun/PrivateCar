@@ -11,6 +11,7 @@ public class Const {
     public static final String CLIENT_SECRET = "4c7f6f8fa93d59c45502c0ae8c4a95b";
 
     //activity requests:----------------
+    public static final int REQUEST_PLACE_AUTOCOMPLETE = 198;
     public static final int REQUEST_GPS_SETTINGS = 199;
     public static final int REQUEST_COARSE_LOCATION_PERMISSION = 200;
     public static final int REQUEST_FINE_LOCATION_PERMISSION = 201;

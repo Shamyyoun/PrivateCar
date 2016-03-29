@@ -129,7 +129,7 @@
     <string name="enter_here">Enter here</string>
     <string name="add_promo_code">Add Promo Code</string>
     <string name="select_car">Select Car</string>
-    <string name="both_economy_business">Both&#160;&#160;&#160;(Economy + Business)</string>
+    <string name="both_economy_business">Both (Economy + Business)</string>
     <string name="driver_add_car_confirmation_message">The car will be added after we review it.</string>
     <string name="message_details">Message Details</string>
     <string name="select_full_day_car_type">Select full day car type</string>
@@ -276,6 +276,19 @@
     <string name="add_notes">Add Notes</string>
     <string name="finding_your_private_driver_please_wait">Finding your private driver, please wait...</string>
     <string name="no_drivers_found_now">Sorry, no drivers found now</string>
+    <string name="no_driver">No drivers around</string>
+    <string name="could_not_get_time">Couldn\'t get time</string>
+    <string name="current_car">Current Car</string>
+    <string name="change_type">Change Type</string>
+    <string name="change_car">Change Car</string>
+    <string name="last_trip">Last Trip</string>
+    <string name="fare">Fare</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="search">Search</string>
+    <string name="your_rate">Your Rate</string>
+    <string name="important_links">Important Links</string>
+    <string name="visit_website">Visit Website</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

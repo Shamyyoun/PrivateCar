@@ -70,7 +70,7 @@ public class CustomerSocialSignupActivity extends BasicBackActivity implements R
             @Override
             public void afterTextChanged(Editable s) {
                 if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX) {
-                    if (!Utils.isValidEgyptianMobileNumber("0" + s.toString())) {
+                    if (!Utils.isValidEgyptianMobileNumber(s.toString()) && !Utils.isValidEgyptianMobileNumber("0" + s.toString())) {
                         etMobile.setError(getString(R.string.not_valid_mobile));
                     } else {
                         etMobile.setError(null);
@@ -93,7 +93,7 @@ public class CustomerSocialSignupActivity extends BasicBackActivity implements R
         boolean valid = true;
 
         if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX) {
-            if (!Utils.isValidEgyptianMobileNumber("0" + Utils.getText(etMobile))) {
+            if (!Utils.isValidEgyptianMobileNumber(Utils.getText(etMobile)) && !Utils.isValidEgyptianMobileNumber("0" + Utils.getText(etMobile))) {
                 etMobile.setError(getString(R.string.not_valid_mobile));
                 valid = false;
             } else {
@@ -108,9 +108,13 @@ public class CustomerSocialSignupActivity extends BasicBackActivity implements R
         if (!customerSocialSignupValidation()) return;
 
         String code = new CountriesUtils().getCountryCodes()[spinner.getSelectedItemPosition()];
+        String mobile = Utils.getText(etMobile);
+        if (spinner.getSelectedItemPosition() == Const.EGYPT_INDEX && mobile.charAt(0) == '0') //if the egyptian number starts with 0
+            code = "+2";
+
         progressDialog = DialogUtils.showProgressDialog(this, R.string.registering, true);
         Utils.hideKeyboard(etMobile);
-        CustomerRequests.regCustomerSocial(this, this, firstName, lastName, email, code + Utils.getText(etMobile), provider, id, token);
+        CustomerRequests.regCustomerSocial(this, this, firstName, lastName, email, code + mobile, provider, id, token);
     }
 
     @Override

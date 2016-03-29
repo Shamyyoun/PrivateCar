@@ -280,12 +280,13 @@ public class Utils {
     }
 
     /**
-     * Checks to see if text contains whitespace or no content
+     * Checks to see if text is null or contains whitespace or no content
      *
      * @param charSequence
      * @return true if text contains whitespace or no content otherwise false
      */
     public static boolean isEmpty(CharSequence charSequence) {
+        if (charSequence == null) return true;
         return TextUtils.isEmpty(charSequence.toString().trim());
     }
 

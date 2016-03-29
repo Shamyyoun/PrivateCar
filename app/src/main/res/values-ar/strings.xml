@@ -275,4 +275,18 @@
     <string name="add_notes">اضف ملاحظات</string>
     <string name="finding_your_private_driver_please_wait">جاري البحث عن السائق الخاص بك، برجاء الانتظار</string>
     <string name="no_drivers_found_now">عفواً، لا يوجد سائقين الآن</string>
+    <string name="no_driver">لا يوجد سائقين</string>
+    <string name="could_not_get_time">لم نتمكن من حساب الوقت</string>
+    <string name="currency">جنيه</string>
+    <string name="current_car">السيارة الحالية</string>
+    <string name="change_type">تغيير النوع</string>
+    <string name="change_car">تغيير السيارة</string>
+    <string name="last_trip">آخر رحلة</string>
+    <string name="fare">إيراد الرحلة</string>
+    <string name="from">من</string>
+    <string name="to">إلى</string>
+    <string name="search">بحث</string>
+    <string name="your_rate">تقييمك</string>
+    <string name="important_links">مواقع هامة</string>
+    <string name="visit_website">زيارة الموقع</string>
 </resources>

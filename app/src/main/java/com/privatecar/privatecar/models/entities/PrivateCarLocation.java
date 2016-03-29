@@ -16,6 +16,11 @@ public class PrivateCarLocation implements Serializable {
 
     }
 
+    public PrivateCarLocation(PrivateCarLocation privateCarLocation) {
+        this.lat = privateCarLocation.getLat();
+        this.lng = privateCarLocation.getLng();
+    }
+
     public PrivateCarLocation(android.location.Location location) {
         this.lat = location.getLatitude();
         this.lng = location.getLongitude();

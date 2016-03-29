@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.PrivateCarPlace;
+import com.privatecar.privatecar.utils.Utils;
 
 import java.util.List;
 
@@ -34,7 +35,13 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
 
         // set data
         holder.textName.setText(place.getName());
-        holder.textAddress.setText(place.getAddress());
+        if (!Utils.isEmpty(place.getAddress())) {
+            holder.textAddress.setVisibility(View.VISIBLE);
+            holder.textAddress.setText(place.getAddress());
+        } else {
+            holder.textAddress.setVisibility(View.GONE);
+        }
+
         if (place.isMarkerLocation()) {
             // show pin image
             holder.timeLayout.setVisibility(View.GONE);
