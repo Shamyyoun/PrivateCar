@@ -1,5 +1,7 @@
 package com.privatecar.privatecar.utils;
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -60,5 +62,23 @@ public class DateUtil {
         int hours = c.get(Calendar.HOUR_OF_DAY);
 
         return hours + ":" + minutes + ":" + seconds;
+    }
+
+    public static boolean isCurrentDate(Calendar calendar) {
+        Calendar currentCalendar = Calendar.getInstance(Locale.getDefault());
+        return (calendar.get(Calendar.DAY_OF_MONTH) == currentCalendar.get(Calendar.DAY_OF_MONTH)
+                && calendar.get(Calendar.MONTH) == currentCalendar.get(Calendar.MONTH))
+                && calendar.get(Calendar.YEAR) == currentCalendar.get(Calendar.YEAR);
+    }
+
+    public static boolean isPastDate(Calendar calendar) {
+        Calendar currentCalendar = Calendar.getInstance(Locale.getDefault());
+//        calendar.set(Calendar.SECOND, 0);
+//        currentCalendar.set(Calendar.SECOND, 0);
+
+        Log.e("CUR", "" + currentCalendar.getTimeInMillis());
+        Log.e("CALENDAR", "" + calendar.getTimeInMillis());
+
+        return calendar.getTimeInMillis() < currentCalendar.getTimeInMillis();
     }
 }

@@ -2,7 +2,6 @@ package com.privatecar.privatecar.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -15,8 +14,6 @@ import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.enums.UserType;
 import com.privatecar.privatecar.models.responses.AccessTokenResponse;
-import com.privatecar.privatecar.models.responses.GeneralResponse;
-import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;

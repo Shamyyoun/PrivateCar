@@ -2,7 +2,6 @@ package com.privatecar.privatecar.models.entities;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by basim on 17/2/16.

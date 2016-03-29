@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.User;
-import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.models.responses.PromoCodeResponse;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
@@ -18,7 +17,7 @@ import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class CustomerAddPromoCodeActivity extends BasicBackActivity implements RequestListener<PromoCodeResponse>{
+public class CustomerAddPromoCodeActivity extends BasicBackActivity implements RequestListener<PromoCodeResponse> {
     private EditText etPromoCode;
     private Button btnSave;
 
@@ -77,7 +76,7 @@ public class CustomerAddPromoCodeActivity extends BasicBackActivity implements R
 
         // create and send the request
         User user = AppUtils.getCachedUser(this);
-        CustomerRequests.activatePromoCodde(this, this, user.getAccessToken(), user.getCustomerAccountDetails().getId(), Utils.getText(etPromoCode));
+        CustomerRequests.activatePromoCode(this, this, user.getAccessToken(), user.getCustomerAccountDetails().getId(), Utils.getText(etPromoCode));
     }
 
     @Override

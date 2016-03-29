@@ -1,5 +1,7 @@
 package com.privatecar.privatecar.models.entities;
 
+import com.privatecar.privatecar.utils.Utils;
+
 import java.io.Serializable;
 
 /**
@@ -50,5 +52,14 @@ public class PrivateCarPlace implements Serializable {
 
     public void setLocation(PrivateCarLocation location) {
         this.location = location;
+    }
+
+    public String
+    getFullAddress() {
+        String fullAddress = name;
+        if (!Utils.isNullOrEmpty(address)) {
+            name += " - " + address;
+        }
+        return fullAddress;
     }
 }

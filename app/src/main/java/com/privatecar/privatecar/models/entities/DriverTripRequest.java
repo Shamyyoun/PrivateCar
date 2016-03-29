@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class TripRequest implements Serializable {
+public class DriverTripRequest implements Serializable {
 
     @SerializedName("Id")
     @Expose
@@ -246,5 +246,4 @@ public class TripRequest implements Serializable {
     public void setPaymentType(String PaymentType) {
         this.PaymentType = PaymentType;
     }
-
 }

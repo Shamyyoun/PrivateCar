@@ -1,7 +1,5 @@
 package com.privatecar.privatecar.models.responses;
 
-import java.util.ArrayList;
-
 /**
  * Created by basim on 26/2/16.
  */

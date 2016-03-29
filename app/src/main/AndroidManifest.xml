@@ -48,8 +48,8 @@
 
         <!-- commented because the com.google.android.geo.API_KEY is enough  -->
         <!--<meta-data-->
-            <!--android:name="com.google.android.maps.v2.API_KEY"-->
-            <!--android:value="@string/android_api_key" />-->
+        <!--android:name="com.google.android.maps.v2.API_KEY"-->
+        <!--android:value="@string/android_api_key" />-->
 
         <!-- ============= Google Places Api =============== -->
 
@@ -251,6 +251,9 @@
         <activity
             android:name=".activities.CustomerSocialSignupActivity"
             android:label="@string/sign_up" />
+        <activity
+            android:name=".activities.CustomerAddNotesToCaptainActivity"
+            android:label="@string/add_notes" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="da607939978304e5bdac277f3be706343200c524" />

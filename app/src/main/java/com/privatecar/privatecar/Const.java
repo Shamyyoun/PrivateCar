@@ -42,6 +42,7 @@ public class Const {
     public static final int REQUEST_MESSAGE_DETAILS = 1025;
     public static final int REQUEST_GOOGLE_PLUS_SIGN_IN = 1026;
     public static final int REQUEST_ADD_DETAILS = 1027;
+    public static final int REQUEST_ADD_NOTES = 1028;
 
     //app level constants:--------------
     public static final String LOG_TAG = "Private Car";
@@ -99,6 +100,7 @@ public class Const {
     public static final String MESSAGE_CUSTOMER_TRIPS = "customertrips";
     public static final String MESSAGE_CUSTOMER_FARES = "getfares";
     public static final String MESSAGE_CUSTOMER_ACTIVATE_PROMO_CODE = "activatepromocode";
+    public static final String MESSAGE_CUSTOMER_REQUEST_TRIP = "requesttrip";
 
 
     //messages (driver):----
@@ -149,10 +151,25 @@ public class Const {
     public static final String MSG_PARAM_TOKEN = "token";
     public static final String MSG_PARAM_PROVIDER = "provider";
     public static final String MSG_PARAM_CODE = "code";
-    public static final String MSG_PARAM_CUSTOMER_ID = "CustomerId";
+    public static final String MSG_PARAM_CUSTOMERID = "CustomerId";
     public static final String MSG_PARAM_CLASS = "class";
     public static final String MSG_PARAM_PICKUP_TIME = "pickup_time";
     public static final String MSG_PARAM_PROMO_CODE = "PromoCode";
+    public static final String MSG_PARAM_CUSTOMER_ID = "customer_id";
+    public static final String MSG_PARAM_PICKUP_ADDRESS = "pickup_address";
+    public static final String MSG_PARAM_SERVICE_TYPE = "service_type";
+    public static final String MSG_PARAM_PAYMENT_TYPE = "payment_type";
+    public static final String MSG_PARAM_PICKUP_LOCATION = "pickup_location";
+    public static final String MSG_PARAM_PICKUP_NOW = "pickup_now";
+    public static final String MSG_PARAM_DESTINATION_TYPE = "destination_type";
+    public static final String MSG_PARAM_DESTINATION_LOCATION = "destination_location";
+    public static final String MSG_PARAM_ESTIMATE_DISTANCE = "estimate_distance";
+    public static final String MSG_PARAM_ESTIMATE_FARE = "estimate_fare";
+    public static final String MSG_PARAM_ESTIMATE_TIME = "estimate_time";
+    public static final String MSG_PARAM_PICKUP_DATE_TIME = "pickup_date_time";
+    public static final String MSG_PARAM_DESTINATION_ADDRESS = "destination_address";
+    public static final String MSG_PARAM_NOTES_FOR_DRIVER = "notes_for_driver";
+    public static final String MSG_PARAM_PICKUP_ADDRESS_NOTES = "pickup_address_notes";
 
     //Intent & bundle keys
     public static final String KEY_TRIP_REQUEST = "trip_request";
@@ -168,4 +185,5 @@ public class Const {
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_PICKUP_PLACE = "pickup_place";
     public static final String KEY_DETAILS = "details";
+    public static final String KEY_CAR_TYPE = "car_type";
 }

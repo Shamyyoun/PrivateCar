@@ -1,9 +1,6 @@
 package com.privatecar.privatecar.dialogs;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.privatecar.privatecar.R;
 

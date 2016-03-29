@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.DriverAccountDetails;
-import com.privatecar.privatecar.models.entities.TripRequest;
+import com.privatecar.privatecar.models.entities.DriverTripRequest;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.enums.PaymentType;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
@@ -26,7 +26,7 @@ import com.privatecar.privatecar.utils.Utils;
 public class DriverTripRequestActivity extends BaseActivity implements RequestListener<GeneralResponse> {
     public static DriverTripRequestActivity currentInstance;
 
-    private TripRequest tripRequest;
+    private DriverTripRequest tripRequest;
     private TextView tvOrderNo;
     private TextView tvRideNo;
     private TextView tvClientName;
@@ -45,7 +45,7 @@ public class DriverTripRequestActivity extends BaseActivity implements RequestLi
         currentInstance = this;
 
         // get trip request object
-        tripRequest = (TripRequest) getIntent().getSerializableExtra(Const.KEY_TRIP_REQUEST);
+        tripRequest = (DriverTripRequest) getIntent().getSerializableExtra(Const.KEY_TRIP_REQUEST);
 
         // init views
         tvOrderNo = (TextView) findViewById(R.id.tv_order_no);

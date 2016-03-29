@@ -13,7 +13,6 @@ import com.privatecar.privatecar.fragments.ImageSlideFragment;
 import com.privatecar.privatecar.models.wrappers.SerializableListWrapper;
 import com.viewpagerindicator.CirclePageIndicator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DriverDocumentDetailsActivity extends BaseActivity {

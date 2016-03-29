@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.DriverAccountDetails;
-import com.privatecar.privatecar.models.entities.TripRequest;
+import com.privatecar.privatecar.models.entities.DriverTripRequest;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.enums.PaymentType;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
@@ -31,7 +31,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class DriverTripInfoActivity extends BaseActivity implements RequestListener<GeneralResponse> {
-    private TripRequest tripRequest;
+    private DriverTripRequest tripRequest;
     private ImageView ivDefUserImage;
     private ImageView ivUserImage;
     private TextView tvRideNo;
@@ -48,7 +48,7 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
         setContentView(R.layout.activity_driver_trip_info);
 
         // get trip request object
-        tripRequest = (TripRequest) getIntent().getSerializableExtra(Const.KEY_TRIP_REQUEST);
+        tripRequest = (DriverTripRequest) getIntent().getSerializableExtra(Const.KEY_TRIP_REQUEST);
 
         // init views
         ivDefUserImage = (ImageView) findViewById(R.id.iv_user_def_image);
