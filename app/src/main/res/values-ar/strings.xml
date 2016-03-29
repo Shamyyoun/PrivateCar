@@ -269,4 +269,10 @@
     <string name="invite_msg">مرحبا، انا استخدم تطبيق برايفت. يمكنك تجربته الآن مجانا،</string>
     <string name="please_call_us_to_know_more">للمزيد، من فضلك قم بالاتصال بنا</string>
     <string name="change_details">تغيير\nالتفاصيل</string>
+    <string name="invalid_date">تاريخ غير صالح</string>
+    <string name="select_payment_type">اختر نوع الدفع</string>
+    <string name="add_notes_to_the_captain">قم باضافة ملاحظات للكابتن</string>
+    <string name="add_notes">اضف ملاحظات</string>
+    <string name="finding_your_private_driver_please_wait">جاري البحث عن السائق الخاص بك، برجاء الانتظار</string>
+    <string name="no_drivers_found_now">عفواً، لا يوجد سائقين الآن</string>
 </resources>

@@ -229,5 +229,12 @@ public class RequestHelper<T> {
         return !(future.isCancelled() || future.isDone()) && future.cancel(interruptThread);
     }
 
-
+    /**
+     * method, used to set the time out of the future requests
+     *
+     * @param timeOut
+     */
+    public static void setTimeOut(int timeOut) {
+        RequestHelper.TIMEOUT = timeOut;
+    }
 }

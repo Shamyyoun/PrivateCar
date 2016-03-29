@@ -1,16 +1,14 @@
 package com.privatecar.privatecar.models.enums;
 
-import java.io.Serializable;
-
 /**
  * Created by Shamyyoun on 2/24/2016.
  */
-public enum CarType implements Serializable {
-    ECONOMY("1"), BUSINESS("2");
+public enum AddressType {
+    ADDRESS("1"), LEAD_DRIVER("2");
 
     private String value;
 
-    CarType(String value) {
+    AddressType(String value) {
         this.value = value;
     }
 

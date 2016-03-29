@@ -3,7 +3,7 @@ package com.privatecar.privatecar.models.payload;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.privatecar.privatecar.models.entities.TripRequest;
+import com.privatecar.privatecar.models.entities.DriverTripRequest;
 
 public class TripRequestPayload {
 
@@ -12,7 +12,7 @@ public class TripRequestPayload {
     private String key;
     @SerializedName("content")
     @Expose
-    private TripRequest tripRequest;
+    private DriverTripRequest tripRequest;
 
     /**
      * @return The key
@@ -31,14 +31,14 @@ public class TripRequestPayload {
     /**
      * @return The tripRequest
      */
-    public TripRequest getTripRequest() {
+    public DriverTripRequest getTripRequest() {
         return tripRequest;
     }
 
     /**
      * @param tripRequest The tripRequest
      */
-    public void setTripRequest(TripRequest tripRequest) {
+    public void setTripRequest(DriverTripRequest tripRequest) {
         this.tripRequest = tripRequest;
     }
 

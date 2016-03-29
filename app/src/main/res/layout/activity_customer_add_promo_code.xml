@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="15dp"
-        android:background="@drawable/petroleum_rounded_corners_shape"
+        android:background="@drawable/petroleum_rounded_corners_selector"
         android:text="@string/save"
         android:textAllCaps="true"
         android:textAppearance="?android:textAppearanceMedium"

@@ -1,7 +1,6 @@
 package com.privatecar.privatecar.requests;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.models.enums.GrantType;

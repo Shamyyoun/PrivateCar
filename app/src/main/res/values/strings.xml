@@ -270,6 +270,12 @@
     <string name="invite_msg">Hi, I\'m using Private app. You can try it now for free,</string>
     <string name="please_call_us_to_know_more">Please call us to know more</string>
     <string name="change_details">Change\nDetails</string>
+    <string name="invalid_date">Invalid date</string>
+    <string name="select_payment_type">Select Payment Type</string>
+    <string name="add_notes_to_the_captain">Add notes to the captain</string>
+    <string name="add_notes">Add Notes</string>
+    <string name="finding_your_private_driver_please_wait">Finding your private driver, please wait...</string>
+    <string name="no_drivers_found_now">Sorry, no drivers found now</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

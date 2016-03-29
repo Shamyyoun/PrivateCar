@@ -27,6 +27,7 @@
         android:background="@color/colorAccent" />
 
     <DatePicker
+        android:id="@+id/date_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="-15dp"
@@ -51,6 +52,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btn_cancel"
             style="?attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -66,6 +68,7 @@
             android:background="@color/grayish_highlight" />
 
         <Button
+            android:id="@+id/btn_set"
             style="?attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

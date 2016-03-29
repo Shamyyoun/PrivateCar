@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -37,6 +36,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_pickup_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
@@ -110,6 +110,7 @@
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackgroundBorderless"
+                    android:enabled="false"
                     android:gravity="center"
                     android:text="@string/add_dropoff"
                     android:textAppearance="?android:textAppearanceSmall"
@@ -138,10 +139,11 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_pickup_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:gravity="center"
-                    android:text="@string/as_soon_as_possible"
                     android:textAppearance="?android:textAppearanceSmall"
                     android:textColor="@color/grayish_light" />
             </LinearLayout>
@@ -189,18 +191,9 @@
                 android:textColor="@color/colorAccent"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_full_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/full_day"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
 
             <RadioGroup
+                android:id="@+id/rg_car_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -268,9 +261,11 @@
                     android:background="@color/grayish_highlight" />
 
                 <LinearLayout
+                    android:id="@+id/layout_payment_type"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
                     android:orientation="vertical">
 
                     <TextView
@@ -282,6 +277,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_payment_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
@@ -309,8 +305,9 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tv_add_notes"
                         android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
                         android:layout_gravity="center"
                         android:background="?selectableItemBackgroundBorderless"
                         android:drawablePadding="5dp"

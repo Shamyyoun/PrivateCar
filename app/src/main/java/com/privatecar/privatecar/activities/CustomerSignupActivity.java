@@ -33,7 +33,6 @@ import com.google.android.gms.common.api.Status;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.adapters.CountryAdapter;
-import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;

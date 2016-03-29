@@ -6,7 +6,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.models.entities.Message;
 
 /**
  * Created by Shamyyoun on 2/17/2016.

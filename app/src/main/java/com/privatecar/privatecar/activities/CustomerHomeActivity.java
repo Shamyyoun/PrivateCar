@@ -33,7 +33,6 @@ import com.privatecar.privatecar.utils.AppUtils;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.net.UnknownServiceException;
 
 public class CustomerHomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
