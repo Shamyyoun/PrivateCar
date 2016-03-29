@@ -219,7 +219,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
         // get cached user & send the request
         User user = AppUtils.getCachedUser(activity);
         //cancel the request before making new one
-        if (customersStatsRequest != null) customersStatsRequest.cancel(true);
+        if (customersStatsRequest != null) customersStatsRequest.cancel(false);
 
         PrivateCarLocation tmpLocation = new PrivateCarLocation();
         tmpLocation.setLat(location.getLatitude());
@@ -403,7 +403,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
         googleApiClient.disconnect();
 
         // cancel states request
-        if (customersStatsRequest != null) customersStatsRequest.cancel(true);
+        if (customersStatsRequest != null) customersStatsRequest.cancel(false);
 
         Utils.LogE("onStop");
     }
@@ -571,7 +571,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     @Override
     public void onDestroy() {
         // cancel details request
-        if (accountDetailsRequest != null) accountDetailsRequest.cancel(true);
+        if (accountDetailsRequest != null) accountDetailsRequest.cancel(false);
         super.onDestroy();
     }
 }

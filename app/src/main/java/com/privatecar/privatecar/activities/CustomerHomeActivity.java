@@ -22,7 +22,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
-import com.privatecar.privatecar.fragments.BookALiftFragment;
+import com.privatecar.privatecar.fragments.CustomerBookALiftFragment;
 import com.privatecar.privatecar.fragments.CustomerMyRidesFragment;
 import com.privatecar.privatecar.fragments.CustomerPricesFragment;
 import com.privatecar.privatecar.fragments.CustomerSettingsFragment;
@@ -71,7 +71,7 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
         if (savedInstanceState == null) {
             // load book lift fragment
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.layout_fragment_container, new BookALiftFragment(), BookALiftFragment.TAG)
+                    .replace(R.id.layout_fragment_container, new CustomerBookALiftFragment(), CustomerBookALiftFragment.TAG)
                     .commit();
         } else {
             // update personal info from the cached user
@@ -98,7 +98,7 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
         Fragment fragment = null;
         switch (item.getItemId()) {
             case R.id.nav_book_lift:
-                fragment = new BookALiftFragment();
+                fragment = new CustomerBookALiftFragment();
                 break;
 
             case R.id.nav_my_rides:
@@ -215,11 +215,11 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
         }
 
         // check request code
-        if (requestCode == Const.REQUEST_COARSE_LOCATION_PERMISSION && resultCode == RESULT_OK) {//this request is sent in BookALiftFragment
+        if (requestCode == Const.REQUEST_COARSE_LOCATION_PERMISSION && resultCode == RESULT_OK) {//this request is sent in CustomerBookALiftFragment
             Log.e(Const.LOG_TAG, "resultCode: " + resultCode);
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_fragment_container);
-            if (fragment instanceof BookALiftFragment) {
-                BookALiftFragment homeFragment = (BookALiftFragment) fragment;
+            if (fragment instanceof CustomerBookALiftFragment) {
+                CustomerBookALiftFragment homeFragment = (CustomerBookALiftFragment) fragment;
                 homeFragment.onConnected(null);
             }
         }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.privatecar.privatecar.fragments.BookALiftFragment">
+    tools:context=".fragments.CustomerBookALiftFragment">
 
     <RelativeLayout
         android:id="@+id/layout_info"

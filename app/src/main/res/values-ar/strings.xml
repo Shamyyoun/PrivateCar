@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Private Car</string>
-    <string name="customer">راكب</string>
-    <string name="driver">سائق</string>
-    <string name="sign_in">تسجيل الدخول</string>
+    <string name="customer">العميل</string>
+    <string name="driver">السائق</string>
+    <string name="sign_in">الدخول</string>
     <string name="sign_up">التسجيل</string>
     <string name="call">اتصال</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
-    <string name="loading">جاري التحميل...</string>
+    <string name="loading">جاري التحميل…</string>
     <string name="or">أو</string>
     <string name="first_name">الاسم الاول</string>
     <string name="last_name">الاسم الاخير</string>
@@ -38,7 +38,7 @@
     <string name="pick_you_up_soon">يلتقطتك في اقرب وقت</string>
     <string name="later">لاحقا</string>
     <string name="scheduled_pick_up">جدولة ميعاد</string>
-    <string name="your_photo">صورتك</string>
+    <string name="your_photo">الصورة الشخصية</string>
     <string name="car_photo">صورة السيارة</string>
     <string name="id_front">البطاقة من الأمام</string>
     <string name="id_back">البطاقة من الخلف</string>
@@ -58,14 +58,14 @@
     <string name="low_crowd_clients"><![CDATA[< 999 عميل]]></string>
     <string name="medium_crowd_clients">1000–1999 عميل</string>
     <string name="high_crowd_clients"><![CDATA[> 2999 عميل]]></string>
-    <string name="today_profit">الربح اليوم</string>
-    <string name="total_trips">عدد الرحلات الكلي</string>
+    <string name="today_profit">ايراد اليوم</string>
+    <string name="total_trips">اجمالي الرحلات</string>
     <string name="total_hours">عدد الساعات الكلي</string>
-    <string name="be_active">كن نشطاً</string>
+    <string name="be_active">كن متاح</string>
     <string name="online">متاح</string>
     <string name="search_for_period">بحث عن مدة</string>
     <string name="add_car">اضافة سيارة</string>
-    <string name="your_documents">اوراقك</string>
+    <string name="your_documents">المستندات</string>
     <string name="about_private">عن برايفت</string>
     <string name="sign_out">تسجيل الخروج</string>
     <string name="accept">قبول</string>
@@ -82,7 +82,7 @@
     <string name="business">بيزنس</string>
     <string name="full_day">طوال اليوم</string>
     <string name="where_should_we_pick_you_up">اين يجب ان نلتقطك؟</string>
-    <string name="min">د</string>
+    <string name="min">دق</string>
     <string name="your_ride">رحلتك</string>
     <string name="pickup">البداية</string>
 
@@ -103,7 +103,7 @@
     <string name="promo_codes">كوبونات</string>
     <string name="go">ابدأ!</string>
     <string name="payment_by_customer_credit_done">تم الدفع بكارت الائتمان</string>
-    <string name="please_type_comment_here">من فضلك اكتب تعليقك هنا...</string>
+    <string name="please_type_comment_here">من فضلك اكتب تعليقك هنا…</string>
     <string name="customer_behaved_badly">الراكب كان يتصرف بطريقة سيئة</string>
     <string name="customer_arrived_late">الراكب وصل متأخر جدا</string>
     <string name="customer_made_illegal_action">الراكب قام بفعل شيء غير قانوني</string>
@@ -125,7 +125,7 @@
     <string name="enter_here">اكتب هنا</string>
     <string name="add_promo_code">اضف كوبون</string>
     <string name="select_car">اختيار سيارة</string>
-    <string name="both_economy_business">الاثنين&#160;&#160;&#160;اقتصادي + بيزنس</string>
+    <string name="both_economy_business">الاثنين (اقتصادي + بيزنس)</string>
     <string name="driver_add_car_confirmation_message">سوف يتم اضافة السيارة بعد المعاينة</string>
     <string name="message_details">تفاصيل الرسالة</string>
     <string name="select_full_day_car_type">اختر نوع السيارة طوال اليوم</string>
@@ -163,8 +163,8 @@
     <string name="language">اللغة</string>
     <string name="tell_friends">اخبر الاصدقاء</string>
     <string name="customer_services">خدمة العملاء</string>
-    <string name="english">انجليزي</string>
-    <string name="arabic">عربي</string>
+    <string name="english">اللغة الإنجليزية</string>
+    <string name="arabic">اللغة العربية</string>
     <string name="current_password">كلمة المرور الحالية</string>
     <string name="new_password">كلمة المرور الجديدة</string>
     <string name="re_type_new_password">اعد كتابة كلمة المرور</string>
@@ -193,8 +193,8 @@
     <string name="account_credit">رصيد الحساب</string>
     <string name="install_google_play_services">من فضلك قم بتنصيب Google Play Services</string>
     <string name="offline">غير متاح</string>
-    <string name="today_trips">عدد الرحلات اليوم</string>
-    <string name="today_hours">عدد الساعات اليوم</string>
+    <string name="today_trips">عدد الرحلات اليومية</string>
+    <string name="today_hours">عدد ساعات العمل يوميا</string>
     <string name="driverTrips">رحلة</string>
     <string name="please_choose_from_date">من فضلك اختر تاريخ البداية</string>
     <string name="please_choose_to_date">من فضلك اختر تاريخ النهاية</string>
@@ -206,7 +206,7 @@
     <string name="trip_declined_successfully">تم رفض الرحلة بنجاح</string>
     <string name="error_decline_this_trip">خطأ في رفض هذه الرحلة</string>
     <string name="error_accepting_this_trip">خطأ في قبول هذه الرحلة</string>
-    <string name="be_inactive">كن غير نشطاُ</string>
+    <string name="be_inactive">كن غير متاح</string>
     <string name="private_car">Private Car</string>
 
     <string name="loading_latest_messages">تحميل آخر الرسائل</string>
@@ -226,14 +226,14 @@
     </string-array>
 
     <string name="driver_state_active">حالة السائق: نشط</string>
-    <string name="starting_trip_please_wait">جاري بدء الرحلة، برجاء الانتظار...</string>
-    <string name="cancelling_trip_please_wait">جاري الغاء الرحلة، برجاء الانتظار...</string>
+    <string name="starting_trip_please_wait">جاري بدء الرحلة، برجاء الانتظار…</string>
+    <string name="cancelling_trip_please_wait">جاري الغاء الرحلة، برجاء الانتظار…</string>
     <string name="trip_cancelled_successfully">تم الغاء الرحلة بنجاح</string>
     <string name="cancel_trip_q">الغاء الرحلة؟</string>
     <string name="error_loading_ads">خطأ في تحميل الاعلانات</string>
-    <string name="loading_ads_please_wait">جاري تحميل الاعلانلات، برجاء الانتظار...</string>
+    <string name="loading_ads_please_wait">جاري تحميل الاعلانلات، برجاء الانتظار…</string>
     <string name="your_balance_c">رصيدك:</string>
-    <string name="changing_car_please_wait">جاري تغيير السيارة، برجاء الانتظار...</string>
+    <string name="changing_car_please_wait">جاري تغيير السيارة، برجاء الانتظار…</string>
     <string name="your_current_car_change_to">تم تغيير السيارة الحالية الي</string>
     <string name="your_current_car_cant_be_business">لا يمكن ان تكون سيارتك الحالية بيزنس</string>
     <string name="changing_car_type_please_wait">جاري تغيير نوع السيارة الحالية، برجاء الانتظار</string>
@@ -264,7 +264,7 @@
     <string name="rides">رحلة</string>
     <string name="you_have_not_do_any_trip_yet">لم تقم بأي رحلة حتى الآن</string>
     <string name="social_users_cant_change_password">العملاء القادمين من الشبكات الاجتماعية لا يمكنهم تغيير كلمة السر</string>
-    <string name="activating_promo_code_please_wait">جاري تفعيل الكوبون، برجاء الانتظار...</string>
+    <string name="activating_promo_code_please_wait">جاري تفعيل الكوبون، برجاء الانتظار…</string>
     <string name="promo_code_activated_successfully">تم تفعيل الكوبون بنجاح</string>
     <string name="error_activating_promo_code">خطأ في تفعيل الكوبون</string>
     <string name="invite_msg">مرحبا، انا استخدم تطبيق برايفت. يمكنك تجربته الآن مجانا،</string>

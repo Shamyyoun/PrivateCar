@@ -220,6 +220,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                     Intent intent = new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class);
                     intent.putExtra(Const.KEY_NOW, now);
                     intent.putExtra(Const.KEY_PICKUP_PLACE, nearPlaces.get(position));
+                    intent.putExtra(Const.KEY_CAR_TYPE, carType);
                     startActivity(intent);
                 } else {
                     LatLng latLng = new LatLng(place.getLocation().getLat(), place.getLocation().getLng());
@@ -431,8 +432,6 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
 
             if (firstTime) {
                 map.moveCamera(CameraUpdateFactory.newLatLng(curLocation));
-
-//                map.addCircle(new CircleOptions().center(curLocation).fillColor(0xf00).radius(3));
 
                 //add the layout marker - set its middle bottom as the anchor point
                 Point point = map.getProjection().toScreenLocation(curLocation);

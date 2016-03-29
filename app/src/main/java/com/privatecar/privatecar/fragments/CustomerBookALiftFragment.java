@@ -47,8 +47,8 @@ import com.privatecar.privatecar.utils.PlayServicesUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class BookALiftFragment extends BaseFragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, RequestListener<CustomerAccountDetailsResponse> {
-    public static final String TAG = BookALiftFragment.class.getName();
+public class CustomerBookALiftFragment extends BaseFragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, RequestListener<CustomerAccountDetailsResponse> {
+    public static final String TAG = CustomerBookALiftFragment.class.getName();
 
     private CustomerHomeActivity activity;
     private View rootView;
@@ -70,7 +70,7 @@ public class BookALiftFragment extends BaseFragment implements OnMapReadyCallbac
         locationRequestCoarse.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
     }
 
-    public BookALiftFragment() {
+    public CustomerBookALiftFragment() {
         // Required empty public constructor
     }
 
