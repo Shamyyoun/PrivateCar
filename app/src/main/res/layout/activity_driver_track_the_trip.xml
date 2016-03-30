@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,20 +12,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        map:cameraBearing="112.5"
-        map:cameraTargetLat="-33.796923"
-        map:cameraTargetLng="150.922433"
-        map:cameraTilt="30"
-        map:cameraZoom="13"
-        map:liteMode="true"
-        map:mapType="normal"
-        map:uiCompass="false"
-        map:uiRotateGestures="false"
-        map:uiScrollGestures="false"
-        map:uiTiltGestures="false"
-        map:uiZoomControls="false"
-        map:uiZoomGestures="false" />
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,13 +32,14 @@
                 style="@style/white_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ride No: " />
+                android:layout_marginEnd="5dp"
+                android:text="@string/ride_no" />
 
             <TextView
                 style="@style/white_medium_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AA1234" />
+                tools:text="AA1234" />
         </LinearLayout>
 
         <LinearLayout
@@ -70,16 +57,17 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_ride_h_m"
                     style="@style/white_medium_bold_capitalized_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1 : 2" />
+                    tools:text="1 : 2" />
 
                 <TextView
                     style="@style/white_medium_bold_capitalized_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="H : M" />
+                    android:text="@string/h_m" />
             </LinearLayout>
 
             <LinearLayout
@@ -92,16 +80,17 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_ride_km_m"
                     style="@style/white_medium_bold_capitalized_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="100 : 999" />
+                    tools:text="100 : 999" />
 
                 <TextView
                     style="@style/white_medium_bold_capitalized_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="KM : M" />
+                    android:text="@string/km_m" />
 
             </LinearLayout>
 
@@ -115,16 +104,17 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_ride_waiting_h_m"
                     style="@style/white_medium_bold_capitalized_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Waiting" />
+                    tools:text="20 : 60" />
 
                 <TextView
                     style="@style/white_medium_bold_capitalized_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20 : 60" />
+                    android:text="@string/waiting" />
 
             </LinearLayout>
 
@@ -133,22 +123,23 @@
 
 
         <TextView
+            android:id="@+id/ride_cost"
             style="@style/white_medium_bold_capitalized_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/petroleum_rounded_corners_shape"
             android:gravity="center"
-            android:text="220 EGP"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:text="220 EGP" />
 
         <Button
-            android:id="@+id/btn_"
+            android:id="@+id/btn_end_ride"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@drawable/yellowish_rounded_corners_selector"
             android:minHeight="40dp"
-            android:text="End Ride" />
+            android:text="@string/end_ride" />
 
     </LinearLayout>
 

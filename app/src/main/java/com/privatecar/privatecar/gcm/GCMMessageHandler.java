@@ -42,7 +42,7 @@ public class GCMMessageHandler extends GcmListenerService {
 
                 // this is a driver user
                 // check the key
-                if (key.equals("trip_request")) {
+                if (key.equals(Const.GCM_KEY_TRIP_REQUEST)) {
                     // this is a trip request
                     // parse the json string
                     TripRequestPayload requestPayload = gson.fromJson(json, TripRequestPayload.class);

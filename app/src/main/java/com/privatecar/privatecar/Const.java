@@ -186,4 +186,10 @@ public class Const {
     public static final String KEY_PICKUP_PLACE = "pickup_place";
     public static final String KEY_DETAILS = "details";
     public static final String KEY_CAR_TYPE = "car_type";
+
+    //push notifications keys
+    public static final String GCM_KEY_TRIP_REQUEST = "trip_request";
+
+
+
 }

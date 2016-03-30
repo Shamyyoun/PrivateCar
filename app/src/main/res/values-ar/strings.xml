@@ -290,4 +290,14 @@
     <string name="your_rate">تقييمك</string>
     <string name="important_links">مواقع هامة</string>
     <string name="visit_website">زيارة الموقع</string>
+    <string name="order_no">رقم الطلب</string>
+    <string name="client_name">اسم العميل</string>
+    <string name="destination">عنوان الوصول</string>
+    <string name="notes">ملحوظات</string>
+    <string name="payment_type">نوع الدفع</string>
+    <string name="start_ride">بدأ الرحلة</string>
+    <string name="h_m">"س : د"</string>
+    <string name="km_m">"كم : م"</string>
+    <string name="waiting">انتظار</string>
+    <string name="end_ride">إنهاء الرحلة</string>
 </resources>

@@ -32,6 +32,7 @@ import com.squareup.picasso.Picasso;
 
 public class DriverTripInfoActivity extends BaseActivity implements RequestListener<GeneralResponse> {
     private DriverTripRequest tripRequest;
+
     private ImageView ivDefUserImage;
     private ImageView ivUserImage;
     private TextView tvRideNo;
