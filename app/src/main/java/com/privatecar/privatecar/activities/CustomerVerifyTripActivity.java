@@ -202,7 +202,7 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
 
             case R.id.tv_add_dropoff:
                 // open add drop off activity
-                startActivity(new Intent(this, CustomerAddDropoffActivity.class));
+                startActivity(new Intent(this, CustomerAddDropOffActivity.class));
                 break;
 
             case R.id.layout_payment_type:

@@ -11,7 +11,6 @@ public class PrivateCarPlace implements Serializable {
     private String name;
     private String address;
     private PrivateCarLocation location;
-    private int time;
     private boolean markerLocation = false;
 
     public String getName() {
@@ -28,14 +27,6 @@ public class PrivateCarPlace implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
     }
 
     public boolean isMarkerLocation() {

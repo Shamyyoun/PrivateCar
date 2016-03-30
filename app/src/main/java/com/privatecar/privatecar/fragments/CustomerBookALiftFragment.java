@@ -2,6 +2,7 @@ package com.privatecar.privatecar.fragments;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -253,7 +254,7 @@ public class CustomerBookALiftFragment extends BaseFragment implements OnMapRead
                         // location is enabled, open pickup activity
                         Intent intent = new Intent(activity, CustomerPickupActivity.class);
                         intent.putExtra(Const.KEY_NOW, now);
-                        startActivity(intent);
+                        CustomerBookALiftFragment.this.startActivityForResult(intent, Const.REQUEST_TRIP_FULL_DAY);
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                         // Location settings are not satisfied, but this can be fixed by showing the user a dialog.
@@ -342,5 +343,15 @@ public class CustomerBookALiftFragment extends BaseFragment implements OnMapRead
             map.moveCamera(CameraUpdateFactory.newLatLng(curLocation));
         }
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Const.REQUEST_TRIP_FULL_DAY && resultCode == Activity.RESULT_OK) {
+            AppUtils.showCallCustomerServiceDialog(getActivity());
+        }
+    }
+
 
 }
