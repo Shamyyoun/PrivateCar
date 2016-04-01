@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.NotificationCompat;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -29,6 +30,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverHomeActivity;
+import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.PrivateCarLocation;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
@@ -51,8 +53,10 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
     //create fine location request for getting high accuracy driver location
     private void createFineLocationRequest() {
         locationRequestFine = new LocationRequest();
-        locationRequestFine.setInterval(Const.LOCATION_UPDATE_IN_MS);
-        locationRequestFine.setFastestInterval(Const.LOCATION_UPDATE_IN_MS);
+        String intervalString = AppUtils.getConfigValue(getApplicationContext(), Config.KEY_MAP_REFRESH_RATE);
+        int interval = intervalString != null ? Integer.parseInt(intervalString) : 10;
+        locationRequestFine.setInterval(interval);
+        locationRequestFine.setFastestInterval(interval);
         locationRequestFine.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
@@ -79,6 +83,15 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
         String driverId = "" + user.getDriverAccountDetails().getId();
 
         updateLocationRequest = DriverRequests.updateLocation(this, this, user.getAccessToken(), tmpLocation.toString(), bearing, carId, driverId);
+
+
+        //send the location via local broadcast manager to activities that needs it
+        Intent intent = new Intent(Const.ACTION_DRIVER_SEND_LOCATION);
+        intent.putExtra(Const.KEY_LOCATION, location);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+        //save last driver location in the shared preferences
+        Utils.cacheString(this, Const.CACHE_LOCATION, location.getLatitude() + "," + location.getLongitude());
     }
 
 

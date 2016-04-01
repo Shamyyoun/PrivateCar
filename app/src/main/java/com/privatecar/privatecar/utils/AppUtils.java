@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.Ad;
@@ -177,5 +178,18 @@ public class AppUtils {
         });
         builder.setNegativeButton(R.string.no, null);
         builder.show();
+    }
+
+
+    /**
+     * Convert location string to LatLng
+     * @param location string like "34.3434,22.34334"
+     * @return LatLng object
+     */
+    public static LatLng getLatLng(String location) {
+        String[] latLngArr = location.split(",");
+        double latitude = Double.parseDouble(latLngArr[0]);
+        double longitude = Double.parseDouble(latLngArr[1]);
+        return new LatLng(latitude, longitude);
     }
 }

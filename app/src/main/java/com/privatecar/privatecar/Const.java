@@ -82,6 +82,7 @@ public class Const {
     public static final String CACHE_ADS = "ads_cache";
     public static final String CACHE_MESSAGES = "messages_cache";
     public static final String CACHE_LOCALE = "app_locale_cache";
+    public static final String CACHE_LOCATION = "location_cache";
 
     //messages (common):----
     public static final String IMAGES_BASE_URL = "http://ec2-54-201-70-234.us-west-2.compute.amazonaws.com/api-repo-1/";
@@ -188,6 +189,10 @@ public class Const {
     public static final String KEY_DROP_OFF_PLACE = "pickup_place";
     public static final String KEY_DETAILS = "details";
     public static final String KEY_CAR_TYPE = "car_type";
+    public static final String KEY_LOCATION = "car_type";
+
+    //Intent actions
+    public static final String ACTION_DRIVER_SEND_LOCATION = "com.private.privatecar.driver_send_location";
 
     //push notifications keys
     public static final String GCM_KEY_TRIP_REQUEST = "trip_request";
