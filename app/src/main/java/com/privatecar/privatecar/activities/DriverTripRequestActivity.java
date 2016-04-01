@@ -157,6 +157,9 @@ public class DriverTripRequestActivity extends BaseActivity implements RequestLi
 
     @Override
     protected void onDestroy() {
+        //TODO: remove this deprecated code
+        //TODO: make the activity unlock the screen
+
         // release screen lock
         KeyguardManager keyguardManager = (KeyguardManager) getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
         KeyguardManager.KeyguardLock keyguardLock = keyguardManager.newKeyguardLock("TAG");

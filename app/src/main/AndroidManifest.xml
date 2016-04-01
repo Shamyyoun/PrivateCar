@@ -182,7 +182,7 @@
             android:name=".activities.CustomerAddDetailsActivity"
             android:label="@string/add_details" />
         <activity
-            android:name=".activities.CustomerAddDropoffActivity"
+            android:name=".activities.CustomerAddDropOffActivity"
             android:label="@string/add_dropoff" />
         <activity
             android:name=".activities.CustomerAddPromoCodeActivity"

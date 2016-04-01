@@ -135,7 +135,7 @@
     <string name="message_details">Message Details</string>
     <string name="select_full_day_car_type">Select full day car type</string>
     <string name="business_1_people">Business\n1 People</string>
-    <string name="ride_no">Ride No.:</string>
+    <string name="ride_no">Ride No</string>
     <string name="driver_c">Driver:</string>
     <string name="car_c">Car:</string>
     <string name="avg">AVG</string>
@@ -290,6 +290,16 @@
     <string name="your_rate">Your Rate</string>
     <string name="important_links">Important Links</string>
     <string name="visit_website">Visit Website</string>
+    <string name="order_no">Order No</string>
+    <string name="client_name">Client Name</string>
+    <string name="destination">Destination</string>
+    <string name="notes">Notes</string>
+    <string name="payment_type">Payment Type</string>
+    <string name="start_ride">Start Ride</string>
+    <string name="h_m">H : M</string>
+    <string name="km_m">KM : M</string>
+    <string name="waiting">Waiting</string>
+    <string name="end_ride">End Ride</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

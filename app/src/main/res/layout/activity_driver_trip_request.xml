@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/trip_background"
     android:orientation="vertical"
+    android:paddingBottom="@dimen/widgets_vertical_space"
     tools:context=".activities.DriverTripRequestActivity">
 
     <LinearLayout
@@ -47,7 +48,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
-                        android:text="Order No."
+                        android:text="@string/order_no"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/colorPrimary" />
 
@@ -58,9 +59,9 @@
                         android:layout_weight="1"
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
-                        android:text="2034"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/textColorPrimary" />
+                        android:textColor="@color/textColorPrimary"
+                        tools:text="2034" />
                 </TableRow>
 
                 <TableRow
@@ -72,7 +73,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
-                        android:text="Ride No."
+                        android:text="@string/ride_no"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/colorPrimary" />
 
@@ -83,9 +84,9 @@
                         android:layout_weight="1"
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
-                        android:text="AA1234"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/textColorPrimary" />
+                        android:textColor="@color/textColorPrimary"
+                        tools:text="AA1234" />
                 </TableRow>
 
                 <TableRow
@@ -97,7 +98,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
-                        android:text="Client Name"
+                        android:text="@string/client_name"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/colorPrimary" />
 
@@ -108,9 +109,9 @@
                         android:layout_weight="1"
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
-                        android:text="Basim Alamuddin"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/textColorPrimary" />
+                        android:textColor="@color/textColorPrimary"
+                        tools:text="Basim Alamuddin" />
                 </TableRow>
 
                 <TableRow
@@ -122,7 +123,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
-                        android:text="Mobile"
+                        android:text="@string/mobile"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/colorPrimary" />
 
@@ -133,9 +134,9 @@
                         android:layout_weight="1"
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
-                        android:text="00201099592668"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/textColorPrimary" />
+                        android:textColor="@color/textColorPrimary"
+                        tools:text="00201099592668" />
                 </TableRow>
 
                 <TableRow
@@ -147,7 +148,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
-                        android:text="Pickup Address"
+                        android:text="@string/pickup_address"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/colorPrimary" />
 
@@ -159,10 +160,10 @@
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
                         android:singleLine="false"
-                        android:text="35 Shehab St"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/greenish"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="35 Shehab St" />
                 </TableRow>
 
                 <TableRow
@@ -174,7 +175,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
-                        android:text="Destination"
+                        android:text="@string/destination"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/colorPrimary" />
 
@@ -186,10 +187,10 @@
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
                         android:singleLine="false"
-                        android:text="City Stars"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/greenish"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="City Stars" />
                 </TableRow>
 
                 <TableRow
@@ -201,7 +202,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
-                        android:text="Notes"
+                        android:text="@string/notes"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/colorPrimary" />
 
@@ -213,9 +214,9 @@
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
                         android:singleLine="false"
-                        android:text="Notes"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/textColorPrimary" />
+                        android:textColor="@color/textColorPrimary"
+                        tools:text="Notes" />
                 </TableRow>
 
                 <TableRow
@@ -227,7 +228,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
-                        android:text="Payment Type"
+                        android:text="@string/payment_type"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/colorPrimary" />
 
@@ -239,9 +240,9 @@
                         android:background="@drawable/cell_background_shape"
                         android:padding="5dp"
                         android:singleLine="false"
-                        android:text="Account Credit"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/textColorPrimary" />
+                        android:textColor="@color/textColorPrimary"
+                        tools:text="Account Credit" />
                 </TableRow>
             </TableLayout>
         </ScrollView>
@@ -250,8 +251,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/layout_content"
-        android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
         android:layout_marginTop="@dimen/widgets_vertical_space"
         android:orientation="horizontal"

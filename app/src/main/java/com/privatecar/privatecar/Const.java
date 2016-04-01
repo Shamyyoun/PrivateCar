@@ -43,6 +43,7 @@ public class Const {
     public static final int REQUEST_GOOGLE_PLUS_SIGN_IN = 1026;
     public static final int REQUEST_ADD_DETAILS = 1027;
     public static final int REQUEST_ADD_NOTES = 1028;
+    public static final int REQUEST_TRIP_FULL_DAY = 1029;
 
     //app level constants:--------------
     public static final String LOG_TAG = "Private Car";
@@ -184,6 +185,13 @@ public class Const {
     public static final String KEY_NOW = "now";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_PICKUP_PLACE = "pickup_place";
+    public static final String KEY_DROP_OFF_PLACE = "pickup_place";
     public static final String KEY_DETAILS = "details";
     public static final String KEY_CAR_TYPE = "car_type";
+
+    //push notifications keys
+    public static final String GCM_KEY_TRIP_REQUEST = "trip_request";
+
+
+
 }

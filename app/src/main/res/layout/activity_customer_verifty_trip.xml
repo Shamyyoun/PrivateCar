@@ -110,7 +110,6 @@
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackgroundBorderless"
-                    android:enabled="false"
                     android:gravity="center"
                     android:text="@string/add_dropoff"
                     android:textAppearance="?android:textAppearanceSmall"

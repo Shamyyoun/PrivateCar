@@ -67,6 +67,7 @@ import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.ButtonHighlighterOnTouchListener;
+import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.LatLngInterpolator;
 import com.privatecar.privatecar.utils.MarkerAnimation;
 import com.privatecar.privatecar.utils.PlayServicesUtils;
@@ -195,7 +196,8 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                         carType = CarType.BUSINESS;
                         break;
                     case R.id.rb_full_day:
-                        AppUtils.showCallCustomerServiceDialog(CustomerPickupActivity.this);
+                        setResult(RESULT_OK);
+                        onBackPressed();
                         break;
                 }
             }
@@ -216,15 +218,23 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                 PrivateCarPlace place = nearPlaces.get(position);
 
                 if (place.isMarkerLocation()) {
-                    // open verify trip activity
-                    Intent intent = new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class);
-                    intent.putExtra(Const.KEY_NOW, now);
-                    intent.putExtra(Const.KEY_PICKUP_PLACE, nearPlaces.get(position));
-                    intent.putExtra(Const.KEY_CAR_TYPE, carType);
-                    startActivity(intent);
+                    if (sparseMarkersArray.size() > 0) {
+                        // open verify trip activity
+                        Intent intent = new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class);
+                        intent.putExtra(Const.KEY_NOW, now);
+                        intent.putExtra(Const.KEY_PICKUP_PLACE, nearPlaces.get(position));
+                        intent.putExtra(Const.KEY_CAR_TYPE, carType);
+                        startActivity(intent);
+                    } else {
+                        DialogUtils.showAlertDialog(CustomerPickupActivity.this, R.string.no_drivers_found_now, null);
+                    }
                 } else {
                     LatLng latLng = new LatLng(place.getLocation().getLat(), place.getLocation().getLng());
                     map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+                    // clear all cars
+                    map.clear();
+                    sparseMarkersArray.clear();
                 }
             }
         });
@@ -310,7 +320,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
 
     @Override
     public void onConnected(Bundle bundle) {
-//request locationRequestCoarse
+        //request locationRequestCoarse
 
         LocationSettingsRequest.Builder builder =
                 new LocationSettingsRequest.Builder().addLocationRequest(locationRequestCoarse);
@@ -459,11 +469,12 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         }
     }
 
+    //async task to get the address by the geocoder
     private static class GetAddressAsyncTask extends AsyncTask<Void, Void, Void> {
         Geocoder geocoder;
         LatLng latLng;
         String name;
-        String description;
+        String address;
 
         WeakReference<CustomerPickupActivity> activityReference;
 
@@ -481,15 +492,15 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                 if (addresses != null && addresses.size() > 0) {
                     Address address = addresses.get(0);
                     name = address.getAddressLine(0);
-                    StringBuilder strDescription = new StringBuilder();
+                    StringBuilder strAddress = new StringBuilder();
                     for (int i = 1; i < address.getMaxAddressLineIndex(); i++) {
-                        if (i != 1) strDescription.append(", ");
-                        strDescription.append(address.getAddressLine(i));
+                        if (i != 1) strAddress.append(", ");
+                        strAddress.append(address.getAddressLine(i));
                     }
 
-                    description = strDescription.toString();
+                    this.address = strAddress.toString();
 
-                    Utils.LogE("Address: " + name + ", " + description);
+                    Utils.LogE("Address: " + name + ", " + this.address);
                 } else {
                     Utils.LogE("No address returned");
                 }
@@ -506,17 +517,17 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
             super.onPostExecute(aVoid);
 
             if (activityReference != null && !Utils.isEmpty(name)) {
-                activityReference.get().updateRVMarkerLocation(latLng, name, description);
+                activityReference.get().updateRVMarkerLocation(latLng, name, address);
             }
         }
     }
 
     // update the first item in the recyclerView to set it to the marker position
-    public void updateRVMarkerLocation(LatLng latLng, String name, String description) {
+    public void updateRVMarkerLocation(LatLng latLng, String name, String address) {
 
         PrivateCarPlace place = new PrivateCarPlace();
         place.setName(name);
-        place.setAddress(description);
+        place.setAddress(address);
         place.setLocation(new PrivateCarLocation(latLng));
         place.setMarkerLocation(true);
 
