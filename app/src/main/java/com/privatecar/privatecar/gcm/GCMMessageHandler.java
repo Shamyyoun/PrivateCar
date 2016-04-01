@@ -16,6 +16,7 @@ import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverTripRequestActivity;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.enums.UserType;
+import com.privatecar.privatecar.models.payload.AcceptTripPayload;
 import com.privatecar.privatecar.models.payload.TripRequestPayload;
 import com.privatecar.privatecar.utils.AppUtils;
 
@@ -62,6 +63,13 @@ public class GCMMessageHandler extends GcmListenerService {
                         }
                     });
                     mediaPlayer.start();
+                } else if (key.equals("accepttrip")) {
+                    // this is an accept request
+                    // parse the json string
+                    AcceptTripPayload tripPayload = gson.fromJson(json, AcceptTripPayload.class);
+
+
+                    // open
                 }
             }
         } catch (Exception e) {
