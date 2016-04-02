@@ -111,6 +111,7 @@ public class CustomerAddDropOffActivity extends BasicBackActivity implements Vie
             public void onPlaceSelected(Place place) {
                 Log.e("_____", "Place: " + place.getName() + ", " + place.getAddress() + ", " + place.getLatLng().toString());
 
+                privateCarPlace = new PrivateCarPlace();
                 privateCarPlace.setName(place.getName().toString());
                 privateCarPlace.setAddress(place.getAddress().toString());
                 privateCarPlace.setLocation(new PrivateCarLocation(place.getLatLng()));

@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.DriverAccountDetails;
 import com.privatecar.privatecar.models.entities.DriverTripRequest;
 import com.privatecar.privatecar.models.entities.User;
@@ -44,6 +45,8 @@ import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 public class DriverTripInfoActivity extends BaseActivity implements RequestListener<GeneralResponse>, OnMapReadyCallback {
     private DriverTripRequest tripRequest;
@@ -96,26 +99,23 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
         ratingBar.setRating(tripRequest.getCustomerRating());
 
         // load user image if possible
-        String userImage = tripRequest.getCustomerImage();
-        if (userImage != null && !userImage.isEmpty()) {
-            Picasso.with(this).load(userImage).into(ivUserImage, new Callback() {
-                @Override
-                public void onSuccess() {
-                    // hide default image
-                    ivDefUserImage.setVisibility(View.GONE);
-                }
+        String userImage = AppUtils.getConfigValue(getApplicationContext(), Config.KEY_BASE_URL) + File.separator + tripRequest.getCustomerImage();
+        Picasso.with(this).load(userImage).into(ivUserImage, new Callback() {
+            @Override
+            public void onSuccess() {
+                // hide default image
+                ivDefUserImage.setVisibility(View.GONE);
+            }
 
-                @Override
-                public void onError() {
-                }
-            });
-        }
+            @Override
+            public void onError() {
+            }
+        });
 
         // add click listeners
         btnStartTrip.setOnClickListener(this);
         ibCall.setOnClickListener(this);
         ibCancel.setOnClickListener(this);
-
 
         IntentFilter intentFilter = new IntentFilter(Const.ACTION_DRIVER_SEND_LOCATION);
         LocalBroadcastManager.getInstance(this).registerReceiver(locationReceiver, intentFilter);
@@ -132,10 +132,9 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
             if (driverMarker != null) {
                 driverMarker.setPosition(driverLatLng);
             } else {
-                //Todo: change marker icon
                 driverMarker = map.addMarker(new MarkerOptions()
                         .position(driverLatLng)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_pin)));
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.large_driver_pin)));
             }
         }
     };
@@ -183,21 +182,20 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
         super.onStart();
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
         mapFragment.getMapAsync(this);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-
+        map.getUiSettings().setMapToolbarEnabled(false);
         map.moveCamera(CameraUpdateFactory.zoomTo(16));
 
         // add pickup marker
         LatLng pickupLatLng = AppUtils.getLatLng(tripRequest.getPickLocation());
         pickUpMarker = map.addMarker(new MarkerOptions()
                 .position(pickupLatLng)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_pin)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.large_pin)));
 
         map.moveCamera(CameraUpdateFactory.newLatLng(pickupLatLng));
 
@@ -205,10 +203,9 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
         String driverLocation = Utils.getCachedString(this, Const.CACHE_LOCATION, null);
         LatLng driverLatLng = AppUtils.getLatLng(driverLocation);
         if (driverLocation != null) {
-            //TODO: set marker icon
             driverMarker = map.addMarker(new MarkerOptions()
                     .position(driverLatLng)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_pin)));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.large_driver_pin)));
 
             //add map bounds
             //https://developers.google.com/maps/documentation/android-api/views#setting_boundaries
