@@ -174,12 +174,13 @@ public class CustomerAddDropOffActivity extends BasicBackActivity implements Vie
                 onBackPressed();
                 break;
             case R.id.layout_marker:
-                if (privateCarPlace != null) {
+                if (privateCarPlace != null) { //Todo : sometimes = null
                     Intent intent = new Intent();
                     intent.putExtra(Const.KEY_DROP_OFF_PLACE, privateCarPlace);
                     setResult(RESULT_OK, intent);
-
                     onBackPressed();
+                } else {
+                    Utils.showLongToast(this, R.string.could_not_get_location_details);
                 }
                 break;
         }
@@ -370,9 +371,8 @@ public class CustomerAddDropOffActivity extends BasicBackActivity implements Vie
                 activityReference.get().privateCarPlace.setName(name);
                 activityReference.get().privateCarPlace.setAddress(address);
                 activityReference.get().privateCarPlace.setLocation(new PrivateCarLocation(latLng));
-            }
-            if (activityReference != null)
                 activityReference.get().setMarkerNotLoading();
+            }
         }
     }
 

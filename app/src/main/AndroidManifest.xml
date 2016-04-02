@@ -164,7 +164,9 @@
         <activity
             android:name=".activities.DriverTripInfoActivity"
             android:label="@string/your_ride" />
-        <activity android:name=".activities.DriverTrackTheTripActivity" />
+        <activity
+            android:name=".activities.DriverTrackTheTripActivity"
+            android:label="@string/your_ride" />
         <activity
             android:name=".activities.CustomerVerifyTripActivity"
             android:label="@string/verify" />
@@ -254,6 +256,7 @@
         <activity
             android:name=".activities.CustomerAddNotesToCaptainActivity"
             android:label="@string/add_notes" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="da607939978304e5bdac277f3be706343200c524" />

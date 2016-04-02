@@ -300,6 +300,7 @@
     <string name="km_m">KM : M</string>
     <string name="waiting">Waiting</string>
     <string name="end_ride">End Ride</string>
+    <string name="could_not_get_location_details">Couldn\'t get location details</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

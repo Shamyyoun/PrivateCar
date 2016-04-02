@@ -300,4 +300,5 @@
     <string name="km_m">"كم : م"</string>
     <string name="waiting">انتظار</string>
     <string name="end_ride">إنهاء الرحلة</string>
+    <string name="could_not_get_location_details">فشل في ايجاد تفاصيل المكان</string>
 </resources>
