@@ -1,6 +1,7 @@
 package com.privatecar.privatecar.fragments;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,7 +9,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,12 +38,14 @@ import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.BitmapUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.PermissionUtil;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 import com.soundcloud.android.crop.Crop;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.List;
 import java.util.Locale;
 
 public class CustomerSettingsFragment extends BaseFragment implements View.OnClickListener {
@@ -145,10 +150,39 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0: //Gallery
-                                requestGalleryImage(Const.REQUEST_GALLERY_USER_PHOTO);
+                                // check storage permission
+                                if (PermissionUtil.isGranted(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                                    // granted
+                                    requestGalleryImage(Const.REQUEST_GALLERY_USER_PHOTO);
+                                } else {
+                                    // not granted
+                                    // request the permission
+                                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Const.PERM_REQ_STORAGE);
+                                }
                                 break;
                             case 1: //Camera
-                                requestCameraImage(Const.REQUEST_CAMERA_USER_PHOTO);
+                                // check the permissions
+                                String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                                List<String> notGrantedPermissions = PermissionUtil.getNotGranted(activity, permissions);
+
+                                // check not granted
+                                if (notGrantedPermissions.size() == 0) {
+                                    Log.e("PERMISSIONS", "All Granted");
+                                    // all permissions are granted
+                                    requestCameraImage(Const.REQUEST_CAMERA_USER_PHOTO);
+                                } else {
+                                    // request other permissions
+                                    String[] notGrantedPermissionsArr = new String[notGrantedPermissions.size()];
+                                    notGrantedPermissionsArr = notGrantedPermissions.toArray(notGrantedPermissionsArr);
+                                    notGrantedPermissions.toArray(permissions);
+
+                                    Log.e("PERMISSIONS", "Not all granted");
+                                    for (int i = 0; i < notGrantedPermissions.size(); i++) {
+                                        Log.e("PERM", notGrantedPermissions.get(i));
+                                    }
+
+                                    requestPermissions(notGrantedPermissionsArr, Const.PERM_REQ_CAMERA);
+                                }
                                 break;
                         }
                     }
@@ -185,8 +219,15 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
                 break;
 
             case R.id.layout_customer_service:
-                // show call customer service dialog
-                AppUtils.showCallCustomerServiceDialog(activity);
+                // check call permission
+                if (PermissionUtil.isGranted(activity, Manifest.permission.CALL_PHONE)) {
+                    // show call customer service dialog
+                    AppUtils.showCallCustomerServiceDialog(activity);
+                } else {
+                    // not granted
+                    // request the permission
+                    requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, Const.PERM_REQ_CALL);
+                }
                 break;
 
             case R.id.layout_sign_out:
@@ -306,5 +347,49 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
     public void onDestroy() {
         activity.settingsFragment = null;
         super.onDestroy();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case Const.PERM_REQ_CALL:
+                // check if granted
+                if (PermissionUtil.isAllGranted(grantResults)) {
+                    // granted
+                    // show call customer service dialog
+                    AppUtils.showCallCustomerServiceDialog(activity);
+                } else {
+                    // show msg
+                    Utils.showShortToast(activity, R.string.we_need_call_permission_to_call_customer_service);
+                }
+                break;
+
+            case Const.PERM_REQ_STORAGE:
+                // check if granted
+                if (PermissionUtil.isAllGranted(grantResults)) {
+                    // granted
+                    // request gallery image
+                    requestGalleryImage(Const.REQUEST_GALLERY_USER_PHOTO);
+                } else {
+                    // show msg
+                    Utils.showShortToast(activity, R.string.we_need_storage_permission_to_choose_your_profile_photo);
+                }
+                break;
+
+            case Const.PERM_REQ_CAMERA:
+                // check if granted
+                if (PermissionUtil.isAllGranted(grantResults)) {
+                    // granted
+                    // request camera image
+                    requestCameraImage(Const.REQUEST_CAMERA_USER_PHOTO);
+                } else {
+                    // show msg
+                    Utils.showShortToast(activity, R.string.we_need_camera_permission_to_capture_your_profile_photo);
+                }
+                break;
+
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

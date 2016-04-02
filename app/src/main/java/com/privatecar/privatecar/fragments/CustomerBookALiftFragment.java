@@ -9,6 +9,7 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +45,7 @@ import com.privatecar.privatecar.models.responses.CustomerAccountDetailsResponse
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.PermissionUtil;
 import com.privatecar.privatecar.utils.PlayServicesUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
@@ -349,9 +351,36 @@ public class CustomerBookALiftFragment extends BaseFragment implements OnMapRead
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Const.REQUEST_TRIP_FULL_DAY && resultCode == Activity.RESULT_OK) {
-            AppUtils.showCallCustomerServiceDialog(getActivity());
+            // check call permission
+            if (PermissionUtil.isGranted(activity, Manifest.permission.CALL_PHONE)) {
+                // show call customer service dialog
+                AppUtils.showCallCustomerServiceDialog(activity);
+            } else {
+                // not granted
+                // request the permission
+                requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, Const.PERM_REQ_CALL);
+            }
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case Const.PERM_REQ_CALL:
+                // check if granted
+                if (PermissionUtil.isAllGranted(grantResults)) {
+                    // granted
+                    // show call customer service dialog
+                    AppUtils.showCallCustomerServiceDialog(activity);
+                } else {
+                    // show msg
+                    Utils.showShortToast(activity, R.string.we_need_call_permission_to_call_customer_service);
+                }
+                break;
+
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
 
 }

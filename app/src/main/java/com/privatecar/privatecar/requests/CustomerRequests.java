@@ -166,10 +166,15 @@ public class CustomerRequests {
         if (tripRequest.getDestinationType() == AddressType.ADDRESS) {
             params.put(Const.MSG_PARAM_DESTINATION_LOCATION, tripRequest.getDestinationPlace().getLocation().getLat()
                     + "," + tripRequest.getDestinationPlace().getLocation().getLng());
-            params.put(Const.MSG_PARAM_ESTIMATE_DISTANCE, "" + tripRequest.getEstimateDistance());
-            params.put(Const.MSG_PARAM_ESTIMATE_FARE, "" + tripRequest.getEstimateFare());
-            params.put(Const.MSG_PARAM_ESTIMATE_TIME, "" + tripRequest.getEstimateTime());
-            params.put(Const.MSG_PARAM_DESTINATION_ADDRESS, tripRequest.getDestinationPlace().getFullAddress());
+
+            // check pickup now
+            if (tripRequest.isPickupNow()) {
+                // add estimation values
+                params.put(Const.MSG_PARAM_ESTIMATE_DISTANCE, "" + tripRequest.getEstimateDistance());
+                params.put(Const.MSG_PARAM_ESTIMATE_FARE, "" + tripRequest.getEstimateFare());
+                params.put(Const.MSG_PARAM_ESTIMATE_TIME, "" + tripRequest.getEstimateTime());
+                params.put(Const.MSG_PARAM_DESTINATION_ADDRESS, tripRequest.getDestinationPlace().getFullAddress());
+            }
         }
 
         // check pickup now to add pickup time
@@ -182,6 +187,19 @@ public class CustomerRequests {
         RequestHelper<TripRequestResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
                 Const.MESSAGE_CUSTOMER_REQUEST_TRIP, TripRequestResponse.class, listener, params);
         requestHelper.setTimeOut(4 * 60 * 1000);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+    public static RequestHelper<Object> cancelTrip(Context context, RequestListener<Object> listener, String accessToken, int tripId) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_TRIP_ID, "" + tripId);
+
+        // create & send request
+        RequestHelper<Object> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_CUSTOMER_CANCEL_TRIP, GeneralResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;

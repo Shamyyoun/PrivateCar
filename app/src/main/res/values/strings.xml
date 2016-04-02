@@ -136,6 +136,7 @@
     <string name="select_full_day_car_type">Select full day car type</string>
     <string name="business_1_people">Business\n1 People</string>
     <string name="ride_no">Ride No</string>
+    <string name="ride_no_c">Ride No:</string>
     <string name="driver_c">Driver:</string>
     <string name="car_c">Car:</string>
     <string name="avg">AVG</string>
@@ -300,6 +301,16 @@
     <string name="km_m">KM : M</string>
     <string name="waiting">Waiting</string>
     <string name="end_ride">End Ride</string>
+    <string name="error_cancelling_trip_try_again">Error cancelling the trip\nPlease try again</string>
+    <string name="cancel_the_trip">Cancel the trip?</string>
+    <string name="change_notes">Change notes</string>
+    <string name="cant_estimate_fares">Can\'t estimate fares</string>
+    <string name="estimating_your_trip_fares_please_wait">Estimating your trip fares, please wait...</string>
+    <string name="we_need_call_permission_to_call_customer_service">We need call permission to call customer service :-)</string>
+    <string name="we_need_storage_permission_to_choose_your_profile_photo">We need storage permission to choose your profile photo :-)</string>
+    <string name="we_need_camera_permission_to_capture_your_profile_photo">We need camera permission to capture your profile photo :-)</string>
+    <string name="no_fares_on_later">No fares on later</string>
+    <string name="click_to_estimate">Click to estimate</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

@@ -15,36 +15,28 @@ public class AcceptTripPayload {
     private TripInfo tripInfo;
 
     /**
-     * 
-     * @return
-     *     The key
+     * @return The key
      */
     public String getKey() {
         return key;
     }
 
     /**
-     * 
-     * @param key
-     *     The key
+     * @param key The key
      */
     public void setKey(String key) {
         this.key = key;
     }
 
     /**
-     * 
-     * @return
-     *     The tripInfo
+     * @return The tripInfo
      */
     public TripInfo getTripInfo() {
         return tripInfo;
     }
 
     /**
-     * 
-     * @param tripInfo
-     *     The tripInfo
+     * @param tripInfo The tripInfo
      */
     public void setTripInfo(TripInfo tripInfo) {
         this.tripInfo = tripInfo;

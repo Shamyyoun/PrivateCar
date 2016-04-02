@@ -111,6 +111,7 @@ public class CustomerAddDropOffActivity extends BasicBackActivity implements Vie
             public void onPlaceSelected(Place place) {
                 Log.e("_____", "Place: " + place.getName() + ", " + place.getAddress() + ", " + place.getLatLng().toString());
 
+                privateCarPlace = new PrivateCarPlace();
                 privateCarPlace.setName(place.getName().toString());
                 privateCarPlace.setAddress(place.getAddress().toString());
                 privateCarPlace.setLocation(new PrivateCarLocation(place.getLatLng()));
@@ -170,6 +171,7 @@ public class CustomerAddDropOffActivity extends BasicBackActivity implements Vie
                 }
                 break;
             case R.id.btn_guide_the_captain:
+                setResult(RESULT_OK, new Intent());
                 onBackPressed();
                 break;
             case R.id.layout_marker:

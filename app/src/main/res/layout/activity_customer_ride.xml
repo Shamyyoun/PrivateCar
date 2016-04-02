@@ -48,13 +48,15 @@
                 style="@style/white_normal_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ride_no" />
+                android:text="@string/ride_no_c" />
 
             <TextView
+                android:id="@+id/tv_ride_no"
                 style="@style/white_normal_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" AA1234" />
+                android:layout_marginStart="5dp"
+                android:text="MMM" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,10 +66,11 @@
             android:orientation="horizontal">
 
             <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_driver_image"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/penelope_cruz"
+                android:src="@drawable/def_user_photo"
                 app:riv_border_color="@color/textColorPrimary"
                 app:riv_border_width="0.5dip"
                 app:riv_corner_radius="7dip"
@@ -75,6 +78,7 @@
                 app:riv_oval="false" />
 
             <TextView
+                android:id="@+id/tv_message"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
@@ -184,6 +188,7 @@
                     android:scaleType="fitCenter" />
 
                 <ImageButton
+                    android:id="@+id/btn_cancel"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="5dp"

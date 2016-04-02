@@ -90,6 +90,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_destination_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
@@ -231,9 +232,11 @@
                 android:padding="15dp">
 
                 <LinearLayout
+                    android:id="@+id/layout_estimate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:orientation="vertical">
 
                     <TextView
@@ -245,6 +248,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_estimation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
@@ -305,8 +309,8 @@
 
                     <TextView
                         android:id="@+id/tv_add_notes"
-                        android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:background="?selectableItemBackgroundBorderless"
                         android:drawablePadding="5dp"
