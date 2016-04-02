@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -17,6 +18,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -25,6 +27,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.privatecar.privatecar.Const;
+import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.models.entities.Config;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

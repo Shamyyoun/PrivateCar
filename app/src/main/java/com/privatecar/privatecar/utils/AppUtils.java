@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.privatecar.privatecar.Const;
@@ -160,24 +161,34 @@ public class AppUtils {
      *
      * @param context
      */
-    public static void showCallCustomerServiceDialog(final Context context) {
+    public static void showCallCustomerServiceDialog(Context context) {
         final String customerServiceNumber = getConfigValue(context, Config.KEY_CUSTOMER_SERVICE_NUMBER);
+        DialogUtils.showCallDialog(context, customerServiceNumber);
+    }
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(context.getString(R.string.call) + " " + customerServiceNumber + context.getString(R.string.question_mark));
-        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + customerServiceNumber));
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO get marshmallow permission
-                    return;
-                }
-                context.startActivity(intent);
-            }
-        });
-        builder.setNegativeButton(R.string.no, null);
-        builder.show();
+    /**
+     * method, used to calculate the trip fare based on passed params
+     * @param context
+     * @param distance
+     * @param openFare
+     * @param kmFare
+     * @return
+     */
+    public static float calculateFare(Context context, float distance, float openFare, float kmFare) {
+        // get min fare from configs
+        float minFare = 0;
+        String minFareStr = getConfigValue(context, Config.KEY_MIN_TRIP_FARE);
+        try {
+            minFare = Float.parseFloat(minFareStr);
+        } catch (Exception e) {
+            Log.e("ERROR", "Can't convert min fare (" + minFareStr + ") to integer");
+        }
+
+        // calculate the fare
+        float fares = openFare + (distance * kmFare);
+        fares = fares < minFare ? minFare : fares;
+
+        return fares;
     }
 
 

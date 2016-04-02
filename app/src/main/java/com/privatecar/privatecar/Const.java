@@ -44,6 +44,7 @@ public class Const {
     public static final int REQUEST_ADD_DETAILS = 1027;
     public static final int REQUEST_ADD_NOTES = 1028;
     public static final int REQUEST_TRIP_FULL_DAY = 1029;
+    public static final int REQUEST_ADD_DROP_OFF = 1030;
 
     //app level constants:--------------
     public static final String LOG_TAG = "Private Car";
@@ -103,6 +104,7 @@ public class Const {
     public static final String MESSAGE_CUSTOMER_FARES = "getfares";
     public static final String MESSAGE_CUSTOMER_ACTIVATE_PROMO_CODE = "activatepromocode";
     public static final String MESSAGE_CUSTOMER_REQUEST_TRIP = "requesttrip";
+    public static final String MESSAGE_CUSTOMER_CANCEL_TRIP = "customercanceltrip";
 
 
     //messages (driver):----
@@ -190,13 +192,20 @@ public class Const {
     public static final String KEY_DETAILS = "details";
     public static final String KEY_CAR_TYPE = "car_type";
     public static final String KEY_LOCATION = "car_type";
+    public static final String KEY_TRIP_INFO = "trip_info";
+
 
     //Intent actions
     public static final String ACTION_DRIVER_SEND_LOCATION = "com.private.privatecar.driver_send_location";
+
 
     //push notifications keys
     public static final String GCM_KEY_TRIP_REQUEST = "trip_request";
 
 
+    // permissions requests
+    public static final int PERM_REQ_CALL = 1;
+    public static final int PERM_REQ_STORAGE = 2;
+    public static final int PERM_REQ_CAMERA = 3;
 
 }

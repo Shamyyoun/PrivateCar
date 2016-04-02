@@ -73,12 +73,6 @@ public class DateUtil {
 
     public static boolean isPastDate(Calendar calendar) {
         Calendar currentCalendar = Calendar.getInstance(Locale.getDefault());
-//        calendar.set(Calendar.SECOND, 0);
-//        currentCalendar.set(Calendar.SECOND, 0);
-
-        Log.e("CUR", "" + currentCalendar.getTimeInMillis());
-        Log.e("CALENDAR", "" + calendar.getTimeInMillis());
-
         return calendar.getTimeInMillis() < currentCalendar.getTimeInMillis();
     }
 }

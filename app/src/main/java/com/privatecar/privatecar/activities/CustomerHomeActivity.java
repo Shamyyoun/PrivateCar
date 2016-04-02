@@ -1,9 +1,11 @@
 package com.privatecar.privatecar.activities;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -30,6 +32,8 @@ import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.CustomerAccountDetails;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.utils.AppUtils;
+import com.privatecar.privatecar.utils.PermissionUtil;
+import com.privatecar.privatecar.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -114,7 +118,16 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
                 break;
 
             case R.id.nav_call_us:
-                AppUtils.showCallCustomerServiceDialog(this);
+                // check call permission
+                if (PermissionUtil.isGranted(this, Manifest.permission.CALL_PHONE)) {
+                    // show call customer service dialog
+                    AppUtils.showCallCustomerServiceDialog(this);
+                } else {
+                    // not granted
+                    // request the permission
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, Const.PERM_REQ_CALL);
+                }
+
                 selectItem = false;
                 break;
 
@@ -225,5 +238,24 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case Const.PERM_REQ_CALL:
+                // check if granted
+                if (PermissionUtil.isAllGranted(grantResults)) {
+                    // granted
+                    // show call customer service dialog
+                    AppUtils.showCallCustomerServiceDialog(this);
+                } else {
+                    // show msg
+                    Utils.showShortToast(this, R.string.we_need_call_permission_to_call_customer_service);
+                }
+                break;
+
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
 
 }

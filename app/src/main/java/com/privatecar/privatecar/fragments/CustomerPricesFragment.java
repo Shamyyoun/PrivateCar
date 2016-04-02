@@ -1,9 +1,11 @@
 package com.privatecar.privatecar.fragments;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.Fare;
 import com.privatecar.privatecar.models.entities.User;
@@ -18,6 +21,7 @@ import com.privatecar.privatecar.models.responses.FaresResponse;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DateUtil;
+import com.privatecar.privatecar.utils.PermissionUtil;
 import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
@@ -94,8 +98,15 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
         btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // show call dialog
-                AppUtils.showCallCustomerServiceDialog(activity);
+                // check call permission
+                if (PermissionUtil.isGranted(activity, Manifest.permission.CALL_PHONE)) {
+                    // show call customer service dialog
+                    AppUtils.showCallCustomerServiceDialog(activity);
+                } else {
+                    // not granted
+                    // request the permission
+                    requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, Const.PERM_REQ_CALL);
+                }
             }
         });
 
@@ -209,5 +220,25 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
         // cancel request if still running
         if (requestHelper != null) requestHelper.cancel(true);
         super.onDestroy();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case Const.PERM_REQ_CALL:
+                // check if granted
+                if (PermissionUtil.isAllGranted(grantResults)) {
+                    // granted
+                    // show call customer service dialog
+                    AppUtils.showCallCustomerServiceDialog(activity);
+                } else {
+                    // show msg
+                    Utils.showShortToast(activity, R.string.we_need_call_permission_to_call_customer_service);
+                }
+                break;
+
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

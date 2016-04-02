@@ -41,6 +41,7 @@ import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.requests.DriverRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.PermissionUtil;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 import com.squareup.picasso.Callback;
@@ -169,7 +170,15 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
                 break;
 
             case R.id.ib_call:
-                showCallDialog();
+                // check call permission
+                if (PermissionUtil.isGranted(this, Manifest.permission.CALL_PHONE)) {
+                    // show call dialog
+                    showCallDialog();
+                } else {
+                    // not granted
+                    // request the permission
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, Const.PERM_REQ_CALL);
+                }
                 break;
 
             default:
@@ -319,7 +328,6 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // TODO add marshmallow permissions
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + tripRequest.getMobile()));
                 if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     return;
@@ -334,5 +342,25 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
     @Override
     public void onBackPressed() {
         // do nothing
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case Const.PERM_REQ_CALL:
+                // check if granted
+                if (PermissionUtil.isAllGranted(grantResults)) {
+                    // granted
+                    // show call dialog
+                    showCallDialog();
+                } else {
+                    // show msg
+                    Utils.showShortToast(this, R.string.we_need_call_permission_to_call_customer_service);
+                }
+                break;
+
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

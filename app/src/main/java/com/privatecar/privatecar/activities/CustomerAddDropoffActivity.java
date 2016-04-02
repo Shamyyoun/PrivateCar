@@ -171,6 +171,7 @@ public class CustomerAddDropOffActivity extends BasicBackActivity implements Vie
                 }
                 break;
             case R.id.btn_guide_the_captain:
+                setResult(RESULT_OK, new Intent());
                 onBackPressed();
                 break;
             case R.id.layout_marker:

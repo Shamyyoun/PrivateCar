@@ -85,7 +85,6 @@
     <string name="min">دق</string>
     <string name="your_ride">رحلتك</string>
     <string name="pickup">نقطة اللقاء</string>
-
     <string name="pickup_location">نقطة الالتقاء</string>
     <string name="verify">فحص</string>
     <string name="dropoff">نقطة الوصول</string>
@@ -131,6 +130,7 @@
     <string name="select_full_day_car_type">اختر نوع السيارة طوال اليوم</string>
     <string name="business_1_people">بيزنس\n شخص واحد</string>
     <string name="ride_no">رقم الرحلة:</string>
+    <string name="ride_no_c">رقم الرحلة:</string>
     <string name="driver_c">السائق:</string>
     <string name="car_c">السيارة:</string>
     <string name="avg">متوسط التقييم</string>
@@ -301,4 +301,13 @@
     <string name="waiting">انتظار</string>
     <string name="end_ride">إنهاء الرحلة</string>
     <string name="could_not_get_location_details">فشل في ايجاد تفاصيل المكان</string>
+    <string name="error_cancelling_trip_try_again">خدث خطأ اثناء الغاء الرحلة٫ برجاء المحاولة مرة اخرى</string>
+    <string name="cancel_the_trip">إلغاء الرحلة؟</string>
+    <string name="change_notes">تغيير التفاصيل</string>
+    <string name="cant_estimate_fares">لا يمكن حساب التكلفة</string>
+    <string name="estimating_your_trip_fares_please_wait">جاري حساب تكلفة رحلتك٫ برجاء الانتظار</string>
+    <string name="we_need_call_permission_to_call_customer_service">نحن نحتاج تصريح الاتصال لتتمكن من الاتصال بخدمة العملاء :-)</string>
+    <string name="we_need_storage_permission_to_choose_your_profile_photo">نحن نحتاج لتصريح الذاكرة لتتمكن من اختيار صورة الحساب :-)</string>
+    <string name="we_need_camera_permission_to_capture_your_profile_photo">نحن نحتاج لتصريح الكاميرا لتتمكن من التقاط صورة الحساب :-)</string>
+    <string name="click_to_estimate">اضغط للحساب</string>
 </resources>

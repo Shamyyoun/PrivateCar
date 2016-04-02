@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class GeneralResponse {
     private boolean status;
-    private ArrayList<String> validation;
+    private ArrayList<String> validation = new ArrayList<>();
 
     public boolean isSuccess() {
         return status;

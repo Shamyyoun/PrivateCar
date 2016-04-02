@@ -8,13 +8,13 @@ public class Fare {
 
     @SerializedName("open_fare")
     @Expose
-    private int openFare;
+    private float openFare;
     @SerializedName("kilometer_fare")
     @Expose
-    private int kilometerFare;
+    private float kilometerFare;
     @SerializedName("minute_wait_fare")
     @Expose
-    private int minuteWaitFare;
+    private float minuteWaitFare;
     @SerializedName("class")
     @Expose
     private int _class;
@@ -28,42 +28,42 @@ public class Fare {
     /**
      * @return The openFare
      */
-    public int getOpenFare() {
+    public float getOpenFare() {
         return openFare;
     }
 
     /**
      * @param openFare The open_fare
      */
-    public void setOpenFare(int openFare) {
+    public void setOpenFare(float openFare) {
         this.openFare = openFare;
     }
 
     /**
      * @return The kilometerFare
      */
-    public int getKilometerFare() {
+    public float getKilometerFare() {
         return kilometerFare;
     }
 
     /**
      * @param kilometerFare The kilometer_fare
      */
-    public void setKilometerFare(int kilometerFare) {
+    public void setKilometerFare(float kilometerFare) {
         this.kilometerFare = kilometerFare;
     }
 
     /**
      * @return The minuteWaitFare
      */
-    public int getMinuteWaitFare() {
+    public float getMinuteWaitFare() {
         return minuteWaitFare;
     }
 
     /**
      * @param minuteWaitFare The minute_wait_fare
      */
-    public void setMinuteWaitFare(int minuteWaitFare) {
+    public void setMinuteWaitFare(float minuteWaitFare) {
         this.minuteWaitFare = minuteWaitFare;
     }
 

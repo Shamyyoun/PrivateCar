@@ -13,9 +13,11 @@ import com.google.android.gms.gcm.GcmListenerService;
 import com.google.gson.Gson;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.activities.CustomerRideActivity;
 import com.privatecar.privatecar.activities.DriverTripRequestActivity;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.enums.UserType;
+import com.privatecar.privatecar.models.payload.AcceptTripPayload;
 import com.privatecar.privatecar.models.payload.TripRequestPayload;
 import com.privatecar.privatecar.utils.AppUtils;
 
@@ -62,6 +64,19 @@ public class GCMMessageHandler extends GcmListenerService {
                         }
                     });
                     mediaPlayer.start();
+                }
+            } else if (user != null && user.getType() != null && user.getType() == UserType.CUSTOMER) {
+                if (key.equals("accepttrip")) {
+                    // this is an accept request
+                    // parse the json string
+                    AcceptTripPayload tripPayload = gson.fromJson(json, AcceptTripPayload.class);
+
+
+                    // open customer ride activity
+                    Intent intent = new Intent(this, CustomerRideActivity.class);
+                    intent.putExtra(Const.KEY_TRIP_INFO, tripPayload.getTripInfo());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
             }
         } catch (Exception e) {
