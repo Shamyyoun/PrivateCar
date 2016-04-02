@@ -215,29 +215,32 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         rvNearPlacesAdapter.setOnItemClickListener(new PlacesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                PrivateCarPlace place = nearPlaces.get(position);
-
-                if (place.isMarkerLocation()) {
-                    if (sparseMarkersArray.size() > 0) {
-                        // open verify trip activity
-                        Intent intent = new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class);
-                        intent.putExtra(Const.KEY_NOW, now);
-                        intent.putExtra(Const.KEY_PICKUP_PLACE, nearPlaces.get(position));
-                        intent.putExtra(Const.KEY_CAR_TYPE, carType);
-                        startActivity(intent);
-                    } else {
-                        DialogUtils.showAlertDialog(CustomerPickupActivity.this, R.string.no_drivers_found_now, null);
-                    }
+                if (sparseMarkersArray.size() > 0) {
+                    // open verify trip activity
+                    Intent intent = new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class);
+                    intent.putExtra(Const.KEY_NOW, now);
+                    intent.putExtra(Const.KEY_PICKUP_PLACE, nearPlaces.get(position));
+                    intent.putExtra(Const.KEY_CAR_TYPE, carType);
+                    startActivity(intent);
                 } else {
-                    LatLng latLng = new LatLng(place.getLocation().getLat(), place.getLocation().getLng());
-                    map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
-                    // clear all cars
-                    map.clear();
-                    sparseMarkersArray.clear();
+                    DialogUtils.showAlertDialog(CustomerPickupActivity.this, R.string.no_drivers_found_now, null);
                 }
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean(Const.KEY_NOW, now);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        now = savedInstanceState.getBoolean(Const.KEY_NOW);
     }
 
     /**
@@ -516,7 +519,12 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            if (activityReference != null && !Utils.isEmpty(name)) {
+            if (activityReference != null) {
+                if (Utils.isEmpty(name)) {
+                    name = activityReference.get().getString(R.string.location_on_map);
+                    address = null;
+                }
+                
                 activityReference.get().updateRVMarkerLocation(latLng, name, address);
             }
         }

@@ -52,7 +52,7 @@ public class GCMMessageHandler extends GcmListenerService {
                     // open trip request activity
                     Intent intent = new Intent(this, DriverTripRequestActivity.class);
                     intent.putExtra(Const.KEY_TRIP_REQUEST, requestPayload.getTripRequest());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
 
                     // play horn sound
@@ -75,7 +75,7 @@ public class GCMMessageHandler extends GcmListenerService {
                     // open customer ride activity
                     Intent intent = new Intent(this, CustomerRideActivity.class);
                     intent.putExtra(Const.KEY_TRIP_INFO, tripPayload.getTripInfo());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
             }
