@@ -393,6 +393,7 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                     tripRequest.setDestinationType(AddressType.LEAD_DRIVER);
 
                     // update ui
+                    tvAddDropoff.setText(R.string.add_dropoff);
                     tvDestinationAddress.setText(R.string.i_will_guide_the_captain);
                     tvEstimation.setText(R.string.add_dropoff_to_estimate);
                     layoutEstimate.setEnabled(false);
@@ -402,6 +403,7 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                     tripRequest.setDestinationType(AddressType.ADDRESS);
 
                     // update the ui
+                    tvAddDropoff.setText(R.string.change_drop_off);
                     tvDestinationAddress.setText(destinationPlace.getFullAddress());
                     tvEstimation.setText(R.string.click_to_estimate);
                     layoutEstimate.setEnabled(true);
@@ -491,6 +493,7 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                 Log.e("Trip Fare", "" + tripFare);
                 String tripFareStr = String.format("%.0f", tripFare);
                 tvEstimation.setText(tripFareStr + " " + getString(R.string.currency));
+                layoutEstimate.setEnabled(false);
             } else {
                 // show error msg
                 Utils.showLongToast(getApplicationContext(), R.string.cant_estimate_fares);

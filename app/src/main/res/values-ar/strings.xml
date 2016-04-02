@@ -310,4 +310,5 @@
     <string name="we_need_storage_permission_to_choose_your_profile_photo">نحن نحتاج لتصريح الذاكرة لتتمكن من اختيار صورة الحساب :-)</string>
     <string name="we_need_camera_permission_to_capture_your_profile_photo">نحن نحتاج لتصريح الكاميرا لتتمكن من التقاط صورة الحساب :-)</string>
     <string name="click_to_estimate">اضغط للحساب</string>
+    <string name="change_drop_off">تغيير\nمكان الوصول</string>
 </resources>
