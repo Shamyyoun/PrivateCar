@@ -166,15 +166,10 @@ public class CustomerRequests {
         if (tripRequest.getDestinationType() == AddressType.ADDRESS) {
             params.put(Const.MSG_PARAM_DESTINATION_LOCATION, tripRequest.getDestinationPlace().getLocation().getLat()
                     + "," + tripRequest.getDestinationPlace().getLocation().getLng());
-
-            // check pickup now
-            if (tripRequest.isPickupNow()) {
-                // add estimation values
-                params.put(Const.MSG_PARAM_ESTIMATE_DISTANCE, "" + tripRequest.getEstimateDistance());
-                params.put(Const.MSG_PARAM_ESTIMATE_FARE, "" + tripRequest.getEstimateFare());
-                params.put(Const.MSG_PARAM_ESTIMATE_TIME, "" + tripRequest.getEstimateTime());
-                params.put(Const.MSG_PARAM_DESTINATION_ADDRESS, tripRequest.getDestinationPlace().getFullAddress());
-            }
+            params.put(Const.MSG_PARAM_ESTIMATE_DISTANCE, "" + tripRequest.getEstimateDistance());
+            params.put(Const.MSG_PARAM_ESTIMATE_FARE, "" + tripRequest.getEstimateFare());
+            params.put(Const.MSG_PARAM_ESTIMATE_TIME, "" + tripRequest.getEstimateTime());
+            params.put(Const.MSG_PARAM_DESTINATION_ADDRESS, tripRequest.getDestinationPlace().getFullAddress());
         }
 
         // check pickup now to add pickup time

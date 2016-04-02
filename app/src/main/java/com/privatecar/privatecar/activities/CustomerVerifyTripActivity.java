@@ -198,23 +198,8 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
         if (tripRequest.isPickupNow()) {
             // set pickup time text
             tvPickupTime.setText(R.string.as_soon_as_possible);
-
-            // check destination place
-            if (tripRequest.getDestinationPlace() != null) {
-                // update estimate ui
-                tvEstimation.setText(R.string.click_to_estimate);
-                layoutEstimate.setEnabled(true);
-            } else {
-                // update estimate ui
-                tvEstimation.setText(R.string.add_dropoff_to_estimate);
-                layoutEstimate.setEnabled(false);
-            }
         } else {
             rbLater.setChecked(true);
-
-            // update estimate ui
-            tvEstimation.setText(R.string.later);
-            layoutEstimate.setEnabled(false);
 
             // set pickup time text
             if (tripRequest.getPickupTime() != null) {
@@ -227,6 +212,17 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                 Calendar calendar = Calendar.getInstance(Locale.getDefault());
                 tvPickupTime.setText(DateUtil.convertToString(calendar, "hh:mm a"));
             }
+        }
+
+        // check destination place to customize estimate ui
+        if (tripRequest.getDestinationPlace() != null) {
+            // update estimate ui
+            tvEstimation.setText(R.string.click_to_estimate);
+            layoutEstimate.setEnabled(true);
+        } else {
+            // update estimate ui
+            tvEstimation.setText(R.string.add_dropoff_to_estimate);
+            layoutEstimate.setEnabled(false);
         }
     }
 
@@ -398,7 +394,7 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
 
                     // update ui
                     tvDestinationAddress.setText(R.string.i_will_guide_the_captain);
-                    tvEstimation.setText(tripRequest.isPickupNow() ? R.string.add_dropoff_to_estimate : R.string.later);
+                    tvEstimation.setText(R.string.add_dropoff_to_estimate);
                     layoutEstimate.setEnabled(false);
                 } else {
                     // user has selected a place
@@ -407,8 +403,8 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
 
                     // update the ui
                     tvDestinationAddress.setText(destinationPlace.getFullAddress());
-                    tvEstimation.setText(tripRequest.isPickupNow() ? R.string.click_to_estimate : R.string.later);
-                    layoutEstimate.setEnabled(tripRequest.isPickupNow());
+                    tvEstimation.setText(R.string.click_to_estimate);
+                    layoutEstimate.setEnabled(true);
                 }
             }
         }
@@ -451,7 +447,6 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                 if (element.isOk()) {
                     // get values
                     float duration = element.getDuration().getValue(); // in seconds
-                    duration = duration / 60f + 1; // in minutes
                     float distance = element.getDistance().getValue(); // in meters
                     distance = distance / 1000f; // in kilo meters
                     tripRequest.setEstimateTime(duration);
@@ -460,7 +455,8 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                     // prepare params
                     User user = AppUtils.getCachedUser(this);
                     String theClass = tripRequest.getCarType().getValue();
-                    String pickupTime = DateUtil.convertToString(Calendar.getInstance(Locale.getDefault()), "hh:mm:ss");
+                    String pickupTime = DateUtil.convertToString(tripRequest.isPickupNow() ? Calendar.getInstance(Locale.getDefault())
+                            : tripRequest.getPickupTime(), "hh:mm:ss");
 
                     // create and send fares request to the server
                     CustomerRequests.fares(this, this, user.getAccessToken(), theClass, pickupTime);
