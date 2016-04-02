@@ -29,6 +29,7 @@
             android:padding="5dp">
 
             <TextView
+                android:id="@+id/tv_ride_no"
                 style="@style/white_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -139,6 +140,7 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/yellowish_rounded_corners_selector"
             android:minHeight="40dp"
+            android:onClick="onClick"
             android:text="@string/end_ride" />
 
     </LinearLayout>

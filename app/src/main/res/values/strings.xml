@@ -94,7 +94,7 @@
     <string name="pickup_location">Pickup Location</string>
     <string name="verify">Verify</string>
     <string name="dropoff">Dropoff</string>
-    <string name="i_will_guide_the_captain">I will guide the captain</string>
+    <string name="i_will_guide_the_captain">I will guide the driver</string>
     <string name="add_details">Add\nDetails</string>
     <string name="add_dropoff">Add\n Dropoff</string>
     <string name="pickup_time">Pickup time</string>
@@ -104,7 +104,7 @@
     <string name="add_dropoff_to_estimate">Add dropoff to estimate</string>
     <string name="payment">Payment</string>
     <string name="cash">Cash</string>
-    <string name="notes_to_captain">Notes to captain</string>
+    <string name="notes_to_captain">Notes to driver</string>
     <string name="promo_codes">Promo codes</string>
     <string name="go">Go!</string>
     <string name="payment_by_customer_credit_done">Payment by Customer\'s Credit Card Done.</string>
@@ -113,7 +113,7 @@
     <string name="customer_arrived_late">The customer arrived tool late</string>
     <string name="customer_made_illegal_action">The customer made an illegal action</string>
     <string name="rate">Rate</string>
-    <string name="add_details_for_pick_up">Add details for pickup location that will help the captain find you.</string>
+    <string name="add_details_for_pick_up">Add details for pickup location that will help the driver find you.</string>
     <string name="save">Save</string>
     <string name="date">Date</string>
     <string name="trips">Trips</string>
@@ -274,7 +274,7 @@
     <string name="change_details">Change\nDetails</string>
     <string name="invalid_date">Invalid date</string>
     <string name="select_payment_type">Select Payment Type</string>
-    <string name="add_notes_to_the_captain">Add notes to the captain</string>
+    <string name="add_notes_to_the_captain">Add notes to the driver</string>
     <string name="add_notes">Add Notes</string>
     <string name="finding_your_private_driver_please_wait">Finding your private driver, please wait...</string>
     <string name="no_drivers_found_now">Sorry, no drivers found now</string>
@@ -301,6 +301,7 @@
     <string name="km_m">KM : M</string>
     <string name="waiting">Waiting</string>
     <string name="end_ride">End Ride</string>
+    <string name="could_not_get_location_details">Couldn\'t get location details</string>
     <string name="error_cancelling_trip_try_again">Error cancelling the trip\nPlease try again</string>
     <string name="cancel_the_trip">Cancel the trip?</string>
     <string name="change_notes">Change notes</string>
