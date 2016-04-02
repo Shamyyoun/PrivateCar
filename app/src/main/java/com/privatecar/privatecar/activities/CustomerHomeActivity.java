@@ -28,6 +28,7 @@ import com.privatecar.privatecar.fragments.CustomerBookALiftFragment;
 import com.privatecar.privatecar.fragments.CustomerMyRidesFragment;
 import com.privatecar.privatecar.fragments.CustomerPricesFragment;
 import com.privatecar.privatecar.fragments.CustomerSettingsFragment;
+import com.privatecar.privatecar.fragments.MessageCenterFragment;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.CustomerAccountDetails;
 import com.privatecar.privatecar.models.entities.User;
@@ -129,6 +130,10 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
                 }
 
                 selectItem = false;
+                break;
+
+            case R.id.nav_message_center:
+                fragment = new MessageCenterFragment();
                 break;
 
             case R.id.nav_promo_code:

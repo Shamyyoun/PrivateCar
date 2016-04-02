@@ -213,35 +213,6 @@ public class DriverRequests {
         return requestHelper;
     }
 
-    public static RequestHelper<MessagesResponse> getInbox(Context context, RequestListener<MessagesResponse> listener, String accessToken, int start) {
-        // prepare parameters
-        Map<String, String> params = new HashMap<>();
-        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
-        params.put("start", String.valueOf(start));
-
-        // create & send request
-        RequestHelper<MessagesResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
-                Const.MESSAGE_DRIVER_GET_INBOX, MessagesResponse.class, listener, params);
-
-        requestHelper.executeFormUrlEncoded();
-
-        return requestHelper;
-    }
-
-    public static RequestHelper<GeneralResponse> sendMessage(Context context, RequestListener<GeneralResponse> listener, String accessToken, String message) {
-        // prepare parameters
-        Map<String, String> params = new HashMap<>();
-        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
-        params.put("message", message);
-
-        // create & send request
-        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
-                Const.MESSAGE_DRIVER_SEND_MESSAGE, GeneralResponse.class, listener, params);
-        requestHelper.executeFormUrlEncoded();
-
-        return requestHelper;
-    }
-
     public static RequestHelper<GeneralResponse> changeCar(Context context, RequestListener<GeneralResponse> listener, String accessToken, int carId) {
         // prepare parameters
         Map<String, String> params = new HashMap<>();
@@ -266,57 +237,6 @@ public class DriverRequests {
         // create & send request
         RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
                 Const.MESSAGE_DRIVER_CHANGE_CAR_TYPE, GeneralResponse.class, listener, params);
-        requestHelper.executeFormUrlEncoded();
-
-        return requestHelper;
-    }
-
-    public static RequestHelper<GeneralResponse> messagesMarkAsRead(Context context, RequestListener<GeneralResponse> listener, String accessToken, int messagesIds) {
-        // prepare parameters
-        Map<String, String> params = new HashMap<>();
-        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
-        params.put("messages_ids", String.valueOf(messagesIds));
-
-        // create & send request
-        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
-                Const.MESSAGE_DRIVER_MESSAGES_MARK_AS_READ, GeneralResponse.class, listener, params);
-
-        requestHelper.executeFormUrlEncoded();
-
-        return requestHelper;
-    }
-
-    public static RequestHelper<GeneralResponse> messagesMarkAsUnRead(Context context, RequestListener<GeneralResponse> listener, String accessToken, int messagesIds) {
-        // prepare parameters
-        Map<String, String> params = new HashMap<>();
-        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
-        params.put("messages_ids", String.valueOf(messagesIds));
-
-        // create & send request
-        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
-                Const.MESSAGE_DRIVER_MESSAGES_MARK_AS_UNREAD, GeneralResponse.class, listener, params);
-
-        requestHelper.executeFormUrlEncoded();
-
-        return requestHelper;
-    }
-
-    /**
-     * @param context
-     * @param listener
-     * @param accessToken
-     * @param messagesIds comma separated message ids (2,34,22,....)
-     * @return
-     */
-    public static RequestHelper<GeneralResponse> messagesDelete(Context context, RequestListener<GeneralResponse> listener, String accessToken, String messagesIds) {
-        // prepare parameters
-        Map<String, String> params = new HashMap<>();
-        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
-        params.put("messages_ids", messagesIds);
-
-        // create & send request
-        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
-                Const.MESSAGE_DRIVER_MESSAGES_DELETE, GeneralResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;

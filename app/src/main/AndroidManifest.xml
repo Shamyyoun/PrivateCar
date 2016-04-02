@@ -241,10 +241,10 @@
             android:name=".activities.CustomerAboutPrivateActivity"
             android:label="@string/about_private" />
         <activity
-            android:name=".activities.DriverMessageDetailsActivity"
+            android:name=".activities.MessageDetailsActivity"
             android:label="@string/message_details" />
         <activity
-            android:name=".activities.DriverCreateMessageActivity"
+            android:name=".activities.CreateMessageActivity"
             android:label="@string/create_message" />
         <activity
             android:name=".activities.ForgotPasswordActivity"
