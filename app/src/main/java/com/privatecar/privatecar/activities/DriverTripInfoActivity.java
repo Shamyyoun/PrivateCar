@@ -135,7 +135,7 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
             } else {
                 driverMarker = map.addMarker(new MarkerOptions()
                         .position(driverLatLng)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.large_driver_pin)));
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_driver_pin)));
             }
         }
     };
@@ -204,7 +204,7 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
         LatLng pickupLatLng = AppUtils.getLatLng(tripRequest.getPickLocation());
         pickUpMarker = map.addMarker(new MarkerOptions()
                 .position(pickupLatLng)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.large_pin)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_pin)));
 
         map.moveCamera(CameraUpdateFactory.newLatLng(pickupLatLng));
 
@@ -214,7 +214,7 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
         if (driverLocation != null) {
             driverMarker = map.addMarker(new MarkerOptions()
                     .position(driverLatLng)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.large_driver_pin)));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_driver_pin)));
 
             //add map bounds
             //https://developers.google.com/maps/documentation/android-api/views#setting_boundaries

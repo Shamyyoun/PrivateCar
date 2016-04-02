@@ -69,7 +69,7 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
             } else {
                 driverMarker = map.addMarker(new MarkerOptions()
                         .position(driverLatLng)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.large_driver_pin)));
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_driver_pin)));
             }
         }
     };
@@ -92,7 +92,7 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
         LatLng destinationLatLng = AppUtils.getLatLng(tripRequest.getDestinationLocation());
         destinationMarker = map.addMarker(new MarkerOptions()
                 .position(destinationLatLng)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.large_pin)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_pin)));
 
         map.moveCamera(CameraUpdateFactory.newLatLng(destinationLatLng));
 
@@ -102,7 +102,7 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
         if (driverLocation != null) {
             driverMarker = map.addMarker(new MarkerOptions()
                     .position(driverLatLng)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.large_driver_pin)));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_driver_pin)));
 
             //add map bounds
             //https://developers.google.com/maps/documentation/android-api/views#setting_boundaries
