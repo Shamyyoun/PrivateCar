@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,6 +39,8 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
     private GoogleMap map;
     private Marker driverMarker, destinationMarker;
 
+    private ImageButton ibNavigate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,14 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
 
         tvRideNo = (TextView) findViewById(R.id.tv_ride_no);
         tvRideNo.setText(tripRequest.getCode());
+
+        ibNavigate = (ImageButton) findViewById(R.id.ib_navigate);
+        ibNavigate.setOnClickListener(this);
+
+        //hide the navigation button if, destination=guide the driver
+        if (tripRequest.getDestinationLocation() == null)
+            ibNavigate.setVisibility(View.GONE);
+
 
         IntentFilter intentFilter = new IntentFilter(Const.ACTION_DRIVER_SEND_LOCATION);
         LocalBroadcastManager.getInstance(this).registerReceiver(locationReceiver, intentFilter);
@@ -166,6 +178,17 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
         switch (view.getId()) {
             case R.id.btn_end_ride:
 
+                break;
+            case R.id.ib_navigate:
+                //start navigation in google maps app
+                //https://developers.google.com/maps/documentation/android-api/intents#launch_turn-by-turn_navigation
+                String pkg = "com.google.android.apps.maps";
+                if (Utils.isAppInstalledAndEnabled(this, pkg)) {
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q=" + tripRequest.getDestinationLocation());
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage(pkg);
+                    startActivity(mapIntent);
+                }
                 break;
         }
     }

@@ -61,6 +61,7 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
     private TextView tvRating;
     private Button btnStartTrip;
     private ImageButton ibCall, ibCancel;
+    private ImageButton ibNavigate;
 
     SupportMapFragment mapFragment;
 
@@ -90,6 +91,7 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
         btnStartTrip = (Button) findViewById(R.id.btn_start_trip);
         ibCall = (ImageButton) findViewById(R.id.ib_call);
         ibCancel = (ImageButton) findViewById(R.id.ib_cancel);
+        ibNavigate = (ImageButton) findViewById(R.id.ib_navigate);
 
         // render data to the UI
         tvRideNo.setText("" + tripRequest.getCode());
@@ -117,6 +119,7 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
         btnStartTrip.setOnClickListener(this);
         ibCall.setOnClickListener(this);
         ibCancel.setOnClickListener(this);
+        ibNavigate.setOnClickListener(this);
 
         IntentFilter intentFilter = new IntentFilter(Const.ACTION_DRIVER_SEND_LOCATION);
         LocalBroadcastManager.getInstance(this).registerReceiver(locationReceiver, intentFilter);
@@ -181,6 +184,18 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
                 }
                 break;
 
+            case R.id.ib_navigate:
+                //start navigation in google maps app
+                //https://developers.google.com/maps/documentation/android-api/intents#launch_turn-by-turn_navigation
+                String pkg = "com.google.android.apps.maps";
+                if (Utils.isAppInstalledAndEnabled(this, pkg)) {
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q=" + tripRequest.getPickLocation());
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage(pkg);
+                    startActivity(mapIntent);
+                }
+
+                break;
             default:
                 super.onClick(v);
         }

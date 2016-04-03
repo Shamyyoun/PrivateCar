@@ -1,12 +1,11 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:overScrollMode="ifContentScrolls">
 
         <LinearLayout
@@ -19,7 +18,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -40,9 +42,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="Abbas Elakkad - Nasr City"
                         android:textColor="@color/grayish"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="Abbas Elakkad - Nasr City" />
                 </LinearLayout>
 
                 <View
@@ -73,7 +75,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -127,7 +132,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -142,7 +150,7 @@
                     android:id="@+id/tv_pickup_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:gravity="center"
                     android:textAppearance="?android:textAppearanceSmall"
                     android:textColor="@color/grayish_light" />
@@ -176,7 +184,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/grayish_highlight" />
 
             <TextView
@@ -185,7 +193,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:text="@string/car_type"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/colorAccent"
@@ -222,14 +230,17 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/grayish_highlight" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp">
 
                 <LinearLayout
                     android:id="@+id/layout_estimate"
@@ -293,14 +304,17 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/grayish_highlight" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp">
 
                 <FrameLayout
                     android:layout_width="0dp"
@@ -345,15 +359,15 @@
                         android:textStyle="bold" />
                 </FrameLayout>
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_go"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:background="@drawable/petroleum_rounded_corners_selector"
+                android:text="@string/go"
+                android:textAllCaps="true" />
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/btn_go"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:background="@drawable/petroleum_rounded_corners_shape"
-        android:text="@string/go"
-        android:textAllCaps="true" />
-</LinearLayout>
+</FrameLayout>
