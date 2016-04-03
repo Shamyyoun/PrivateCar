@@ -50,6 +50,9 @@ public class DriverTripRequest implements Serializable {
     @SerializedName("PaymentType")
     @Expose
     private String PaymentType;
+    @SerializedName("ServiceType")
+    @Expose
+    private String ServiceType;
 
     /**
      * @return The Id
@@ -245,5 +248,13 @@ public class DriverTripRequest implements Serializable {
      */
     public void setPaymentType(String PaymentType) {
         this.PaymentType = PaymentType;
+    }
+
+    public String getServiceType() {
+        return ServiceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        ServiceType = serviceType;
     }
 }
