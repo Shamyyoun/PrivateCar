@@ -22,13 +22,15 @@
             style="@style/white_normal_bold_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ride No: " />
+            android:text="@string/ride_no_c" />
 
         <TextView
+            android:id="@+id/tv_ride_no"
             style="@style/white_normal_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AA1234" />
+            android:layout_marginStart="5dp"
+            android:text="--------" />
     </LinearLayout>
 
     <LinearLayout
@@ -46,10 +48,12 @@
             android:text="@string/driver_id_c" />
 
         <TextView
+            android:id="@+id/tv_driver_id"
             style="@style/white_normal_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" AA1234" />
+            android:layout_marginStart="5dp"
+            android:text="--------" />
     </LinearLayout>
 
     <RatingBar
@@ -57,62 +61,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
-        android:rating="3"
         android:stepSize="0.5"
         android:theme="@style/GoldenRatingBarTheme" />
 
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/driver_behaviour_worse" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/car_not_clean" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/driver_arrived_too_late" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lack_of_knowledge_of_places" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/other" />
-
-    </RadioGroup>
-
     <ScrollView
-        android:background="@drawable/edit_text_rounded_grayish_border"
+        android:id="@+id/layout_options"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_weight="1">
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:overScrollMode="ifContentScrolls"
+        android:visibility="invisible">
 
-        <EditText
-            android:textAppearance="?android:textAppearanceSmall"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:background="@null"
-            android:gravity="start|top"
-            android:hint="@string/please_type_comment_here"
-            android:inputType="textMultiLine" />
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/rg_options"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/et_other"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edit_text_rounded_grayish_border"
+                android:gravity="start|top"
+                android:hint="@string/write_decline_reason"
+                android:inputType="textMultiLine" />
+        </LinearLayout>
     </ScrollView>
 
     <Button
@@ -122,5 +104,4 @@
         android:layout_height="wrap_content"
         android:text="@string/rate"
         android:textSize="@dimen/large_text_size" />
-
 </LinearLayout>

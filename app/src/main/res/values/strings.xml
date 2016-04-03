@@ -316,6 +316,9 @@
     <string name="we_need_call_permission_to_call_your_driver">We need call permission to call your driver :-)</string>
     <string name="successful_trip_request">Successful trip request.\n
             Please wait your private driver to accept your request.</string>
+    <string name="thanks_message">Thanks %s for using Private app and have a nice day.</string>
+    <string name="error_submitting_your_rating_please_try_again">Error submitting your rating\nPlease try again</string>
+    <string name="try_again">Try again?</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>
