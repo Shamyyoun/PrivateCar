@@ -88,40 +88,52 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
         map.getUiSettings().setMapToolbarEnabled(false);
         map.moveCamera(CameraUpdateFactory.zoomTo(16));
 
-// add pickup marker
-        LatLng destinationLatLng = AppUtils.getLatLng(tripRequest.getDestinationLocation());
-        destinationMarker = map.addMarker(new MarkerOptions()
-                .position(destinationLatLng)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_pin)));
-
-        map.moveCamera(CameraUpdateFactory.newLatLng(destinationLatLng));
-
-        // add driver marker
+        String destinationLocation = tripRequest.getDestinationLocation();
         String driverLocation = Utils.getCachedString(this, Const.CACHE_LOCATION, null);
-        LatLng driverLatLng = AppUtils.getLatLng(driverLocation);
-        if (driverLocation != null) {
+
+        if (destinationLocation != null) {
+            // add destination marker
+            LatLng destinationLatLng = AppUtils.getLatLng(destinationLocation);
+            destinationMarker = map.addMarker(new MarkerOptions()
+                    .position(destinationLatLng)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_pin)));
+
+            map.moveCamera(CameraUpdateFactory.newLatLng(destinationLatLng));
+
+            if (driverLocation != null) {
+                // add driver marker
+                LatLng driverLatLng = AppUtils.getLatLng(driverLocation);
+                driverMarker = map.addMarker(new MarkerOptions()
+                        .position(driverLatLng)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_driver_pin)));
+
+                //add map bounds
+                //https://developers.google.com/maps/documentation/android-api/views#setting_boundaries
+                LatLng southWest = new LatLng(Math.min(driverLatLng.latitude, destinationLatLng.latitude),
+                        Math.min(driverLatLng.longitude, destinationLatLng.longitude));
+                LatLng northEast = new LatLng(Math.max(driverLatLng.latitude, destinationLatLng.latitude),
+                        Math.max(driverLatLng.longitude, destinationLatLng.longitude));
+                final LatLngBounds bounds = new LatLngBounds(southWest, northEast);
+
+                View view = mapFragment.getView();
+                if (view != null)
+                    view.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            //run this after the map gets its width and height
+                            map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+                        }
+                    });
+            }
+
+        } else if (driverLocation != null) {
+            // add driver marker
+            LatLng driverLatLng = AppUtils.getLatLng(driverLocation);
             driverMarker = map.addMarker(new MarkerOptions()
                     .position(driverLatLng)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_driver_pin)));
 
-            //add map bounds
-            //https://developers.google.com/maps/documentation/android-api/views#setting_boundaries
-            LatLng southWest = new LatLng(Math.min(driverLatLng.latitude, destinationLatLng.latitude),
-                    Math.min(driverLatLng.longitude, destinationLatLng.longitude));
-            LatLng northEast = new LatLng(Math.max(driverLatLng.latitude, destinationLatLng.latitude),
-                    Math.max(driverLatLng.longitude, destinationLatLng.longitude));
-            final LatLngBounds bounds = new LatLngBounds(southWest, northEast);
-
-            View view = mapFragment.getView();
-            if (view != null)
-                view.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        //run this after the map gets its width and height
-                        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
-                    }
-                });
-
+            map.moveCamera(CameraUpdateFactory.newLatLng(driverLatLng));
         }
 
     }
