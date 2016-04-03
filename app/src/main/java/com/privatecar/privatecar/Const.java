@@ -107,6 +107,7 @@ public class Const {
     public static final String MESSAGE_CUSTOMER_REQUEST_TRIP = "requesttrip";
     public static final String MESSAGE_CUSTOMER_CANCEL_TRIP = "customercanceltrip";
     public static final String MESSAGE_TRIP_DRIVER_LOCATION = "tripdriverlocation";
+    public static final String MESSAGE_CUSTOMER_RATE_DRIVER = "customerratedriver";
 
 
     //messages (driver):----
@@ -176,6 +177,7 @@ public class Const {
     public static final String MSG_PARAM_DESTINATION_ADDRESS = "destination_address";
     public static final String MSG_PARAM_NOTES_FOR_DRIVER = "notes_for_driver";
     public static final String MSG_PARAM_PICKUP_ADDRESS_NOTES = "pickup_address_notes";
+    public static final String MSG_PARAM_RATE = "rate";
 
     //Intent & bundle keys
     public static final String KEY_TRIP_REQUEST = "trip_request";
@@ -195,6 +197,7 @@ public class Const {
     public static final String KEY_CAR_TYPE = "car_type";
     public static final String KEY_LOCATION = "car_type";
     public static final String KEY_TRIP_INFO = "trip_info";
+    public static final String KEY_MESSAGE = "message";
 
 
     //Intent actions

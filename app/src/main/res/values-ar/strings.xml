@@ -315,4 +315,7 @@
     <string name="we_need_call_permission_to_call_your_driver">نحن نحتاج لتصريح الاتصال لتتمكن من الاتصال بالسائق الخاص بك :-)</string>
     <string name="successful_trip_request">تم طلب الرحلة بنجاح.\n
             برجاء انتظار السائق الخاص بك حتى يوافق على طلبك</string>
+    <string name="thanks_message">شكراً %s على استخدامكم تطبيق برايفت٫ يوم سعيد</string>
+    <string name="error_submitting_your_rating_please_try_again">خطأ اثناء ارسال تقييمك\nبرجاء المحاولة مرة اخرى</string>
+    <string name="try_again">اعادة المحاولة؟</string>
 </resources>

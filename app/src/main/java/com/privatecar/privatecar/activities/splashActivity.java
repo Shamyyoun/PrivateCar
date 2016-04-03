@@ -53,14 +53,16 @@ public class SplashActivity extends BaseActivity implements RequestListener {
     protected void onResume() {
         super.onResume();
 
-        //Handle api 23 permissions
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION);
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Const.REQUEST_FINE_LOCATION_PERMISSION);
-        } else {
-            // send startup config request
-            CommonRequests.startupConfig(this, this);
-        }
+//        //Handle api 23 permissions
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION);
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Const.REQUEST_FINE_LOCATION_PERMISSION);
+//        } else {
+//            // send startup config request
+//            CommonRequests.startupConfig(this, this);
+//        }
+
+        startActivity(new Intent(this, CustomerRateActivity.class));
     }
 
     @Override
