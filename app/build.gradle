@@ -54,7 +54,7 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.2.0'
     compile 'com.marshalchen.ultimaterecyclerview:library:0.3.18'
     compile 'com.soundcloud.android:android-crop:1.0.1@aar'
-    compile 'com.koushikdutta.ion:ion:2.1.6'  //include Gson
+    compile 'com.koushikdutta.ion:ion:2.1.7'  //include Gson
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.2'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.commit451:PhotoView:1.2.4'

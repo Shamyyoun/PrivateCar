@@ -68,7 +68,20 @@ public class MarkerAnimation {
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    public  static void animateMarkerToICS(Marker marker, LatLng finalPosition, float finalRotation, final LatLngInterpolator latLngInterpolator) {
+    public  static void animateMarkerToICS(Marker marker, LatLng finalPosition, final LatLngInterpolator latLngInterpolator) {
+        TypeEvaluator<LatLng> latLngEvaluator = new TypeEvaluator<LatLng>() {
+            @Override
+            public LatLng evaluate(float fraction, LatLng startValue, LatLng endValue) {
+                return latLngInterpolator.interpolate(fraction, startValue, endValue);
+            }
+        };
+        Property<Marker, LatLng> position = Property.of(Marker.class, LatLng.class, "position");
+        ObjectAnimator positionAnimator = ObjectAnimator.ofObject(marker, position, latLngEvaluator, finalPosition);
+        positionAnimator.setDuration(1000).start();
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    public  static void animateMarkerToICSWithBearing(Marker marker, LatLng finalPosition, float finalRotation, final LatLngInterpolator latLngInterpolator) {
         TypeEvaluator<LatLng> latLngEvaluator = new TypeEvaluator<LatLng>() {
             @Override
             public LatLng evaluate(float fraction, LatLng startValue, LatLng endValue) {
@@ -91,4 +104,7 @@ public class MarkerAnimation {
         ObjectAnimator rotationAnimator = ObjectAnimator.ofObject(marker, rotation, floatEvaluator, finalRotation);
         rotationAnimator.setDuration(1000).start();
     }
+
+
+
 }

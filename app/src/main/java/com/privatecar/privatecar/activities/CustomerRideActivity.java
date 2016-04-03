@@ -3,6 +3,7 @@ package com.privatecar.privatecar.activities;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.ImageButton;
@@ -10,26 +11,42 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.Car;
+import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.CustomerTripRequest;
 import com.privatecar.privatecar.models.entities.TripInfo;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
+import com.privatecar.privatecar.models.responses.LocationResponse;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.LatLngInterpolator;
+import com.privatecar.privatecar.utils.MarkerAnimation;
 import com.privatecar.privatecar.utils.PermissionUtil;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.SavePrefs;
 import com.privatecar.privatecar.utils.Utils;
 import com.squareup.picasso.Picasso;
 
-public class CustomerRideActivity extends BasicBackActivity implements RequestListener<Object> {
+import java.lang.ref.WeakReference;
+
+public class CustomerRideActivity extends BaseActivity implements RequestListener<Object>, OnMapReadyCallback {
     private CustomerRideActivity activity;
     private TripInfo tripInfo;
     private CustomerTripRequest tripRequest;
+
     private TextView tvRideNo;
     private ImageView ivDriverImage;
     private TextView tvMessage;
@@ -40,6 +57,36 @@ public class CustomerRideActivity extends BasicBackActivity implements RequestLi
     private ImageButton btnCall;
     private ImageButton btnCancel;
 
+    SupportMapFragment mapFragment;
+
+    private GoogleMap map;
+    private Marker driverMarker, pickUpMarker;
+
+    private int mapRefreshRate; //in MS
+
+    Handler driverLocationRequestHandler = new Handler();
+    DriverLocationRequestRunnable driverLocationRequestRunnable;
+
+    //a runnable used request driver location
+    private static class DriverLocationRequestRunnable implements Runnable {
+        WeakReference<CustomerRideActivity> activityWeakReference;
+
+        DriverLocationRequestRunnable(CustomerRideActivity activity) {
+            activityWeakReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void run() {
+            CustomerRideActivity activity = activityWeakReference.get();
+            String accessToken = AppUtils.getCachedUser(activity).getAccessToken();
+            int tripId = activity.tripRequest.getId();
+            int requestRate = activity.mapRefreshRate;
+
+            CustomerRequests.tripDriverLocation(activity, activity, accessToken, tripId);
+            activity.driverLocationRequestHandler.postDelayed(this, requestRate);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +94,10 @@ public class CustomerRideActivity extends BasicBackActivity implements RequestLi
 
         // get activity reference
         activity = this;
+
+        //get the refresh rate (driver location request rate)
+        String strMapRefreshRate = AppUtils.getConfigValue(this, Config.KEY_MAP_REFRESH_RATE);
+        mapRefreshRate = strMapRefreshRate != null ? Integer.parseInt(strMapRefreshRate) * 1000 : 10000;
 
         // get main objects
         tripInfo = (TripInfo) getIntent().getSerializableExtra(Const.KEY_TRIP_INFO);
@@ -81,6 +132,61 @@ public class CustomerRideActivity extends BasicBackActivity implements RequestLi
         // add click listeners
         btnCall.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        map.getUiSettings().setMapToolbarEnabled(false);
+        map.moveCamera(CameraUpdateFactory.zoomTo(16));
+
+        // add pickup marker
+        LatLng pickupLatLng = AppUtils.getLatLng(tripRequest.getPickupLocation());
+        pickUpMarker = map.addMarker(new MarkerOptions()
+                .position(pickupLatLng)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_pin)));
+
+        map.moveCamera(CameraUpdateFactory.newLatLng(pickupLatLng));
+
+        // add driver marker
+        String driverLocation = tripInfo.getLastLocation();
+        if (driverLocation != null) {
+            LatLng driverLatLng = AppUtils.getLatLng(driverLocation);
+            driverMarker = map.addMarker(new MarkerOptions()
+                    .position(driverLatLng)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_driver_pin)));
+
+            //add map bounds
+            //https://developers.google.com/maps/documentation/android-api/views#setting_boundaries
+            LatLng southWest = new LatLng(Math.min(driverLatLng.latitude, pickupLatLng.latitude),
+                    Math.min(driverLatLng.longitude, pickupLatLng.longitude));
+            LatLng northEast = new LatLng(Math.max(driverLatLng.latitude, pickupLatLng.latitude),
+                    Math.max(driverLatLng.longitude, pickupLatLng.longitude));
+            final LatLngBounds bounds = new LatLngBounds(southWest, northEast);
+
+            View view = mapFragment.getView();
+            if (view != null)
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //run this after the map gets its width and height
+                        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+                    }
+                });
+
+        }
+
+
+        driverLocationRequestRunnable = new DriverLocationRequestRunnable(this);
+        driverLocationRequestHandler.postDelayed(driverLocationRequestRunnable, mapRefreshRate);
     }
 
     @Override
@@ -131,43 +237,64 @@ public class CustomerRideActivity extends BasicBackActivity implements RequestLi
     }
 
     @Override
-    public void onSuccess(Object response, String apiName) {
+    public synchronized void onSuccess(Object response, String apiName) {
         // dismiss the progress dialog
-        progressDialog.dismiss();
+        if (progressDialog != null)
+            progressDialog.dismiss();
 
-        // parse the response
-        GeneralResponse generalResponse = (GeneralResponse) response;
+        if (response instanceof GeneralResponse) {
+            // parse the response
+            GeneralResponse generalResponse = (GeneralResponse) response;
 
-        // check the response
-        if (generalResponse.isSuccess()) {
-            // show success msg and finish the activity
-            Utils.showLongToast(this, R.string.trip_cancelled_successfully);
-            finish();
-        } else {
-            // prepare error msg
-            String errorMsg = "";
-            for (int i = 0; i < generalResponse.getValidation().size(); i++) {
-                if (i != 0) {
-                    errorMsg += "\n";
+            // check the response
+            if (generalResponse.isSuccess()) {
+                // show success msg and finish the activity
+                Utils.showLongToast(this, R.string.trip_cancelled_successfully);
+                finish();
+            } else {
+                // prepare error msg
+                String errorMsg = "";
+                for (int i = 0; i < generalResponse.getValidation().size(); i++) {
+                    if (i != 0) {
+                        errorMsg += "\n";
+                    }
+
+                    errorMsg += generalResponse.getValidation().get(i);
                 }
 
-                errorMsg += generalResponse.getValidation().get(i);
+                if (errorMsg.isEmpty()) {
+                    errorMsg = getString(R.string.error_cancelling_trip_try_again);
+                }
+
+                // show error msg
+                Utils.showLongToast(this, errorMsg);
             }
 
-            if (errorMsg.isEmpty()) {
-                errorMsg = getString(R.string.error_cancelling_trip_try_again);
+        } else if (response instanceof LocationResponse) {
+            LocationResponse locationResponse = (LocationResponse) response;
+            if (locationResponse.isSuccess()) {
+                if (locationResponse.getContent() != null) {
+                    LatLng location = AppUtils.getLatLng(locationResponse.getContent());
+                    MarkerAnimation.animateMarkerToICS(driverMarker, location, new LatLngInterpolator.LinearFixed());
+                }
+            } else {
+                Utils.showLongToast(this, locationResponse.getValidation());
             }
-
-            // show error msg
-            Utils.showLongToast(this, errorMsg);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        driverLocationRequestHandler.removeCallbacks(driverLocationRequestRunnable);
     }
 
     @Override
     public void onFail(String message, String apiName) {
         // dismiss the progress dialog & show error msg
-        progressDialog.dismiss();
-        Utils.showLongToast(this, R.string.connection_error);
+        if (progressDialog != null)
+            progressDialog.dismiss();
+        Utils.showLongToast(this, message);
     }
 
     @Override

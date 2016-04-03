@@ -11,6 +11,7 @@ import com.privatecar.privatecar.models.responses.AccessTokenResponse;
 import com.privatecar.privatecar.models.responses.CustomerTripsResponse;
 import com.privatecar.privatecar.models.responses.FaresResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
+import com.privatecar.privatecar.models.responses.LocationResponse;
 import com.privatecar.privatecar.models.responses.NearDriversResponse;
 import com.privatecar.privatecar.models.responses.PromoCodeResponse;
 import com.privatecar.privatecar.models.responses.TripRequestResponse;
@@ -199,4 +200,20 @@ public class CustomerRequests {
 
         return requestHelper;
     }
+
+    //get the location of the driver when coming to the pickup location
+    public static RequestHelper<Object> tripDriverLocation(Context context, RequestListener<Object> listener, String accessToken, int tripId) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_TRIP_ID, "" + tripId);
+
+        // create & send request
+        RequestHelper<Object> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_TRIP_DRIVER_LOCATION, LocationResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+
 }

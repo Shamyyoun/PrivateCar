@@ -614,7 +614,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                         if (sparseMarkersArray.indexOfKey(id) >= 0) { // id found in the array
                             // animate the marker in the array with the new location of the near driver then add it to the tmpSparseArray
                             Marker marker = sparseMarkersArray.get(id);
-                            MarkerAnimation.animateMarkerToICS(marker, nearDriverLatLng, bearing, new LatLngInterpolator.LinearFixed());
+                            MarkerAnimation.animateMarkerToICSWithBearing(marker, nearDriverLatLng, bearing, new LatLngInterpolator.LinearFixed());
 
                             tmpSparseMarkersArray.append(id, marker);
                             sparseMarkersArray.remove(id);

@@ -106,6 +106,7 @@ public class Const {
     public static final String MESSAGE_CUSTOMER_ACTIVATE_PROMO_CODE = "activatepromocode";
     public static final String MESSAGE_CUSTOMER_REQUEST_TRIP = "requesttrip";
     public static final String MESSAGE_CUSTOMER_CANCEL_TRIP = "customercanceltrip";
+    public static final String MESSAGE_TRIP_DRIVER_LOCATION = "tripdriverlocation";
 
 
     //messages (driver):----

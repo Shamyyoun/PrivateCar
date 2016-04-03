@@ -210,8 +210,8 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
 
         // add driver marker
         String driverLocation = Utils.getCachedString(this, Const.CACHE_LOCATION, null);
-        LatLng driverLatLng = AppUtils.getLatLng(driverLocation);
         if (driverLocation != null) {
+            LatLng driverLatLng = AppUtils.getLatLng(driverLocation);
             driverMarker = map.addMarker(new MarkerOptions()
                     .position(driverLatLng)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_driver_pin)));
