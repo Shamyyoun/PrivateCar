@@ -177,6 +177,7 @@ public class DialogUtils {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
+                context.startActivity(intent);
             }
         }, null);
     }

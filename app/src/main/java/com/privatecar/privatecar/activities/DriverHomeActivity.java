@@ -20,7 +20,7 @@ import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.fragments.DriverAccountFragment;
 import com.privatecar.privatecar.fragments.DriverHomeFragment;
-import com.privatecar.privatecar.fragments.DriverMessageCenterFragment;
+import com.privatecar.privatecar.fragments.MessageCenterFragment;
 import com.privatecar.privatecar.fragments.DriverRatingsFragment;
 import com.privatecar.privatecar.fragments.DriverStatementFragment;
 import com.privatecar.privatecar.models.entities.Config;
@@ -85,7 +85,7 @@ public class DriverHomeActivity extends BaseActivity {
                         fragmentManager.beginTransaction().replace(R.id.layout_fragment_container, new DriverAccountFragment()).commit();
                         break;
                     case R.id.nav_message_center:
-                        fragmentManager.beginTransaction().replace(R.id.layout_fragment_container, new DriverMessageCenterFragment()).commit();
+                        fragmentManager.beginTransaction().replace(R.id.layout_fragment_container, new MessageCenterFragment()).commit();
                         break;
                 }
 

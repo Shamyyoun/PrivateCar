@@ -12,13 +12,13 @@ import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.Message;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
-import com.privatecar.privatecar.requests.DriverRequests;
+import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class DriverMessageDetailsActivity extends BasicBackActivity implements RequestListener<GeneralResponse> {
+public class MessageDetailsActivity extends BasicBackActivity implements RequestListener<GeneralResponse> {
 
     Message message;
     int position; // the position of the message in the array list
@@ -30,7 +30,7 @@ public class DriverMessageDetailsActivity extends BasicBackActivity implements R
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_message_details);
+        setContentView(R.layout.activity_message_details);
 
         message = (Message) getIntent().getSerializableExtra("message");
         position = getIntent().getIntExtra("position", -1);
@@ -56,7 +56,7 @@ public class DriverMessageDetailsActivity extends BasicBackActivity implements R
         switch (v.getId()) {
             case R.id.ib_delete_message:
                 progressDialog = DialogUtils.showProgressDialog(this, R.string.deleting_message);
-                DriverRequests.messagesDelete(this, this, AppUtils.getCachedUser(this).getAccessToken(), String.valueOf(message.getId()));
+                CommonRequests.messagesDelete(this, this, AppUtils.getCachedUser(this).getAccessToken(), String.valueOf(message.getId()));
                 break;
         }
     }

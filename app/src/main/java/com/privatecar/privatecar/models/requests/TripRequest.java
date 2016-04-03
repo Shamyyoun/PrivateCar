@@ -18,7 +18,7 @@ public class TripRequest {
     private AddressType destinationType;
     private PrivateCarPlace destinationPlace;
     private float estimateDistance; // kilo meters
-    private float estimateTime;
+    private float estimateTime; // seconds
     private float estimateFare;
     private Calendar pickupTime;
     private String notes;

@@ -8,13 +8,13 @@ import android.widget.EditText;
 
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
-import com.privatecar.privatecar.requests.DriverRequests;
+import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class DriverCreateMessageActivity extends BasicBackActivity implements View.OnClickListener, RequestListener<GeneralResponse> {
+public class CreateMessageActivity extends BasicBackActivity implements View.OnClickListener, RequestListener<GeneralResponse> {
 
     private EditText etMessageBody;
     private Button btnSend;
@@ -23,7 +23,7 @@ public class DriverCreateMessageActivity extends BasicBackActivity implements Vi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_create_message);
+        setContentView(R.layout.activity_create_message);
 
         etMessageBody = (EditText) findViewById(R.id.et_message_body);
         btnSend = (Button) findViewById(R.id.btn_send);
@@ -43,7 +43,7 @@ public class DriverCreateMessageActivity extends BasicBackActivity implements Vi
                 } else {
                     dialog = DialogUtils.showProgressDialog(this, R.string.sending_message, true);
                     Utils.hideKeyboard(etMessageBody);
-                    DriverRequests.sendMessage(this, this, AppUtils.getCachedUser(this).getAccessToken(), Utils.getText(etMessageBody));
+                    CommonRequests.sendMessage(this, this, AppUtils.getCachedUser(this).getAccessToken(), Utils.getText(etMessageBody));
                 }
 
                 break;

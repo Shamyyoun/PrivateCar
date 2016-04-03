@@ -1,7 +1,9 @@
 package com.privatecar.privatecar.activities;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -11,19 +13,23 @@ import android.widget.TextView;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.Car;
+import com.privatecar.privatecar.models.entities.CustomerTripRequest;
 import com.privatecar.privatecar.models.entities.TripInfo;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
+import com.privatecar.privatecar.utils.PermissionUtil;
 import com.privatecar.privatecar.utils.RequestListener;
+import com.privatecar.privatecar.utils.SavePrefs;
 import com.privatecar.privatecar.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 public class CustomerRideActivity extends BasicBackActivity implements RequestListener<Object> {
     private CustomerRideActivity activity;
     private TripInfo tripInfo;
+    private CustomerTripRequest tripRequest;
     private TextView tvRideNo;
     private ImageView ivDriverImage;
     private TextView tvMessage;
@@ -42,8 +48,10 @@ public class CustomerRideActivity extends BasicBackActivity implements RequestLi
         // get activity reference
         activity = this;
 
-        // get passed trip info
+        // get main objects
         tripInfo = (TripInfo) getIntent().getSerializableExtra(Const.KEY_TRIP_INFO);
+        SavePrefs<CustomerTripRequest> savePrefs = new SavePrefs<>(this, CustomerTripRequest.class);
+        tripRequest = savePrefs.load(Const.CACHE_LAST_TRIP_REQUEST);
 
         // init views
         tvRideNo = (TextView) findViewById(R.id.tv_ride_no);
@@ -57,8 +65,8 @@ public class CustomerRideActivity extends BasicBackActivity implements RequestLi
         btnCancel = (ImageButton) findViewById(R.id.btn_cancel);
 
         // update the ui
-        tvRideNo.setText("" + tripInfo.getId());
-//        tvMessage.setText(tripInfo.get);
+        tvRideNo.setText(tripRequest.getCode());
+//        tvMessage.setText(tripInfo.get); TODO set the message
         tvDriverName.setText(tripInfo.getFullname());
         Car car = tripInfo.getCars().get(0);
         tvCarName.setText(car.getBrand() + " " + car.getModel());
@@ -79,8 +87,15 @@ public class CustomerRideActivity extends BasicBackActivity implements RequestLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_call:
-                // show call dialog
-                DialogUtils.showCallDialog(this, tripInfo.getMobile());
+                // check call permission
+                if (PermissionUtil.isGranted(this, Manifest.permission.CALL_PHONE)) {
+                    // show call dialog
+                    DialogUtils.showCallDialog(this, tripInfo.getMobile());
+                } else {
+                    // not granted
+                    // request the permission
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, Const.PERM_REQ_CALL);
+                }
                 break;
 
             case R.id.btn_cancel:
@@ -153,5 +168,25 @@ public class CustomerRideActivity extends BasicBackActivity implements RequestLi
         // dismiss the progress dialog & show error msg
         progressDialog.dismiss();
         Utils.showLongToast(this, R.string.connection_error);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case Const.PERM_REQ_CALL:
+                // check if granted
+                if (PermissionUtil.isAllGranted(grantResults)) {
+                    // granted
+                    // show call dialog
+                    DialogUtils.showCallDialog(this, tripInfo.getMobile());
+                } else {
+                    // show msg
+                    Utils.showShortToast(this, R.string.we_need_call_permission_to_call_your_driver);
+                }
+                break;
+
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

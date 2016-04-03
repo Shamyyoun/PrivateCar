@@ -313,6 +313,10 @@
     <string name="no_fares_on_later">No fares on later</string>
     <string name="click_to_estimate">Click to estimate</string>
     <string name="location_on_map">Location on map</string>
+    <string name="change_drop_off">Change\nDropoff</string>
+    <string name="we_need_call_permission_to_call_your_driver">We need call permission to call your driver :-)</string>
+    <string name="successful_trip_request">Successful trip request.\n
+            Please wait your private driver to accept your request.</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

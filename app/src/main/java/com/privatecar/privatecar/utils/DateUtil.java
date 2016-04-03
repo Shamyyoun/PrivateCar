@@ -56,12 +56,8 @@ public class DateUtil {
     }
 
     public static String getCurrentTime() {
-        Calendar c = Calendar.getInstance(Locale.getDefault());
-        int seconds = c.get(Calendar.SECOND);
-        int minutes = c.get(Calendar.MINUTE);
-        int hours = c.get(Calendar.HOUR_OF_DAY);
-
-        return hours + ":" + minutes + ":" + seconds;
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        return convertToString(calendar, "hh:mm:ss");
     }
 
     public static boolean isCurrentDate(Calendar calendar) {

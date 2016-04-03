@@ -14,6 +14,7 @@ import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.dialogs.DateTimeDialog;
 import com.privatecar.privatecar.dialogs.PaymentTypeDialog;
+import com.privatecar.privatecar.models.entities.CustomerTripRequest;
 import com.privatecar.privatecar.models.entities.DistanceMatrixElement;
 import com.privatecar.privatecar.models.entities.Fare;
 import com.privatecar.privatecar.models.entities.PrivateCarPlace;
@@ -31,10 +32,10 @@ import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DateUtil;
 import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.RequestListener;
+import com.privatecar.privatecar.utils.SavePrefs;
 import com.privatecar.privatecar.utils.Utils;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class CustomerVerifyTripActivity extends BasicBackActivity implements View.OnClickListener, RequestListener {
@@ -188,33 +189,14 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
      */
     private void updateUI() {
         // set the pickup address
-        String pickupAddress = tripRequest.getPickupPlace().getName();
-        if (!Utils.isNullOrEmpty(tripRequest.getPickupPlace().getAddress())) {
-            pickupAddress += " - " + tripRequest.getPickupPlace().getAddress();
-        }
-        tvPickupAddress.setText(pickupAddress);
+        tvPickupAddress.setText(tripRequest.getPickupPlace().getFullAddress());
 
         // check pickup time
         if (tripRequest.isPickupNow()) {
             // set pickup time text
             tvPickupTime.setText(R.string.as_soon_as_possible);
-
-            // check destination place
-            if (tripRequest.getDestinationPlace() != null) {
-                // update estimate ui
-                tvEstimation.setText(R.string.click_to_estimate);
-                layoutEstimate.setEnabled(true);
-            } else {
-                // update estimate ui
-                tvEstimation.setText(R.string.add_dropoff_to_estimate);
-                layoutEstimate.setEnabled(false);
-            }
         } else {
             rbLater.setChecked(true);
-
-            // update estimate ui
-            tvEstimation.setText(R.string.later);
-            layoutEstimate.setEnabled(false);
 
             // set pickup time text
             if (tripRequest.getPickupTime() != null) {
@@ -227,6 +209,17 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                 Calendar calendar = Calendar.getInstance(Locale.getDefault());
                 tvPickupTime.setText(DateUtil.convertToString(calendar, "hh:mm a"));
             }
+        }
+
+        // check destination place to customize estimate ui
+        if (tripRequest.getDestinationPlace() != null) {
+            // update estimate ui
+            tvEstimation.setText(R.string.click_to_estimate);
+            layoutEstimate.setEnabled(true);
+        } else {
+            // update estimate ui
+            tvEstimation.setText(R.string.add_dropoff_to_estimate);
+            layoutEstimate.setEnabled(false);
         }
     }
 
@@ -289,7 +282,6 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                     tripRequest.setPaymentType(type);
 
                     // update ui
-                    String text;
                     if (type == PaymentType.CASH) {
                         tvPaymentType.setText(getString(R.string.cash));
                     } else {
@@ -397,8 +389,9 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                     tripRequest.setDestinationType(AddressType.LEAD_DRIVER);
 
                     // update ui
+                    tvAddDropoff.setText(R.string.add_dropoff);
                     tvDestinationAddress.setText(R.string.i_will_guide_the_captain);
-                    tvEstimation.setText(tripRequest.isPickupNow() ? R.string.add_dropoff_to_estimate : R.string.later);
+                    tvEstimation.setText(R.string.add_dropoff_to_estimate);
                     layoutEstimate.setEnabled(false);
                 } else {
                     // user has selected a place
@@ -406,9 +399,13 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                     tripRequest.setDestinationType(AddressType.ADDRESS);
 
                     // update the ui
+                    tvAddDropoff.setText(R.string.change_drop_off);
                     tvDestinationAddress.setText(destinationPlace.getFullAddress());
-                    tvEstimation.setText(tripRequest.isPickupNow() ? R.string.click_to_estimate : R.string.later);
-                    layoutEstimate.setEnabled(tripRequest.isPickupNow());
+                    tvEstimation.setText(R.string.click_to_estimate);
+                    layoutEstimate.setEnabled(true);
+
+                    Log.e("Place name", destinationPlace.getName());
+                    Log.e("Place address", destinationPlace.getAddress());
                 }
             }
         }
@@ -430,10 +427,15 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
             // check response
             if (requestResponse.isStatus()) {
                 // success
-                // goto ride activity
-//            Intent intent = new Intent(this, CustomerRideActivity.class);
-//            intent.putExtra()
-                DialogUtils.showAlertDialog(this, "Successful request", null);
+                // cache the trip request
+                SavePrefs<CustomerTripRequest> savePrefs = new SavePrefs<CustomerTripRequest>(this, CustomerTripRequest.class);
+                savePrefs.save(requestResponse.getTripRequest(), Const.CACHE_LAST_TRIP_REQUEST);
+
+                // show msg toast and start new customer home activity
+                Utils.showLongToast(this, R.string.successful_trip_request);
+                Intent intent = new Intent(this, CustomerHomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             } else {
                 // no drivers found
                 // show dialog msg
@@ -451,7 +453,6 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                 if (element.isOk()) {
                     // get values
                     float duration = element.getDuration().getValue(); // in seconds
-                    duration = duration / 60f + 1; // in minutes
                     float distance = element.getDistance().getValue(); // in meters
                     distance = distance / 1000f; // in kilo meters
                     tripRequest.setEstimateTime(duration);
@@ -460,7 +461,8 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                     // prepare params
                     User user = AppUtils.getCachedUser(this);
                     String theClass = tripRequest.getCarType().getValue();
-                    String pickupTime = DateUtil.convertToString(Calendar.getInstance(Locale.getDefault()), "hh:mm:ss");
+                    String pickupTime = DateUtil.convertToString(tripRequest.isPickupNow() ? Calendar.getInstance(Locale.getDefault())
+                            : tripRequest.getPickupTime(), "hh:mm:ss");
 
                     // create and send fares request to the server
                     CustomerRequests.fares(this, this, user.getAccessToken(), theClass, pickupTime);
@@ -495,6 +497,7 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                 Log.e("Trip Fare", "" + tripFare);
                 String tripFareStr = String.format("%.0f", tripFare);
                 tvEstimation.setText(tripFareStr + " " + getString(R.string.currency));
+                layoutEstimate.setEnabled(false);
             } else {
                 // show error msg
                 Utils.showLongToast(getApplicationContext(), R.string.cant_estimate_fares);

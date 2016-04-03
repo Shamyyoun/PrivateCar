@@ -78,6 +78,7 @@
                 app:riv_oval="false" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_message"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

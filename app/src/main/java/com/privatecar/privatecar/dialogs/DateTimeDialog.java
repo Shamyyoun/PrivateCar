@@ -50,7 +50,7 @@ public class DateTimeDialog extends ParentDialog {
 
         // customize pickers
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
-        if (minCurrentDate) datePicker.setMinDate(calendar.getTimeInMillis());
+        if (minCurrentDate) datePicker.setMinDate(calendar.getTimeInMillis() - 1000);
 
         // add set click listener
         btnSet.setOnClickListener(new View.OnClickListener() {

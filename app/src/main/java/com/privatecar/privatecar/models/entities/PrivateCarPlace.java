@@ -49,7 +49,7 @@ public class PrivateCarPlace implements Serializable {
     getFullAddress() {
         String fullAddress = name;
         if (!Utils.isNullOrEmpty(address)) {
-            name += " - " + address;
+            fullAddress += " - " + address;
         }
         return fullAddress;
     }
