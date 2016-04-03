@@ -14,6 +14,7 @@ import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.dialogs.DateTimeDialog;
 import com.privatecar.privatecar.dialogs.PaymentTypeDialog;
+import com.privatecar.privatecar.models.entities.CustomerTripRequest;
 import com.privatecar.privatecar.models.entities.DistanceMatrixElement;
 import com.privatecar.privatecar.models.entities.Fare;
 import com.privatecar.privatecar.models.entities.PrivateCarPlace;
@@ -31,10 +32,10 @@ import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DateUtil;
 import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.RequestListener;
+import com.privatecar.privatecar.utils.SavePrefs;
 import com.privatecar.privatecar.utils.Utils;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class CustomerVerifyTripActivity extends BasicBackActivity implements View.OnClickListener, RequestListener {
@@ -188,11 +189,7 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
      */
     private void updateUI() {
         // set the pickup address
-        String pickupAddress = tripRequest.getPickupPlace().getName();
-        if (!Utils.isNullOrEmpty(tripRequest.getPickupPlace().getAddress())) {
-            pickupAddress += " - " + tripRequest.getPickupPlace().getAddress();
-        }
-        tvPickupAddress.setText(pickupAddress);
+        tvPickupAddress.setText(tripRequest.getPickupPlace().getFullAddress());
 
         // check pickup time
         if (tripRequest.isPickupNow()) {
@@ -285,7 +282,6 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                     tripRequest.setPaymentType(type);
 
                     // update ui
-                    String text;
                     if (type == PaymentType.CASH) {
                         tvPaymentType.setText(getString(R.string.cash));
                     } else {
@@ -407,6 +403,9 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                     tvDestinationAddress.setText(destinationPlace.getFullAddress());
                     tvEstimation.setText(R.string.click_to_estimate);
                     layoutEstimate.setEnabled(true);
+
+                    Log.e("Place name", destinationPlace.getName());
+                    Log.e("Place address", destinationPlace.getAddress());
                 }
             }
         }
@@ -428,10 +427,15 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
             // check response
             if (requestResponse.isStatus()) {
                 // success
-                // goto ride activity
-//            Intent intent = new Intent(this, CustomerRideActivity.class);
-//            intent.putExtra()
-                DialogUtils.showAlertDialog(this, "Successful request", null);
+                // cache the trip request
+                SavePrefs<CustomerTripRequest> savePrefs = new SavePrefs<CustomerTripRequest>(this, CustomerTripRequest.class);
+                savePrefs.save(requestResponse.getTripRequest(), Const.CACHE_LAST_TRIP_REQUEST);
+
+                // show msg toast and start new customer home activity
+                Utils.showLongToast(this, R.string.successful_trip_request);
+                Intent intent = new Intent(this, CustomerHomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             } else {
                 // no drivers found
                 // show dialog msg

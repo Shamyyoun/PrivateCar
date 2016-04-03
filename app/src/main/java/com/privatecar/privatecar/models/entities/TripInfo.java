@@ -18,13 +18,13 @@ public class TripInfo implements Serializable {
     private int credit;
     @SerializedName("low_rating_count")
     @Expose
-    private int lowRatingCount;
+    private float lowRatingCount;
     @SerializedName("noreason_decline_trip_count")
     @Expose
     private int noreasonDeclineTripCount;
     @SerializedName("overall_rating")
     @Expose
-    private int overallRating;
+    private float overallRating;
     @SerializedName("civil_id")
     @Expose
     private String civilId;
@@ -84,10 +84,10 @@ public class TripInfo implements Serializable {
     private String fullname;
     @SerializedName("todayprofit")
     @Expose
-    private int todayprofit;
+    private float todayprofit;
     @SerializedName("todayhours")
     @Expose
-    private int todayhours;
+    private float todayhours;
     @SerializedName("cars")
     @Expose
     private List<Car> cars = new ArrayList<Car>();
@@ -132,14 +132,14 @@ public class TripInfo implements Serializable {
     /**
      * @return The lowRatingCount
      */
-    public int getLowRatingCount() {
+    public float getLowRatingCount() {
         return lowRatingCount;
     }
 
     /**
      * @param lowRatingCount The low_rating_count
      */
-    public void setLowRatingCount(int lowRatingCount) {
+    public void setLowRatingCount(float lowRatingCount) {
         this.lowRatingCount = lowRatingCount;
     }
 
@@ -160,14 +160,14 @@ public class TripInfo implements Serializable {
     /**
      * @return The overallRating
      */
-    public int getOverallRating() {
+    public float getOverallRating() {
         return overallRating;
     }
 
     /**
      * @param overallRating The overall_rating
      */
-    public void setOverallRating(int overallRating) {
+    public void setOverallRating(float overallRating) {
         this.overallRating = overallRating;
     }
 
@@ -440,28 +440,28 @@ public class TripInfo implements Serializable {
     /**
      * @return The todayprofit
      */
-    public int getTodayprofit() {
+    public float getTodayprofit() {
         return todayprofit;
     }
 
     /**
      * @param todayprofit The todayprofit
      */
-    public void setTodayprofit(int todayprofit) {
+    public void setTodayprofit(float todayprofit) {
         this.todayprofit = todayprofit;
     }
 
     /**
      * @return The todayhours
      */
-    public int getTodayhours() {
+    public float getTodayhours() {
         return todayhours;
     }
 
     /**
      * @param todayhours The todayhours
      */
-    public void setTodayhours(int todayhours) {
+    public void setTodayhours(float todayhours) {
         this.todayhours = todayhours;
     }
 

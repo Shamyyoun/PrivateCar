@@ -311,4 +311,7 @@
     <string name="we_need_camera_permission_to_capture_your_profile_photo">نحن نحتاج لتصريح الكاميرا لتتمكن من التقاط صورة الحساب :-)</string>
     <string name="click_to_estimate">اضغط للحساب</string>
     <string name="change_drop_off">تغيير\nمكان الوصول</string>
+    <string name="we_need_call_permission_to_call_your_driver">نحن نحتاج لتصريح الاتصال لتتمكن من الاتصال بالسائق الخاص بك :-)</string>
+    <string name="successful_trip_request">تم طلب الرحلة بنجاح.\n
+            برجاء انتظار السائق الخاص بك حتى يوافق على طلبك</string>
 </resources>

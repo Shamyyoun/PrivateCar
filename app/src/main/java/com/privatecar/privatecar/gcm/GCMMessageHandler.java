@@ -66,11 +66,10 @@ public class GCMMessageHandler extends GcmListenerService {
                     mediaPlayer.start();
                 }
             } else if (user != null && user.getType() != null && user.getType() == UserType.CUSTOMER) {
-                if (key.equals("accepttrip")) {
+                if (key.equals(Const.GCM_KEY_ACCEPT_TRIP)) {
                     // this is an accept request
                     // parse the json string
                     AcceptTripPayload tripPayload = gson.fromJson(json, AcceptTripPayload.class);
-
 
                     // open customer ride activity
                     Intent intent = new Intent(this, CustomerRideActivity.class);

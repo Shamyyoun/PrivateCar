@@ -84,6 +84,7 @@ public class Const {
     public static final String CACHE_MESSAGES = "messages_cache";
     public static final String CACHE_LOCALE = "app_locale_cache";
     public static final String CACHE_LOCATION = "location_cache";
+    public static final String CACHE_LAST_TRIP_REQUEST = "last_trip_request_cache";
 
     //messages (common):----
     public static final String IMAGES_BASE_URL = "http://ec2-54-201-70-234.us-west-2.compute.amazonaws.com/api-repo-1/";
@@ -201,6 +202,7 @@ public class Const {
 
     //push notifications keys
     public static final String GCM_KEY_TRIP_REQUEST = "trip_request";
+    public static final String GCM_KEY_ACCEPT_TRIP = "accepttrip";
 
 
     // permissions requests
