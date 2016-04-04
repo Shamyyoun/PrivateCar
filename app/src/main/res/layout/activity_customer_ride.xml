@@ -75,8 +75,7 @@
                 android:paddingEnd="10dp"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
-                android:visibility="gone"
-                tools:text="Hi, I'm coming to pick you up 1.5 km away, 5 min." />
+                android:text="@string/ride_driver_initial_message" />
         </LinearLayout>
 
         <LinearLayout

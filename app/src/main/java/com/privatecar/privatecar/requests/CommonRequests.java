@@ -9,6 +9,7 @@ import com.privatecar.privatecar.models.enums.GrantType;
 import com.privatecar.privatecar.models.responses.AccessTokenResponse;
 import com.privatecar.privatecar.models.responses.ConfigResponse;
 import com.privatecar.privatecar.models.responses.DistanceMatrixResponse;
+import com.privatecar.privatecar.models.responses.DriverLocationResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.models.responses.MessagesResponse;
 import com.privatecar.privatecar.models.responses.NearbyPlacesResponse;
@@ -140,7 +141,7 @@ public class CommonRequests {
         return requestNearbyPlaces;
     }
 
-    public static RequestHelper<DistanceMatrixResponse> getTravelTimeByDistanceMatrixApi(Context ctx, RequestListener<DistanceMatrixResponse> listener,String origin, LatLng destination) {
+    public static RequestHelper<DistanceMatrixResponse> getTravelTimeByDistanceMatrixApi(Context ctx, RequestListener listener,String origin, LatLng destination) {
         String language = Utils.getAppLanguage();
         String serverApiKey = ctx.getString(R.string.server_api_key);
 
@@ -232,4 +233,18 @@ public class CommonRequests {
         return requestHelper;
     }
 
+    public static RequestHelper<DriverLocationResponse> driverTripLocation(Context context, RequestListener listener, String accessToken, int tripId) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_TRIP_ID, "" + tripId);
+
+        // create & send request
+        RequestHelper<DriverLocationResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_TRIP_LOCATION, DriverLocationResponse.class, listener, params);
+
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
 }

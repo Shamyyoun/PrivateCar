@@ -318,4 +318,10 @@
     <string name="thanks_message">شكراً %s على استخدامكم تطبيق برايفت٫ يوم سعيد</string>
     <string name="error_submitting_your_rating_please_try_again">خطأ اثناء ارسال تقييمك\nبرجاء المحاولة مرة اخرى</string>
     <string name="try_again">اعادة المحاولة؟</string>
+    <string name="ride_driver_initial_message">مرحباً٬ انا قادم اليك لنبدأ الرحلة.</string>
+    <string name="ride_driver_message_km">مرحباً٬ انا قادم اليك لنبدأ الرحلة بعد %1$s كم٬ %2$s دقيقة.</string>
+    <string name="ride_driver_message_m">مرحباً٬ انا قادم اليك لنبدأ الرحلة بعد %1$s م٬ %2$s دقيقة.</string>
+    <string name="customer_cancel_trip_message">نتقدم لك بكل الاعتذار٫ لقد قام السائق بالغاء الرحلة</string>
+    <string name="start_trip_message">لقد بدأ السائق رحلتك٬ نتمنى لك رحلة سعيدة</string>
+    <string name="driver_cancel_trip_message">لقد قام العميل بالغاء الرحلة</string>
 </resources>

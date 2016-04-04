@@ -164,7 +164,8 @@
             android:label="@string/pickup_location" />
         <activity
             android:name=".activities.DriverTripInfoActivity"
-            android:label="@string/your_ride" />
+            android:label="@string/your_ride"
+            android:launchMode="singleTop" />
         <activity
             android:name=".activities.DriverTrackTheTripActivity"
             android:label="@string/your_ride" />

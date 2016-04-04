@@ -155,7 +155,7 @@ public class DriverRequests {
         params.put("bearing", String.valueOf(bearing));
         params.put("carId", carId);
         params.put("driverId", driverId);
-        params.put("resetStatus", "1"); // TODO remove
+//        params.put("resetStatus", "1"); // TODO remove
 
         // create & send request
         RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,

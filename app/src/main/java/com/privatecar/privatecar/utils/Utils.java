@@ -513,4 +513,18 @@ public class Utils {
             return false;
         }
     }
+
+    /**
+     * method, used to convert string number to double number
+     * @param number
+     * @return
+     */
+    public static double convertToDouble(String number) {
+        try {
+            return Double.parseDouble(number);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

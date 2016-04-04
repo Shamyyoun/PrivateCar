@@ -95,6 +95,7 @@ public class Const {
     public static final String MESSAGE_GET_OPTIONS = "getoptions";
     public static final String MESSAGE_CHANGE_PASSWORD = "changepassword";
     public static final String MESSAGE_FORGET_PASSWORD = "forgetpassword";
+    public static final String MESSAGE_DRIVER_TRIP_LOCATION = "tripdriverlocation";
 
     //messages (customer):----
     public static final String MESSAGE_REGISTER_CUSTOMER = "regcustomer";
@@ -197,7 +198,8 @@ public class Const {
     public static final String KEY_CAR_TYPE = "car_type";
     public static final String KEY_LOCATION = "car_type";
     public static final String KEY_TRIP_INFO = "trip_info";
-    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_CANCEL_TRIP = "cancel_trip";
+    public static final String KEY_START_TRIP = "start_trip";
 
 
     //Intent actions
@@ -207,6 +209,9 @@ public class Const {
     //push notifications keys
     public static final String GCM_KEY_TRIP_REQUEST = "trip_request";
     public static final String GCM_KEY_ACCEPT_TRIP = "accepttrip";
+    public static final String GCM_KEY_START_TRIP = "start_trip";
+    public static final String GCM_KEY_DRIVER_CANCEL = "driver_cancel";
+    public static final String GCM_KEY_CUSTOMER_CANCEL = "customer_cancel";
 
 
     // permissions requests
