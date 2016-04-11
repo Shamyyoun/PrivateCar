@@ -8,7 +8,6 @@ import com.privatecar.privatecar.models.responses.DocumentsResponse;
 import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.models.responses.LocationsResponse;
-import com.privatecar.privatecar.models.responses.MessagesResponse;
 import com.privatecar.privatecar.models.responses.StatementsResponse;
 import com.privatecar.privatecar.models.responses.TripResponse;
 import com.privatecar.privatecar.utils.RequestHelper;
@@ -268,6 +267,23 @@ public class DriverRequests {
         RequestHelper<GeneralResponse> request = new RequestHelper<>(ctx, Const.MESSAGES_BASE_URL, Const.MESSAGE_DRIVER_ADD_CAR, GeneralResponse.class, listener, params, files);
 
         request.executeMultiPart();
+        return request;
+    }
+
+    public static RequestHelper<GeneralResponse> endTrip(Context ctx, RequestListener<GeneralResponse> listener, String accessToken, float actualFare, int actualDistance, int tripId, int actualTime, int cash) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put("actualfare", String.valueOf(actualFare));
+        params.put("actualdistance", String.valueOf(actualDistance));
+        params.put("tripId", String.valueOf(tripId));
+        params.put("actualtime", String.valueOf(actualTime));
+        params.put("cash", String.valueOf(cash));
+
+
+        RequestHelper<GeneralResponse> request = new RequestHelper<>(ctx, Const.MESSAGES_BASE_URL, Const.MESSAGE_DRIVER_END_TRIP, GeneralResponse.class, listener, params);
+
+        request.executeFormUrlEncoded();
         return request;
     }
 

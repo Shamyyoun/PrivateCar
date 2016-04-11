@@ -44,7 +44,6 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/tv_ride_no"
                 style="@style/white_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,6 +51,7 @@
                 android:text="@string/ride_no" />
 
             <TextView
+                android:id="@+id/tv_ride_no"
                 style="@style/white_medium_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
 
 
         <TextView
-            android:id="@+id/ride_cost"
+            android:id="@+id/tv_ride_cost"
             style="@style/white_medium_bold_capitalized_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

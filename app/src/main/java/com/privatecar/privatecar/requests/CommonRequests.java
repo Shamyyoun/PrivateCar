@@ -9,6 +9,7 @@ import com.privatecar.privatecar.models.enums.GrantType;
 import com.privatecar.privatecar.models.responses.AccessTokenResponse;
 import com.privatecar.privatecar.models.responses.ConfigResponse;
 import com.privatecar.privatecar.models.responses.DistanceMatrixResponse;
+import com.privatecar.privatecar.models.responses.FaresResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.models.responses.MessagesResponse;
 import com.privatecar.privatecar.models.responses.NearbyPlacesResponse;
@@ -227,6 +228,20 @@ public class CommonRequests {
         // create & send request
         RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
                 Const.MESSAGE_DRIVER_MESSAGES_DELETE, GeneralResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
+    public static RequestHelper<FaresResponse> fares(Context context, RequestListener<FaresResponse> listener, String accessToken, String theClass, String pickupTime) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_CLASS, theClass);
+        params.put(Const.MSG_PARAM_PICKUP_TIME, pickupTime);
+
+        // create & send request
+        RequestHelper<FaresResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_CUSTOMER_FARES, FaresResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;

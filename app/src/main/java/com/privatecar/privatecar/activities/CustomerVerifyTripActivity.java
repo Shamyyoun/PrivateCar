@@ -465,7 +465,7 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                             : tripRequest.getPickupTime(), "hh:mm:ss");
 
                     // create and send fares request to the server
-                    CustomerRequests.fares(this, this, user.getAccessToken(), theClass, pickupTime);
+                    CommonRequests.fares(this, this, user.getAccessToken(), theClass, pickupTime);
                 } else {
                     // dismiss progress & show error
                     progressDialog.dismiss();
@@ -485,7 +485,7 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
             FaresResponse faresResponse = (FaresResponse) response;
 
             // check response
-            if (faresResponse.isStatus() && !Utils.isNullOrEmpty(faresResponse.getFares())) {
+            if (faresResponse.isSuccess() && !Utils.isNullOrEmpty(faresResponse.getFares())) {
                 // get values
                 Fare fare = faresResponse.getFares().get(faresResponse.getFares().size() - 1);
 

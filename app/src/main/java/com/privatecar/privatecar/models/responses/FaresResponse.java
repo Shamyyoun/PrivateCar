@@ -23,7 +23,7 @@ public class FaresResponse {
     /**
      * @return The status
      */
-    public boolean isStatus() {
+    public boolean isSuccess() {
         return status;
     }
 

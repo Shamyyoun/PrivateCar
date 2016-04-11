@@ -5,7 +5,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.Fare;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.FaresResponse;
-import com.privatecar.privatecar.requests.CustomerRequests;
+import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DateUtil;
 import com.privatecar.privatecar.utils.PermissionUtil;
@@ -145,7 +144,7 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
 
         // create & send the request
         User user = AppUtils.getCachedUser(activity);
-        requestHelper = CustomerRequests.fares(activity, this, user.getAccessToken(), "" + (selectedRadioPosition + 1), DateUtil.getCurrentTime());
+        requestHelper = CommonRequests.fares(activity, this, user.getAccessToken(), "" + (selectedRadioPosition + 1), DateUtil.getCurrentTime());
     }
 
     @Override

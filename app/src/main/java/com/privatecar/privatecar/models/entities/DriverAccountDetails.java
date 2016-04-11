@@ -83,7 +83,7 @@ public class DriverAccountDetails {
     private String fullname;
     @SerializedName("todayprofit")
     @Expose
-    private int todayprofit;
+    private float todayprofit;
     @SerializedName("todayhours")
     @Expose
     private int todayhours;
@@ -436,14 +436,14 @@ public class DriverAccountDetails {
     /**
      * @return The todayprofit
      */
-    public int getTodayprofit() {
+    public float getTodayprofit() {
         return todayprofit;
     }
 
     /**
      * @param todayprofit The todayprofit
      */
-    public void setTodayprofit(int todayprofit) {
+    public void setTodayprofit(float todayprofit) {
         this.todayprofit = todayprofit;
     }
 

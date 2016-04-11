@@ -117,20 +117,6 @@ public class CustomerRequests {
         return requestHelper;
     }
 
-    public static RequestHelper<FaresResponse> fares(Context context, RequestListener<FaresResponse> listener, String accessToken, String theClass, String pickupTime) {
-        // prepare parameters
-        Map<String, String> params = new HashMap<>();
-        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
-        params.put(Const.MSG_PARAM_CLASS, theClass);
-        params.put(Const.MSG_PARAM_PICKUP_TIME, pickupTime);
-
-        // create & send request
-        RequestHelper<FaresResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_CUSTOMER_FARES, FaresResponse.class, listener, params);
-        requestHelper.executeFormUrlEncoded();
-
-        return requestHelper;
-    }
-
     public static RequestHelper<PromoCodeResponse> activatePromoCode(Context context, RequestListener<PromoCodeResponse> listener, String accessToken, int customerId, String promoCode) {
         // prepare parameters
         Map<String, String> params = new HashMap<>();

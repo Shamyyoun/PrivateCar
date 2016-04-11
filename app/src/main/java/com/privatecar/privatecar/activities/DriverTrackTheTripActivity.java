@@ -24,22 +24,32 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.DriverTripRequest;
+import com.privatecar.privatecar.models.entities.Fare;
+import com.privatecar.privatecar.models.responses.FaresResponse;
+import com.privatecar.privatecar.requests.CommonRequests;
+import com.privatecar.privatecar.requests.DriverRequests;
 import com.privatecar.privatecar.utils.AppUtils;
+import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class DriverTrackTheTripActivity extends BaseActivity implements OnMapReadyCallback {
+public class DriverTrackTheTripActivity extends BaseActivity implements OnMapReadyCallback, RequestListener {
 
     private DriverTripRequest tripRequest;
 
-    private TextView tvRideNo;
+    private TextView tvRideNo, tvRideHM, tvRideKMM, tvRideWaitingHM, tvRideCost;
+    private ImageButton ibNavigate;
 
 
     SupportMapFragment mapFragment;
     private GoogleMap map;
     private Marker driverMarker, destinationMarker;
 
-    private ImageButton ibNavigate;
+
+    int waitingSpeed; //in km/m
+    float minTripFare;
+    float openFare, kmFare, minuteWaitFare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +57,27 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
         setContentView(R.layout.activity_driver_track_the_trip);
 
         // get trip request object
-        if (savedInstanceState != null) {
-            tripRequest = (DriverTripRequest) savedInstanceState.getSerializable(Const.KEY_TRIP_REQUEST);
-        } else
+        if (savedInstanceState == null)
             tripRequest = (DriverTripRequest) getIntent().getSerializableExtra(Const.KEY_TRIP_REQUEST);
+        else
+            tripRequest = (DriverTripRequest) savedInstanceState.getSerializable(Const.KEY_TRIP_REQUEST);
 
+        initViews();
+
+        IntentFilter intentFilter = new IntentFilter(Const.ACTION_DRIVER_SEND_LOCATION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(locationReceiver, intentFilter);
+
+        if (savedInstanceState == null)
+            initTripInfo();
+    }
+
+    private void initViews() {
         tvRideNo = (TextView) findViewById(R.id.tv_ride_no);
+        tvRideHM = (TextView) findViewById(R.id.tv_ride_h_m);
+        tvRideKMM = (TextView) findViewById(R.id.tv_ride_km_m);
+        tvRideWaitingHM = (TextView) findViewById(R.id.tv_ride_waiting_h_m);
+        tvRideCost = (TextView) findViewById(R.id.tv_ride_cost);
+
         tvRideNo.setText(tripRequest.getCode());
 
         ibNavigate = (ImageButton) findViewById(R.id.ib_navigate);
@@ -62,10 +87,21 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
         if (tripRequest.getDestinationLocation() == null)
             ibNavigate.setVisibility(View.GONE);
 
+    }
 
-        IntentFilter intentFilter = new IntentFilter(Const.ACTION_DRIVER_SEND_LOCATION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(locationReceiver, intentFilter);
+    private void initTripInfo() {
+        String waitingTimeSpeedStr = AppUtils.getConfigValue(this, Config.KEY_WAITING_TIME_SPEED);
+        String minTripFareStr = AppUtils.getConfigValue(this, Config.KEY_MIN_TRIP_FARE);
+        waitingSpeed = Integer.parseInt(waitingTimeSpeedStr);
+        minTripFare = Float.parseFloat(minTripFareStr);
 
+        getFare(); // call this at the end of the trip
+
+    }
+
+    private void getFare() {
+        String accessToken = AppUtils.getCachedUser(this).getAccessToken();
+        CommonRequests.fares(this, this, accessToken, tripRequest.getServiceType(), null);
     }
 
     //broadcast receiver that receives the driver current location got from UpdateDriverLocationService
@@ -157,15 +193,24 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        tripRequest = (DriverTripRequest) savedInstanceState.getSerializable(Const.KEY_TRIP_REQUEST);
-    }
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(Const.KEY_TRIP_REQUEST, tripRequest);
+        outState.putInt(Const.KEY_WAITING_SPEED, waitingSpeed);
+        outState.putFloat(Const.KEY_MIN_TRIP_FARE, minTripFare);
+        outState.putFloat(Const.KEY_OPEN_FARE, openFare);
+        outState.putFloat(Const.KEY_KM_FARE, kmFare);
+        outState.putFloat(Const.KEY_MINUTE_WAIT_FARE, minuteWaitFare);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        waitingSpeed = savedInstanceState.getInt(Const.KEY_WAITING_SPEED);
+        minTripFare = savedInstanceState.getInt(Const.KEY_MIN_TRIP_FARE);
+        openFare = savedInstanceState.getFloat(Const.KEY_OPEN_FARE);
+        kmFare = savedInstanceState.getFloat(Const.KEY_KM_FARE);
+        minuteWaitFare = savedInstanceState.getFloat(Const.KEY_MINUTE_WAIT_FARE);
     }
 
 
@@ -177,7 +222,7 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_end_ride:
-
+                DriverRequests.endTrip(this, this, AppUtils.getCachedUser(this).getAccessToken(), 34, 3, tripRequest.getId(), 70, 34);
                 break;
             case R.id.ib_navigate:
                 //start navigation in google maps app
@@ -191,5 +236,26 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onSuccess(Object response, String apiName) {
+        if (response instanceof FaresResponse) {
+            FaresResponse faresResponse = (FaresResponse) response;
+            if (faresResponse.isSuccess()) {
+                Fare fare = faresResponse.getFares().get(0);
+                openFare = fare.getOpenFare();
+                kmFare = fare.getKilometerFare();
+                minuteWaitFare = fare.getMinuteWaitFare();
+            } else {
+                getFare();
+            }
+        }
+    }
+
+    @Override
+    public void onFail(String message, String apiName) {
+        Utils.LogE(message);
+        Utils.showLongToast(this, message);
     }
 }

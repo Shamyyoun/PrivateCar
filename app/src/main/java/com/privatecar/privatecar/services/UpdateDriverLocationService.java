@@ -44,7 +44,7 @@ import com.privatecar.privatecar.utils.Utils;
  * Created by basim on 4/3/16.
  */
 
-//before starting this service, check if the fine location setting is enabled.
+//TODO: before starting this service, check if the fine location setting is enabled.
 public class UpdateDriverLocationService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, RequestListener {
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequestFine;

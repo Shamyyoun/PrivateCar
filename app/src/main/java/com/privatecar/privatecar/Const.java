@@ -131,6 +131,7 @@ public class Const {
     public static final String MESSAGE_DRIVER_GET_DOCUMENTS = "getdocuments";
     public static final String MESSAGE_DRIVER_ADD_CAR = "addcar";
     public static final String MESSAGE_DRIVER_CHANGE_PHOTO = "changephoto";
+    public static final String MESSAGE_DRIVER_END_TRIP = "endtrip";
 
 
     //parameters:----
@@ -198,7 +199,11 @@ public class Const {
     public static final String KEY_LOCATION = "car_type";
     public static final String KEY_TRIP_INFO = "trip_info";
     public static final String KEY_MESSAGE = "message";
-
+    public static final String KEY_WAITING_SPEED = "waiting_speed";
+    public static final String KEY_MIN_TRIP_FARE = "min_trip_fare";
+    public static final String KEY_OPEN_FARE = "open_fare";
+    public static final String KEY_KM_FARE = "km_fare";
+    public static final String KEY_MINUTE_WAIT_FARE = "minute_wait_fare";
 
     //Intent actions
     public static final String ACTION_DRIVER_SEND_LOCATION = "com.private.privatecar.driver_send_location";
