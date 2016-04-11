@@ -7,10 +7,10 @@ buildscript {
         jcenter()
     }
     dependencies {
-
         //make sure to use gradle version 2.10 with these versions
         //File > Project Structure > Project > Gradle version
         //Preferences > Gradle > Use Default Gradle Wrapper (recommended)
+
         classpath 'com.android.tools.build:gradle:2.0.0'
         classpath 'com.google.gms:google-services:2.0.0-alpha5'
 
