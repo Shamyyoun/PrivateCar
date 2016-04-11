@@ -1,9 +1,13 @@
 package com.privatecar.privatecar.activities;
 
 import android.Manifest;
+import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.ImageButton;
@@ -25,10 +29,14 @@ import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.Car;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.CustomerTripRequest;
+import com.privatecar.privatecar.models.entities.DistanceMatrixElement;
 import com.privatecar.privatecar.models.entities.TripInfo;
 import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.models.responses.DistanceMatrixResponse;
+import com.privatecar.privatecar.models.responses.DriverLocationResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.models.responses.LocationResponse;
+import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.requests.CustomerRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
@@ -117,7 +125,6 @@ public class CustomerRideActivity extends BaseActivity implements RequestListene
 
         // update the ui
         tvRideNo.setText(tripRequest.getCode());
-//        tvMessage.setText(tripInfo.get); TODO set the message
         tvDriverName.setText(tripInfo.getFullname());
         Car car = tripInfo.getCars().get(0);
         tvCarName.setText(car.getBrand() + " " + car.getModel());
@@ -129,9 +136,33 @@ public class CustomerRideActivity extends BaseActivity implements RequestListene
         Picasso.with(this).load(driverImageUrl).placeholder(R.drawable.def_user_photo)
                 .error(R.drawable.def_user_photo).into(ivDriverImage);
 
+        // load the driver location from the server
+        loadDriverLocation();
+
         // add click listeners
         btnCall.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+
+        // wake up the device
+        PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "TAG");
+        wakeLock.acquire();
+    }
+
+    /**
+     * method, used to load driver location from the server
+     */
+    private void loadDriverLocation() {
+        if (!Utils.hasConnection(this)) {
+            return;
+        }
+
+        // show progress dialog
+        progressDialog = DialogUtils.showProgressDialog(this, R.string.loading_please_wait);
+
+        // create and send the request
+        User user = AppUtils.getCachedUser(this);
+        CommonRequests.driverTripLocation(this, this, user.getAccessToken(), tripRequest.getId());
     }
 
     @Override
@@ -238,11 +269,10 @@ public class CustomerRideActivity extends BaseActivity implements RequestListene
 
     @Override
     public synchronized void onSuccess(Object response, String apiName) {
-        // dismiss the progress dialog
-        if (progressDialog != null)
+        if (response instanceof GeneralResponse) {
+            // dismiss the progress dialog
             progressDialog.dismiss();
 
-        if (response instanceof GeneralResponse) {
             // parse the response
             GeneralResponse generalResponse = (GeneralResponse) response;
 
@@ -280,13 +310,75 @@ public class CustomerRideActivity extends BaseActivity implements RequestListene
             } else {
                 Utils.showLongToast(this, locationResponse.getValidation());
             }
+        } else if (response instanceof DriverLocationResponse) {
+            // this was the driver trip location request
+            // cast the response
+            DriverLocationResponse locationResponse = (DriverLocationResponse) response;
+
+            // check the response
+            if (!Utils.isNullOrEmpty(locationResponse.getContent())) {
+                // create and send the time and distance estimation request from google
+                String[] latLngStrs = tripRequest.getPickupLocation().split(",");
+                LatLng destination = new LatLng(Utils.convertToDouble(latLngStrs[0]), Utils.convertToDouble(latLngStrs[1]));
+                CommonRequests.getTravelTimeByDistanceMatrixApi(this, this, locationResponse.getContent(), destination);
+            } else {
+                // error
+                // dismiss the progress dialog
+                progressDialog.dismiss();
+            }
+        } else if (response instanceof DistanceMatrixResponse) {
+            // this was the estimation request
+            // dismiss the progress dialog
+            progressDialog.dismiss();
+
+            // cast the response
+            DistanceMatrixResponse estimationResponse = (DistanceMatrixResponse) response;
+
+            // check response
+            if (estimationResponse.isOk()) {
+                // get element and check it
+                DistanceMatrixElement element = estimationResponse.getRows().get(0).getElements().get(0);
+                if (element.isOk()) {
+                    // get and format duration
+                    float duration = element.getDuration().getValue(); // in seconds
+                    duration = duration < 60 ? 1 : (duration / 60f); // in minutes
+                    String durationStr = String.format("%.0f", duration);
+
+                    // format distance then dormat the final message
+                    float distance = element.getDistance().getValue(); // in meters
+                    String driverMessage = null;
+                    if (distance >= 1000) {
+                        // more than one kilo, then convert to kilo meters
+                        distance = distance / 1000f; // in kilo meters
+                        String distanceStr = String.format("%.0f", distance);
+                        driverMessage = String.format(getString(R.string.ride_driver_message_km), distanceStr, durationStr);
+                    } else {
+                        // less than one kilo, keep it in meters
+                        String distanceStr = String.format("%.0f", distance);
+                        driverMessage = String.format(getString(R.string.ride_driver_message_m), distanceStr, durationStr);
+                    }
+
+                    // update the driver message
+                    tvMessage.setText(driverMessage);
+                }
+            }
         }
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        //TODO: remove this deprecated code
+        //TODO: make the activity unlock the screen
+
+        // release screen lock
+        KeyguardManager keyguardManager = (KeyguardManager) getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
+        KeyguardManager.KeyguardLock keyguardLock = keyguardManager.newKeyguardLock("TAG");
+        keyguardLock.disableKeyguard();
+
+        // remove the callbacks
         driverLocationRequestHandler.removeCallbacks(driverLocationRequestRunnable);
+
+        super.onDestroy();
     }
 
     @Override
@@ -315,5 +407,25 @@ public class CustomerRideActivity extends BaseActivity implements RequestListene
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        // get new values from the intent
+        boolean startTrip = intent.getBooleanExtra(Const.KEY_START_TRIP, false);
+        boolean cancelTrip = intent.getBooleanExtra(Const.KEY_CANCEL_TRIP, false);
+
+        // check theme
+        if (startTrip) {
+            // show message & finish
+            Utils.showLongToast(this, R.string.start_trip_message);
+            finish();
+        } else if (cancelTrip) {
+            // show message & finish
+            Utils.showLongToast(this, R.string.customer_cancel_trip_message);
+            finish();
+        }
+
+        super.onNewIntent(intent);
     }
 }

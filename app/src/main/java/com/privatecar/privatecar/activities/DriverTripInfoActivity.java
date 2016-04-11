@@ -378,4 +378,17 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        // check if cance the trip
+        boolean cancelTrip = intent.getBooleanExtra(Const.KEY_CANCEL_TRIP, false);
+        if (cancelTrip) {
+            // show message & finish
+            Utils.showLongToast(this, R.string.driver_cancel_trip_message);
+            finish();
+        }
+
+        super.onNewIntent(intent);
+    }
 }

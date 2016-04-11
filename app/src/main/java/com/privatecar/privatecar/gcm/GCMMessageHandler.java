@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.CustomerRideActivity;
+import com.privatecar.privatecar.activities.DriverTripInfoActivity;
 import com.privatecar.privatecar.activities.DriverTripRequestActivity;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.enums.UserType;
@@ -52,7 +53,7 @@ public class GCMMessageHandler extends GcmListenerService {
                     // open trip request activity
                     Intent intent = new Intent(this, DriverTripRequestActivity.class);
                     intent.putExtra(Const.KEY_TRIP_REQUEST, requestPayload.getTripRequest());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
 
                     // play horn sound
@@ -64,6 +65,13 @@ public class GCMMessageHandler extends GcmListenerService {
                         }
                     });
                     mediaPlayer.start();
+                } else if (key.equals(Const.GCM_KEY_CUSTOMER_CANCEL)) {
+                    // cancel the trip
+                    // re deliver new intent to the trip info activity
+                    Intent intent = new Intent(this, DriverTripInfoActivity.class);
+                    intent.putExtra(Const.KEY_CANCEL_TRIP, true);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
                 }
             } else if (user != null && user.getType() != null && user.getType() == UserType.CUSTOMER) {
                 if (key.equals(Const.GCM_KEY_ACCEPT_TRIP)) {
@@ -74,7 +82,31 @@ public class GCMMessageHandler extends GcmListenerService {
                     // open customer ride activity
                     Intent intent = new Intent(this, CustomerRideActivity.class);
                     intent.putExtra(Const.KEY_TRIP_INFO, tripPayload.getTripInfo());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+
+                    // play horn sound
+                    final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.horn);
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            mediaPlayer.release();
+                        }
+                    });
+                    mediaPlayer.start();
+                } else if (key.equals(Const.GCM_KEY_START_TRIP)) {
+                    // start the trip
+                    // re deliver new intent to the ride activity
+                    Intent intent = new Intent(this, CustomerRideActivity.class);
+                    intent.putExtra(Const.KEY_START_TRIP, true);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                } else if (key.equals(Const.GCM_KEY_DRIVER_CANCEL)) {
+                    // cancel the trip
+                    // re deliver new intent to the ride activity
+                    Intent intent = new Intent(this, CustomerRideActivity.class);
+                    intent.putExtra(Const.KEY_CANCEL_TRIP, true);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
                 }
             }

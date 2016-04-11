@@ -320,6 +320,12 @@
     <string name="thanks_message">Thanks %s for using Private app and have a nice day.</string>
     <string name="error_submitting_your_rating_please_try_again">Error submitting your rating\nPlease try again</string>
     <string name="try_again">Try again?</string>
+    <string name="ride_driver_initial_message">Hi, I\'m coming to pick you up.</string>
+    <string name="ride_driver_message_km">Hi, I\'m coming to pick you up %1$s km away, %2$s min.</string>
+    <string name="ride_driver_message_m">Hi, I\'m coming to pick you up %1$s m away, %2$s min.</string>
+    <string name="customer_cancel_trip_message">We are very sorry, but the driver has cancelled the trip</string>
+    <string name="start_trip_message">The driver has started the trip, we hope to enjoy your trip</string>
+    <string name="driver_cancel_trip_message">The customer has cancelled the trip</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>
