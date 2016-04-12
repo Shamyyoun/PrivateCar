@@ -190,6 +190,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_be_active:
+                //TODO: handle when the driver is in a trip
                 if (Utils.isServiceRunning(getContext(), UpdateDriverLocationService.class)) {
                     beActive(false);
                 } else {

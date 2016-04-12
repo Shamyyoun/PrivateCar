@@ -39,6 +39,7 @@ import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.enums.PaymentType;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.requests.DriverRequests;
+import com.privatecar.privatecar.services.UpdateDriverLocationService;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.PermissionUtil;
@@ -265,6 +266,12 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
             Utils.showShortToast(this, R.string.no_internet_connection);
             return;
         }
+
+        //start trip service operations
+        Intent intent = new Intent(this, UpdateDriverLocationService.class);
+        intent.putExtra(Const.KEY_SERVICE_OPERATION, Const.START_TRIP);
+        startService(intent);
+
 
         // show loading
         progressDialog = DialogUtils.showProgressDialog(this, R.string.starting_trip_please_wait);

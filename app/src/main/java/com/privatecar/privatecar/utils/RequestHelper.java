@@ -199,9 +199,10 @@ public class RequestHelper<T> {
     private void handleOnCompleted(Exception e, String result) {
         printLogs(1);  // request finished
 
-        if (e != null && !(e instanceof CancellationException)) { //on request failure
+        if (e != null) { //on request failure
             e.printStackTrace();
-            if (listener != null) listener.onFail(e.toString(), apiName);
+            if (!(e instanceof CancellationException))
+                if (listener != null) listener.onFail(e.toString(), apiName);
         } else if (result != null) {
             Log.e(LOG_TAG, "Response: " + result);
 

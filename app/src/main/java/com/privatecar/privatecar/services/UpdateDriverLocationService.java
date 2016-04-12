@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -32,6 +33,7 @@ import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.DriverHomeActivity;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.PrivateCarLocation;
+import com.privatecar.privatecar.models.entities.TripMeterInfo;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.requests.DriverRequests;
@@ -50,17 +52,30 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
     private LocationRequest locationRequestFine;
     private RequestHelper updateLocationRequest;
 
+    private Location lastLocation; // currently last location
+    private Location tripDriverStartLocation; // trip start location of the driver
+
+    private boolean tripStarted = false;
+    private int tripTime = 0; // in minutes
+    private int tripDistance = 0; // in meters
+    private int tripWaitingSpeedTime = 0; // in minutes
+
     //create fine location request for getting high accuracy driver location
     private void createFineLocationRequest() {
         locationRequestFine = new LocationRequest();
         String intervalString = AppUtils.getConfigValue(getApplicationContext(), Config.KEY_MAP_REFRESH_RATE);
         int interval = intervalString != null ? Integer.parseInt(intervalString) : 10;
+        Utils.LogE("interval_____:" + interval);
         locationRequestFine.setInterval(interval);
         locationRequestFine.setFastestInterval(interval);
         locationRequestFine.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
     private void updateLocation(Location location) {
+        lastLocation = location;
+        if (tripStarted && tripDriverStartLocation == null)
+            tripDriverStartLocation = lastLocation; //in case this is the first received last location
+
         if (!Utils.hasConnection(this)) {
             //TODO: check if gps disabled
             Utils.showLongToast(this, R.string.no_internet_connection);
@@ -72,7 +87,7 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
         User user = AppUtils.getCachedUser(this);
 
         //cancel the request before making new one
-        if (updateLocationRequest != null) updateLocationRequest.cancel(true);
+        if (updateLocationRequest != null) updateLocationRequest.cancel(false);
 
         PrivateCarLocation tmpLocation = new PrivateCarLocation();
         tmpLocation.setLat(location.getLatitude());
@@ -88,6 +103,14 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
         //send the location via local broadcast manager to activities that needs it
         Intent intent = new Intent(Const.ACTION_DRIVER_SEND_LOCATION);
         intent.putExtra(Const.KEY_LOCATION, location);
+
+        if (tripStarted) {
+            TripMeterInfo tripMeterInfo = new TripMeterInfo(); //TODO: fill info
+            int tripTime = (int) ((lastLocation.getElapsedRealtimeNanos() - tripDriverStartLocation.getElapsedRealtimeNanos()) / 60000000000L); // in minutes
+            tripMeterInfo.setTime(tripTime);
+            intent.putExtra(Const.KEY_TRIP_METER_INFO, tripMeterInfo);
+        }
+
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
         //save last driver location in the shared preferences
@@ -112,15 +135,41 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
 
         createFineLocationRequest();
 
+        googleApiClient.connect();
+
         //TODO: start the service as foreground
 //        runAsForeground();
     }
 
+    //TODO: handle service recreation
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        googleApiClient.connect();
+        //handle starting and ending the trip operations
+        if (intent != null) {
+            String operation = intent.getStringExtra(Const.KEY_SERVICE_OPERATION);
+            if (operation != null) {
+                switch (operation) {
+                    case Const.START_TRIP:
+                        //TODO: send broadcasts to update the drivertrackthetripactivity details
+                        tripStarted = true;
+                        tripDriverStartLocation = lastLocation;
 
-        return START_REDELIVER_INTENT;
+                        Log.e("___________", "START_TRIP");
+
+                        break;
+                    case Const.END_TRIP:
+                        //TODO: send broadcasts to stop updating the drivertrackthetripactivity details
+                        tripStarted = false;
+
+                        Log.e("___________", "END_TRIP");
+
+                        break;
+                }
+            }
+        }
+
+        return START_STICKY;
+//        return START_REDELIVER_INTENT;
     }
 
     @Nullable
@@ -129,6 +178,8 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
         return null;
     }
 
+    //TODO: handle service instance resoration
+    //http://stackoverflow.com/questions/19411744/android-when-a-service-is-killed-how-can-we-persist-the-service-state-for-late
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -219,7 +270,6 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
                 Utils.LogE(generalResponse.getValidation().get(0));
             }
         }
-
     }
 
     @Override

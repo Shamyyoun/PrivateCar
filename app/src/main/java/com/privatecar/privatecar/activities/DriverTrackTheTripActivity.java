@@ -27,14 +27,18 @@ import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.DriverTripRequest;
 import com.privatecar.privatecar.models.entities.Fare;
+import com.privatecar.privatecar.models.entities.TripMeterInfo;
 import com.privatecar.privatecar.models.responses.FaresResponse;
 import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.requests.DriverRequests;
+import com.privatecar.privatecar.services.UpdateDriverLocationService;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
-public class DriverTrackTheTripActivity extends BaseActivity implements OnMapReadyCallback, RequestListener {
+import java.util.Locale;
+
+public class DriverTrackTheTripActivity extends BaseActivity implements OnMapReadyCallback, RequestListener, View.OnClickListener {
 
     private DriverTripRequest tripRequest;
 
@@ -47,9 +51,11 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
     private Marker driverMarker, destinationMarker;
 
 
+    //TODO: save the instance state
     int waitingSpeed; //in km/m
     float minTripFare;
     float openFare, kmFare, minuteWaitFare;
+    int tripTime; // in min
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +69,6 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
             tripRequest = (DriverTripRequest) savedInstanceState.getSerializable(Const.KEY_TRIP_REQUEST);
 
         initViews();
-
-        IntentFilter intentFilter = new IntentFilter(Const.ACTION_DRIVER_SEND_LOCATION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(locationReceiver, intentFilter);
 
         if (savedInstanceState == null)
             initTripInfo();
@@ -95,8 +98,7 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
         waitingSpeed = Integer.parseInt(waitingTimeSpeedStr);
         minTripFare = Float.parseFloat(minTripFareStr);
 
-        getFare(); // call this at the end of the trip
-
+        getFare(); //TODO: call this at the end of the trip
     }
 
     private void getFare() {
@@ -114,20 +116,41 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
             LatLng driverLatLng = new LatLng(location.getLatitude(), location.getLongitude());
             if (driverMarker != null) {
                 driverMarker.setPosition(driverLatLng);
-            } else {
+            } else { //in case of no driver marker has been drawn because of lack of cached driver location
                 driverMarker = map.addMarker(new MarkerOptions()
                         .position(driverLatLng)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.small_driver_pin)));
             }
+
+            if (intent.getExtras().containsKey(Const.KEY_TRIP_METER_INFO)) {
+                TripMeterInfo tripMeterInfo = intent.getParcelableExtra(Const.KEY_TRIP_METER_INFO);
+
+                tripTime = tripMeterInfo.getTime();
+                Utils.LogE("time: _________ " + tripTime);
+                tvRideHM.setText(String.format(Locale.ENGLISH, "%02d:%02d", tripTime / 60, tripTime % 60)); //63
+            }
+
         }
     };
 
     @Override
     protected void onStart() {
-        super.onStart();
-
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        IntentFilter intentFilter = new IntentFilter(Const.ACTION_DRIVER_SEND_LOCATION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(locationReceiver, intentFilter);
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(locationReceiver);
+        super.onStop();
     }
 
     @Override
@@ -187,12 +210,6 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(locationReceiver);
-    }
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(Const.KEY_TRIP_REQUEST, tripRequest);
@@ -222,7 +239,13 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_end_ride:
-                DriverRequests.endTrip(this, this, AppUtils.getCachedUser(this).getAccessToken(), 34, 3, tripRequest.getId(), 70, 34);
+                //end trip service operations
+                Intent intent = new Intent(this, UpdateDriverLocationService.class);
+                intent.putExtra(Const.KEY_SERVICE_OPERATION, Const.END_TRIP);
+                startService(intent);
+
+                DriverRequests.endTrip(this, this, AppUtils.getCachedUser(this).getAccessToken()
+                        , 34, 3, tripRequest.getId(), tripTime * 60, 34);
                 break;
             case R.id.ib_navigate:
                 //start navigation in google maps app
@@ -240,14 +263,14 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
 
     @Override
     public void onSuccess(Object response, String apiName) {
-        if (response instanceof FaresResponse) {
+        if (response instanceof FaresResponse) { //get fares
             FaresResponse faresResponse = (FaresResponse) response;
             if (faresResponse.isSuccess()) {
                 Fare fare = faresResponse.getFares().get(0);
                 openFare = fare.getOpenFare();
                 kmFare = fare.getKilometerFare();
                 minuteWaitFare = fare.getMinuteWaitFare();
-            } else {
+            } else { //
                 getFare();
             }
         }

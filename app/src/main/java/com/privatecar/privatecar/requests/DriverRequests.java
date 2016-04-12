@@ -269,6 +269,7 @@ public class DriverRequests {
         return request;
     }
 
+    //{"status":true,"content":{"key":"end_trip_cash","content":"34.0"},"validation":null}
     public static RequestHelper<GeneralResponse> endTrip(Context ctx, RequestListener<GeneralResponse> listener, String accessToken, float actualFare, int actualDistance, int tripId, int actualTime, int cash) {
         // prepare parameters
         Map<String, String> params = new HashMap<>();
