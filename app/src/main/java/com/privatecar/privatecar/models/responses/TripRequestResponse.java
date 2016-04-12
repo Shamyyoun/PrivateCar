@@ -16,9 +16,6 @@ public class TripRequestResponse {
     @SerializedName("content")
     @Expose
     private CustomerTripRequest tripRequest;
-    @SerializedName("validation")
-    @Expose
-    private List<String> validation = new ArrayList<String>();
 
     /**
      * @return The status
@@ -46,20 +43,6 @@ public class TripRequestResponse {
      */
     public void setTripRequest(CustomerTripRequest tripRequest) {
         this.tripRequest = tripRequest;
-    }
-
-    /**
-     * @return The validation
-     */
-    public List<String> getValidation() {
-        return validation;
-    }
-
-    /**
-     * @param validation The validation
-     */
-    public void setValidation(List<String> validation) {
-        this.validation = validation;
     }
 
 }

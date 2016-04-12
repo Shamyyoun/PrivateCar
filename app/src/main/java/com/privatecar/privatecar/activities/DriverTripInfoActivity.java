@@ -50,8 +50,8 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 
 public class DriverTripInfoActivity extends BaseActivity implements RequestListener<GeneralResponse>, OnMapReadyCallback {
+    public static DriverTripInfoActivity currentInstance;
     private DriverTripRequest tripRequest;
-
     private ImageView ivDefUserImage;
     private ImageView ivUserImage;
     private TextView tvRideNo;
@@ -73,6 +73,9 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_trip_info);
+
+        // assign this activity reference
+        currentInstance = this;
 
         // get trip request object
         if (savedInstanceState != null) {
@@ -145,6 +148,7 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
 
     @Override
     protected void onDestroy() {
+        currentInstance = null;
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(locationReceiver);
     }
@@ -377,18 +381,5 @@ public class DriverTripInfoActivity extends BaseActivity implements RequestListe
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        // check if cance the trip
-        boolean cancelTrip = intent.getBooleanExtra(Const.KEY_CANCEL_TRIP, false);
-        if (cancelTrip) {
-            // show message & finish
-            Utils.showLongToast(this, R.string.driver_cancel_trip_message);
-            finish();
-        }
-
-        super.onNewIntent(intent);
     }
 }

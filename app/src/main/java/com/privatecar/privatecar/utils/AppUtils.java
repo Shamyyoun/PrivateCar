@@ -181,7 +181,7 @@ public class AppUtils {
         try {
             minFare = Float.parseFloat(minFareStr);
         } catch (Exception e) {
-            Log.e("ERROR", "Can't convert min fare (" + minFareStr + ") to integer");
+            Log.e("ERROR", "Can't convert min fare (" + minFareStr + ") to float");
         }
 
         // calculate the fare

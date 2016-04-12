@@ -51,6 +51,7 @@ import com.squareup.picasso.Picasso;
 import java.lang.ref.WeakReference;
 
 public class CustomerRideActivity extends BaseActivity implements RequestListener<Object>, OnMapReadyCallback {
+    public static CustomerRideActivity currentInstance;
     private CustomerRideActivity activity;
     private TripInfo tripInfo;
     private CustomerTripRequest tripRequest;
@@ -102,6 +103,7 @@ public class CustomerRideActivity extends BaseActivity implements RequestListene
 
         // get activity reference
         activity = this;
+        currentInstance = this;
 
         //get the refresh rate (driver location request rate)
         String strMapRefreshRate = AppUtils.getConfigValue(this, Config.KEY_MAP_REFRESH_RATE);
@@ -378,6 +380,9 @@ public class CustomerRideActivity extends BaseActivity implements RequestListene
         // remove the callbacks
         driverLocationRequestHandler.removeCallbacks(driverLocationRequestRunnable);
 
+        // null the current instance
+        currentInstance = null;
+
         super.onDestroy();
     }
 
@@ -407,25 +412,5 @@ public class CustomerRideActivity extends BaseActivity implements RequestListene
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        // get new values from the intent
-        boolean startTrip = intent.getBooleanExtra(Const.KEY_START_TRIP, false);
-        boolean cancelTrip = intent.getBooleanExtra(Const.KEY_CANCEL_TRIP, false);
-
-        // check theme
-        if (startTrip) {
-            // show message & finish
-            Utils.showLongToast(this, R.string.start_trip_message);
-            finish();
-        } else if (cancelTrip) {
-            // show message & finish
-            Utils.showLongToast(this, R.string.customer_cancel_trip_message);
-            finish();
-        }
-
-        super.onNewIntent(intent);
     }
 }

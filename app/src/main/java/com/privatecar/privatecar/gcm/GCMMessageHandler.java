@@ -7,7 +7,10 @@ package com.privatecar.privatecar.gcm;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.gcm.GcmListenerService;
 import com.google.gson.Gson;
@@ -16,11 +19,13 @@ import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.activities.CustomerRideActivity;
 import com.privatecar.privatecar.activities.DriverTripInfoActivity;
 import com.privatecar.privatecar.activities.DriverTripRequestActivity;
+import com.privatecar.privatecar.models.entities.Message;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.enums.UserType;
 import com.privatecar.privatecar.models.payload.AcceptTripPayload;
 import com.privatecar.privatecar.models.payload.TripRequestPayload;
 import com.privatecar.privatecar.utils.AppUtils;
+import com.privatecar.privatecar.utils.Utils;
 
 import org.json.JSONObject;
 
@@ -67,11 +72,11 @@ public class GCMMessageHandler extends GcmListenerService {
                     mediaPlayer.start();
                 } else if (key.equals(Const.GCM_KEY_CUSTOMER_CANCEL)) {
                     // cancel the trip
-                    // re deliver new intent to the trip info activity
-                    Intent intent = new Intent(this, DriverTripInfoActivity.class);
-                    intent.putExtra(Const.KEY_CANCEL_TRIP, true);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(intent);
+                    // show msg and finish the driver ride activity if available
+                    showToast(getString(R.string.driver_cancel_trip_message), Toast.LENGTH_LONG);
+                    if (DriverTripInfoActivity.currentInstance != null) {
+                        DriverTripInfoActivity.currentInstance.finish();
+                    }
                 }
             } else if (user != null && user.getType() != null && user.getType() == UserType.CUSTOMER) {
                 if (key.equals(Const.GCM_KEY_ACCEPT_TRIP)) {
@@ -96,22 +101,46 @@ public class GCMMessageHandler extends GcmListenerService {
                     mediaPlayer.start();
                 } else if (key.equals(Const.GCM_KEY_START_TRIP)) {
                     // start the trip
-                    // re deliver new intent to the ride activity
-                    Intent intent = new Intent(this, CustomerRideActivity.class);
-                    intent.putExtra(Const.KEY_START_TRIP, true);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(intent);
+                    // show msg and finish the customer ride activity if available
+                    showToast(getString(R.string.start_trip_message), Toast.LENGTH_LONG);
+                    if (CustomerRideActivity.currentInstance != null) {
+                        CustomerRideActivity.currentInstance.finish();
+                    }
                 } else if (key.equals(Const.GCM_KEY_DRIVER_CANCEL)) {
                     // cancel the trip
-                    // re deliver new intent to the ride activity
-                    Intent intent = new Intent(this, CustomerRideActivity.class);
-                    intent.putExtra(Const.KEY_CANCEL_TRIP, true);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(intent);
+                    // show msg and finish the customer ride activity if available
+                    showToast(getString(R.string.customer_cancel_trip_message), Toast.LENGTH_LONG);
+                    if (CustomerRideActivity.currentInstance != null) {
+                        CustomerRideActivity.currentInstance.finish();
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * method, used to show toast outside the ui thread
+     * @param message
+     * @param duration
+     */
+    private void showToast(final String message, final int duration) {
+        new Thread() {
+            Handler handler;
+
+            @Override
+            public void run() {
+                Looper.prepare();
+
+                handler = new Handler() {
+                    public void handleMessage(Message msg) {
+                        Toast.makeText(GCMMessageHandler.this, message, duration).show();
+                    }
+                };
+
+                Looper.loop();
+            }
+        }.run();
     }
 }

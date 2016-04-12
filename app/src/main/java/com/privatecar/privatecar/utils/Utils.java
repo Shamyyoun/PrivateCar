@@ -245,7 +245,6 @@ public class Utils {
         Log.e(Const.LOG_TAG, msg);
     }
 
-
     /**
      * Executes the given AsyncTask Efficiently.
      *
