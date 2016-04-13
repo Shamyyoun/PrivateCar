@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -48,6 +49,7 @@ import com.privatecar.privatecar.utils.SavePrefs;
 import com.privatecar.privatecar.utils.Utils;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 
 public class CustomerRideActivity extends BaseActivity implements RequestListener<Object>, OnMapReadyCallback {
@@ -134,7 +136,7 @@ public class CustomerRideActivity extends BaseActivity implements RequestListene
         ratingBar.setRating(tripInfo.getOverallRating());
 
         // load the driver image
-        String driverImageUrl = Const.IMAGES_BASE_URL + tripInfo.getPersonalPhoto();
+        String driverImageUrl = AppUtils.getConfigValue(getApplicationContext(), Config.KEY_BASE_URL) + File.separator + tripInfo.getPersonalPhoto();
         Picasso.with(this).load(driverImageUrl).placeholder(R.drawable.def_user_photo)
                 .error(R.drawable.def_user_photo).into(ivDriverImage);
 

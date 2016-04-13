@@ -226,6 +226,7 @@ public class Const {
     public static final String GCM_KEY_START_TRIP = "start_trip";
     public static final String GCM_KEY_DRIVER_CANCEL = "driver_cancel";
     public static final String GCM_KEY_CUSTOMER_CANCEL = "customer_cancel";
+    public static final String GCM_KEY_NO_DRIVER_FOUND = "no_driver_found";
 
 
     // permissions requests
