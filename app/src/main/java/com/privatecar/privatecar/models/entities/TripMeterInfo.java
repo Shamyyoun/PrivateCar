@@ -7,16 +7,16 @@ import android.os.Parcelable;
  * Created by basim on 12/4/16.
  */
 public class TripMeterInfo implements Parcelable {
-    private int time; // in minutes
+    private int duration; // in minutes
     private int distance; // in meters
     private int waitingSpeedTime; // in minutes
 
-    public int getTime() {
-        return time;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setTime(int time) {
-        this.time = time;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public int getDistance() {
@@ -40,7 +40,7 @@ public class TripMeterInfo implements Parcelable {
     }
 
     public TripMeterInfo(Parcel in) {
-        time = in.readInt();
+        duration = in.readInt();
         distance = in.readInt();
         waitingSpeedTime = in.readInt();
     }
@@ -52,7 +52,7 @@ public class TripMeterInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(time);
+        dest.writeInt(duration);
         dest.writeInt(distance);
         dest.writeInt(waitingSpeedTime);
     }

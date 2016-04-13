@@ -55,10 +55,12 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
     private Location lastLocation; // currently last location
     private Location tripDriverStartLocation; // trip start location of the driver
 
+    int waitingSpeed; //in km/h
+
     private boolean tripStarted = false;
-    private int tripTime = 0; // in minutes
+    private int tripDuration = 0; // in minutes
     private int tripDistance = 0; // in meters
-    private int tripWaitingSpeedTime = 0; // in minutes
+    private int tripWaitDuration = 0; // in minutes
 
     //create fine location request for getting high accuracy driver location
     private void createFineLocationRequest() {
@@ -106,8 +108,9 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
 
         if (tripStarted) {
             TripMeterInfo tripMeterInfo = new TripMeterInfo(); //TODO: fill info
-            int tripTime = (int) ((lastLocation.getElapsedRealtimeNanos() - tripDriverStartLocation.getElapsedRealtimeNanos()) / 60000000000L); // in minutes
-            tripMeterInfo.setTime(tripTime);
+            int tripDuration = (int) ((lastLocation.getElapsedRealtimeNanos() - tripDriverStartLocation.getElapsedRealtimeNanos()) / 60000000000L); // in minutes
+            tripMeterInfo.setDuration(tripDuration);
+
             intent.putExtra(Const.KEY_TRIP_METER_INFO, tripMeterInfo);
         }
 
@@ -150,7 +153,9 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
             if (operation != null) {
                 switch (operation) {
                     case Const.START_TRIP:
-                        //TODO: send broadcasts to update the drivertrackthetripactivity details
+                        String waitingTimeSpeedStr = AppUtils.getConfigValue(this, Config.KEY_WAITING_TIME_SPEED);
+                        waitingSpeed = Integer.parseInt(waitingTimeSpeedStr);
+                        
                         tripStarted = true;
                         tripDriverStartLocation = lastLocation;
 
@@ -158,7 +163,7 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
 
                         break;
                     case Const.END_TRIP:
-                        //TODO: send broadcasts to stop updating the drivertrackthetripactivity details
+                        updateLocation(lastLocation); //to send broadcast to DriverTrackTheTripActivity before ending the trip to update trip values
                         tripStarted = false;
 
                         Log.e("___________", "END_TRIP");

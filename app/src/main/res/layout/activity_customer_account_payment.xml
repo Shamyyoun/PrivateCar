@@ -64,6 +64,7 @@
             style="@style/white_normal_bold_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
             android:text="@string/travel_price_c" />
 
         <TextView
