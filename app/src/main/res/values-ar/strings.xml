@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Private Car</string>
+    <string name="app_name">Private</string>
     <string name="customer">العميل</string>
     <string name="driver">السائق</string>
     <string name="sign_in">الدخول</string>
