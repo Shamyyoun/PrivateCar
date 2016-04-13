@@ -58,6 +58,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/android_api_key" />
 
+        <!-- ============= Fabric =============== -->
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="da607939978304e5bdac277f3be706343200c524" />
+
         <!-- ============= GCM =============== -->
 
         <receiver
@@ -259,9 +265,6 @@
             android:name=".activities.CustomerAddNotesToCaptainActivity"
             android:label="@string/add_notes" />
 
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="da607939978304e5bdac277f3be706343200c524" />
     </application>
 
 </manifest>
