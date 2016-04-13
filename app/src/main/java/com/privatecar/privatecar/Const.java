@@ -57,6 +57,9 @@ public class Const {
     public static final int MIN_PASSWORD_LENGTH = 3;
     public static final int LOCATION_UPDATE_IN_MS = 2000; //location is updated in how many milliseconds
     public static final int HEATMAP_RADIUS = 50; // in KM
+    public static final String START_TRIP = "start_trip";
+    public static final String END_TRIP = "end_trip";
+    public static final String TRIP_PAY_REMAINING = "trip_pay_remaining";
 
     //File names
     public static final String FILE_NAME_USER_PHOTO = "user_photo";
@@ -135,7 +138,7 @@ public class Const {
     public static final String MESSAGE_DRIVER_END_TRIP = "endtrip";
 
 
-    //parameters:----
+    //message parameters:----
     public static final String MSG_PARAM_CLIENT_ID = "client_id";
     public static final String MSG_PARAM_CLIENT_SECRET = "client_secret";
     public static final String MSG_PARAM_GRANT_TYPE = "grant_type";
@@ -209,11 +212,10 @@ public class Const {
     public static final String KEY_START_TRIP = "start_trip";
     public static final String KEY_SERVICE_OPERATION = "service_operation";
     public static final String KEY_TRIP_METER_INFO = "trip_meter_info";
-
-
-    //Intent & bundle values
-    public static final String START_TRIP = "start_trip";
-    public static final String END_TRIP = "end_trip";
+    public static final String KEY_TRIP_DURATION = "trip_duration";
+    public static final String KEY_TRIP_WAIT_DURATION = "trip_wait_duration";
+    public static final String KEY_TRIP_DISTANCE = "trip_distance";
+    public static final String KEY_ACTUAL_FARE = "actual_fare";
 
 
     //Intent actions

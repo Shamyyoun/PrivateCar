@@ -1,11 +1,13 @@
 package com.privatecar.privatecar.requests;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.models.responses.AdsResponse;
 import com.privatecar.privatecar.models.responses.DocumentsResponse;
 import com.privatecar.privatecar.models.responses.DriverAccountDetailsResponse;
+import com.privatecar.privatecar.models.responses.EndTripResponse;
 import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.models.responses.LocationsResponse;
 import com.privatecar.privatecar.models.responses.StatementsResponse;
@@ -269,19 +271,19 @@ public class DriverRequests {
         return request;
     }
 
-    //{"status":true,"content":{"key":"end_trip_cash","content":"34.0"},"validation":null}
-    public static RequestHelper<GeneralResponse> endTrip(Context ctx, RequestListener<GeneralResponse> listener, String accessToken, float actualFare, int actualDistance, int tripId, int actualTime, int cash) {
+    public static RequestHelper<EndTripResponse> endTrip(Context ctx, RequestListener<EndTripResponse> listener, String accessToken, int tripId, int actualFare, float actualDistanceKM, int actualTimeSec, @Nullable Float cashIfPaymentTypeCash) {
         // prepare parameters
         Map<String, String> params = new HashMap<>();
         params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
         params.put("actualfare", String.valueOf(actualFare));
-        params.put("actualdistance", String.valueOf(actualDistance));
+        params.put("actualdistance", String.valueOf(actualDistanceKM));
         params.put("tripId", String.valueOf(tripId));
-        params.put("actualtime", String.valueOf(actualTime));
-        params.put("cash", String.valueOf(cash));
+        params.put("actualtime", String.valueOf(actualTimeSec));
+        if (cashIfPaymentTypeCash != null)
+            params.put("cash", String.valueOf(cashIfPaymentTypeCash));
 
 
-        RequestHelper<GeneralResponse> request = new RequestHelper<>(ctx, Const.MESSAGES_BASE_URL, Const.MESSAGE_DRIVER_END_TRIP, GeneralResponse.class, listener, params);
+        RequestHelper<EndTripResponse> request = new RequestHelper<>(ctx, Const.MESSAGES_BASE_URL, Const.MESSAGE_DRIVER_END_TRIP, EndTripResponse.class, listener, params);
 
         request.executeFormUrlEncoded();
         return request;

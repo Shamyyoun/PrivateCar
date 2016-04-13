@@ -1,5 +1,6 @@
 package com.privatecar.privatecar.activities;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -28,19 +29,20 @@ import com.privatecar.privatecar.models.entities.Config;
 import com.privatecar.privatecar.models.entities.DriverTripRequest;
 import com.privatecar.privatecar.models.entities.Fare;
 import com.privatecar.privatecar.models.entities.TripMeterInfo;
+import com.privatecar.privatecar.models.enums.PaymentType;
+import com.privatecar.privatecar.models.responses.EndTripResponse;
 import com.privatecar.privatecar.models.responses.FaresResponse;
 import com.privatecar.privatecar.requests.CommonRequests;
 import com.privatecar.privatecar.requests.DriverRequests;
 import com.privatecar.privatecar.services.UpdateDriverLocationService;
 import com.privatecar.privatecar.utils.AppUtils;
+import com.privatecar.privatecar.utils.DialogUtils;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
 import java.util.Locale;
 
 public class DriverTrackTheTripActivity extends BaseActivity implements OnMapReadyCallback, RequestListener, View.OnClickListener {
-
-    private DriverTripRequest tripRequest;
 
     private TextView tvRideNo, tvRideHM, tvRideKMM, tvRideWaitingHM, tvRideCost;
     private ImageButton ibNavigate;
@@ -50,12 +52,14 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
     private GoogleMap map;
     private Marker driverMarker, destinationMarker;
 
+    private DriverTripRequest tripRequest;
+    float openFare, kmFare, minuteWaitFare; // initialized by getFareInfo()
+    int tripDuration; // in min
+    int tripWaitDuration; // in min
+    int tripDistance; // in meters
+    boolean endingTrip = false;
 
-    //TODO: save the instance state
-    int waitingSpeed; //in km/m
-    float minTripFare;
-    float openFare, kmFare, minuteWaitFare;
-    int tripTime; // in min
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +75,7 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
         initViews();
 
         if (savedInstanceState == null)
-            initTripInfo();
+            getFareInfo();
     }
 
     private void initViews() {
@@ -86,25 +90,34 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
         ibNavigate = (ImageButton) findViewById(R.id.ib_navigate);
         ibNavigate.setOnClickListener(this);
 
-        //hide the navigation button if, destination=guide the driver
+        //hide the navigation button if, destination= "guide the driver"
         if (tripRequest.getDestinationLocation() == null)
             ibNavigate.setVisibility(View.GONE);
 
     }
 
-    private void initTripInfo() {
-        String waitingTimeSpeedStr = AppUtils.getConfigValue(this, Config.KEY_WAITING_TIME_SPEED);
-        String minTripFareStr = AppUtils.getConfigValue(this, Config.KEY_MIN_TRIP_FARE);
-        waitingSpeed = Integer.parseInt(waitingTimeSpeedStr);
-        minTripFare = Float.parseFloat(minTripFareStr);
-
-        getFare(); //TODO: call this at the end of the trip
-    }
-
-    private void getFare() {
+    private void getFareInfo() {
         String accessToken = AppUtils.getCachedUser(this).getAccessToken();
         CommonRequests.fares(this, this, accessToken, tripRequest.getServiceType(), null);
     }
+
+    private int getActualFare() {
+        String minTripFareStr = AppUtils.getConfigValue(this, Config.KEY_MIN_TRIP_FARE);
+        float minTripFare = Float.parseFloat(minTripFareStr); //minimum trip fare
+
+        float totalFare = openFare + minuteWaitFare * tripWaitDuration + kmFare * tripDistance / 1000.0f;
+        float actualFare = Math.max(totalFare, minTripFare);
+        return (int) Math.ceil(actualFare);
+    }
+
+    private void endTrip() {
+        progressDialog = DialogUtils.showProgressDialog(this, R.string.ending_trip, false);
+
+        int actualFare = getActualFare();
+        DriverRequests.endTrip(this, this, AppUtils.getCachedUser(this).getAccessToken()
+                , tripRequest.getId(), actualFare, tripDistance / 1000.0f, tripDuration * 60, null);
+    }
+
 
     //broadcast receiver that receives the driver current location got from UpdateDriverLocationService
     BroadcastReceiver locationReceiver = new BroadcastReceiver() {
@@ -125,9 +138,12 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
             if (intent.getExtras().containsKey(Const.KEY_TRIP_METER_INFO)) {
                 TripMeterInfo tripMeterInfo = intent.getParcelableExtra(Const.KEY_TRIP_METER_INFO);
 
-                tripTime = tripMeterInfo.getTime();
-                Utils.LogE("time: _________ " + tripTime);
-                tvRideHM.setText(String.format(Locale.ENGLISH, "%02d:%02d", tripTime / 60, tripTime % 60)); //63
+                tripDuration = tripMeterInfo.getDuration();
+                tvRideHM.setText(String.format(Locale.ENGLISH, "%02d:%02d", tripDuration / 60, tripDuration % 60));
+
+                //TODO: get these values
+                tripWaitDuration = 4;
+                tripDistance = 500;
             }
 
         }
@@ -213,21 +229,23 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(Const.KEY_TRIP_REQUEST, tripRequest);
-        outState.putInt(Const.KEY_WAITING_SPEED, waitingSpeed);
-        outState.putFloat(Const.KEY_MIN_TRIP_FARE, minTripFare);
         outState.putFloat(Const.KEY_OPEN_FARE, openFare);
         outState.putFloat(Const.KEY_KM_FARE, kmFare);
         outState.putFloat(Const.KEY_MINUTE_WAIT_FARE, minuteWaitFare);
+        outState.putInt(Const.KEY_TRIP_DURATION, tripDuration);
+        outState.putInt(Const.KEY_TRIP_WAIT_DURATION, tripWaitDuration);
+        outState.putInt(Const.KEY_TRIP_DISTANCE, tripDistance);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        waitingSpeed = savedInstanceState.getInt(Const.KEY_WAITING_SPEED);
-        minTripFare = savedInstanceState.getInt(Const.KEY_MIN_TRIP_FARE);
         openFare = savedInstanceState.getFloat(Const.KEY_OPEN_FARE);
         kmFare = savedInstanceState.getFloat(Const.KEY_KM_FARE);
         minuteWaitFare = savedInstanceState.getFloat(Const.KEY_MINUTE_WAIT_FARE);
+        tripDuration = savedInstanceState.getInt(Const.KEY_TRIP_DURATION);
+        tripWaitDuration = savedInstanceState.getInt(Const.KEY_TRIP_WAIT_DURATION);
+        tripDistance = savedInstanceState.getInt(Const.KEY_TRIP_DISTANCE);
     }
 
 
@@ -239,13 +257,16 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_end_ride:
+                //TODO: add confirmation
+
                 //end trip service operations
                 Intent intent = new Intent(this, UpdateDriverLocationService.class);
                 intent.putExtra(Const.KEY_SERVICE_OPERATION, Const.END_TRIP);
                 startService(intent);
 
-                DriverRequests.endTrip(this, this, AppUtils.getCachedUser(this).getAccessToken()
-                        , 34, 3, tripRequest.getId(), tripTime * 60, 34);
+                //get updated trip fare info and end the trip
+                endingTrip = true;
+                getFareInfo();
                 break;
             case R.id.ib_navigate:
                 //start navigation in google maps app
@@ -262,7 +283,7 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
     }
 
     @Override
-    public void onSuccess(Object response, String apiName) {
+    public synchronized void onSuccess(Object response, String apiName) {
         if (response instanceof FaresResponse) { //get fares
             FaresResponse faresResponse = (FaresResponse) response;
             if (faresResponse.isSuccess()) {
@@ -270,15 +291,46 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
                 openFare = fare.getOpenFare();
                 kmFare = fare.getKilometerFare();
                 minuteWaitFare = fare.getMinuteWaitFare();
-            } else { //
-                getFare();
+
+                if (endingTrip) { // End the trip
+                    if (tripRequest.getPaymentType().equals(PaymentType.CASH.getValue())) { // if cash payment
+                        Intent intent = new Intent(this, DriverCashPaymentActivity.class);
+                        intent.putExtra(Const.KEY_TRIP_REQUEST, tripRequest);
+                        intent.putExtra(Const.KEY_ACTUAL_FARE, getActualFare());
+                        intent.putExtra(Const.KEY_TRIP_DISTANCE, tripDistance);
+                        intent.putExtra(Const.KEY_TRIP_DURATION, tripDuration);
+
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        endTrip();
+                    }
+                }
+            }
+        } else if (response instanceof EndTripResponse) {
+            progressDialog.dismiss();
+
+            EndTripResponse endTripResponse = (EndTripResponse) response;
+            if (endTripResponse.isSuccess()) {
+                String key = endTripResponse.getContent().getKey();
+                if (key.equals(Const.TRIP_PAY_REMAINING)) {
+                    /*TODO: show a screen to the driver to take cash with this amount from the customer and a button to confirm this button will call {payremaining} and it will return for driver "Trip Ended".
+                     */
+                    Utils.showLongToast(this, "TRIP_PAY_REMAINING");
+                    finish();
+                } else {
+                    startActivity(new Intent(this, DriverCreditPaymentActivity.class));
+                    finish();
+                }
             }
         }
     }
 
     @Override
-    public void onFail(String message, String apiName) {
+    public synchronized void onFail(String message, String apiName) {
+        if (progressDialog != null) progressDialog.dismiss();
         Utils.LogE(message);
         Utils.showLongToast(this, message);
     }
+
 }

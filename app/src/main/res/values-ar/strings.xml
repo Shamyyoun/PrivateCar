@@ -324,4 +324,7 @@
     <string name="customer_cancel_trip_message">نتقدم لك بكل الاعتذار٫ لقد قام السائق بالغاء الرحلة</string>
     <string name="start_trip_message">لقد بدأ السائق رحلتك٬ نتمنى لك رحلة سعيدة</string>
     <string name="driver_cancel_trip_message">لقد قام العميل بالغاء الرحلة</string>
+    <string name="ending_trip">جاري انهاء الرحلة</string>
+    <string name="customer_payed">ما دفعه العميل</string>
+    <string name="please_enter_cash_value">من فضلك أدخل القيمة النقدية</string>
 </resources>

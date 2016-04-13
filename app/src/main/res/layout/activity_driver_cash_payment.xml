@@ -19,13 +19,15 @@
             style="@style/white_medium_bold_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ride No: " />
+            android:layout_marginEnd="5dp"
+            android:text="@string/ride_no" />
 
         <TextView
+            android:id="@+id/tv_ride_no"
             style="@style/white_medium_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AA1234" />
+            tools:text="AA1234" />
     </LinearLayout>
 
     <LinearLayout
@@ -41,22 +43,25 @@
             style="@style/white_medium_bold_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Travel Price: " />
+            android:layout_marginEnd="5dp"
+            android:text="@string/travel_price_c" />
 
         <TextView
+            android:id="@+id/tv_price"
             style="@style/white_medium_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="100 EGP" />
-
+            android:layout_marginEnd="5dp"
+            tools:text="100 EGP" />
 
     </LinearLayout>
 
     <EditText
+        android:id="@+id/et_cash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/widgets_vertical_space"
-        android:hint="Customer Payed"
+        android:hint="@string/customer_payed"
         android:inputType="numberSigned" />
 
     <Button
@@ -68,6 +73,5 @@
         android:onClick="onClick"
         android:text="@string/confirm"
         android:textSize="@dimen/large_text_size" />
-
 
 </LinearLayout>

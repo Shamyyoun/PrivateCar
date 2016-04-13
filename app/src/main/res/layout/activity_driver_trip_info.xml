@@ -47,6 +47,7 @@
                 style="@style/white_medium_bold_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
                 android:text="@string/ride_no" />
 
             <TextView
@@ -54,7 +55,7 @@
                 style="@style/white_medium_capitalized_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text=" AA1234" />
+                tools:text="AA1234" />
         </LinearLayout>
 
         <LinearLayout
