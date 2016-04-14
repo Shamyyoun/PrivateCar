@@ -18,16 +18,22 @@ import com.google.android.gms.gcm.GcmListenerService;
 import com.google.gson.Gson;
 import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
+import com.privatecar.privatecar.activities.CustomerAccountPaymentActivity;
+import com.privatecar.privatecar.activities.CustomerCashPaymentActivity;
 import com.privatecar.privatecar.activities.CustomerRideActivity;
 import com.privatecar.privatecar.activities.CustomerVerifyTripActivity;
 import com.privatecar.privatecar.activities.DriverTripInfoActivity;
 import com.privatecar.privatecar.activities.DriverTripRequestActivity;
 import com.privatecar.privatecar.models.entities.Message;
+import com.privatecar.privatecar.models.entities.TripCostInfo;
+import com.privatecar.privatecar.models.entities.TripInfo;
 import com.privatecar.privatecar.models.entities.User;
 import com.privatecar.privatecar.models.enums.UserType;
 import com.privatecar.privatecar.models.payload.AcceptTripPayload;
+import com.privatecar.privatecar.models.payload.EndCreditTripPayload;
 import com.privatecar.privatecar.models.payload.TripRequestPayload;
 import com.privatecar.privatecar.utils.AppUtils;
+import com.privatecar.privatecar.utils.SavePrefs;
 import com.privatecar.privatecar.utils.Utils;
 
 import org.json.JSONObject;
@@ -51,7 +57,7 @@ public class GCMMessageHandler extends GcmListenerService {
             Log.e(Const.LOG_TAG, "GCM Message: " + json);
 
             // get the key
-            JSONObject object = new JSONObject(json);
+            final JSONObject object = new JSONObject(json);
             final String key = object.optString("key");
 
             // run the following code in the main thread to prevent exceptions
@@ -97,6 +103,10 @@ public class GCMMessageHandler extends GcmListenerService {
                             // parse the json string
                             AcceptTripPayload tripPayload = gson.fromJson(json, AcceptTripPayload.class);
 
+                            // cache this trip info
+                            SavePrefs<TripInfo> savePrefs = new SavePrefs<TripInfo>(context, TripInfo.class);
+                            savePrefs.save(tripPayload.getTripInfo(), Const.CACHE_LAST_TRIP_INFO);
+
                             // notify the customer verify activity if available
                             if (CustomerVerifyTripActivity.currentInstance != null) {
                                 CustomerVerifyTripActivity.currentInstance.notifyDriverAccepted();
@@ -104,7 +114,6 @@ public class GCMMessageHandler extends GcmListenerService {
 
                             // open customer ride activity
                             Intent intent = new Intent(context, CustomerRideActivity.class);
-                            intent.putExtra(Const.KEY_TRIP_INFO, tripPayload.getTripInfo());
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
 
@@ -136,6 +145,29 @@ public class GCMMessageHandler extends GcmListenerService {
                             if (CustomerVerifyTripActivity.currentInstance != null) {
                                 CustomerVerifyTripActivity.currentInstance.notifyNoDriversFound();
                             }
+                        } else if (key.equals(Const.GCM_KEY_END_TRIP_CASH)) {
+                            // cash trip ended
+                            // get cost
+                            float cost = 0;
+                            try {
+                                cost = Float.parseFloat(object.optString("content"));
+                            } catch (Exception e) {}
+
+                            // start customer cash payment activity
+                            Intent intent = new Intent(context, CustomerCashPaymentActivity.class);
+                            intent.putExtra(Const.KEY_COST, cost);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        } else if (key.equals(Const.GCM_KEY_END_TRIP_CREDIT)) {
+                            // credit trip ended
+                            // get trip cost info object
+                            EndCreditTripPayload endCreditTripPayload = gson.fromJson(json, EndCreditTripPayload.class);
+
+                            // start customer credit payment activity
+                            Intent intent = new Intent(context, CustomerAccountPaymentActivity.class);
+                            intent.putExtra(Const.KEY_TRIP_COST_INFO, endCreditTripPayload.getTripCostInfo());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
                         }
                     }
                 }

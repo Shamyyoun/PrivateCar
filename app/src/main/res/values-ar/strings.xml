@@ -134,7 +134,7 @@
     <string name="driver_c">السائق:</string>
     <string name="car_c">السيارة:</string>
     <string name="avg">متوسط التقييم</string>
-    <string name="travel_price_c">تكلفة الرحلة</string>
+    <string name="travel_price_c">تكلفة الرحلة:</string>
     <string name="current_statement_c">رصيد الحساب</string>
     <string name="current_balance_c">الرصيد الحالي</string>
     <string name="card_no">رقم الكارت</string>
@@ -327,4 +327,6 @@
     <string name="ending_trip">جاري انهاء الرحلة</string>
     <string name="customer_payed">ما دفعه العميل</string>
     <string name="please_enter_cash_value">من فضلك أدخل القيمة النقدية</string>
+    <string name="close">اغلاق</string>
+    <string name="client_id_c">رقم العميل:</string>
 </resources>

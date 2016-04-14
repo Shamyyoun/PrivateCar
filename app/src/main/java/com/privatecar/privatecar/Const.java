@@ -88,6 +88,7 @@ public class Const {
     public static final String CACHE_LOCALE = "app_locale_cache";
     public static final String CACHE_LOCATION = "location_cache";
     public static final String CACHE_LAST_TRIP_REQUEST = "last_trip_request_cache";
+    public static final String CACHE_LAST_TRIP_INFO = "last_trip_info_cache";
 
     //messages (common):----
     public static final String IMAGES_BASE_URL = "http://ec2-54-201-70-234.us-west-2.compute.amazonaws.com/api-repo-1/";
@@ -112,6 +113,7 @@ public class Const {
     public static final String MESSAGE_CUSTOMER_CANCEL_TRIP = "customercanceltrip";
     public static final String MESSAGE_TRIP_DRIVER_LOCATION = "tripdriverlocation";
     public static final String MESSAGE_CUSTOMER_RATE_DRIVER = "customerratedriver";
+    public static final String MESSAGE_CUSTOMER_GET_RANDOM_AD = "getrandomad";
 
 
     //messages (driver):----
@@ -136,6 +138,7 @@ public class Const {
     public static final String MESSAGE_DRIVER_ADD_CAR = "addcar";
     public static final String MESSAGE_DRIVER_CHANGE_PHOTO = "changephoto";
     public static final String MESSAGE_DRIVER_END_TRIP = "endtrip";
+    public static final String MESSAGE_DRIVER_RATE_CUSTOMER = "driverratecustomer";
 
 
     //message parameters:----
@@ -201,7 +204,6 @@ public class Const {
     public static final String KEY_DETAILS = "details";
     public static final String KEY_CAR_TYPE = "car_type";
     public static final String KEY_LOCATION = "car_type";
-    public static final String KEY_TRIP_INFO = "trip_info";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_WAITING_SPEED = "waiting_speed";
     public static final String KEY_MIN_TRIP_FARE = "min_trip_fare";
@@ -216,6 +218,8 @@ public class Const {
     public static final String KEY_TRIP_WAIT_DURATION = "trip_wait_duration";
     public static final String KEY_TRIP_DISTANCE = "trip_distance";
     public static final String KEY_ACTUAL_FARE = "actual_fare";
+    public static final String KEY_COST = "cost";
+    public static final String KEY_TRIP_COST_INFO = "trip_cost_info";
 
 
     //Intent actions
@@ -229,6 +233,8 @@ public class Const {
     public static final String GCM_KEY_DRIVER_CANCEL = "driver_cancel";
     public static final String GCM_KEY_CUSTOMER_CANCEL = "customer_cancel";
     public static final String GCM_KEY_NO_DRIVER_FOUND = "no_driver_found";
+    public static final String GCM_KEY_END_TRIP_CASH = "end_trip_cash";
+    public static final String GCM_KEY_END_TRIP_CREDIT = "end_trip_credit";
 
 
     // permissions requests

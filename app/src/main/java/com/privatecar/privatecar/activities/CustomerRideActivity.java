@@ -112,9 +112,8 @@ public class CustomerRideActivity extends BaseActivity implements RequestListene
         mapRefreshRate = strMapRefreshRate != null ? Integer.parseInt(strMapRefreshRate) * 1000 : 10000;
 
         // get main objects
-        tripInfo = (TripInfo) getIntent().getSerializableExtra(Const.KEY_TRIP_INFO);
-        SavePrefs<CustomerTripRequest> savePrefs = new SavePrefs<>(this, CustomerTripRequest.class);
-        tripRequest = savePrefs.load(Const.CACHE_LAST_TRIP_REQUEST);
+        tripRequest = AppUtils.getLastCachedTripRequest(this);
+        tripInfo = AppUtils.getLastCachedTripInfo(this);
 
         // init views
         tvRideNo = (TextView) findViewById(R.id.tv_ride_no);

@@ -289,4 +289,22 @@ public class DriverRequests {
         return request;
     }
 
+    public static RequestHelper<Object> rateTrip(Context context, RequestListener<Object> listener, String accessToken, int tripId, float rate, String reasonId, String comment) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_TRIP_ID, "" + tripId);
+        params.put(Const.MSG_PARAM_RATE, "" + rate);
+        if (comment == null) {
+            params.put(Const.MSG_PARAM_REASON_ID, reasonId);
+        } else {
+            params.put(Const.MSG_PARAM_COMMENT, comment);
+        }
+
+        // create & send request
+        RequestHelper<Object> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_DRIVER_RATE_CUSTOMER, GeneralResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+        return requestHelper;
+    }
+
 }

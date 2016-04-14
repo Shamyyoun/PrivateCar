@@ -6,6 +6,7 @@ import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.models.entities.PrivateCarLocation;
 import com.privatecar.privatecar.models.enums.AddressType;
 import com.privatecar.privatecar.models.requests.TripRequest;
+import com.privatecar.privatecar.models.responses.AdResponse;
 import com.privatecar.privatecar.models.responses.CustomerAccountDetailsResponse;
 import com.privatecar.privatecar.models.responses.AccessTokenResponse;
 import com.privatecar.privatecar.models.responses.CustomerTripsResponse;
@@ -215,6 +216,17 @@ public class CustomerRequests {
 
         // create & send request
         RequestHelper<Object> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_CUSTOMER_RATE_DRIVER, GeneralResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+        return requestHelper;
+    }
+
+    public static RequestHelper<AdResponse> randomAd(Context context, RequestListener<AdResponse> listener, String accessToken) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+
+        // create & send request
+        RequestHelper<AdResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_CUSTOMER_GET_RANDOM_AD, AdResponse.class, listener, params);
         requestHelper.executeFormUrlEncoded();
         return requestHelper;
     }

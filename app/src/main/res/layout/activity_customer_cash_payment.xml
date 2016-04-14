@@ -20,12 +20,15 @@
             style="@style/white_normal_bold_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ride_no" />
+            android:text="@string/ride_no_c" />
 
         <TextView
+
+            android:id="@+id/tv_ride_no"
             style="@style/white_normal_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:text=" AA1234" />
     </LinearLayout>
 
@@ -45,9 +48,11 @@
             android:text="@string/travel_price_c" />
 
         <TextView
+            android:id="@+id/tv_cost"
             style="@style/white_normal_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:text=" 100 EGP" />
     </LinearLayout>
 
