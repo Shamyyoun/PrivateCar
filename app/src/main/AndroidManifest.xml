@@ -182,7 +182,7 @@
             android:name=".activities.DriverCashPaymentActivity"
             android:label="@string/payment" />
         <activity
-            android:name=".activities.DriverCreditPaymentActivity"
+            android:name=".activities.DriverAccountPaymentActivity"
             android:label="@string/payment" />
         <activity
             android:name=".activities.DriverRateTripActivity"

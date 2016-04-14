@@ -15,8 +15,11 @@ import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.Ad;
 import com.privatecar.privatecar.models.entities.Config;
+import com.privatecar.privatecar.models.entities.CustomerTripRequest;
 import com.privatecar.privatecar.models.entities.Message;
+import com.privatecar.privatecar.models.entities.TripInfo;
 import com.privatecar.privatecar.models.entities.User;
+import com.privatecar.privatecar.models.requests.TripRequest;
 import com.privatecar.privatecar.models.responses.ConfigResponse;
 
 import java.util.Arrays;
@@ -88,6 +91,16 @@ public class AppUtils {
     public static List<Ad> getCachedAds(Context ctx) {
         SavePrefs<Ad[]> savePrefs = new SavePrefs<>(ctx, Ad[].class);
         return Arrays.asList(savePrefs.load(Const.CACHE_ADS));
+    }
+
+    public static TripInfo getLastCachedTripInfo(Context ctx) {
+        SavePrefs<TripInfo> savePrefs = new SavePrefs<>(ctx, TripInfo.class);
+        return savePrefs.load(Const.CACHE_LAST_TRIP_INFO);
+    }
+
+    public static CustomerTripRequest getLastCachedTripRequest(Context ctx) {
+        SavePrefs<CustomerTripRequest> savePrefs = new SavePrefs<>(ctx, CustomerTripRequest.class);
+        return savePrefs.load(Const.CACHE_LAST_TRIP_REQUEST);
     }
 
     public static boolean isUserLoggedIn(Context ctx) {

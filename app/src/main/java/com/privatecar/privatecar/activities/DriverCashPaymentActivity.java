@@ -81,8 +81,12 @@ public class DriverCashPaymentActivity extends BaseActivity implements RequestLi
         if (response.isSuccess()) {
             progressDialog.dismiss();
 
-            startActivity(new Intent(this, DriverRateTripActivity.class));
-            finish();
+            // start rate activity as new task
+            Intent intent = new Intent(this, DriverRateTripActivity.class);
+            intent.putExtra(Const.KEY_TRIP_REQUEST, tripRequest);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            startActivity(intent);
         }
     }
 

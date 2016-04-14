@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class CustomerRateActivity extends BasicBackActivity implements RequestListener {
+public class CustomerRateActivity extends BaseActivity implements RequestListener {
     private static final int OPTION_OTHER = 99999999;
 
     private TripInfo tripInfo;
@@ -57,10 +57,9 @@ public class CustomerRateActivity extends BasicBackActivity implements RequestLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_rate_trip);
 
-        // get main objects
-        tripInfo = (TripInfo) getIntent().getSerializableExtra(Const.KEY_TRIP_INFO);
-        SavePrefs<CustomerTripRequest> savePrefs = new SavePrefs<>(this, CustomerTripRequest.class);
-        tripRequest = savePrefs.load(Const.CACHE_LAST_TRIP_REQUEST);
+        // get main objects from cache
+        tripRequest = AppUtils.getLastCachedTripRequest(this);
+        tripInfo = AppUtils.getLastCachedTripInfo(this);
         user = AppUtils.getCachedUser(this);
 
         // init views
@@ -271,5 +270,10 @@ public class CustomerRateActivity extends BasicBackActivity implements RequestLi
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        // do nothing
     }
 }

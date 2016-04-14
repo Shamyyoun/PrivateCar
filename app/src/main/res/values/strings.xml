@@ -140,7 +140,7 @@
     <string name="driver_c">Driver:</string>
     <string name="car_c">Car:</string>
     <string name="avg">AVG</string>
-    <string name="travel_price_c">Travel Price</string>
+    <string name="travel_price_c">Travel Price:</string>
     <string name="current_statement_c">Current Statement:</string>
     <string name="current_balance_c">Current Balance:</string>
     <string name="card_no">Card NO.</string>
@@ -329,6 +329,8 @@
     <string name="ending_trip">Ending the trip</string>
     <string name="customer_payed">Customer Payed</string>
     <string name="please_enter_cash_value">Please enter cash value</string>
+    <string name="close">Close</string>
+    <string name="client_id_c">Client Id:</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

@@ -301,9 +301,9 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
                         intent.putExtra(Const.KEY_ACTUAL_FARE, getActualFare());
                         intent.putExtra(Const.KEY_TRIP_DISTANCE, tripDistance);
                         intent.putExtra(Const.KEY_TRIP_DURATION, tripDuration);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                         startActivity(intent);
-                        finish();
                     } else {
                         endTrip();
                     }
@@ -321,8 +321,11 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
                     Utils.showLongToast(this, "TRIP_PAY_REMAINING");
                     finish();
                 } else {
-                    startActivity(new Intent(this, DriverCreditPaymentActivity.class));
-                    finish();
+                    Intent intent = new Intent(this, DriverAccountPaymentActivity.class);
+                    intent.putExtra(Const.KEY_TRIP_REQUEST, tripRequest);
+                    intent.putExtra(Const.KEY_ACTUAL_FARE, getActualFare());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             }
         }

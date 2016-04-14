@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/activity_margin"
-    tools:context=".activities.DriverCreditPaymentActivity">
+    tools:context=".activities.DriverAccountPaymentActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,10 +21,13 @@
             android:layout_height="wrap_content"
             android:text="Ride No: " />
 
+
         <TextView
+            android:id="@+id/tv_ride_no"
             style="@style/white_medium_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:text="AA1234" />
     </LinearLayout>
 
@@ -44,21 +47,25 @@
             android:text="Travel Price: " />
 
         <TextView
+            android:layout_marginStart="5dp"
+            android:id="@+id/tv_price"
             style="@style/white_medium_capitalized_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="100 EGP" />
-
-
     </LinearLayout>
 
     <TextView
-        style="@style/white_medium_capitalized_text"
+        style="@style/white_medium_bold_capitalized_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/widgets_vertical_space"
         android:background="@drawable/petroleum_rounded_corners_shape"
-        android:padding="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:gravity="center"
+        android:paddingRight="10dp"
         android:text="@string/payment_by_customer_credit_done" />
 
     <Button

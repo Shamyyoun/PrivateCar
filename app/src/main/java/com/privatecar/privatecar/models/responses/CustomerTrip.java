@@ -20,10 +20,10 @@ public class CustomerTrip {
     private String date;
     @SerializedName("fare")
     @Expose
-    private int fare;
+    private float fare;
     @SerializedName("distance")
     @Expose
-    private int distance;
+    private float distance;
     @SerializedName("time")
     @Expose
     private int time;
@@ -87,28 +87,28 @@ public class CustomerTrip {
     /**
      * @return The fare
      */
-    public int getFare() {
+    public float getFare() {
         return fare;
     }
 
     /**
      * @param fare The fare
      */
-    public void setFare(int fare) {
+    public void setFare(float fare) {
         this.fare = fare;
     }
 
     /**
      * @return The distance
      */
-    public int getDistance() {
+    public float getDistance() {
         return distance;
     }
 
     /**
      * @param distance The distance
      */
-    public void setDistance(int distance) {
+    public void setDistance(float distance) {
         this.distance = distance;
     }
 

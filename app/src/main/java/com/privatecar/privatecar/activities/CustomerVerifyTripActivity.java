@@ -39,6 +39,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class CustomerVerifyTripActivity extends BasicBackActivity implements View.OnClickListener, RequestListener {
+    public static CustomerVerifyTripActivity currentInstance;
     private TripRequest tripRequest; // used to save the request parameters to be send to server
     private TextView tvPickupAddress;
     private TextView tvAddDetails;
@@ -64,6 +65,9 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_verifty_trip);
+
+        // assign this instance to the currentInstance
+        currentInstance = this;
 
         // get passed params
         boolean pickupNow = getIntent().getBooleanExtra(Const.KEY_NOW, false);
@@ -418,9 +422,6 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
         // check response
         if (response instanceof TripRequestResponse) {
             // this is the request trip message
-            // dismiss progress dialog
-            progressDialog.dismiss();
-
             // cast the response
             TripRequestResponse requestResponse = (TripRequestResponse) response;
 
@@ -430,12 +431,6 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                 // cache the trip request
                 SavePrefs<CustomerTripRequest> savePrefs = new SavePrefs<CustomerTripRequest>(this, CustomerTripRequest.class);
                 savePrefs.save(requestResponse.getTripRequest(), Const.CACHE_LAST_TRIP_REQUEST);
-
-                // show msg toast and start new customer home activity
-                Utils.showLongToast(this, R.string.successful_trip_request);
-                Intent intent = new Intent(this, CustomerHomeActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
             } else {
                 // no drivers found
                 // show dialog msg
@@ -513,5 +508,28 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
         // show and log the message
         Utils.showLongToast(this, R.string.connection_error);
         Log.e("ERROR", message);
+    }
+
+    /**
+     * method, used to notify that no drivers found and release the activity
+     */
+    public void notifyNoDriversFound() {
+        // hide the progress dialog and show msg
+        if (progressDialog != null) progressDialog.dismiss();
+        Utils.showLongToast(this, R.string.no_drivers_found_now);
+    }
+
+    /**
+     * method, used to notify that a driver has accepted the trip and release the activity
+     */
+    public void notifyDriverAccepted() {
+        // hide the progress dialog if visible
+        if (progressDialog != null) progressDialog.dismiss();
+    }
+
+    @Override
+    protected void onDestroy() {
+        currentInstance = null;
+        super.onDestroy();
     }
 }
