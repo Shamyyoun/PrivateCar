@@ -36,9 +36,15 @@ android {
 repositories {
     maven { url "https://jitpack.io" }
     maven { url 'https://maven.fabric.io/public' }
+    maven { url 'https://dl.bintray.com/alexeydanilov/maven' } // for viewpagerindicator
 }
 
 dependencies {
+
+    //ion contains Gson
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
+    }
 
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.google.android.gms:play-services-auth:8.4.0'
@@ -57,14 +63,10 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.makeramen:roundedimageview:2.2.0'
     compile 'com.soundcloud.android:android-crop:1.0.1@aar'
-    compile 'com.koushikdutta.ion:ion:2.1.7'  //ion contains Gson
+    compile 'com.koushikdutta.ion:ion:2.1.7'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.2'
-    compile 'com.viewpagerindicator:library:2.4.1@aar'
+    compile 'com.viewpagerindicator:viewpagerindicator:2.4.3'
     compile 'com.commit451:PhotoView:1.2.4'
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
-        transitive = true;
-    }
-
 }
 
 
