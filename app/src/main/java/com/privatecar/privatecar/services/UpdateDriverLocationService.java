@@ -42,6 +42,8 @@ import com.privatecar.privatecar.utils.RequestHelper;
 import com.privatecar.privatecar.utils.RequestListener;
 import com.privatecar.privatecar.utils.Utils;
 
+import java.util.ArrayList;
+
 /**
  * Created by basim on 4/3/16.
  */
@@ -52,21 +54,22 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
     private LocationRequest locationRequestFine;
     private RequestHelper updateLocationRequest;
 
-    private Location lastLocation; // currently last location
-    private Location tripDriverStartLocation; // trip start location of the driver
-
-    int waitingSpeed; //in km/h
+    private Location prevLocation; // currently last location
+    private Location tripStartLocation; // trip start location
 
     private boolean tripStarted = false;
     private int tripDuration = 0; // in minutes
     private int tripDistance = 0; // in meters
     private int tripWaitDuration = 0; // in minutes
 
+    private ArrayList<Float> speedsBuffer = new ArrayList<>();
+    private Location speedsBufferFirstLocation;
+
     //create fine location request for getting high accuracy driver location
     private void createFineLocationRequest() {
         locationRequestFine = new LocationRequest();
         String intervalString = AppUtils.getConfigValue(getApplicationContext(), Config.KEY_MAP_REFRESH_RATE);
-        int interval = intervalString != null ? Integer.parseInt(intervalString) : 10;
+        int interval = 1000 * (intervalString != null ? Integer.parseInt(intervalString) : Const.LOCATION_UPDATE_DURATION); //in milli sec
         Utils.LogE("interval_____:" + interval);
         locationRequestFine.setInterval(interval);
         locationRequestFine.setFastestInterval(interval);
@@ -74,10 +77,6 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
     }
 
     private void updateLocation(Location location) {
-        lastLocation = location;
-        if (tripStarted && tripDriverStartLocation == null)
-            tripDriverStartLocation = lastLocation; //in case this is the first received last location
-
         if (!Utils.hasConnection(this)) {
             //TODO: check if gps disabled
             Utils.showLongToast(this, R.string.no_internet_connection);
@@ -85,6 +84,31 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
             return;
         }
 
+        String provider = location.getProvider();
+        float accuracy = location.getAccuracy();
+        float speed = location.getSpeed();
+        float bearingg = location.getBearing();
+        double altitude = location.getAltitude();
+        Log.e("____ location: ", String.format("provider:%s accuracy:%f speed:%f bearing:%f altitude:%f", provider, accuracy, speed, bearingg, altitude));
+
+
+        if (tripStarted && tripStartLocation == null)
+            tripStartLocation = location; //in case this is the first received last location
+
+
+        //update the driver location in the backend
+        setDriverBackendLocation(location);
+
+        //send the location via local broadcast manager to activities that needs it
+        sendLocationBroadCast(location);
+
+        prevLocation = location;
+
+        //save last driver location in the shared preferences
+        Utils.cacheString(this, Const.CACHE_LOCATION, location.getLatitude() + "," + location.getLongitude());
+    }
+
+    private void setDriverBackendLocation(Location location) {
         // get cached user & send the request
         User user = AppUtils.getCachedUser(this);
 
@@ -100,26 +124,69 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
         String driverId = "" + user.getDriverAccountDetails().getId();
 
         updateLocationRequest = DriverRequests.updateLocation(this, this, user.getAccessToken(), tmpLocation.toString(), bearing, carId, driverId);
+    }
 
-
-        //send the location via local broadcast manager to activities that needs it
+    private void sendLocationBroadCast(Location location) {
         Intent intent = new Intent(Const.ACTION_DRIVER_SEND_LOCATION);
         intent.putExtra(Const.KEY_LOCATION, location);
 
-        if (tripStarted) {
-            TripMeterInfo tripMeterInfo = new TripMeterInfo(); //TODO: fill info
-            int tripDuration = (int) ((lastLocation.getElapsedRealtimeNanos() - tripDriverStartLocation.getElapsedRealtimeNanos()) / 60000000000L); // in minutes
+        if (tripStarted && prevLocation != null) {
+            TripMeterInfo tripMeterInfo = new TripMeterInfo();
+            int timeDiff = getTimeDifference(prevLocation, location); // in sec
+
+            //setting trip duration
+            tripDuration += timeDiff / 60; // in minutes
             tripMeterInfo.setDuration(tripDuration);
+
+            float speed = location.getSpeed(); // TODO: handle speed at tunnel waysl
+
+            //setting trip distance
+            tripDistance += speed * timeDiff;
+            tripMeterInfo.setDistance(tripDistance);
+
+
+            //setting trip wait duration
+            if (speedsBuffer.isEmpty()) {
+                speedsBufferFirstLocation = location;
+            }
+            speedsBuffer.add(speed);
+            if (getTimeDifference(speedsBufferFirstLocation, location) >= 60 && !speedsBuffer.isEmpty()) {
+                float speedAvg = getSpeedsAvg(); //in m/s
+                String waitingTimeSpeedStr = AppUtils.getConfigValue(this, Config.KEY_WAITING_TIME_SPEED);
+                int waitingSpeedKMH = Integer.parseInt(waitingTimeSpeedStr);//in km/h
+                float waitingSpeedMS = waitingSpeedKMH * 1000 / 3600;//in m/s
+                if (speedAvg <= waitingSpeedMS) {
+                    tripWaitDuration++;
+                }
+
+                speedsBuffer.clear();
+            }
+            tripMeterInfo.setWaitDuration(tripWaitDuration);
+
+
+            Log.e("____ trip info: ", String.format("tripDuration:%d tripDistance:%d tripWaitDuration:%d", tripDuration, tripDistance, tripWaitDuration));
+
 
             intent.putExtra(Const.KEY_TRIP_METER_INFO, tripMeterInfo);
         }
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-
-        //save last driver location in the shared preferences
-        Utils.cacheString(this, Const.CACHE_LOCATION, location.getLatitude() + "," + location.getLongitude());
     }
 
+    //return the time difference (in sec) between two locations
+    private int getTimeDifference(Location startLocation, Location endLocation) {
+        return (int) ((endLocation.getElapsedRealtimeNanos() - startLocation.getElapsedRealtimeNanos()) / 1000000000.0);
+    }
+
+    //get average speed in m/sec
+    private float getSpeedsAvg() {
+        float sum = 0;
+        for (float speed : speedsBuffer) {
+            sum += speed;
+        }
+
+        return sum / speedsBuffer.size();
+    }
 
     @Override
     public void onCreate() {
@@ -153,17 +220,15 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
             if (operation != null) {
                 switch (operation) {
                     case Const.START_TRIP:
-                        String waitingTimeSpeedStr = AppUtils.getConfigValue(this, Config.KEY_WAITING_TIME_SPEED);
-                        waitingSpeed = Integer.parseInt(waitingTimeSpeedStr);
-                        
+
                         tripStarted = true;
-                        tripDriverStartLocation = lastLocation;
+                        tripStartLocation = prevLocation;
 
                         Log.e("___________", "START_TRIP");
 
                         break;
                     case Const.END_TRIP:
-                        updateLocation(lastLocation); //to send broadcast to DriverTrackTheTripActivity before ending the trip to update trip values
+                        updateLocation(prevLocation); //to send broadcast to DriverTrackTheTripActivity before ending the trip to update trip values
                         tripStarted = false;
 
                         Log.e("___________", "END_TRIP");

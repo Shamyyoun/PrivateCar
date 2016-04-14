@@ -13,7 +13,7 @@ public class Config {
     public static final String KEY_REGISTER_ENABLED = "RegisterEnabled";
     public static final String KEY_LOW_CUSTOMER_TRIP_RATE = "LowCustomerTripRate";
     public static final String KEY_LOW_DRIVER_TRIP_RATE = "LowDriverTripRate";
-    public static final String KEY_MAP_REFRESH_RATE = "MapRefereshRate";
+    public static final String KEY_MAP_REFRESH_RATE = "MapRefereshRate"; // in sec
     public static final String KEY_MIN_TRIP_FARE = "MinTripFare";
     public static final String KEY_WAITING_TIME_SPEED = "WaitingTimeSpeed";
     public static final String KEY_BASE_URL = "BaseURL";

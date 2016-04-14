@@ -55,7 +55,8 @@ public class Const {
     public static final int IMAGE_SIZE = 1024;
     public static final int EGYPT_INDEX = 61; //Egypt index in the country spinner
     public static final int MIN_PASSWORD_LENGTH = 3;
-    public static final int LOCATION_UPDATE_IN_MS = 2000; //location is updated in how many milliseconds
+    public static final int LOCATION_UPDATE_DURATION = 10; //location is updated in how many sec
+    public static final int LOCATION_UPDATE_SMALLEST_DISPLACEMENT = 15; //location is updated in how many milliseconds
     public static final int HEATMAP_RADIUS = 50; // in KM
     public static final String START_TRIP = "start_trip";
     public static final String END_TRIP = "end_trip";

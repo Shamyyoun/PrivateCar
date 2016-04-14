@@ -73,7 +73,7 @@ public class CustomerAddDropOffActivity extends BasicBackActivity implements Vie
     private void createCoarseLocationRequest() {
         locationRequestCoarse = new LocationRequest();
         String intervalString = AppUtils.getConfigValue(getApplicationContext(), Config.KEY_MAP_REFRESH_RATE);
-        int interval = intervalString != null ? Integer.parseInt(intervalString) : 10;
+        int interval = 1000 * (intervalString != null ? Integer.parseInt(intervalString) : Const.LOCATION_UPDATE_DURATION); //in milli sec
         locationRequestCoarse.setInterval(interval);
         locationRequestCoarse.setFastestInterval(interval);
         locationRequestCoarse.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);

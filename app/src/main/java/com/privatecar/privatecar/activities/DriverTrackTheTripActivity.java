@@ -138,12 +138,14 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
             if (intent.getExtras().containsKey(Const.KEY_TRIP_METER_INFO)) {
                 TripMeterInfo tripMeterInfo = intent.getParcelableExtra(Const.KEY_TRIP_METER_INFO);
 
-                tripDuration = tripMeterInfo.getDuration();
+                tripDuration = tripMeterInfo.getDuration(); // in m
                 tvRideHM.setText(String.format(Locale.ENGLISH, "%02d:%02d", tripDuration / 60, tripDuration % 60));
 
-                //TODO: get these values
-                tripWaitDuration = 4;
-                tripDistance = 500;
+                tripDistance = tripMeterInfo.getDistance(); // in m
+                tvRideKMM.setText(String.format(Locale.ENGLISH, "%02d:%02d", tripDistance / 1000, tripDistance % 1000));
+                tripWaitDuration = tripMeterInfo.getWaitDuration(); // in m
+                tvRideHM.setText(String.format(Locale.ENGLISH, "%02d:%02d", tripWaitDuration / 60, tripWaitDuration % 60));
+                
             }
 
         }

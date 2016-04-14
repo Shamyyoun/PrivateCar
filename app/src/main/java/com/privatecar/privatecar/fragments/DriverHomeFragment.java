@@ -93,7 +93,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     private void createCoarseLocationRequest() {
         locationRequestCoarse = new LocationRequest();
         String intervalString = AppUtils.getConfigValue(getActivity(), Config.KEY_MAP_REFRESH_RATE);
-        int interval = intervalString != null ? Integer.parseInt(intervalString) : 10;
+        int interval = 1000 * (intervalString != null ? Integer.parseInt(intervalString) : Const.LOCATION_UPDATE_DURATION); //in milli sec
         locationRequestCoarse.setInterval(interval);
         locationRequestCoarse.setFastestInterval(interval);
         locationRequestCoarse.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
@@ -102,8 +102,11 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
     //create fine location request for getting high accuracy driver location (for updatelocation message)
     private void createFineLocationRequest() {
         locationRequestFine = new LocationRequest();
-        locationRequestFine.setInterval(Const.LOCATION_UPDATE_IN_MS);
-        locationRequestFine.setFastestInterval(Const.LOCATION_UPDATE_IN_MS);
+        String intervalString = AppUtils.getConfigValue(getContext(), Config.KEY_MAP_REFRESH_RATE);
+        int interval = 1000 * (intervalString != null ? Integer.parseInt(intervalString) : Const.LOCATION_UPDATE_DURATION); //in milli sec
+        Utils.LogE("interval_____:" + interval);
+        locationRequestFine.setInterval(interval);
+        locationRequestFine.setFastestInterval(interval);
         locationRequestFine.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
