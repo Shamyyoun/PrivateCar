@@ -50,7 +50,7 @@ public class Const {
     public static final String LOG_TAG = "Private Car";
     public static final String SHARED_PREFERENCES_FILE_NAME = "private_car";
     public static final String APP_FILES_DIR = "/.private_car";
-    public static final String PACKAGE_NAME = "com.privatecar.privatecar";
+    public static final String PACKAGE_NAME = "com.privateegy.privatecar";
     public static final int IMAGE_SIZE_USER = 400;
     public static final int IMAGE_SIZE = 1024;
     public static final int EGYPT_INDEX = 61; //Egypt index in the country spinner
@@ -227,7 +227,7 @@ public class Const {
 
 
     //Intent actions
-    public static final String ACTION_DRIVER_SEND_LOCATION = "com.private.privatecar.driver_send_location";
+    public static final String ACTION_DRIVER_SEND_LOCATION = PACKAGE_NAME + ".driver_send_location";
 
 
     //push notifications keys

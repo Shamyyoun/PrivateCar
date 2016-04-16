@@ -55,7 +55,7 @@
 #Gson, don't change classes names
 -keepattributes Signature, *Annotation*
 -keep class sun.misc.Unsafe { *; }
--keep class com.privatecar.privatecar.models.** { *; }
+-keep class com.privateegy.privatecar.models.** { *; }
 
 #Prettytime
 -keep class org.ocpsoft.prettytime.i18n.**
