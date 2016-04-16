@@ -331,6 +331,7 @@
     <string name="please_enter_cash_value">Please enter cash value</string>
     <string name="close">Close</string>
     <string name="client_id_c">Client Id:</string>
+    <string name="remaining_c">Remaining:</string>
 
     <string-array name="photo_sources_array">
         <item>From Gallery</item>

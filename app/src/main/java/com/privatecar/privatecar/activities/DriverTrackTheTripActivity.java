@@ -316,10 +316,14 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
             if (endTripResponse.isSuccess()) {
                 String key = endTripResponse.getContent().getKey();
                 if (key.equals(Const.TRIP_PAY_REMAINING)) {
-                    /*TODO: show a screen to the driver to take cash with this amount from the customer and a button to confirm this button will call {payremaining} and it will return for driver "Trip Ended".
-                     */
-                    Utils.showLongToast(this, "TRIP_PAY_REMAINING");
-                    finish();
+                    // open pay remaining activity with the remaining value
+                    float remainingValue = endTripResponse.getContent().getContent();
+                    Intent intent = new Intent(this, DriverRemainingPaymentActivity.class);
+                    intent.putExtra(Const.KEY_TRIP_REQUEST, tripRequest);
+                    intent.putExtra(Const.KEY_ACTUAL_FARE, getActualFare());
+                    intent.putExtra(Const.KEY_REMAINING_VALUE, remainingValue);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 } else {
                     Intent intent = new Intent(this, DriverAccountPaymentActivity.class);
                     intent.putExtra(Const.KEY_TRIP_REQUEST, tripRequest);

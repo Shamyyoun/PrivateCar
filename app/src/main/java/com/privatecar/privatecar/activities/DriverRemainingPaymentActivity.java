@@ -10,6 +10,7 @@ import com.privatecar.privatecar.Const;
 import com.privatecar.privatecar.R;
 import com.privatecar.privatecar.models.entities.DriverTripRequest;
 import com.privatecar.privatecar.models.responses.EndTripResponse;
+import com.privatecar.privatecar.models.responses.GeneralResponse;
 import com.privatecar.privatecar.requests.DriverRequests;
 import com.privatecar.privatecar.utils.AppUtils;
 import com.privatecar.privatecar.utils.DialogUtils;
@@ -18,9 +19,9 @@ import com.privatecar.privatecar.utils.Utils;
 
 import java.util.Locale;
 
-public class DriverCashPaymentActivity extends BaseActivity implements RequestListener<EndTripResponse> {
+public class DriverRemainingPaymentActivity extends BaseActivity implements RequestListener<GeneralResponse> {
 
-    private TextView tvRideNo, tvPrice;
+    private TextView tvRideNo, tvPrice, tvRemaining;
     private EditText etCash;
 
     private DriverTripRequest tripRequest;
@@ -40,10 +41,14 @@ public class DriverCashPaymentActivity extends BaseActivity implements RequestLi
         int actualFare = getIntent().getIntExtra(Const.KEY_ACTUAL_FARE, 0);
         tvPrice.setText(String.format(Locale.ENGLISH, "%d %s", actualFare, getString(R.string.currency)));
 
+        tvRemaining = (TextView) findViewById(R.id.tv_remaining);
+        float remainingValue = getIntent().getIntExtra(Const.KEY_REMAINING_VALUE, 0);
+        tvPrice.setText(String.format("%.0f", remainingValue) + " " + getString(R.string.currency));
+
         etCash = (EditText) findViewById(R.id.et_cash);
     }
 
-    private void endTrip() {
+    private void confirmPayRemaining() {
         float cash;
         if (Utils.isEmpty(etCash)) {
             Utils.showLongToast(this, R.string.please_enter_cash_value);
@@ -54,19 +59,14 @@ public class DriverCashPaymentActivity extends BaseActivity implements RequestLi
 
         progressDialog = DialogUtils.showProgressDialog(this, R.string.ending_trip, false);
 
-        int actualFare = getIntent().getIntExtra(Const.KEY_ACTUAL_FARE, 0);
-        int tripDistance = getIntent().getIntExtra(Const.KEY_TRIP_DISTANCE, 0);
-        int tripDuration = getIntent().getIntExtra(Const.KEY_TRIP_DURATION, 0);
-
-        DriverRequests.endTrip(this, this, AppUtils.getCachedUser(this).getAccessToken()
-                , tripRequest.getId(), actualFare, tripDistance / 1000.0f, tripDuration * 60, cash);
+        DriverRequests.payRemaining(this, this, AppUtils.getCachedUser(this).getAccessToken(), tripRequest.getId(), cash);
     }
 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_confirm:
                 //TODO: add confirmation
-                endTrip();
+                confirmPayRemaining();
                 break;
         }
     }
@@ -77,7 +77,7 @@ public class DriverCashPaymentActivity extends BaseActivity implements RequestLi
     }
 
     @Override
-    public void onSuccess(EndTripResponse response, String apiName) {
+    public void onSuccess(GeneralResponse response, String apiName) {
         if (response.isSuccess()) {
             progressDialog.dismiss();
 

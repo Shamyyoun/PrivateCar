@@ -307,4 +307,17 @@ public class DriverRequests {
         return requestHelper;
     }
 
+    public static RequestHelper<GeneralResponse> payRemaining(Context ctx, RequestListener<GeneralResponse> listener, String accessToken, int tripId, float cash) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_TRIP_ID, "" + tripId);
+        params.put(Const.MSG_PARAM_CASH, "" + cash);
+
+        RequestHelper<GeneralResponse> request = new RequestHelper<>(ctx, Const.MESSAGES_BASE_URL, Const.MESSAGE_DRIVER_PAY_REMAINING, GeneralResponse.class, listener, params);
+
+        request.executeFormUrlEncoded();
+        return request;
+    }
+
 }
