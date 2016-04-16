@@ -138,7 +138,7 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
             tripDuration += timeDiff / 60; // in minutes
             tripMeterInfo.setDuration(tripDuration);
 
-            float speed = location.getSpeed(); // TODO: handle speed at tunnel waysl
+            float speed = location.getSpeed(); // TODO: handle speed at tunnel ways
 
             //setting trip distance
             tripDistance += speed * timeDiff;
