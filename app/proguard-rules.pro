@@ -15,3 +15,55 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#icepick
+-dontwarn icepick.**
+-keep class icepick.** { *; }
+-keep class **$$Icepick { *; }
+-keepclasseswithmembernames class * {
+    @icepick.* <fields>;
+}
+
+#glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+#picasso
+-dontwarn com.squareup.picasso.**
+
+#UltimateRecyclerView
+-dontwarn com.marshalchen.ultimaterecyclerview.**
+
+#MPAndroidChart
+-keep class com.github.mikephil.charting.** { *; }
+-dontwarn io.realm.**
+
+
+#leakcanary
+-keep class org.eclipse.mat.** { *; }
+-keep class com.squareup.leakcanary.** { *; }
+-keep class com.squareup.haha.** { *; }
+-dontwarn com.squareup.haha.guava.**
+-dontwarn com.squareup.haha.perflib.**
+-dontwarn com.squareup.haha.trove.**
+-dontwarn com.squareup.leakcanary.**
+
+
+#Gson, don't change classes names
+-keepattributes Signature, *Annotation*
+-keep class sun.misc.Unsafe { *; }
+-keep class com.privatecar.privatecar.models.** { *; }
+
+#Prettytime
+-keep class org.ocpsoft.prettytime.i18n.**
+
+#remove Log.d & Log.e
+#-assumenosideeffects class android.util.Log {
+#    public static *** d(...);
+#    public static *** e(...);
+#}
+
+
