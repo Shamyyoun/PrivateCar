@@ -329,4 +329,5 @@
     <string name="please_enter_cash_value">من فضلك أدخل القيمة النقدية</string>
     <string name="close">اغلاق</string>
     <string name="client_id_c">رقم العميل:</string>
+    <string name="remaining_c">المتبقي:</string>
 </resources>

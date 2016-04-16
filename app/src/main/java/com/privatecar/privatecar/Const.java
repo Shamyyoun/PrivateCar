@@ -140,6 +140,7 @@ public class Const {
     public static final String MESSAGE_DRIVER_CHANGE_PHOTO = "changephoto";
     public static final String MESSAGE_DRIVER_END_TRIP = "endtrip";
     public static final String MESSAGE_DRIVER_RATE_CUSTOMER = "driverratecustomer";
+    public static final String MESSAGE_DRIVER_PAY_REMAINING = "payremaining";
 
 
     //message parameters:----
@@ -187,6 +188,7 @@ public class Const {
     public static final String MSG_PARAM_NOTES_FOR_DRIVER = "notes_for_driver";
     public static final String MSG_PARAM_PICKUP_ADDRESS_NOTES = "pickup_address_notes";
     public static final String MSG_PARAM_RATE = "rate";
+    public static final String MSG_PARAM_CASH = "cash";
 
     //Intent & bundle keys
     public static final String KEY_TRIP_REQUEST = "trip_request";
@@ -221,6 +223,7 @@ public class Const {
     public static final String KEY_ACTUAL_FARE = "actual_fare";
     public static final String KEY_COST = "cost";
     public static final String KEY_TRIP_COST_INFO = "trip_cost_info";
+    public static final String KEY_REMAINING_VALUE = "remaining_value";
 
 
     //Intent actions
