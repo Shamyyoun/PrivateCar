@@ -238,6 +238,13 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
      */
     public void beActive(boolean active) {
 
+        //check if trips are stopped by the backend
+        String stopTripConfig = AppUtils.getConfigValue(getContext(), Config.KEY_STOP_TRIP);
+        if (active && stopTripConfig != null && stopTripConfig.equals("1")) {
+            Utils.showLongToast(getContext(), R.string.trips_stopped_now);
+            return;
+        }
+
         if (!active) {
             Intent intent = new Intent(getContext(), UpdateDriverLocationService.class);
             getActivity().stopService(intent);

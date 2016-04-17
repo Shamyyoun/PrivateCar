@@ -19,6 +19,7 @@ public class Config {
     public static final String KEY_BASE_URL = "BaseURL";
     public static final String KEY_WEBSITE_URL = "WebSiteURL";
     public static final String KEY_INVITE_TEMPLATE = "InviteTemplate";
+    public static final String KEY_STOP_TRIP = "StopTripRquest";
 
 
     @SerializedName("key")

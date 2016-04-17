@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Private</string>
     <string name="facebook_id" translatable="false">1672155173024840</string>
-    <!--<string name="project_number" translatable="false">190216326794</string>-->
+    <string name="project_number" translatable="false">190216326794</string>
     <!-- New project number -->
-    <string name="project_number" translatable="false">468362986506</string>
+    <!--<string name="project_number" translatable="false">468362986506</string>-->
     <string name="android_api_key" translatable="false">AIzaSyB9h3_UFrSt3E2sF2wJNPYroJWNFQ6JbpQ</string>
-    <!--<string name="server_api_key" translatable="false">AIzaSyBaZNQhClLZ0-ACMt3fqhFWl1mdcltmspU</string>-->
+    <string name="server_api_key" translatable="false">AIzaSyBaZNQhClLZ0-ACMt3fqhFWl1mdcltmspU</string>
     <!-- New server api key -->
-    <string name="server_api_key" translatable="false">AIzaSyDFOXx5F4yGcSOy0vJdL096NrL073NZ8yY</string>
+    <!--<string name="server_api_key" translatable="false">AIzaSyDFOXx5F4yGcSOy0vJdL096NrL073NZ8yY</string>-->
     <string name="client_id" translatable="false">468362986506-127hrg3be2s74r9qoorcvktbmcva4b2l.apps.googleusercontent.com</string>
     <string name="currency">EGP</string>
     <string name="customer">Customer</string>
@@ -335,10 +335,13 @@
     <string name="close">Close</string>
     <string name="client_id_c">Client Id:</string>
     <string name="remaining_c">Remaining:</string>
+    <string name="trips_stopped_now">Trips are disabled right now</string>
+    <string name="from_gallery">From Gallery</string>
+    <string name="from_camera">From Camera</string>
 
     <string-array name="photo_sources_array">
-        <item>From Gallery</item>
-        <item>From Camera</item>
+        <item>@string/from_gallery</item>
+        <item>@string/from_camera</item>
     </string-array>
 
     <string-array name="car_types">

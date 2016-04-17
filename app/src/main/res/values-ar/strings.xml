@@ -220,10 +220,7 @@
     <string name="failed_deleting_message">فشل في حذف الرسالة</string>
     <string name="deleting_message">جاري حذف الرسالة</string>
     <string name="adding_car">يتم إضافة السيارة</string>
-    <string-array name="photo_sources_array">
-        <item>من معرض الصور</item>
-        <item>من كاميرا الهاتف</item>
-    </string-array>
+
 
     <string name="driver_state_active">حالة السائق: نشط</string>
     <string name="starting_trip_please_wait">جاري بدء الرحلة، برجاء الانتظار…</string>
@@ -330,4 +327,7 @@
     <string name="close">اغلاق</string>
     <string name="client_id_c">رقم العميل:</string>
     <string name="remaining_c">المتبقي:</string>
+    <string name="trips_stopped_now">تم تعطيل الرحلات بشكل مؤقت</string>
+    <string name="from_gallery">من معرض الصور</string>
+    <string name="from_camera">من كاميرا الهاتف</string>
 </resources>

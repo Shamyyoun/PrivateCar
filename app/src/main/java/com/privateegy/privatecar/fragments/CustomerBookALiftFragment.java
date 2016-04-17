@@ -228,6 +228,14 @@ public class CustomerBookALiftFragment extends BaseFragment implements OnMapRead
      * @param now boolean flag that is true if should pickup now and false otherwise
      */
     private void pickUp(final boolean now) {
+
+        //check if trips are stopped by the backend
+        String stopTripConfig = AppUtils.getConfigValue(getContext(), Config.KEY_STOP_TRIP);
+        if (stopTripConfig != null && stopTripConfig.equals("1")) {
+            Utils.showLongToast(getContext(), R.string.trips_stopped_now);
+            return;
+        }
+
         // check internet connection
         if (!Utils.hasConnection(activity)) {
             // show error toast

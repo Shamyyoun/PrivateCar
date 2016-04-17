@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by basim on 18/12/15.
+ * Created by basim.alamuddin@gmail.com on 18/12/15.
  * A class, with general purpose utility methods (useful for many projects).
  */
 public class Utils {
@@ -332,8 +332,25 @@ public class Utils {
         cacheInt(context, KEY_APP_VERSION_CODE, getAppVersionCode(context));
     }
 
+
     public static int getCachedAppVersionCode(Context context) {
         return getCachedInt(context, KEY_APP_VERSION_CODE, Integer.MIN_VALUE);
+    }
+
+    /**
+     * Get the application version name
+     *
+     * @param context
+     * @return The app version name
+     */
+    public static String getAppVersionName(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            // should never happen
+            throw new RuntimeException("Could not get package name: " + e);
+        }
     }
 
     /**
@@ -512,6 +529,7 @@ public class Utils {
 
     /**
      * method, used to convert string number to double number
+     *
      * @param number
      * @return
      */
