@@ -61,8 +61,8 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
     private View layoutAddCreditCard;
     private View layoutPromoCode;
     private View layoutLanguage;
-    private View layoutTellFriends;
     private View layoutAboutPrivate;
+    private View layoutTellFriends;
     private View layoutCustomerService;
     private View layoutSignOut;
 

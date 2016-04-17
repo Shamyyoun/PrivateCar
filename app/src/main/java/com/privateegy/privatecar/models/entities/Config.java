@@ -7,9 +7,10 @@ import com.google.gson.annotations.SerializedName;
 public class Config {
 
     public static final String KEY_CURRENT_APP_VERSION = "CurrentAppVersion";
-    public static final String KEY_CUSTOMER_SERVICE_NUMBER = "CustomerServiceNumber";
-    public static final String KEY_LOGIN_ENABLED = "LoginEnabled";
     public static final String KEY_MIN_APP_VERSION = "MinAppVersion";
+    public static final String KEY_CUSTOMER_SERVICE_NUMBER = "CustomerServiceNumber";
+    public static final String KEY_DRIVER_SERVICE_NUMBER = "DriverServiceNumber";
+    public static final String KEY_LOGIN_ENABLED = "LoginEnabled";
     public static final String KEY_REGISTER_ENABLED = "RegisterEnabled";
     public static final String KEY_LOW_CUSTOMER_TRIP_RATE = "LowCustomerTripRate";
     public static final String KEY_LOW_DRIVER_TRIP_RATE = "LowDriverTripRate";

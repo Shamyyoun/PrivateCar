@@ -1,10 +1,12 @@
 package com.privateegy.privatecar.activities;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageButton;
@@ -23,6 +25,7 @@ import com.privateegy.privatecar.requests.CommonRequests;
 import com.privateegy.privatecar.utils.AppUtils;
 import com.privateegy.privatecar.utils.BitmapUtils;
 import com.privateegy.privatecar.utils.DialogUtils;
+import com.privateegy.privatecar.utils.PermissionUtil;
 import com.privateegy.privatecar.utils.RequestListener;
 import com.privateegy.privatecar.utils.Utils;
 import com.soundcloud.android.crop.Crop;
@@ -31,7 +34,7 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 
 public class DriverSettingsActivity extends BasicBackActivity {
-    private View layoutChangePassword, layoutChangeLanguage;
+    private View layoutChangePassword, layoutChangeLanguage, layoutTellFriends, layoutCustomerService;
     private ImageButton ibUserPhoto;
     private TextView tvLanguage, tvName, tvMobile, tvEmail;
     File imageUserPhoto, imageUserPhotoCropped;
@@ -48,6 +51,11 @@ public class DriverSettingsActivity extends BasicBackActivity {
         layoutChangePassword.setOnClickListener(this);
         layoutChangeLanguage = findViewById(R.id.layout_change_language);
         layoutChangeLanguage.setOnClickListener(this);
+        layoutTellFriends = findViewById(R.id.layout_tell_friends);
+        layoutTellFriends.setOnClickListener(this);
+        layoutCustomerService = findViewById(R.id.layout_customer_service);
+        layoutCustomerService.setOnClickListener(this);
+
 
         tvLanguage = (TextView) findViewById(R.id.tv_language);
         String language = Utils.getAppLanguage();
@@ -100,7 +108,38 @@ public class DriverSettingsActivity extends BasicBackActivity {
                     }
                 });
                 builder.show();
+                break;
+            case R.id.layout_tell_friends:
+                // open invite friends activity
+                startActivity(new Intent(this, CustomerInviteFriendsActivity.class));
+                break;
+            case R.id.layout_customer_service:
+                // check call permission
+                if (PermissionUtil.isGranted(this, Manifest.permission.CALL_PHONE)) {
+                    // show call customer service dialog
+                    AppUtils.showCallDriverServiceDialog(this);
+                } else {
+                    // not granted
+                    // request the permission
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, Const.PERM_REQ_CALL);
+                }
+                break;
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case Const.PERM_REQ_CALL:
+                // check if granted
+                if (PermissionUtil.isAllGranted(grantResults)) {
+                    // granted
+                    // show call customer service dialog
+                    AppUtils.showCallDriverServiceDialog(this);
+                } else {
+                    // show msg
+                    Utils.showShortToast(this, R.string.we_need_call_permission_to_call_customer_service);
+                }
                 break;
         }
     }

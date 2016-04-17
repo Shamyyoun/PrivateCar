@@ -1,11 +1,14 @@
 package com.privateegy.privatecar.activities;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -97,6 +100,36 @@ public class SplashActivity extends BaseActivity implements RequestListener {
             for (Config config : configResponse.getConfigs()) {
                 Log.e(Const.LOG_TAG, config.getKey() + " : " + config.getValue());
             }
+
+            //checking installed app version
+            try {
+                int minAppVersion = Integer.parseInt(AppUtils.getConfigValue(this, Config.KEY_MIN_APP_VERSION));
+                minAppVersion = 2;
+                int installedAppVersion = Utils.getAppVersionCode(this);
+                if (installedAppVersion < minAppVersion) {
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+                    dialogBuilder.setMessage(R.string.you_should_update_the_application);
+                    dialogBuilder.setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // open app page in google play
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
+                            finish();
+                        }
+                    });
+
+                    dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+                    dialogBuilder.show();
+                    return;
+                }
+            } catch (Exception e) {
+            }
+
 
             // get cached user
             User user = AppUtils.getCachedUser(SplashActivity.this);

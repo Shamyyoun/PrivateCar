@@ -171,6 +171,18 @@ public class AppUtils {
     }
 
     /**
+     * method, used to show call driver service dialog
+     *
+     * @param context
+     */
+    public static void showCallDriverServiceDialog(Context context) {
+        final String customerServiceNumber = getConfigValue(context, Config.KEY_DRIVER_SERVICE_NUMBER);
+        DialogUtils.showCallDialog(context, customerServiceNumber);
+    }
+
+
+
+    /**
      * method, used to calculate the trip fare based on passed params
      * @param context
      * @param distance

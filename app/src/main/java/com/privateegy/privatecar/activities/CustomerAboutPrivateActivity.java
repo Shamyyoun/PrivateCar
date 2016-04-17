@@ -42,7 +42,7 @@ public class CustomerAboutPrivateActivity extends BasicBackActivity {
         tvAppVersion.setText("" + configAppVersion);
 
         // get installed app version & compare it
-        int installedAppVersion = Utils.getAppVersion(this);
+        int installedAppVersion = Utils.getAppVersionCode(this);
         if (configAppVersion <= installedAppVersion) {
             // the latest version is installed
             // disable update button

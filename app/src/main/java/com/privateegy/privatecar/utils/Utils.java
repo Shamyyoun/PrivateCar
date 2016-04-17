@@ -454,22 +454,6 @@ public class Utils {
         return list == null || list.isEmpty();
     }
 
-    /**
-     * method, used to return installed app version
-     *
-     * @param context
-     * @return
-     */
-    public static int getAppVersion(Context context) {
-        try {
-            PackageManager manager = context.getPackageManager();
-            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
-            return info.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
 
     /**
      * method, used to prepare the url and open it in the browser
