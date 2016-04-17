@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="@dimen/activity_margin"
     android:showDividers="middle"
-    tools:context="com.privatecar.privatecar.activities.DriverRateTripActivity">
+    tools:context="com.privateegy.privatecar.activities.DriverRateTripActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

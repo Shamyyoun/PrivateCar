@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_margin"
-    tools:context="com.privatecar.privatecar.activities.DriverDeclineTripReasonActivity">
+    tools:context="com.privateegy.privatecar.activities.DriverDeclineTripReasonActivity">
 
     <LinearLayout
         android:id="@+id/layout_content"

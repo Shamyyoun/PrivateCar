@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.privatecar.privatecar">
+    package="com.privateegy.privatecar">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -57,7 +57,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="da607939978304e5bdac277f3be706343200c524" />
+            android:value="27800c00ae3176ecd3db3b8f99dd7ab42d2b992f" />
 
         <!-- ============= GCM =============== -->
 
@@ -68,8 +68,7 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="com.privateegy.privatecar" />
+                <category android:name="com.privateegy.privatecar" /> <!-- Package name -->
             </intent-filter>
         </receiver>
 

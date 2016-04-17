@@ -1,27 +1,32 @@
 {
   "project_info": {
-    "project_id": "private-car-1198",
-    "project_number": "190216326794",
+    "project_id": "private-car-1283",
+    "project_number": "468362986506",
     "name": "Private Car"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:190216326794:android:0c3be5866c8c8892",
-        "client_id": "android:com.privatecar.privatecar",
+        "mobilesdk_app_id": "1:468362986506:android:bb92ee024536946a",
+        "client_id": "android:com.privateegy.privatecar",
         "client_type": 1,
         "android_client_info": {
-          "package_name": "com.privatecar.privatecar"
+          "package_name": "com.privateegy.privatecar",
+          "certificate_hash": []
         }
       },
       "oauth_client": [
         {
-          "client_id": "190216326794-ef6g0bevjq5kcelp5l2q21d9lrn5ee4f.apps.googleusercontent.com",
+          "client_id": "468362986506-1r53ihq1o37fhnh0iol1uimsdrno1btc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.privatecar.privatecar",
-            "certificate_hash": "F3E1B86B8E1B30A98E0EE1074A0270C562D78F98"
+            "package_name": "com.privateegy.privatecar",
+            "certificate_hash": "330CFA9559C65C4A16F709DE001D5446C16F930B"
           }
+        },
+        {
+          "client_id": "468362986506-127hrg3be2s74r9qoorcvktbmcva4b2l.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [],
@@ -30,7 +35,7 @@
           "status": 1
         },
         "cloud_messaging_service": {
-          "status": 1,
+          "status": 2,
           "apns_config": []
         },
         "appinvite_service": {

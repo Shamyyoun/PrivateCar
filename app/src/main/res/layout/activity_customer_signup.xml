@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.privatecar.privatecar.activities.CustomerSignupActivity">
+    tools:context="com.privateegy.privatecar.activities.CustomerSignupActivity">
 
     <ScrollView
         android:layout_width="match_parent"

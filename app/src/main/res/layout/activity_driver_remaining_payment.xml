@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/activity_margin"
-    tools:context="com.privatecar.privatecar.activities.DriverCashPaymentActivity">
+    tools:context="com.privateegy.privatecar.activities.DriverCashPaymentActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -6,7 +6,7 @@
     android:divider="@drawable/linearlayout_vertical_divider_transparent"
     android:orientation="vertical"
     android:showDividers="middle"
-    tools:context="com.privatecar.privatecar.fragments.CustomerMyRidesFragment">
+    tools:context="com.privateegy.privatecar.fragments.CustomerMyRidesFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,18 +56,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.privatecar.privatecar.custom_views.ProgressView
+        <com.privateegy.privatecar.custom_views.ProgressView
             android:id="@+id/progress_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <com.privatecar.privatecar.custom_views.ErrorView
+        <com.privateegy.privatecar.custom_views.ErrorView
             android:id="@+id/error_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
 
-        <com.privatecar.privatecar.custom_views.EmptyView
+        <com.privateegy.privatecar.custom_views.EmptyView
             android:id="@+id/empty_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

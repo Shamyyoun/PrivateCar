@@ -3,20 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.privatecar.privatecar.activities.DriverDocumentsActivity">
+    tools:context="com.privateegy.privatecar.activities.DriverDocumentsActivity">
 
-    <com.privatecar.privatecar.custom_views.ProgressView
+    <com.privateegy.privatecar.custom_views.ProgressView
         android:id="@+id/progress_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.privatecar.privatecar.custom_views.ErrorView
+    <com.privateegy.privatecar.custom_views.ErrorView
         android:id="@+id/error_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <com.privatecar.privatecar.custom_views.EmptyView
+    <com.privateegy.privatecar.custom_views.EmptyView
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

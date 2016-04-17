@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
-    tools:context="com.privatecar.privatecar.activities.DriverDocumentDetailsActivity">
+    tools:context="com.privateegy.privatecar.activities.DriverDocumentDetailsActivity">
 
-    <com.privatecar.privatecar.custom_views.ImageZoomViewPager
+    <com.privateegy.privatecar.custom_views.ImageZoomViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

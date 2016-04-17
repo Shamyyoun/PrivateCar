@@ -19,7 +19,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.privatecar.privatecar"
+        applicationId "com.privateegy.privatecar"
         minSdkVersion 17
         targetSdkVersion 23
         versionCode 1
@@ -27,7 +27,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false //TODO: enable obfuscation
+            minifyEnabled true //TODO: enable obfuscation
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

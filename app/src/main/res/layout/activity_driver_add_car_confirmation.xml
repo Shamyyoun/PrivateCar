@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/activity_margin"
     android:orientation="vertical"
-    tools:context="com.privatecar.privatecar.activities.DriverAddCarConfirmationActivity">
+    tools:context="com.privateegy.privatecar.activities.DriverAddCarConfirmationActivity">
 
     <TextView
         android:layout_width="match_parent"

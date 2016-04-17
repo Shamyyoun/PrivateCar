@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    tools:context="com.privatecar.privatecar.fragments.DriverStatementFragment">
+    tools:context="com.privateegy.privatecar.fragments.DriverStatementFragment">
 
     <TextView
         android:id="@+id/tv_status"
