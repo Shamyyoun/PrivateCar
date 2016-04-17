@@ -92,8 +92,8 @@ public class Const {
     public static final String CACHE_LAST_TRIP_INFO = "last_trip_info_cache";
 
     //messages (common):----
-//    public static final String MESSAGES_BASE_URL = "http://52.36.46.145/public";
-    public static final String MESSAGES_BASE_URL = "http://ec2-54-201-70-234.us-west-2.compute.amazonaws.com/api-repo-1/public/messages/";
+    public static final String MESSAGES_BASE_URL = "http://52.36.46.145/public/messages/";
+//    public static final String MESSAGES_BASE_URL = "http://ec2-54-201-70-234.us-west-2.compute.amazonaws.com/api-repo-1/public/messages/";
     public static final String MESSAGE_STARTUP_CONFIG = "startupconfig";
     public static final String MESSAGE_USER_CONFIG = "userconfig";
     public static final String MESSAGE_ACCESS_TOKEN = "accesstoken";
@@ -245,5 +245,6 @@ public class Const {
     public static final int PERM_REQ_CALL = 1;
     public static final int PERM_REQ_STORAGE = 2;
     public static final int PERM_REQ_CAMERA = 3;
+    public static final int PERM_REQ_STORAGE_AND_CAMERA = 4;
 
 }

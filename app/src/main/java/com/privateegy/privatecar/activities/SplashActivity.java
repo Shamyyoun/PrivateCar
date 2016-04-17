@@ -104,7 +104,6 @@ public class SplashActivity extends BaseActivity implements RequestListener {
             //checking installed app version
             try {
                 int minAppVersion = Integer.parseInt(AppUtils.getConfigValue(this, Config.KEY_MIN_APP_VERSION));
-                minAppVersion = 2;
                 int installedAppVersion = Utils.getAppVersionCode(this);
                 if (installedAppVersion < minAppVersion) {
                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);

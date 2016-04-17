@@ -61,9 +61,9 @@
 -keep class org.ocpsoft.prettytime.i18n.**
 
 #remove Log.d & Log.e
-#-assumenosideeffects class android.util.Log {
-#    public static *** d(...);
-#    public static *** e(...);
-#}
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+    public static *** e(...);
+}
 
 

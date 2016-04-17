@@ -30,7 +30,7 @@
         <item name="android:dialogTheme">@style/MyDialogTheme</item>
     </style>
 
-    <style name="AppTheme" parent="AppThemeBase"></style>
+    <style name="AppTheme" parent="AppThemeBase"/>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowNoTitle">true</item>

@@ -69,7 +69,7 @@ public class Utils {
      */
     public static void printHashKey(Context pContext) {
         try {
-            PackageInfo info = pContext.getPackageManager().getPackageInfo(Const.PACKAGE_NAME, PackageManager.GET_SIGNATURES);
+            PackageInfo info = pContext.getPackageManager().getPackageInfo(pContext.getPackageName(), PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());

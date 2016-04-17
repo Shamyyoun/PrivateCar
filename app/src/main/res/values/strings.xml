@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Private</string>
     <string name="facebook_id" translatable="false">1672155173024840</string>
-    <string name="project_number" translatable="false">190216326794</string>
+    <!--<string name="project_number" translatable="false">190216326794</string>-->
     <!-- New project number -->
-    <!--<string name="project_number" translatable="false">468362986506</string>-->
+    <string name="project_number" translatable="false">468362986506</string>
     <string name="android_api_key" translatable="false">AIzaSyB9h3_UFrSt3E2sF2wJNPYroJWNFQ6JbpQ</string>
-    <string name="server_api_key" translatable="false">AIzaSyBaZNQhClLZ0-ACMt3fqhFWl1mdcltmspU</string>
+    <!--<string name="server_api_key" translatable="false">AIzaSyBaZNQhClLZ0-ACMt3fqhFWl1mdcltmspU</string>-->
     <!-- New server api key -->
-    <!--<string name="server_api_key" translatable="false">AIzaSyDFOXx5F4yGcSOy0vJdL096NrL073NZ8yY</string>-->
+    <string name="server_api_key" translatable="false">AIzaSyDFOXx5F4yGcSOy0vJdL096NrL073NZ8yY</string>
     <string name="client_id" translatable="false">468362986506-127hrg3be2s74r9qoorcvktbmcva4b2l.apps.googleusercontent.com</string>
     <string name="currency">EGP</string>
     <string name="customer">Customer</string>
