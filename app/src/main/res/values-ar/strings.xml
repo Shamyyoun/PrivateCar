@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Private</string>
     <string name="customer">العميل</string>
-    <string name="driver">السائق</string>
+    <string name="driver">القائد</string>
     <string name="sign_in">الدخول</string>
     <string name="sign_up">التسجيل</string>
     <string name="call">اتصل بنا</string>
@@ -88,7 +88,7 @@
     <string name="pickup_location">نقطة الالتقاء</string>
     <string name="verify">فحص</string>
     <string name="dropoff">نقطة الوصول</string>
-    <string name="i_will_guide_the_captain">سوف ارشد السائق</string>
+    <string name="i_will_guide_the_captain">سوف ارشد القائد</string>
     <string name="add_details">اضافة\nتفاصيل</string>
     <string name="add_dropoff">اضافة\النهاية</string>
     <string name="pickup_time">ميعاد اللقاء</string>
@@ -98,7 +98,7 @@
     <string name="add_dropoff_to_estimate">أضف نقطة وصول لحساب التكلفة</string>
     <string name="payment">الدفع</string>
     <string name="cash">نقدي</string>
-    <string name="notes_to_captain">ملاحظات للسائق</string>
+    <string name="notes_to_captain">ملاحظات للقائد</string>
     <string name="promo_codes">أكواد العرض</string>
     <string name="go">ابدأ!</string>
     <string name="payment_by_customer_credit_done">تم الدفع بكارت الائتمان</string>
@@ -107,7 +107,7 @@
     <string name="customer_arrived_late">الراكب وصل متأخر جدا</string>
     <string name="customer_made_illegal_action">الراكب قام بفعل شيء غير قانوني</string>
     <string name="rate">تقييم</string>
-    <string name="add_details_for_pick_up">اضف معلومات مكان البداية لمساعدة السائق في الوصول اليك</string>
+    <string name="add_details_for_pick_up">اضف معلومات مكان البداية لمساعدة القائد في الوصول اليك</string>
     <string name="save">حفظ</string>
     <string name="date">التاريخ</string>
     <string name="trips">الرحلات</string>
@@ -131,7 +131,7 @@
     <string name="business_1_people">بيزنس\n شخص واحد</string>
     <string name="ride_no">رقم الرحلة:</string>
     <string name="ride_no_c">رقم الرحلة:</string>
-    <string name="driver_c">السائق:</string>
+    <string name="driver_c">القائد:</string>
     <string name="car_c">السيارة:</string>
     <string name="avg">متوسط التقييم</string>
     <string name="travel_price_c">تكلفة الرحلة:</string>
@@ -145,11 +145,11 @@
     <string name="receipt_no_c">رقم الايصال</string>
     <string name="receipt">الايصال</string>
     <string name="ok">موافق</string>
-    <string name="driver_behaviour_worse">السائق تصرف بشكل سيء</string>
+    <string name="driver_behaviour_worse">القائد تصرف بشكل سيء</string>
     <string name="car_not_clean">السيارة ليست نظيفة</string>
-    <string name="driver_arrived_too_late">السائق وصل متأخرا</string>
-    <string name="lack_of_knowledge_of_places">قلة معرفة السائق بالأماكن</string>
-    <string name="driver_id_c">كود السائق</string>
+    <string name="driver_arrived_too_late">القائد وصل متأخرا</string>
+    <string name="lack_of_knowledge_of_places">قلة معرفة القائد بالأماكن</string>
+    <string name="driver_id_c">كود القائد</string>
     <string name="thank_you">شكرا</string>
     <string name="pickup_address">نقطة الالتقاء</string>
     <string name="drop_off_address">نقطة الوصول</string>
@@ -222,7 +222,7 @@
     <string name="adding_car">يتم إضافة السيارة</string>
 
 
-    <string name="driver_state_active">حالة السائق: نشط</string>
+    <string name="driver_state_active">حالة القائد: نشط</string>
     <string name="starting_trip_please_wait">جاري بدء الرحلة، برجاء الانتظار…</string>
     <string name="cancelling_trip_please_wait">جاري الغاء الرحلة، برجاء الانتظار…</string>
     <string name="trip_cancelled_successfully">تم الغاء الرحلة بنجاح</string>
@@ -271,9 +271,9 @@
     <string name="select_payment_type">اختر نوع الدفع</string>
     <string name="add_notes_to_the_captain">قم باضافة ملاحظات للكابتن</string>
     <string name="add_notes">اضف ملاحظات</string>
-    <string name="finding_your_private_driver_please_wait">جاري البحث عن السائق الخاص بك، برجاء الانتظار</string>
+    <string name="finding_your_private_driver_please_wait">جاري البحث عن القائد الخاص بك، برجاء الانتظار</string>
     <string name="no_drivers_found_now">عفواً، لا يوجد سائقين الآن</string>
-    <string name="no_driver">لا يوجد سائقين</string>
+    <string name="no_driver">لا يوجد قائدين</string>
     <string name="could_not_get_time">لم نتمكن من حساب الوقت</string>
     <string name="currency">جنيه</string>
     <string name="current_car">السيارة الحالية</string>
@@ -309,17 +309,17 @@
     <string name="click_to_estimate">اضغط للحساب</string>
     <string name="location_on_map">الموقع على الخريطة</string>
     <string name="change_drop_off">تغيير\nمكان الوصول</string>
-    <string name="we_need_call_permission_to_call_your_driver">نحن نحتاج لتصريح الاتصال لتتمكن من الاتصال بالسائق الخاص بك :-)</string>
+    <string name="we_need_call_permission_to_call_your_driver">نحن نحتاج لتصريح الاتصال لتتمكن من الاتصال بالقائد الخاص بك :-)</string>
     <string name="successful_trip_request">تم طلب الرحلة بنجاح.\n
-            برجاء انتظار السائق الخاص بك حتى يوافق على طلبك</string>
+            برجاء انتظار القائد الخاص بك حتى يوافق على طلبك</string>
     <string name="thanks_message">شكراً %s على استخدامكم تطبيق برايفت٫ يوم سعيد</string>
     <string name="error_submitting_your_rating_please_try_again">خطأ اثناء ارسال تقييمك\nبرجاء المحاولة مرة اخرى</string>
     <string name="try_again">اعادة المحاولة؟</string>
     <string name="ride_driver_initial_message">مرحباً٬ انا قادم اليك لنبدأ الرحلة.</string>
     <string name="ride_driver_message_km">مرحباً٬ انا قادم اليك لنبدأ الرحلة بعد %1$s كم٬ %2$s دقيقة.</string>
     <string name="ride_driver_message_m">مرحباً٬ انا قادم اليك لنبدأ الرحلة بعد %1$s م٬ %2$s دقيقة.</string>
-    <string name="customer_cancel_trip_message">نتقدم لك بكل الاعتذار٫ لقد قام السائق بالغاء الرحلة</string>
-    <string name="start_trip_message">لقد بدأ السائق رحلتك٬ نتمنى لك رحلة سعيدة</string>
+    <string name="customer_cancel_trip_message">نتقدم لك بكل الاعتذار٫ لقد قام القائد بالغاء الرحلة</string>
+    <string name="start_trip_message">لقد بدأ القائد رحلتك٬ نتمنى لك رحلة سعيدة</string>
     <string name="driver_cancel_trip_message">لقد قام العميل بالغاء الرحلة</string>
     <string name="ending_trip">جاري انهاء الرحلة</string>
     <string name="customer_payed">ما دفعه العميل</string>
