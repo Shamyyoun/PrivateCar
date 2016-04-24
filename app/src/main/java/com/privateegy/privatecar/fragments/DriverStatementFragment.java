@@ -262,8 +262,8 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
     @Override
     public void onDestroy() {
         // cancel running requests
-        if (lastTripRequest != null) lastTripRequest.cancel(true);
-        if (statementsRequest != null) statementsRequest.cancel(true);
+        if (lastTripRequest != null) lastTripRequest.cancel(false);
+        if (statementsRequest != null) statementsRequest.cancel(false);
         super.onDestroy();
     }
 }

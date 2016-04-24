@@ -95,7 +95,7 @@ public class CustomerReceiptActivity extends BaseActivity implements RequestList
     @Override
     protected void onDestroy() {
         // cancel the random ad request
-        randomAdRequest.cancel(true);
+        randomAdRequest.cancel(false);
         super.onDestroy();
     }
 }

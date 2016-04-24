@@ -101,6 +101,7 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
         CommonRequests.fares(this, this, accessToken, tripRequest.getServiceType(), null);
     }
 
+    //get the actual fare in egyptian pounds
     private int getActualFare() {
         String minTripFareStr = AppUtils.getConfigValue(this, Config.KEY_MIN_TRIP_FARE);
         float minTripFare = Float.parseFloat(minTripFareStr); //minimum trip fare
@@ -138,14 +139,17 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
             if (intent.getExtras().containsKey(Const.KEY_TRIP_METER_INFO)) {
                 TripMeterInfo tripMeterInfo = intent.getParcelableExtra(Const.KEY_TRIP_METER_INFO);
 
-                tripDuration = tripMeterInfo.getDuration(); // in m
+                tripDuration = tripMeterInfo.getDuration(); // in min
                 tvRideHM.setText(String.format(Locale.ENGLISH, "%02d:%02d", tripDuration / 60, tripDuration % 60));
 
                 tripDistance = tripMeterInfo.getDistance(); // in m
                 tvRideKMM.setText(String.format(Locale.ENGLISH, "%02d:%02d", tripDistance / 1000, tripDistance % 1000));
-                tripWaitDuration = tripMeterInfo.getWaitDuration(); // in m
-                tvRideHM.setText(String.format(Locale.ENGLISH, "%02d:%02d", tripWaitDuration / 60, tripWaitDuration % 60));
-                
+
+                tripWaitDuration = tripMeterInfo.getWaitDuration(); // in min
+                tvRideWaitingHM.setText(String.format(Locale.ENGLISH, "%02d:%02d", tripWaitDuration / 60, tripWaitDuration % 60));
+
+                tvRideCost.setText(String.valueOf(getActualFare()) + " " + getString(R.string.currency));
+
             }
 
         }
@@ -293,6 +297,8 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
                 openFare = fare.getOpenFare();
                 kmFare = fare.getKilometerFare();
                 minuteWaitFare = fare.getMinuteWaitFare();
+
+                tvRideCost.setText(String.valueOf(getActualFare()) + " " + getString(R.string.currency));
 
                 if (endingTrip) { // End the trip
                     if (tripRequest.getPaymentType().equals(PaymentType.CASH.getValue())) { // if cash payment

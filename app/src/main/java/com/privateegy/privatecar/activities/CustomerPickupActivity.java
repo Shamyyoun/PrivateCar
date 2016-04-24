@@ -191,9 +191,11 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                 switch (checkedId) {
                     case R.id.rb_economy:
                         carType = CarType.ECONOMY;
+                        if (!firstTime) getNearDrivers();
                         break;
                     case R.id.rb_business:
                         carType = CarType.BUSINESS;
+                        if (!firstTime) getNearDrivers();
                         break;
                     case R.id.rb_full_day:
                         setResult(RESULT_OK);
@@ -524,7 +526,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                     name = activityReference.get().getString(R.string.location_on_map);
                     address = null;
                 }
-                
+
                 activityReference.get().updateRVMarkerLocation(latLng, name, address);
             }
         }
@@ -563,7 +565,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         User user = AppUtils.getCachedUser(getApplicationContext());
         LatLng latLng = map.getCameraPosition().target;
         requestNearDrivers = CustomerRequests.
-                nearDrivers(this, this, user.getAccessToken(), new PrivateCarLocation(latLng));
+                nearDrivers(this, this, user.getAccessToken(), new PrivateCarLocation(latLng), carType.getValue());
 
         return requestNearDrivers;
     }

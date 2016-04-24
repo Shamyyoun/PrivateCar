@@ -58,9 +58,9 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
     private Location tripStartLocation; // trip start location
 
     private boolean tripStarted = false;
-    private int tripDuration = 0; // in minutes
+    private float tripDuration = 0; // in minutes
     private int tripDistance = 0; // in meters
-    private int tripWaitDuration = 0; // in minutes
+    private float tripWaitDuration = 0; // in minutes
 
     private ArrayList<Float> speedsBuffer = new ArrayList<>();
     private Location speedsBufferFirstLocation;
@@ -87,9 +87,9 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
         String provider = location.getProvider();
         float accuracy = location.getAccuracy();
         float speed = location.getSpeed();
-        float bearingg = location.getBearing();
+        float bearing = location.getBearing();
         double altitude = location.getAltitude();
-        Log.e("____ location: ", String.format("provider:%s accuracy:%f speed:%f bearing:%f altitude:%f", provider, accuracy, speed, bearingg, altitude));
+        Log.e("____ location: ", String.format("provider:%s accuracy:%f speed:%f bearing:%f altitude:%f", provider, accuracy, speed, bearing, altitude));
 
 
         if (tripStarted && tripStartLocation == null)
@@ -135,8 +135,9 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
             int timeDiff = getTimeDifference(prevLocation, location); // in sec
 
             //setting trip duration
-            tripDuration += timeDiff / 60; // in minutes
-            tripMeterInfo.setDuration(tripDuration);
+            tripDuration += timeDiff / 60.0; // in minutes
+            Log.e("********", "tripDuration: " + tripDuration);
+            tripMeterInfo.setDuration((int) tripDuration);
 
             float speed = location.getSpeed(); // TODO: handle speed at tunnel ways
 
@@ -144,27 +145,27 @@ public class UpdateDriverLocationService extends Service implements GoogleApiCli
             tripDistance += speed * timeDiff;
             tripMeterInfo.setDistance(tripDistance);
 
-
             //setting trip wait duration
             if (speedsBuffer.isEmpty()) {
                 speedsBufferFirstLocation = location;
             }
+            //TODO: change this logic (add
             speedsBuffer.add(speed);
-            if (getTimeDifference(speedsBufferFirstLocation, location) >= 60 && !speedsBuffer.isEmpty()) {
+            if (!speedsBuffer.isEmpty() && getTimeDifference(speedsBufferFirstLocation, location) >= 60) {
                 float speedAvg = getSpeedsAvg(); //in m/s
                 String waitingTimeSpeedStr = AppUtils.getConfigValue(this, Config.KEY_WAITING_TIME_SPEED);
                 int waitingSpeedKMH = Integer.parseInt(waitingTimeSpeedStr);//in km/h
-                float waitingSpeedMS = waitingSpeedKMH * 1000 / 3600;//in m/s
+                float waitingSpeedMS = waitingSpeedKMH * 1000 / 3600.0f;//in m/s
                 if (speedAvg <= waitingSpeedMS) {
                     tripWaitDuration++;
                 }
 
                 speedsBuffer.clear();
             }
-            tripMeterInfo.setWaitDuration(tripWaitDuration);
+            tripMeterInfo.setWaitDuration((int) tripWaitDuration);
 
 
-            Log.e("____ trip info: ", String.format("tripDuration:%d tripDistance:%d tripWaitDuration:%d", tripDuration, tripDistance, tripWaitDuration));
+            Log.e("____ trip info: ", String.format("tripDuration:%f tripDistance:%d tripWaitDuration:%f", tripDuration, tripDistance, tripWaitDuration));
 
 
             intent.putExtra(Const.KEY_TRIP_METER_INFO, tripMeterInfo);

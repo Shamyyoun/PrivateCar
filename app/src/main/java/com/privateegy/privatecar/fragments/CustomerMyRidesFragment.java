@@ -150,7 +150,7 @@ public class CustomerMyRidesFragment extends ProgressFragment implements Request
     @Override
     public void onDestroy() {
         // cancel request if still running
-        if (requestHelper != null) requestHelper.cancel(true);
+        if (requestHelper != null) requestHelper.cancel(false);
 
         super.onDestroy();
     }

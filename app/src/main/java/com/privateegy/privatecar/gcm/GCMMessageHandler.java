@@ -4,12 +4,16 @@ package com.privateegy.privatecar.gcm;
  * Created by Basim Alamuddin on 13/12/2015.
  */
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
@@ -62,7 +66,7 @@ public class GCMMessageHandler extends GcmListenerService {
                 public void run() {
                     // check logged in user type
                     User user = AppUtils.getCachedUser(context);
-                    if (user != null && user.getType() != null && user.getType() == UserType.DRIVER) {
+                    if (user != null && user.getType() != null && user.getType() == UserType.DRIVER) { //--------driver---------
                         // this is a driver user
                         // check the key
                         if (key.equals(Const.GCM_KEY_TRIP_REQUEST)) {
@@ -76,15 +80,6 @@ public class GCMMessageHandler extends GcmListenerService {
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
 
-                            // play horn sound
-                            final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.horn);
-                            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                                @Override
-                                public void onCompletion(MediaPlayer mp) {
-                                    mediaPlayer.release();
-                                }
-                            });
-                            mediaPlayer.start();
                         } else if (key.equals(Const.GCM_KEY_CUSTOMER_CANCEL)) {
                             // cancel the trip
                             // show msg and finish the driver ride activity if available
@@ -92,8 +87,24 @@ public class GCMMessageHandler extends GcmListenerService {
                             if (DriverTripInfoActivity.currentInstance != null) {
                                 DriverTripInfoActivity.currentInstance.finish();
                             }
+                        } else if (key.equals(Const.GCM_KEY_NEW_MESSAGE)) {
+                            String content = object.optString("content");
+
+                            Context context = getBaseContext();
+                            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                                    .setContentTitle(getResources().getString(R.string.app_name))
+                                    .setContentText(content)
+                                    .setAutoCancel(true)//cancel the notification when the user selects it
+                                    .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
+                                    .setLights(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary), 2000, 1500);
+
+                            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                            int id = Utils.getCachedInt(getBaseContext(), Const.CACHE_NOTIFICATION_ID, 0);
+                            notificationManager.notify(id, builder.build());
+                            Utils.cacheInt(getBaseContext(), Const.CACHE_NOTIFICATION_ID, id + 1);
+
                         }
-                    } else if (user != null && user.getType() != null && user.getType() == UserType.CUSTOMER) {
+                    } else if (user != null && user.getType() != null && user.getType() == UserType.CUSTOMER) { // -----customer-------
                         if (key.equals(Const.GCM_KEY_ACCEPT_TRIP)) {
                             // this is an accept request
                             // parse the json string
@@ -122,6 +133,7 @@ public class GCMMessageHandler extends GcmListenerService {
                                 }
                             });
                             mediaPlayer.start();
+
                         } else if (key.equals(Const.GCM_KEY_START_TRIP)) {
                             // start the trip
                             // show msg and finish the customer ride activity if available
@@ -165,6 +177,22 @@ public class GCMMessageHandler extends GcmListenerService {
                             intent.putExtra(Const.KEY_TRIP_COST_INFO, endCreditTripPayload.getTripCostInfo());
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
+                        } else if (key.equals(Const.GCM_KEY_NEW_MESSAGE)) {
+                            String content = object.optString("content");
+
+                            Context context = getBaseContext();
+                            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                                    .setContentTitle(getResources().getString(R.string.app_name))
+                                    .setContentText(content)
+                                    .setAutoCancel(true)//cancel the notification when the user selects it
+                                    .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
+                                    .setLights(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary), 2000, 1500);
+
+                            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                            int id = Utils.getCachedInt(getBaseContext(), Const.CACHE_NOTIFICATION_ID, 0);
+                            notificationManager.notify(id, builder.build());
+                            Utils.cacheInt(getBaseContext(), Const.CACHE_NOTIFICATION_ID, id + 1);
+
                         }
                     }
                 }

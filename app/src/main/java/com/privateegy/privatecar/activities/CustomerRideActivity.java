@@ -75,6 +75,7 @@ public class CustomerRideActivity extends BaseActivity implements RequestListene
     Handler driverLocationRequestHandler = new Handler();
     DriverLocationRequestRunnable driverLocationRequestRunnable;
 
+
     //a runnable used request driver location
     private static class DriverLocationRequestRunnable implements Runnable {
         WeakReference<CustomerRideActivity> activityWeakReference;
@@ -262,7 +263,7 @@ public class CustomerRideActivity extends BaseActivity implements RequestListene
 
                 // create and send the request
                 User user = AppUtils.getCachedUser(activity);
-                CustomerRequests.cancelTrip(activity, activity, user.getAccessToken(), 52); // TODO
+                CustomerRequests.cancelTrip(activity, activity, user.getAccessToken(), tripInfo.getId());
             }
         }, null);
     }

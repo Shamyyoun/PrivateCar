@@ -134,7 +134,7 @@ public class DriverRatingsFragment extends BaseFragment implements RequestListen
     @Override
     public void onDestroy() {
         // cancel request if still running
-        if (requestHelper != null) requestHelper.cancel(true);
+        if (requestHelper != null) requestHelper.cancel(false);
         super.onDestroy();
     }
 }

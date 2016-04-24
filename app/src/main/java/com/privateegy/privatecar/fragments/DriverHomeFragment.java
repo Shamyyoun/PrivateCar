@@ -524,7 +524,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
         if (map != null) {
             LatLng markerPosition = new LatLng(location.getLatitude(), location.getLongitude());
             if (locationMarker == null)
-                locationMarker = map.addMarker(new MarkerOptions().position(markerPosition).title("current location"));
+                locationMarker = map.addMarker(new MarkerOptions().position(markerPosition));
             else
                 locationMarker.setPosition(markerPosition);
             map.moveCamera(CameraUpdateFactory.newLatLng(markerPosition));

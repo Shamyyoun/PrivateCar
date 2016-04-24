@@ -3,8 +3,10 @@ package com.privateegy.privatecar.activities;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,6 +38,8 @@ public class DriverTripRequestActivity extends BaseActivity implements RequestLi
     private TextView tvNotes;
     private TextView tvPaymentType;
     Button btnAccept, btnDecline;
+
+    MediaPlayer player;
 
 
     @Override
@@ -91,13 +95,29 @@ public class DriverTripRequestActivity extends BaseActivity implements RequestLi
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // play the ringtone sound
+        player = MediaPlayer.create(this, Settings.System.DEFAULT_RINGTONE_URI);
+        player.setLooping(true);
+        player.start();
+    }
+
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_accept:
+                player.stop();
+                player.release();
+
                 acceptTrip();
                 break;
 
             case R.id.btn_decline:
+                player.stop();
+                player.release();
+
                 Intent declineIntent = new Intent(this, DriverDeclineTripReasonActivity.class);
                 declineIntent.putExtra(Const.KEY_TRIP_ID, tripRequest.getId());
                 startActivity(declineIntent);

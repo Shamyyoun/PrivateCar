@@ -75,12 +75,13 @@ public class CustomerRequests {
         return requestHelper;
     }
 
-    public static RequestHelper<NearDriversResponse> nearDrivers(Context context, RequestListener<NearDriversResponse> listener, String accessToken, PrivateCarLocation location) {
+    public static RequestHelper<NearDriversResponse> nearDrivers(Context context, RequestListener<NearDriversResponse> listener, String accessToken, PrivateCarLocation location, String carType) {
 
         // prepare parameters
         Map<String, String> params = new HashMap<>();
         params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
         params.put("location", location.toString());
+        params.put("carType", carType);
 
         // create & send request
         RequestHelper<NearDriversResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL, Const.MESSAGE_NEAR_DRIVERS, NearDriversResponse.class, listener, params);

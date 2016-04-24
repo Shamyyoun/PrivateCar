@@ -27,6 +27,7 @@ import com.privateegy.privatecar.utils.PlayServicesUtils;
 import com.privateegy.privatecar.utils.RequestListener;
 import com.privateegy.privatecar.utils.Utils;
 
+//TODO: handle when the customer or driver is in a trip
 public class SplashActivity extends BaseActivity implements RequestListener {
 
     private ProgressBar progressBar;

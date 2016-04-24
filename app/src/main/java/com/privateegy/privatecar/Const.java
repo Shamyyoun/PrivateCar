@@ -50,7 +50,6 @@ public class Const {
     public static final String LOG_TAG = "Private Car";
     public static final String SHARED_PREFERENCES_FILE_NAME = "private_car";
     public static final String APP_FILES_DIR = "/.private_car";
-    public static final String PACKAGE_NAME = "com.privateegy.privatecar";
     public static final int IMAGE_SIZE_USER = 400;
     public static final int IMAGE_SIZE = 1024;
     public static final int EGYPT_INDEX = 61; //Egypt index in the country spinner
@@ -90,6 +89,7 @@ public class Const {
     public static final String CACHE_LOCATION = "location_cache";
     public static final String CACHE_LAST_TRIP_REQUEST = "last_trip_request_cache";
     public static final String CACHE_LAST_TRIP_INFO = "last_trip_info_cache";
+    public static final String CACHE_NOTIFICATION_ID = "notification_id_cache";
 
     //messages (common):----
 //    public static final String MESSAGES_BASE_URL = "http://52.36.46.145/public/messages/";
@@ -227,7 +227,7 @@ public class Const {
 
 
     //Intent actions
-    public static final String ACTION_DRIVER_SEND_LOCATION = PACKAGE_NAME + ".driver_send_location";
+    public static final String ACTION_DRIVER_SEND_LOCATION = "com.privateegy.privatecar.driver_send_location";
 
 
     //push notifications keys
@@ -239,6 +239,7 @@ public class Const {
     public static final String GCM_KEY_NO_DRIVER_FOUND = "no_driver_found";
     public static final String GCM_KEY_END_TRIP_CASH = "end_trip_cash";
     public static final String GCM_KEY_END_TRIP_CREDIT = "end_trip_credit";
+    public static final String GCM_KEY_NEW_MESSAGE = "new_message";
 
 
     // permissions requests

@@ -217,7 +217,7 @@ public class CustomerPricesFragment extends ProgressFragment implements RequestL
     @Override
     public void onDestroy() {
         // cancel request if still running
-        if (requestHelper != null) requestHelper.cancel(true);
+        if (requestHelper != null) requestHelper.cancel(false);
         super.onDestroy();
     }
 
