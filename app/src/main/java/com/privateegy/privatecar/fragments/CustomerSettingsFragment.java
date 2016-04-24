@@ -161,7 +161,7 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
                                 break;
                             case 1: //Camera
                                 // check the permissions
-                                String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                                String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
                                 List<String> notGrantedPermissions = PermissionUtil.getNotGranted(activity, permissions);
 
                                 // check not granted
