@@ -169,7 +169,7 @@ public class CustomerRequests {
         // create & send request
         RequestHelper<TripRequestResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
                 Const.MESSAGE_CUSTOMER_REQUEST_TRIP, TripRequestResponse.class, listener, params);
-        requestHelper.setTimeOut(4 * 60 * 1000);
+        requestHelper.setTimeout(4 * 60 * 1000);
         requestHelper.executeFormUrlEncoded();
 
         return requestHelper;
