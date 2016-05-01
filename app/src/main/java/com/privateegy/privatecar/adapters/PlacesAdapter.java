@@ -95,7 +95,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
 
         @Override
         public void onClick(View v) {
-            if (onItemClickListener != null) {
+            if (onItemClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
                 onItemClickListener.onItemClick(v, getAdapterPosition());
             }
         }

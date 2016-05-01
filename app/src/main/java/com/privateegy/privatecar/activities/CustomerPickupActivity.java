@@ -135,9 +135,9 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
 
         @Override
         public void run() {
+            activityReference.get().getNearDrivers();
             activityReference.get().getStreetName();
             activityReference.get().getNearbyPlaces();
-            activityReference.get().getNearDrivers();
         }
     }
 
@@ -220,7 +220,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         rvNearPlacesAdapter.setOnItemClickListener(new PlacesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if (sparseMarkersArray.size() > 0) {
+                if (!now || sparseMarkersArray.size() > 0) { // if near drivers found or it's a later trip request
                     // open verify trip activity
                     Intent intent = new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class);
                     intent.putExtra(Const.KEY_NOW, now);
@@ -280,7 +280,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                 }
                 break;
             case R.id.layout_marker:
-                if (sparseMarkersArray.size() > 0) { // if near drivers found
+                if (!now || sparseMarkersArray.size() > 0) { // if near drivers found or it's a later trip request
                     // open verify trip activity
                     Intent intent = new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class);
 

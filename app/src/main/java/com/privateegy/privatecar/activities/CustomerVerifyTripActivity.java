@@ -109,7 +109,7 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_now:
-                        oNowOption();
+                        onNowOption();
                         break;
                     case R.id.rb_later:
                         onLaterOption();
@@ -150,7 +150,7 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
     /**
      * method, used to update pickup time to now
      */
-    private void oNowOption() {
+    private void onNowOption() {
         // update request object & ui
         tripRequest.setPickupNow(true);
         tripRequest.setPickupTime(null);
@@ -341,8 +341,12 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
             return;
         }
 
-        // show progress dialog
-        progressDialog = DialogUtils.showProgressDialog(this, R.string.finding_your_private_driver_please_wait);
+        if (tripRequest.isPickupNow()) {
+            // show progress dialog
+            progressDialog = DialogUtils.showProgressDialog(this, R.string.finding_your_private_driver_please_wait);
+        } else {
+            progressDialog = DialogUtils.showProgressDialog(this, R.string.please_wait);
+        }
 
         // create and send the request
         User user = AppUtils.getCachedUser(this);
@@ -431,7 +435,17 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                 // cache the trip request
                 SavePrefs<CustomerTripRequest> savePrefs = new SavePrefs<CustomerTripRequest>(this, CustomerTripRequest.class);
                 savePrefs.save(requestResponse.getTripRequest(), Const.CACHE_LAST_TRIP_REQUEST);
-            } else {
+
+                //trip later request successful
+                if (!tripRequest.isPickupNow()) {
+                    progressDialog.dismiss();
+                    Utils.showLongToast(getApplicationContext(), R.string.success);
+                    Intent intent = new Intent(this, CustomerHomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+
+            } else if (tripRequest.isPickupNow()) {
                 // no drivers found
                 // show dialog msg
                 DialogUtils.showAlertDialog(this, R.string.no_drivers_found_now, null);
