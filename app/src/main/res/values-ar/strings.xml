@@ -333,4 +333,6 @@
     <string name="you_should_update_the_application">لابد من تحديث التطبيق</string>
     <string name="update">تحديث</string>
     <string name="total_profit">الربح الإجمالي</string>
+    <string name="you_are_timed_out_cancelling_the_request">لقد استهلكت الوقت الكافي لتستجيب للطلب، جاري الغاء الطلب...</string>
+    <string name="you_are_timed_out_trip_automatically_cancelled">لقد استهلكت الوقت الكافي لتستجيب للطلب\nتك الغاء الطلب اوتوماتيكيا</string>
 </resources>

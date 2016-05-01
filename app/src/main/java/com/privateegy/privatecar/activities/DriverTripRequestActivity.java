@@ -114,7 +114,7 @@ public class DriverTripRequestActivity extends BaseActivity implements RequestLi
         }
 
         // show loading
-        progressDialog = DialogUtils.showProgressDialog(this, R.string.you_are_timed_out_declining_the_request);
+        progressDialog = DialogUtils.showProgressDialog(this, R.string.you_are_timed_out_cancelling_the_request);
 
         // create & send the request
         User user = AppUtils.getCachedUser(this);
