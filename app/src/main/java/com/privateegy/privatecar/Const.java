@@ -47,7 +47,7 @@ public class Const {
     public static final int REQUEST_ADD_DROP_OFF = 1030;
 
     //app level constants:--------------
-    public static final String LOG_TAG = "Private Car";
+    public static final String LOG_TAG = "private_car";
     public static final String SHARED_PREFERENCES_FILE_NAME = "private_car";
     public static final String APP_FILES_DIR = "/.private_car";
     public static final int IMAGE_SIZE_USER = 400;
@@ -225,6 +225,8 @@ public class Const {
     public static final String KEY_COST = "cost";
     public static final String KEY_TRIP_COST_INFO = "trip_cost_info";
     public static final String KEY_REMAINING_VALUE = "remaining_value";
+    public static final String KEY_HOME_NAVIGATION = "key_home_navigation";
+    public static final String KEY_NAVIGATION_MESSAGE_CENTER = "key_navigation_message_center";
 
 
     //Intent actions

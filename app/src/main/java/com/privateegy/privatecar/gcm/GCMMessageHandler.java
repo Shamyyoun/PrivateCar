@@ -6,8 +6,10 @@ package com.privateegy.privatecar.gcm;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,8 +24,10 @@ import com.privateegy.privatecar.Const;
 import com.privateegy.privatecar.R;
 import com.privateegy.privatecar.activities.CustomerAccountPaymentActivity;
 import com.privateegy.privatecar.activities.CustomerCashPaymentActivity;
+import com.privateegy.privatecar.activities.CustomerHomeActivity;
 import com.privateegy.privatecar.activities.CustomerRideActivity;
 import com.privateegy.privatecar.activities.CustomerVerifyTripActivity;
+import com.privateegy.privatecar.activities.DriverHomeActivity;
 import com.privateegy.privatecar.activities.DriverTripInfoActivity;
 import com.privateegy.privatecar.activities.DriverTripRequestActivity;
 import com.privateegy.privatecar.models.entities.TripInfo;
@@ -88,22 +92,31 @@ public class GCMMessageHandler extends GcmListenerService {
                                 DriverTripInfoActivity.currentInstance.finish();
                             }
                         } else if (key.equals(Const.GCM_KEY_NEW_MESSAGE)) {
-                            //TODO: create pending intent to open the messaging center
                             String content = object.optString("content");
 
                             //cache the message to display it in the driver home fragment
                             Utils.cacheString(getBaseContext(), Const.CACHE_LAST_MESSAGE, content);
 
+                            int id = Utils.getCachedInt(getBaseContext(), Const.CACHE_NOTIFICATION_ID, 0);
+
+                            Intent intent = new Intent(getBaseContext(), DriverHomeActivity.class);
+                            intent.putExtra(Const.KEY_HOME_NAVIGATION, Const.KEY_NAVIGATION_MESSAGE_CENTER);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
                             Context context = getBaseContext();
                             NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                                     .setContentTitle(getResources().getString(R.string.app_name))
                                     .setContentText(content)
+                                    .setSmallIcon(R.drawable.small_notification_icon)
+                                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.large_notification_icon))
+                                    .setContentIntent(pendingIntent)
                                     .setAutoCancel(true)//cancel the notification when the user selects it
                                     .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
                                     .setLights(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary), 2000, 1500);
 
                             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                            int id = Utils.getCachedInt(getBaseContext(), Const.CACHE_NOTIFICATION_ID, 0);
+
                             notificationManager.notify(id, builder.build());
                             Utils.cacheInt(getBaseContext(), Const.CACHE_NOTIFICATION_ID, id + 1);
 
@@ -182,19 +195,27 @@ public class GCMMessageHandler extends GcmListenerService {
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         } else if (key.equals(Const.GCM_KEY_NEW_MESSAGE)) {
-                            //TODO: create pending intent to open the messaging center
                             String content = object.optString("content");
+
+                            int id = Utils.getCachedInt(getBaseContext(), Const.CACHE_NOTIFICATION_ID, 0);
+
+                            Intent intent = new Intent(getBaseContext(), CustomerHomeActivity.class);
+                            intent.putExtra(Const.KEY_HOME_NAVIGATION, Const.KEY_NAVIGATION_MESSAGE_CENTER);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                             Context context = getBaseContext();
                             NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                                     .setContentTitle(getResources().getString(R.string.app_name))
                                     .setContentText(content)
+                                    .setSmallIcon(R.drawable.small_notification_icon)
+                                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.large_notification_icon))
+                                    .setContentIntent(pendingIntent)
                                     .setAutoCancel(true)//cancel the notification when the user selects it
                                     .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
                                     .setLights(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary), 2000, 1500);
 
                             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                            int id = Utils.getCachedInt(getBaseContext(), Const.CACHE_NOTIFICATION_ID, 0);
                             notificationManager.notify(id, builder.build());
                             Utils.cacheInt(getBaseContext(), Const.CACHE_NOTIFICATION_ID, id + 1);
 

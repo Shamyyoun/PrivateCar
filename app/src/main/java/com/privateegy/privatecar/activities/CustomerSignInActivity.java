@@ -358,8 +358,8 @@ public class CustomerSignInActivity extends BasicBackActivity implements Request
     // =============================== Google+ ==================================
     private void prepareLoginWithGoogle() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.client_id))
-                .requestServerAuthCode(getString(R.string.client_id))
+                .requestIdToken(getString(R.string.server_client_id))
+                .requestServerAuthCode(getString(R.string.server_client_id))
                 .build();
 
         googleApiClient = new GoogleApiClient.Builder(this)
