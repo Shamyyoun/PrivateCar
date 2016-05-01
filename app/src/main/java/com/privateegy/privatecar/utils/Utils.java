@@ -403,10 +403,7 @@ public class Utils {
      * @return the formatted double as string
      */
     public static String formatDouble(double number) {
-        if (number == (long) number)
-            return String.format("%d", (long) number);
-        else
-            return String.format("%s", number);
+        return String.format("%.0f", number);
     }
 
     /**
