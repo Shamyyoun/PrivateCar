@@ -135,9 +135,9 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
 
         @Override
         public void run() {
+            activityReference.get().getNearDrivers();
             activityReference.get().getStreetName();
             activityReference.get().getNearbyPlaces();
-            activityReference.get().getNearDrivers();
         }
     }
 
@@ -183,6 +183,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         pbMarker = (ProgressBar) findViewById(R.id.pb_marker);
 
         layoutMarker.setVisibility(View.INVISIBLE); //invisible not gone
+        layoutMarker.setOnClickListener(this);
 
         rgTripType = (RadioGroup) findViewById(R.id.rg_trip_type);
         rgTripType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -191,10 +192,12 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                 switch (checkedId) {
                     case R.id.rb_economy:
                         carType = CarType.ECONOMY;
+                        setMarkerLoading();
                         if (!firstTime) getNearDrivers();
                         break;
                     case R.id.rb_business:
                         carType = CarType.BUSINESS;
+                        setMarkerLoading();
                         if (!firstTime) getNearDrivers();
                         break;
                     case R.id.rb_full_day:
@@ -217,7 +220,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         rvNearPlacesAdapter.setOnItemClickListener(new PlacesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if (sparseMarkersArray.size() > 0) {
+                if (!now || sparseMarkersArray.size() > 0) { // if near drivers found or it's a later trip request
                     // open verify trip activity
                     Intent intent = new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class);
                     intent.putExtra(Const.KEY_NOW, now);
@@ -274,6 +277,24 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                     startActivityForResult(intent, Const.REQUEST_PLACE_AUTOCOMPLETE);
                 } catch (GooglePlayServicesRepairableException e) {
                 } catch (GooglePlayServicesNotAvailableException e) {
+                }
+                break;
+            case R.id.layout_marker:
+                if (!now || sparseMarkersArray.size() > 0) { // if near drivers found or it's a later trip request
+                    // open verify trip activity
+                    Intent intent = new Intent(CustomerPickupActivity.this, CustomerVerifyTripActivity.class);
+
+                    if (nearPlaces.size() > 0 && nearPlaces.get(0).isMarkerLocation()) { //first item is the current marker location
+                        intent.putExtra(Const.KEY_PICKUP_PLACE, nearPlaces.get(0));
+                        intent.putExtra(Const.KEY_NOW, now);
+                        intent.putExtra(Const.KEY_CAR_TYPE, carType);
+                        startActivity(intent);
+                    } else {
+                        Utils.showLongToast(getApplicationContext(), R.string.please_wait);
+                        return;
+                    }
+                } else {
+                    DialogUtils.showAlertDialog(CustomerPickupActivity.this, R.string.no_drivers_found_now, null);
                 }
                 break;
         }
@@ -542,10 +563,10 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         place.setMarkerLocation(true);
 
         if (nearPlaces.size() > 0) {
-            if (nearPlaces.get(0).isMarkerLocation()) {
+            if (nearPlaces.get(0).isMarkerLocation()) { //first item is the marker location place
                 nearPlaces.set(0, place);
                 rvNearPlacesAdapter.notifyItemChanged(0);
-            } else {
+            } else { // add it as the first item
                 nearPlaces.add(0, place);
                 rvNearPlacesAdapter.notifyItemInserted(0);
             }
@@ -650,14 +671,14 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                 nearPlaces.addAll(nearbyPlacesResponse.getPrivateCarPlaces());
                 rvNearPlacesAdapter.notifyDataSetChanged();
             }
-        } else if (response instanceof DistanceMatrixResponse) {
+        } else if (response instanceof DistanceMatrixResponse) { //getting nearest driver arrival time
             nearestDriverArrivalTimeGot = true;
             DistanceMatrixResponse distanceMatrixResponse = (DistanceMatrixResponse) response;
             if (distanceMatrixResponse.isOk()) {
                 DistanceMatrixElement element = distanceMatrixResponse.getRows().get(0).getElements().get(0);
                 if (element.isOk()) {
                     int duration = element.getDuration().getValue(); // in seconds
-                    int durationInMin = duration / 60 + 1;
+                    int durationInMin = (int) Math.ceil(duration / 60.0);
                     setMarkerText(durationInMin + "\n" + getString(R.string.min));
                 } else {
                     Utils.showLongToast(getApplicationContext(), R.string.could_not_get_time);
@@ -672,6 +693,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
 
     @Override
     public synchronized void onFail(String message, String apiName) {
+        setMarkerText(getString(R.string.question_mark_without_space));
         Utils.LogE(message);
         Utils.showLongToast(this, message);
     }

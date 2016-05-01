@@ -41,7 +41,7 @@ public class SplashActivity extends BaseActivity implements RequestListener {
             if (PlayServicesUtils.getCachedGCMToken(getApplicationContext()) == null)
                 startService(new Intent(this, RegistrationIntentService.class));
             else
-                Utils.LogE(PlayServicesUtils.getCachedGCMToken(getApplicationContext()));
+                Utils.LogE("Cached GCM Token", PlayServicesUtils.getCachedGCMToken(getApplicationContext()));
         } else { // if google play services is not available
             Utils.showLongToast(this, R.string.install_google_play_services);
             finish();
@@ -84,7 +84,7 @@ public class SplashActivity extends BaseActivity implements RequestListener {
     }
 
     @Override
-    public void onSuccess(Object response, String apiName) {
+    public synchronized void onSuccess(Object response, String apiName) {
         // check the response
         if (response instanceof ConfigResponse) {
             // this was the startup config
@@ -160,7 +160,7 @@ public class SplashActivity extends BaseActivity implements RequestListener {
                     openHomeActivity();
                 }
             }
-        } else {
+        } else if (response instanceof AccessTokenResponse) {
             // this was access token request
             // cast the response
             AccessTokenResponse accessTokenResponse = (AccessTokenResponse) response;

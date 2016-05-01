@@ -86,12 +86,12 @@ public class AnonymousHomeActivity extends BaseActivity {
                         break;
                     case DRIVER:
                         // check camera & write permissions
-                        if (PermissionUtil.isGranted(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) && PermissionUtil.isGranted(this, Manifest.permission.CAMERA)) {
+                        if (PermissionUtil.isGranted(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                             startActivity(new Intent(getApplicationContext(), DriverSignupActivity.class));
                         } else {
                             // not granted
                             // request the permission
-                            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, Const.PERM_REQ_STORAGE_AND_CAMERA);
+                            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Const.PERM_REQ_STORAGE);
                         }
                         break;
                 }
@@ -117,7 +117,7 @@ public class AnonymousHomeActivity extends BaseActivity {
                     Utils.showShortToast(this, R.string.we_need_call_permission_to_call_customer_service);
                 }
                 break;
-            case Const.PERM_REQ_STORAGE_AND_CAMERA:
+            case Const.PERM_REQ_STORAGE:
                 // check if granted
                 if (PermissionUtil.isAllGranted(grantResults)) {
                     // granted

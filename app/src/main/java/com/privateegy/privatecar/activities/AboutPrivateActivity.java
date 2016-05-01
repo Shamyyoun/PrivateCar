@@ -15,7 +15,7 @@ import com.privateegy.privatecar.utils.Utils;
 /**
  * Created by Shamyyoun on 2/20/2016.
  */
-public class CustomerAboutPrivateActivity extends BasicBackActivity {
+public class AboutPrivateActivity extends BasicBackActivity {
     private TextView tvAppVersion;
     private Button btnUpdate;
     private TextView tvWebsite;

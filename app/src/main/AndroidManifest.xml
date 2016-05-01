@@ -241,7 +241,7 @@
             android:name=".activities.CustomerInviteFriendsActivity"
             android:label="@string/invite_friends" />
         <activity
-            android:name=".activities.CustomerAboutPrivateActivity"
+            android:name=".activities.AboutPrivateActivity"
             android:label="@string/about_private" />
         <activity
             android:name=".activities.MessageDetailsActivity"

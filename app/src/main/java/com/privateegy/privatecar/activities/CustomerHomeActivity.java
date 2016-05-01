@@ -74,10 +74,21 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
 
         // check saved instance state
         if (savedInstanceState == null) {
-            // load book lift fragment
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.layout_fragment_container, new CustomerBookALiftFragment(), CustomerBookALiftFragment.TAG)
-                    .commit();
+            //getting navigation extra
+            String navigationKey = getIntent().getStringExtra(Const.KEY_HOME_NAVIGATION);
+            if (navigationKey != null && navigationKey.equals(Const.KEY_NAVIGATION_MESSAGE_CENTER)) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.layout_fragment_container, new MessageCenterFragment())
+                        .commit();
+                //set messaging center item checked
+                MenuItem item = nvDrawer.getMenu().findItem(R.id.nav_message_center);
+                if (item != null) item.setChecked(true);
+            } else {
+                // load book lift fragment
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.layout_fragment_container, new CustomerBookALiftFragment(), CustomerBookALiftFragment.TAG)
+                        .commit();
+            }
         } else {
             // update personal info from the cached user
             User user = AppUtils.getCachedUser(this);
@@ -151,14 +162,14 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
             case R.id.nav_about:
                 // open about private activity
                 selectItem = false;
-                startActivity(new Intent(this, CustomerAboutPrivateActivity.class));
+                startActivity(new Intent(this, AboutPrivateActivity.class));
                 break;
         }
 
         // check fragment
         if (fragment != null) {
             ft.replace(R.id.layout_fragment_container, fragment);
-            ft.commitAllowingStateLoss();
+            ft.commit();
 
             // select / unselect item
             item.setChecked(selectItem);

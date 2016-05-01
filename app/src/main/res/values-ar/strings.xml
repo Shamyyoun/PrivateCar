@@ -90,7 +90,7 @@
     <string name="dropoff">نقطة الوصول</string>
     <string name="i_will_guide_the_captain">سوف ارشد القائد</string>
     <string name="add_details">اضافة\nتفاصيل</string>
-    <string name="add_dropoff">اضافة\النهاية</string>
+    <string name="add_dropoff">اضافة\nالنهاية</string>
     <string name="pickup_time">ميعاد اللقاء</string>
     <string name="as_soon_as_possible">في اقرب وقت ممكن</string>
     <string name="car_type">نوع السيارة</string>
@@ -332,4 +332,5 @@
     <string name="from_camera">من كاميرا الهاتف</string>
     <string name="you_should_update_the_application">لابد من تحديث التطبيق</string>
     <string name="update">تحديث</string>
+    <string name="total_profit">الربح الإجمالي</string>
 </resources>

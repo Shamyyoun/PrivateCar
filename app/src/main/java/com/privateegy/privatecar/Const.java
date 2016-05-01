@@ -47,7 +47,7 @@ public class Const {
     public static final int REQUEST_ADD_DROP_OFF = 1030;
 
     //app level constants:--------------
-    public static final String LOG_TAG = "Private Car";
+    public static final String LOG_TAG = "private_car";
     public static final String SHARED_PREFERENCES_FILE_NAME = "private_car";
     public static final String APP_FILES_DIR = "/.private_car";
     public static final int IMAGE_SIZE_USER = 400;
@@ -85,6 +85,7 @@ public class Const {
     public static final String CACHE_USER = "user_cache";
     public static final String CACHE_ADS = "ads_cache";
     public static final String CACHE_MESSAGES = "messages_cache";
+    public static final String CACHE_LAST_MESSAGE = "last_message_cache";
     public static final String CACHE_LOCALE = "app_locale_cache";
     public static final String CACHE_LOCATION = "location_cache";
     public static final String CACHE_LAST_TRIP_REQUEST = "last_trip_request_cache";
@@ -92,8 +93,8 @@ public class Const {
     public static final String CACHE_NOTIFICATION_ID = "notification_id_cache";
 
     //messages (common):----
-//    public static final String MESSAGES_BASE_URL = "http://52.36.46.145/public/messages/";
-    public static final String MESSAGES_BASE_URL = "http://ec2-54-201-70-234.us-west-2.compute.amazonaws.com/api-repo-1/public/messages/";
+    public static final String MESSAGES_BASE_URL = "http://52.36.46.145/public/messages/";
+//    public static final String MESSAGES_BASE_URL = "http://ec2-54-201-70-234.us-west-2.compute.amazonaws.com/api-repo-1/public/messages/";
     public static final String MESSAGE_STARTUP_CONFIG = "startupconfig";
     public static final String MESSAGE_USER_CONFIG = "userconfig";
     public static final String MESSAGE_ACCESS_TOKEN = "accesstoken";
@@ -226,6 +227,8 @@ public class Const {
     public static final String KEY_COST = "cost";
     public static final String KEY_TRIP_COST_INFO = "trip_cost_info";
     public static final String KEY_REMAINING_VALUE = "remaining_value";
+    public static final String KEY_HOME_NAVIGATION = "key_home_navigation";
+    public static final String KEY_NAVIGATION_MESSAGE_CENTER = "key_navigation_message_center";
 
 
     //Intent actions
@@ -248,6 +251,4 @@ public class Const {
     public static final int PERM_REQ_CALL = 1;
     public static final int PERM_REQ_STORAGE = 2;
     public static final int PERM_REQ_CAMERA = 3;
-    public static final int PERM_REQ_STORAGE_AND_CAMERA = 4;
-
 }

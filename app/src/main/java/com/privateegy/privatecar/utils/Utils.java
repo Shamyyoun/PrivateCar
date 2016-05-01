@@ -245,6 +245,11 @@ public class Utils {
         Log.e(Const.LOG_TAG, msg);
     }
 
+    public static void LogE(String tag, String msg) {
+        Log.e(tag, msg);
+    }
+
+
 
     /**
      * Executes the given AsyncTask Efficiently.

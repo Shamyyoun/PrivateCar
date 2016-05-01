@@ -106,6 +106,8 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
         String minTripFareStr = AppUtils.getConfigValue(this, Config.KEY_MIN_TRIP_FARE);
         float minTripFare = Float.parseFloat(minTripFareStr); //minimum trip fare
 
+        if (kmFare == 0) getFareInfo(); //if fare info not yet initialized
+
         float totalFare = openFare + minuteWaitFare * tripWaitDuration + kmFare * tripDistance / 1000.0f;
         float actualFare = Math.max(totalFare, minTripFare);
         return (int) Math.ceil(actualFare);
@@ -149,7 +151,6 @@ public class DriverTrackTheTripActivity extends BaseActivity implements OnMapRea
                 tvRideWaitingHM.setText(String.format(Locale.ENGLISH, "%02d:%02d", tripWaitDuration / 60, tripWaitDuration % 60));
 
                 tvRideCost.setText(String.valueOf(getActualFare()) + " " + getString(R.string.currency));
-
             }
 
         }

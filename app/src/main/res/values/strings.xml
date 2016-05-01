@@ -1,14 +1,13 @@
 <resources>
     <string name="app_name">Private</string>
     <string name="facebook_id" translatable="false">1672155173024840</string>
+    <string name="server_client_id" translatable="false">468362986506-127hrg3be2s74r9qoorcvktbmcva4b2l.apps.googleusercontent.com</string>
     <string name="android_api_key" translatable="false">AIzaSyB9h3_UFrSt3E2sF2wJNPYroJWNFQ6JbpQ</string>
-    <string name="project_number" translatable="false">190216326794</string>
-    <string name="server_api_key" translatable="false">AIzaSyBaZNQhClLZ0-ACMt3fqhFWl1mdcltmspU</string>
-    <!-- New project number -->
-    <!--<string name="project_number" translatable="false">468362986506</string>-->
-    <!-- New server api key -->
-    <!--<string name="server_api_key" translatable="false">AIzaSyDFOXx5F4yGcSOy0vJdL096NrL073NZ8yY</string>-->
-    <string name="client_id" translatable="false">468362986506-127hrg3be2s74r9qoorcvktbmcva4b2l.apps.googleusercontent.com</string>
+    <!--<string name="project_number" translatable="false">190216326794</string>-->
+    <!--<string name="server_api_key" translatable="false">AIzaSyBaZNQhClLZ0-ACMt3fqhFWl1mdcltmspU</string>-->
+    <!-- New project number & server api key -->
+    <string name="project_number" translatable="false">468362986506</string>
+    <string name="server_api_key" translatable="false">AIzaSyDFOXx5F4yGcSOy0vJdL096NrL073NZ8yY</string>
     <string name="currency">EGP</string>
     <string name="customer">Customer</string>
     <string name="driver">Driver</string>
@@ -268,7 +267,7 @@
     <string name="total_rides_c">Total Rides:</string>
     <string name="total_money_c">Total Money:</string>
     <string name="rides">Rides</string>
-    <string name="you_have_not_do_any_trip_yet">You have not do any trip yet</string>
+    <string name="you_have_not_do_any_trip_yet">You have not made any trips yet</string>
     <string name="social_users_cant_change_password">Social users can\'t change password</string>
     <string name="activating_promo_code_please_wait">Activating promo code, please wait…</string>
     <string name="promo_code_activated_successfully">Promo code activated successfully</string>
@@ -340,6 +339,7 @@
     <string name="from_camera">From Camera</string>
     <string name="you_should_update_the_application">You should update the application</string>
     <string name="update">Update</string>
+    <string name="total_profit">Total Profit</string>
 
     <string name="you_are_timed_out_declining_the_request">You are timed out, declining the trip request...</string>
     <string name="you_are_timed_out_trip_automatically_cancelled">You are timed out\nTrip automatically cancelled</string>

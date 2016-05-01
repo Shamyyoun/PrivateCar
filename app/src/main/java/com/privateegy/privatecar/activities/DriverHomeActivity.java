@@ -115,7 +115,16 @@ public class DriverHomeActivity extends BaseActivity {
             actionBar.setTitle("");
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.layout_fragment_container, new DriverHomeFragment()).commit();
+        //getting navigation extra
+        String navigationKey = getIntent().getStringExtra(Const.KEY_HOME_NAVIGATION);
+        if (navigationKey != null && navigationKey.equals(Const.KEY_NAVIGATION_MESSAGE_CENTER)) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_fragment_container, new MessageCenterFragment()).commit();
+            //set messaging center item checked
+            MenuItem item = nvDrawer.getMenu().findItem(R.id.nav_message_center);
+            if (item != null) item.setChecked(true);
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_fragment_container, new DriverHomeFragment()).commit();
+        }
 
     }
 

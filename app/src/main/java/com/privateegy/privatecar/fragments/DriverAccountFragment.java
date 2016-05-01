@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.privateegy.privatecar.R;
 import com.privateegy.privatecar.activities.AnonymousHomeActivity;
+import com.privateegy.privatecar.activities.AboutPrivateActivity;
 import com.privateegy.privatecar.activities.DriverAddCarActivity;
 import com.privateegy.privatecar.activities.DriverDocumentsActivity;
 import com.privateegy.privatecar.activities.DriverSettingsActivity;
@@ -48,6 +49,7 @@ public class DriverAccountFragment extends BaseFragment implements RequestListen
     private View layoutDocuments;
     private View layoutSettings;
     private View layoutSignOut;
+    private View layoutAboutPrivate;
 
     private int currentRequest; // used to hold number to indicate which request is being handled
     private AlertDialog visibleDialog; // used to hold current visible visibleDialog
@@ -78,6 +80,7 @@ public class DriverAccountFragment extends BaseFragment implements RequestListen
         layoutSettings = fragment.findViewById(R.id.layout_settings);
         layoutDocuments = fragment.findViewById(R.id.layout_documents);
         layoutAddCar = fragment.findViewById(R.id.layout_add_car);
+        layoutAboutPrivate = fragment.findViewById(R.id.layout_about_private);
         layoutSignOut = fragment.findViewById(R.id.layout_sign_out);
 
         // get cached user & details
@@ -110,6 +113,7 @@ public class DriverAccountFragment extends BaseFragment implements RequestListen
         layoutAddCar.setOnClickListener(this);
         layoutDocuments.setOnClickListener(this);
         layoutSettings.setOnClickListener(this);
+        layoutAboutPrivate.setOnClickListener(this);
         layoutSignOut.setOnClickListener(this);
 
         return fragment;
@@ -149,6 +153,10 @@ public class DriverAccountFragment extends BaseFragment implements RequestListen
                 break;
             case R.id.layout_settings:
                 startActivity(new Intent(getActivity(), DriverSettingsActivity.class));
+                break;
+            case R.id.layout_about_private:
+                // open about private activity
+                startActivity(new Intent(activity, AboutPrivateActivity.class));
                 break;
             case R.id.layout_sign_out:
                 // stop update service if running

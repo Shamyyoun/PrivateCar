@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.concurrent.CancellationException;
 
 /**
- * Created by basim.alamuddin@gmail.com on 3/1/16.
+ * Created by basim.alamuddin@gmail.com on 3/1/2016.
  * A helper class for making requests using Ion library.
  */
 
@@ -28,7 +28,7 @@ import java.util.concurrent.CancellationException;
 public class RequestHelper<T> {
 
     private static final String LOG_TAG = "request_helper";
-    private static int TIMEOUT = 60 * 1000; // Ion's default timeout is 30 seconds.
+    private int timeout = 60 * 1000; // Ion's default timeout is 30 seconds.
     Context context;
     String baseUrl;
     String apiName;
@@ -71,11 +71,11 @@ public class RequestHelper<T> {
         switch (level) {
             case 0:
                 startTime = System.currentTimeMillis();
-                Log.e(LOG_TAG, "'" + apiName + "' request started. time=" + Calendar.getInstance().getTime());
+                Log.e(LOG_TAG, "'" + baseUrl + apiName + "' request started. time=" + Calendar.getInstance().getTime());
                 break;
             case 1:
                 finishTime = System.currentTimeMillis();
-                Log.e(LOG_TAG, "'" + apiName + "' request finished and parsing started. time=" + Calendar.getInstance().getTime() + ", Time diff: " + (finishTime - startTime) + " MS");
+                Log.e(LOG_TAG, "'" + baseUrl + apiName + "' request finished and parsing started. time=" + Calendar.getInstance().getTime() + ", Time diff: " + (finishTime - startTime) + " MS");
                 break;
 
         }
@@ -94,7 +94,7 @@ public class RequestHelper<T> {
 
             future = Ion.with(context)
                     .load(baseUrl + apiName)
-                    .setTimeout(TIMEOUT)
+                    .setTimeout(timeout)
                     .asString()
                     .setCallback(new FutureCallback<String>() {
                         @Override
@@ -121,7 +121,7 @@ public class RequestHelper<T> {
 
             Builders.Any.B ionBuilder = Ion.with(context)
                     .load("POST", baseUrl + apiName)
-                    .setTimeout(TIMEOUT);
+                    .setTimeout(timeout);
 
             if (params != null) {
                 for (String key : params.keySet()) {
@@ -157,7 +157,7 @@ public class RequestHelper<T> {
             Builders.Any.B ionBuilder =
                     Ion.with(context)
                             .load("POST", baseUrl + apiName)
-                            .setTimeout(TIMEOUT);
+                            .setTimeout(timeout);
 //                            .uploadProgress(new ProgressCallback() {
 //                                @Override
 //                                public void onProgress(long downloaded, long total) {
@@ -202,6 +202,7 @@ public class RequestHelper<T> {
 
         if (e != null) { //on request failure
             e.printStackTrace();
+            //TODO: handle different error types
             if (!(e instanceof CancellationException))
                 if (listener != null) {
 //                    listener.onFail(e.toString(), apiName);
@@ -216,10 +217,10 @@ public class RequestHelper<T> {
                 try {
                     listener.onSuccess((T) new Gson().fromJson(result, cls), apiName);
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                     Log.e(LOG_TAG, "Parsing Exception: " + ex.toString());
 //                    listener.onFail("Parsing Exception: " + ex.toString(), apiName);
-                    listener.onFail(context.getString(R.string.connection_error), apiName);
-                    ex.printStackTrace();
+                    listener.onFail("Parsing Exception", apiName);
                 }
             }
         }
@@ -236,11 +237,11 @@ public class RequestHelper<T> {
     }
 
     /**
-     * method, used to set the time out of the future requests
+     * method, used to set the time out of the request
      *
-     * @param timeOut
+     * @param timeout in melli sec
      */
-    public static void setTimeOut(int timeOut) {
-        RequestHelper.TIMEOUT = timeOut;
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
     }
 }

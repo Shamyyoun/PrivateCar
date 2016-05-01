@@ -66,7 +66,7 @@ public class MessageCenterFragment extends BaseFragment implements RequestListen
         List<Message> cachedMessages = AppUtils.getCachedMessages(getContext());
         if (cachedMessages != null && cachedMessages.size() > 0) {
             messages.addAll(cachedMessages);
-            getMessages(cachedMessages.get(cachedMessages.size() - 1).getId());
+            getMessages(cachedMessages.get(0).getId()); //the first item is the last message
         } else {
             getMessages(0);
         }
