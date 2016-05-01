@@ -341,6 +341,9 @@
     <string name="you_should_update_the_application">You should update the application</string>
     <string name="update">Update</string>
 
+    <string name="you_are_timed_out_declining_the_request">You are timed out, declining the trip request...</string>
+    <string name="you_are_timed_out_trip_automatically_cancelled">You are timed out\nTrip automatically cancelled</string>
+
     <string-array name="photo_sources_array">
         <item>@string/from_gallery</item>
         <item>@string/from_camera</item>

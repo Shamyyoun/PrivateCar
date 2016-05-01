@@ -130,6 +130,26 @@ public class DriverRequests {
         return requestHelper;
     }
 
+    public static RequestHelper<GeneralResponse> timeoutTripRequest(Context context, RequestListener<GeneralResponse> listener,
+                                                                    String accessToken, String driverId, String tripId, String carId, boolean fromMidnightRequest) {
+        // prepare parameters
+        Map<String, String> params = new HashMap<>();
+        params.put(Const.MSG_PARAM_ACCESS_TOKEN, accessToken);
+        params.put(Const.MSG_PARAM_DRIVER_ID, driverId);
+        params.put(Const.MSG_PARAM_TRIP_ID, tripId);
+        params.put(Const.MSG_PARAM_CAR_ID, carId);
+        if (fromMidnightRequest) {
+            params.put(Const.MSG_PARAM_FROM_MIDNIGHT_REQUEST, "1");
+        }
+
+        // create & send request
+        RequestHelper<GeneralResponse> requestHelper = new RequestHelper<>(context, Const.MESSAGES_BASE_URL,
+                Const.MESSAGE_DRIVER_TRIP_REQUEST_TIMEOUT, GeneralResponse.class, listener, params);
+        requestHelper.executeFormUrlEncoded();
+
+        return requestHelper;
+    }
+
 
     public static RequestHelper<LocationsResponse> getCustomersStats(Context context, RequestListener<LocationsResponse> listener, String accessToken, String location, int radiusInKM) {
         // prepare parameters

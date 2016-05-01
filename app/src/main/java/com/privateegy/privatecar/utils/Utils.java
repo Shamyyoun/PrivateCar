@@ -525,4 +525,19 @@ public class Utils {
             return 0;
         }
     }
+
+    /**
+     * method, used to convert string number to int number
+     *
+     * @param number
+     * @return
+     */
+    public static int convertToInteger(String number) {
+        try {
+            return Integer.parseInt(number);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

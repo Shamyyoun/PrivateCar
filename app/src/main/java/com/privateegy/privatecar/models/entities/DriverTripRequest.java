@@ -54,6 +54,8 @@ public class DriverTripRequest implements Serializable {
     @Expose
     private String ServiceType;
 
+    private boolean midnightRequest; // should set true if the key gcm key = "midnight_trip_request"
+
     /**
      * @return The Id
      */
@@ -256,5 +258,13 @@ public class DriverTripRequest implements Serializable {
 
     public void setServiceType(String serviceType) {
         ServiceType = serviceType;
+    }
+
+    public boolean isMidnightRequest() {
+        return midnightRequest;
+    }
+
+    public void setMidnightRequest(boolean midnightRequest) {
+        this.midnightRequest = midnightRequest;
     }
 }

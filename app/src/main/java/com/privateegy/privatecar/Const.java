@@ -141,6 +141,7 @@ public class Const {
     public static final String MESSAGE_DRIVER_END_TRIP = "endtrip";
     public static final String MESSAGE_DRIVER_RATE_CUSTOMER = "driverratecustomer";
     public static final String MESSAGE_DRIVER_PAY_REMAINING = "payremaining";
+    public static final String MESSAGE_DRIVER_TRIP_REQUEST_TIMEOUT = "triprequesttimeout";
 
 
     //message parameters:----
@@ -189,6 +190,7 @@ public class Const {
     public static final String MSG_PARAM_PICKUP_ADDRESS_NOTES = "pickup_address_notes";
     public static final String MSG_PARAM_RATE = "rate";
     public static final String MSG_PARAM_CASH = "cash";
+    public static final String MSG_PARAM_FROM_MIDNIGHT_REQUEST = "fromMidnightRequest";
 
     //Intent & bundle keys
     public static final String KEY_TRIP_REQUEST = "trip_request";
