@@ -85,6 +85,7 @@ public class Const {
     public static final String CACHE_USER = "user_cache";
     public static final String CACHE_ADS = "ads_cache";
     public static final String CACHE_MESSAGES = "messages_cache";
+    public static final String CACHE_LAST_MESSAGE = "last_message_cache";
     public static final String CACHE_LOCALE = "app_locale_cache";
     public static final String CACHE_LOCATION = "location_cache";
     public static final String CACHE_LAST_TRIP_REQUEST = "last_trip_request_cache";

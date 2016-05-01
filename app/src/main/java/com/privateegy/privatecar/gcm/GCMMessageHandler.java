@@ -88,7 +88,11 @@ public class GCMMessageHandler extends GcmListenerService {
                                 DriverTripInfoActivity.currentInstance.finish();
                             }
                         } else if (key.equals(Const.GCM_KEY_NEW_MESSAGE)) {
+                            //TODO: create pending intent to open the messaging center
                             String content = object.optString("content");
+
+                            //cache the message to display it in the driver home fragment
+                            Utils.cacheString(getBaseContext(), Const.CACHE_LAST_MESSAGE, content);
 
                             Context context = getBaseContext();
                             NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
@@ -178,6 +182,7 @@ public class GCMMessageHandler extends GcmListenerService {
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         } else if (key.equals(Const.GCM_KEY_NEW_MESSAGE)) {
+                            //TODO: create pending intent to open the messaging center
                             String content = object.optString("content");
 
                             Context context = getBaseContext();

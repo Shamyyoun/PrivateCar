@@ -151,7 +151,7 @@ public class CustomerHomeActivity extends BaseActivity implements NavigationView
             case R.id.nav_about:
                 // open about private activity
                 selectItem = false;
-                startActivity(new Intent(this, CustomerAboutPrivateActivity.class));
+                startActivity(new Intent(this, AboutPrivateActivity.class));
                 break;
         }
 

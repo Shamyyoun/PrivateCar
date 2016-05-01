@@ -332,4 +332,5 @@
     <string name="from_camera">من كاميرا الهاتف</string>
     <string name="you_should_update_the_application">لابد من تحديث التطبيق</string>
     <string name="update">تحديث</string>
+    <string name="total_profit">الربح الإجمالي</string>
 </resources>

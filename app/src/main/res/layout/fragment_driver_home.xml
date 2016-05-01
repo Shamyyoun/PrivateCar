@@ -96,7 +96,11 @@
             android:id="@+id/tv_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="This is an example message from application manager to you." />
+            android:lines="3"
+            android:scrollbars="vertical"
+            android:visibility="gone"
+            tools:text="This is an example message\n and \n from application manager to you. \n bye"
+            tools:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,7 +117,7 @@
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="21-1-2016" />
+                tools:text="21-1-2016" />
         </LinearLayout>
 
         <LinearLayout
@@ -133,7 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
-                android:text="@string/today_profit"
+                android:text="@string/total_profit"
                 android:textAllCaps="true" />
 
             <TextView

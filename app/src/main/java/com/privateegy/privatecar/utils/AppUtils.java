@@ -183,14 +183,14 @@ public class AppUtils {
 
 
     /**
-     * method, used to calculate the trip fare based on passed params
+     * method, used to calculate the trip estimate fare based on passed params (no waiting time included)
      * @param context
      * @param distance
      * @param openFare
      * @param kmFare
      * @return
      */
-    public static float calculateFare(Context context, float distance, float openFare, float kmFare) {
+    public static float calculateEstimateFare(Context context, float distance, float openFare, float kmFare) {
         // get min fare from configs
         float minFare = 0;
         String minFareStr = getConfigValue(context, Config.KEY_MIN_TRIP_FARE);

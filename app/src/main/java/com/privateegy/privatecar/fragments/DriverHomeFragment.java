@@ -45,7 +45,6 @@ import com.privateegy.privatecar.R;
 import com.privateegy.privatecar.activities.DriverHomeActivity;
 import com.privateegy.privatecar.models.entities.Config;
 import com.privateegy.privatecar.models.entities.DriverAccountDetails;
-import com.privateegy.privatecar.models.entities.Message;
 import com.privateegy.privatecar.models.entities.PrivateCarLocation;
 import com.privateegy.privatecar.models.entities.User;
 import com.privateegy.privatecar.models.responses.DriverAccountDetailsResponse;
@@ -180,13 +179,12 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
         tvTodayProfit.setText(detailsDriverAccountDetails.getCredit() + " " + getString(R.string.currency));
         tvTotalTrips.setText(detailsDriverAccountDetails.getTotaltrips() + " " + getString(R.string.trips));
         tvTotalHours.setText(detailsDriverAccountDetails.getTodayhours() + " " + getString(R.string.hours));
-        List<Message> messages = AppUtils.getCachedMessages(getContext());
-        if (messages != null && messages.size() > 0) {
-            tvMessage.setText(messages.get(0).getMessage());
-        } else {
-            tvMessage.setVisibility(View.GONE);
+        //get the cached last message
+        String lastMessage = Utils.getCachedString(getContext(), Const.CACHE_LAST_MESSAGE, null);
+        if (lastMessage != null) {
+            tvMessage.setVisibility(View.VISIBLE);
+            tvMessage.setText(lastMessage);
         }
-
     }
 
     @Override

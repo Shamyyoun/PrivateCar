@@ -23,7 +23,7 @@ import com.privateegy.privatecar.Const;
 import com.privateegy.privatecar.R;
 import com.privateegy.privatecar.activities.AnonymousHomeActivity;
 import com.privateegy.privatecar.activities.ChangePasswordActivity;
-import com.privateegy.privatecar.activities.CustomerAboutPrivateActivity;
+import com.privateegy.privatecar.activities.AboutPrivateActivity;
 import com.privateegy.privatecar.activities.CustomerAddCreditCardActivity;
 import com.privateegy.privatecar.activities.CustomerAddPromoCodeActivity;
 import com.privateegy.privatecar.activities.CustomerHomeActivity;
@@ -214,7 +214,7 @@ public class CustomerSettingsFragment extends BaseFragment implements View.OnCli
 
             case R.id.layout_about_private:
                 // open about private activity
-                startActivity(new Intent(activity, CustomerAboutPrivateActivity.class));
+                startActivity(new Intent(activity, AboutPrivateActivity.class));
                 break;
 
             case R.id.layout_customer_service:

@@ -209,7 +209,7 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
 //            // If the user has not previously signed in on this device or the sign-in has expired,
 //            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
 //            // single sign-on will occur in this branch.
-//            showProgressDialog();
+//            showProgressDialog(R.string.loading);
 //            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
 //                @Override
 //                public void onResult(GoogleSignInResult googleSignInResult) {
@@ -236,16 +236,14 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //Facebook signIn
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-
         //Google+ signIn
         if (requestCode == Const.REQUEST_GOOGLE_PLUS_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleGoogleSignInResult(result);
+        } else {
+            //Facebook signIn
+            callbackManager.onActivityResult(requestCode, resultCode, data);
         }
-
-
     }
 
 
@@ -492,10 +490,7 @@ public class CustomerSignupActivity extends BasicBackActivity implements GoogleA
                 startActivity(intent);
             }
 
-
-        } else
-
-        { //not signed in
+        } else { //not signed in
             // Signed out, show unauthenticated UI.
             Log.e("Google+", "Not signed in");
         }

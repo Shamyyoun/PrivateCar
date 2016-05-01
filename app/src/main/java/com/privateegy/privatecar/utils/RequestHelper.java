@@ -71,11 +71,11 @@ public class RequestHelper<T> {
         switch (level) {
             case 0:
                 startTime = System.currentTimeMillis();
-                Log.e(LOG_TAG, "'" + apiName + "' request started. time=" + Calendar.getInstance().getTime());
+                Log.e(LOG_TAG, "'" + baseUrl + apiName + "' request started. time=" + Calendar.getInstance().getTime());
                 break;
             case 1:
                 finishTime = System.currentTimeMillis();
-                Log.e(LOG_TAG, "'" + apiName + "' request finished and parsing started. time=" + Calendar.getInstance().getTime() + ", Time diff: " + (finishTime - startTime) + " MS");
+                Log.e(LOG_TAG, "'" + baseUrl + apiName + "' request finished and parsing started. time=" + Calendar.getInstance().getTime() + ", Time diff: " + (finishTime - startTime) + " MS");
                 break;
 
         }
@@ -202,6 +202,7 @@ public class RequestHelper<T> {
 
         if (e != null) { //on request failure
             e.printStackTrace();
+            //TODO: handle different error types
             if (!(e instanceof CancellationException))
                 if (listener != null) {
 //                    listener.onFail(e.toString(), apiName);
@@ -216,10 +217,10 @@ public class RequestHelper<T> {
                 try {
                     listener.onSuccess((T) new Gson().fromJson(result, cls), apiName);
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                     Log.e(LOG_TAG, "Parsing Exception: " + ex.toString());
 //                    listener.onFail("Parsing Exception: " + ex.toString(), apiName);
-                    listener.onFail(context.getString(R.string.connection_error), apiName);
-                    ex.printStackTrace();
+                    listener.onFail("Parsing Exception", apiName);
                 }
             }
         }

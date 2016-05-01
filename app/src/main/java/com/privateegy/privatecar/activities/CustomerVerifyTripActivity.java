@@ -418,7 +418,7 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
     }
 
     @Override
-    public void onSuccess(Object response, String apiName) {
+    public synchronized void onSuccess(Object response, String apiName) {
         // check response
         if (response instanceof TripRequestResponse) {
             // this is the request trip message
@@ -485,7 +485,7 @@ public class CustomerVerifyTripActivity extends BasicBackActivity implements Vie
                 Fare fare = faresResponse.getFares().get(faresResponse.getFares().size() - 1);
 
                 // calc and save the trip fare
-                float tripFare = AppUtils.calculateFare(this, tripRequest.getEstimateDistance(), fare.getOpenFare(), fare.getKilometerFare());
+                float tripFare = AppUtils.calculateEstimateFare(this, tripRequest.getEstimateDistance(), fare.getOpenFare(), fare.getKilometerFare());
                 tripRequest.setEstimateFare(tripFare);
 
                 // update the ui
