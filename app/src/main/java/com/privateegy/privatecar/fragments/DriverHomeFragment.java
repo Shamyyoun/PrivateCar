@@ -402,7 +402,7 @@ public class DriverHomeFragment extends BaseFragment implements OnMapReadyCallba
 
         map = googleMap;
         map.getUiSettings().setMapToolbarEnabled(false);
-        map.moveCamera(CameraUpdateFactory.zoomTo(19));
+        map.moveCamera(CameraUpdateFactory.zoomTo(13));
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
     }
 

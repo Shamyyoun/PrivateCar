@@ -598,6 +598,28 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
         requestNearbyPlaces = CommonRequests.getNearbyPlacesByPlacesApi(this, this, latLng);
     }
 
+    //get the nearest driver to the marker position
+    private NearDriver getNearestDriver(List<NearDriver> nearDrivers) {
+        LatLng currLocation = map.getCameraPosition().target; //marker position
+
+        NearDriver nearestDriver = null;
+        float nearestDriverDistance = Float.MAX_VALUE;
+        float[] results = new float[3];
+
+        for (NearDriver nearDriver : nearDrivers) {
+            LatLng driverLocation = AppUtils.getLatLng(nearDriver.getLastLocation());
+            Location.distanceBetween(currLocation.latitude, currLocation.longitude,
+                    driverLocation.latitude, driverLocation.longitude, results);
+
+            if (results.length > 0 && results[0] < nearestDriverDistance) {
+                nearestDriverDistance = results[0];
+                nearestDriver = nearDriver;
+            }
+        }
+
+        return nearestDriver != null ? nearestDriver : nearDrivers.get(0);
+    }
+
     private void getNearestDriverArrivalTime(NearDriver nearestDriver) {
         LatLng latLng = map.getCameraPosition().target;
 
@@ -617,7 +639,7 @@ public class CustomerPickupActivity extends BasicBackActivity implements View.On
                     Utils.showLongToast(getApplicationContext(), R.string.no_driver);
                     setMarkerText(getString(R.string.question_mark_without_space));
                 } else if (!nearestDriverArrivalTimeGot) { //near drivers found
-                    getNearestDriverArrivalTime(nearDrivers.get(0));
+                    getNearestDriverArrivalTime(getNearestDriver(nearDrivers));
                 }
 
                 if (nearDrivers.size() == 0) {

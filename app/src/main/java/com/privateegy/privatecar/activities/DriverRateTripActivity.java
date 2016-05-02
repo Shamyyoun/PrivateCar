@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class DriverRateTripActivity extends BaseActivity implements RequestListener {
+public class DriverRateTripActivity extends BaseActivity implements RequestListener, RatingBar.OnRatingBarChangeListener {
     private static final int OPTION_OTHER = 99999999;
 
     private TripInfo tripInfo;
@@ -60,6 +60,7 @@ public class DriverRateTripActivity extends BaseActivity implements RequestListe
         tvRideNo = (TextView) findViewById(R.id.tv_ride_no);
         tvClientId = (TextView) findViewById(R.id.tv_client_id);
         ratingBar = (RatingBar) findViewById(R.id.rating_bar);
+        ratingBar.setOnRatingBarChangeListener(this);
         layoutOptions = findViewById(R.id.layout_options);
         rgOptions = (RadioGroup) findViewById(R.id.rg_options);
         etOther = (EditText) findViewById(R.id.et_other);
@@ -76,10 +77,9 @@ public class DriverRateTripActivity extends BaseActivity implements RequestListe
                 etOther.setError(null);
             }
         });
+
         btnRate.setOnClickListener(this);
 
-        // load available options
-        loadOptions();
     }
 
     @Override
@@ -118,29 +118,33 @@ public class DriverRateTripActivity extends BaseActivity implements RequestListe
         // hide keyboard
         Utils.hideKeyboard(etOther);
 
-        // get reason id & comment
-        int selectedOptionIndex = rgOptions.getCheckedRadioButtonId();
+        float rating = ratingBar.getRating();
         String reasonId = null;
         String comment = null;
-        if (selectedOptionIndex == OPTION_OTHER) {
-            // other option is selected
-            // must have comment
-            if (etOther.getText().toString().trim().isEmpty()) {
-                // show error
-                etOther.setError(getString(R.string.enter_your_comment));
-                return;
-            }
 
-            comment = etOther.getText().toString().trim();
-        } else {
-            reasonId = "" + options.get(selectedOptionIndex).getId();
+        if (rating <= Const.MIN_RATING_VALUE && rgOptions.getChildCount() > 0) {
+            // get reason id & comment
+            int selectedOptionIndex = rgOptions.getCheckedRadioButtonId();
+            if (selectedOptionIndex == OPTION_OTHER) {
+                // other option is selected
+                // must have comment
+                if (etOther.getText().toString().trim().isEmpty()) {
+                    // show error
+                    etOther.setError(getString(R.string.enter_your_comment));
+                    return;
+                }
+
+                comment = etOther.getText().toString().trim();
+            } else {
+                reasonId = "" + options.get(selectedOptionIndex).getId();
+            }
         }
 
         // show loading
         progressDialog = DialogUtils.showProgressDialog(this, R.string.loading_please_wait);
 
         // create & send the request
-        DriverRequests.rateTrip(this, this, user.getAccessToken(), tripRequest.getId(), ratingBar.getRating(), reasonId, comment);
+        DriverRequests.rateTrip(this, this, user.getAccessToken(), tripRequest.getId(), rating, reasonId, comment);
     }
 
     @Override
@@ -250,5 +254,23 @@ public class DriverRateTripActivity extends BaseActivity implements RequestListe
     @Override
     public void onBackPressed() {
         // do nothing
+    }
+
+    @Override
+    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+        if (fromUser) {
+            if (rating <= Const.MIN_RATING_VALUE) {
+                if (options == null) { //options not initialized
+                    // load available options
+                    loadOptions();
+                } else {
+                    // show options layout
+                    layoutOptions.setVisibility(View.VISIBLE);
+                }
+            } else {
+                // hide options layout
+                layoutOptions.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 }

@@ -171,7 +171,7 @@ public class DriverStatementFragment extends BaseFragment implements View.OnClic
                 tvLastTripPrice.setText(driverTrip.getEstimateFare() + " " + getString(R.string.currency));
                 tvLastTripDate.setText(DateUtil.formatDate(driverTrip.getPickupDateTime(), "yyyy-MM-dd hh:mm:ss", TRIP_DATE_FORMAT));
             } else {
-                Utils.showLongToast(activity, R.string.unexpected_error_try_again);
+                Utils.showLongToast(activity, R.string.you_have_not_do_any_trip_yet);
             }
         } else if (response instanceof StatementsResponse) {
             // this statements request

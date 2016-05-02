@@ -73,7 +73,8 @@
         android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:overScrollMode="ifContentScrolls"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        tools:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,7 +94,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/edit_text_rounded_grayish_border"
                 android:gravity="start|top"
-                android:hint="@string/write_decline_reason"
+                android:hint="@string/give_reason"
                 android:inputType="textMultiLine" />
         </LinearLayout>
     </ScrollView>

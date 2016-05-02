@@ -342,6 +342,7 @@
     <string name="total_profit">Total Profit</string>
     <string name="you_are_timed_out_cancelling_the_request">You are timed out, cancelling the trip request...</string>
     <string name="you_are_timed_out_trip_automatically_cancelled">You are timed out\nTrip automatically cancelled</string>
+    <string name="give_reason">Give a reason</string>
 
     <string-array name="photo_sources_array">
         <item>@string/from_gallery</item>

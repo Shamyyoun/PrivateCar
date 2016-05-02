@@ -55,7 +55,7 @@
     <string name="ratings">التقييمات</string>
     <string name="account">الحساب</string>
     <string name="messages">الرسائل</string>
-    <string name="low_crowd_clients"><![CDATA[< 999 عميل]]></string>
+    <string name="low_crowd_clients">1–999 عميل</string>
     <string name="medium_crowd_clients">1000–1999 عميل</string>
     <string name="high_crowd_clients"><![CDATA[> 2999 عميل]]></string>
     <string name="today_profit">ايراد اليوم</string>
@@ -293,8 +293,8 @@
     <string name="notes">ملحوظات</string>
     <string name="payment_type">نوع الدفع</string>
     <string name="start_ride">بدأ الرحلة</string>
-    <string name="h_m">"س : د"</string>
-    <string name="km_m">"كم : م"</string>
+    <string name="h_m">"د  :  س"</string>
+    <string name="km_m">"م  :  كم"</string>
     <string name="waiting">انتظار</string>
     <string name="end_ride">إنهاء الرحلة</string>
     <string name="could_not_get_location_details">فشل في ايجاد تفاصيل المكان</string>
@@ -335,4 +335,5 @@
     <string name="total_profit">الربح الإجمالي</string>
     <string name="you_are_timed_out_cancelling_the_request">لقد استهلكت الوقت الكافي لتستجيب للطلب، جاري الغاء الطلب...</string>
     <string name="you_are_timed_out_trip_automatically_cancelled">لقد استهلكت الوقت الكافي لتستجيب للطلب\nتك الغاء الطلب اوتوماتيكيا</string>
+    <string name="give_reason">أعط سبب</string>
 </resources>
