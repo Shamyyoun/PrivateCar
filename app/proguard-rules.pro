@@ -56,14 +56,17 @@
 -keepattributes Signature, *Annotation*
 -keep class sun.misc.Unsafe { *; }
 -keep class com.privateegy.privatecar.models.** { *; }
+-keep class com.google.android.gms.** { *; } #http://stackoverflow.com/q/27326218
 
 #Prettytime
 -keep class org.ocpsoft.prettytime.i18n.**
 
-#remove Log.d & Log.e
--assumenosideeffects class android.util.Log {
-    public static *** d(...);
-    public static *** e(...);
-}
+#remove Log messages
+-assumenosideeffects class android.util.Log { *; }
+
+
+#Fabric
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
 
 
