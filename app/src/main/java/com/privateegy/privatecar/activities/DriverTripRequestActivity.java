@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.privateegy.privatecar.Const;
 import com.privateegy.privatecar.R;
+import com.privateegy.privatecar.models.entities.Config;
 import com.privateegy.privatecar.models.entities.DriverAccountDetails;
 import com.privateegy.privatecar.models.entities.DriverTripRequest;
 import com.privateegy.privatecar.models.entities.User;
@@ -25,7 +27,7 @@ import com.privateegy.privatecar.utils.DialogUtils;
 import com.privateegy.privatecar.utils.RequestListener;
 import com.privateegy.privatecar.utils.Utils;
 
-public class DriverTripRequestActivity extends BaseActivity implements RequestListener<GeneralResponse> {
+public class DriverTripRequestActivity extends BaseActivity implements RequestListener {
     public static DriverTripRequestActivity currentInstance;
 
     private DriverTripRequest tripRequest;
@@ -40,6 +42,8 @@ public class DriverTripRequestActivity extends BaseActivity implements RequestLi
     Button btnAccept, btnDecline;
 
     MediaPlayer player;
+    private Handler timeoutHandler;
+    private Runnable timeoutRunnable;
 
 
     @Override
@@ -73,6 +77,50 @@ public class DriverTripRequestActivity extends BaseActivity implements RequestLi
         PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "TAG");
         wakeLock.acquire();
+
+        // start timeout request after static time
+        scheduleTimeoutRequest();
+    }
+
+    private void scheduleTimeoutRequest() {
+        // cancel old before starting new one
+        cancelTimeoutRequest();
+
+        // schedule canceller thread after static time from the cache
+        int timeoutDelay = Utils.convertToInteger(AppUtils.getConfigValue(this, Config.KEY_ACCEPT_TRIP_WINDOW)) * 1000;
+        timeoutHandler = new Handler();
+        timeoutRunnable = new Runnable() {
+            @Override
+            public void run() {
+                timeout();
+            }
+        };
+        timeoutHandler.postDelayed(timeoutRunnable, timeoutDelay);
+    }
+
+    private void cancelTimeoutRequest() {
+        if (timeoutHandler != null && timeoutRunnable != null) {
+            timeoutHandler.removeCallbacks(timeoutRunnable);
+        }
+     }
+
+    /**
+     * method, used to timeout the trip request
+     */
+    private void timeout() {
+        // check internet connection
+        if (!Utils.hasConnection(this)) {
+            return;
+        }
+
+        // show loading
+        progressDialog = DialogUtils.showProgressDialog(this, R.string.you_are_timed_out_cancelling_the_request);
+
+        // create & send the request
+        User user = AppUtils.getCachedUser(this);
+        DriverAccountDetails accountDetails = user.getDriverAccountDetails();
+        DriverRequests.timeoutTripRequest(this, this, user.getAccessToken(), "" + accountDetails.getId(),
+                "" + tripRequest.getId(), "" + accountDetails.getDefaultCarId(), tripRequest.isMidnightRequest());
     }
 
     /**
@@ -111,6 +159,9 @@ public class DriverTripRequestActivity extends BaseActivity implements RequestLi
                 player.stop();
                 player.release();
 
+                // cancel decline request
+                cancelTimeoutRequest();
+
                 acceptTrip();
                 break;
 
@@ -118,6 +169,10 @@ public class DriverTripRequestActivity extends BaseActivity implements RequestLi
                 player.stop();
                 player.release();
 
+                // cancel timeout request
+                cancelTimeoutRequest();
+
+                // goto decline activity
                 Intent declineIntent = new Intent(this, DriverDeclineTripReasonActivity.class);
                 declineIntent.putExtra(Const.KEY_TRIP_ID, tripRequest.getId());
                 startActivity(declineIntent);
@@ -146,20 +201,47 @@ public class DriverTripRequestActivity extends BaseActivity implements RequestLi
     }
 
     @Override
-    public void onSuccess(GeneralResponse response, String apiName) {
+    public void onSuccess(Object response, String apiName) {
         // dismiss progress
         progressDialog.dismiss();
 
-        // check if success
-        if (response.isSuccess()) {
-            // goto trip info activity & finish
-            Intent intent = new Intent(this, DriverTripInfoActivity.class);
-            intent.putExtra(Const.KEY_TRIP_REQUEST, tripRequest);
-            startActivity(intent);
-            finish();
+        // check the apiName
+        if (apiName.equals(Const.MESSAGE_DRIVER_ACCEPT_TRIP)) {
+            // this is accept trip request
+            // cast the response
+            GeneralResponse generalResponse = (GeneralResponse) response;
+
+            // check if success
+            if (generalResponse.isSuccess()) {
+                // cancel decline request
+                cancelTimeoutRequest();
+
+                // goto trip info activity & finish
+                Intent intent = new Intent(this, DriverTripInfoActivity.class);
+                intent.putExtra(Const.KEY_TRIP_REQUEST, tripRequest);
+                startActivity(intent);
+                finish();
+            } else {
+                // show error msg
+                Utils.showLongToast(this, R.string.error_accepting_this_trip);
+
+                // start the decline request again
+                scheduleTimeoutRequest();
+            }
         } else {
-            // show error msg
-            Utils.showLongToast(this, R.string.error_accepting_this_trip);
+            // this is timeout trip request
+            // cast the response
+            GeneralResponse generalResponse = (GeneralResponse) response;
+
+            // check response
+            if (generalResponse.isSuccess()) {
+                // show message and finish
+                Utils.showLongToast(this, R.string.you_are_timed_out_trip_automatically_cancelled);
+                finish();
+            } else {
+                // start the timeout request again
+                scheduleTimeoutRequest();
+            }
         }
     }
 
@@ -168,6 +250,9 @@ public class DriverTripRequestActivity extends BaseActivity implements RequestLi
         // // dismiss progress & show error toast
         progressDialog.dismiss();
         Utils.showLongToast(this, R.string.connection_error);
+
+        // start the timeout request again
+        scheduleTimeoutRequest();
     }
 
     @Override

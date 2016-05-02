@@ -403,10 +403,7 @@ public class Utils {
      * @return the formatted double as string
      */
     public static String formatDouble(double number) {
-        if (number == (long) number)
-            return String.format("%d", (long) number);
-        else
-            return String.format("%s", number);
+        return String.format("%.0f", number);
     }
 
     /**
@@ -525,6 +522,21 @@ public class Utils {
     public static double convertToDouble(String number) {
         try {
             return Double.parseDouble(number);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    /**
+     * method, used to convert string number to int number
+     *
+     * @param number
+     * @return
+     */
+    public static int convertToInteger(String number) {
+        try {
+            return Integer.parseInt(number);
         } catch (Exception e) {
             e.printStackTrace();
             return 0;

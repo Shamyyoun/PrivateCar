@@ -64,6 +64,8 @@ public class GCMMessageHandler extends GcmListenerService {
             final JSONObject object = new JSONObject(json);
             final String key = object.optString("key");
 
+            // TODO we should check for the new key "midnight_trip_request" and handle its logic
+
             // run the following code in the main thread to prevent exceptions
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(new Runnable() {
