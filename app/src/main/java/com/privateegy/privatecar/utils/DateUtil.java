@@ -12,7 +12,7 @@ public class DateUtil {
     public static Calendar convertToCalendar(String strDate, String strFormat) {
         Calendar calendar = Calendar.getInstance();
         try {
-            final DateFormat df = new SimpleDateFormat(strFormat, Locale.ENGLISH);
+            final DateFormat df = new SimpleDateFormat(strFormat);
             calendar.setTime(df.parse(strDate));
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,7 +40,7 @@ public class DateUtil {
 
     public static String getDayName(String date, String dateFormat) {
         Calendar calendar = convertToCalendar(date, dateFormat);
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.ENGLISH);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
         String dayName = sdf.format(calendar.getTime());
 
         return dayName;
