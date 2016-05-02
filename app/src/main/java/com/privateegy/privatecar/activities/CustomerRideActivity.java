@@ -263,7 +263,7 @@ public class CustomerRideActivity extends BaseActivity implements RequestListene
 
                 // create and send the request
                 User user = AppUtils.getCachedUser(activity);
-                CustomerRequests.cancelTrip(activity, activity, user.getAccessToken(), tripInfo.getId());
+                CustomerRequests.cancelTrip(activity, activity, user.getAccessToken(), tripRequest.getId());
             }
         }, null);
     }

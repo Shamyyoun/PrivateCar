@@ -28,7 +28,7 @@ public class DriverCashPaymentActivity extends BaseActivity implements RequestLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_remaining_payment);
+        setContentView(R.layout.activity_driver_cash_payment);
 
         // get trip request object
         tripRequest = (DriverTripRequest) getIntent().getSerializableExtra(Const.KEY_TRIP_REQUEST);

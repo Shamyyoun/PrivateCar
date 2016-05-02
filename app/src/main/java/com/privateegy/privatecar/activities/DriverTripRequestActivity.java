@@ -108,6 +108,9 @@ public class DriverTripRequestActivity extends BaseActivity implements RequestLi
      * method, used to timeout the trip request
      */
     private void timeout() {
+        player.stop();
+        player.release();
+
         // check internet connection
         if (!Utils.hasConnection(this)) {
             return;
